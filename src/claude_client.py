@@ -1,0 +1,42 @@
+from dataclasses import dataclass
+from typing import Optional
+import anthropic
+
+@dataclass
+class ClaudeConfig:
+    api_key: str
+    base_url: str
+    model: str
+
+class ClaudeClient:
+    def __init__(self, config: ClaudeConfig):
+        self.config = config
+        self._client = None
+
+    def _get_client(self):
+        if self._client is None:
+            if self.config.base_url:
+                self._client = anthropic.Anthropic(
+                    api_key=self.config.api_key,
+                    base_url=self.config.base_url
+                )
+            else:
+                self._client = anthropic.Anthropic(
+                    api_key=self.config.api_key
+                )
+        return self._client
+
+    def send_message(self, message: str, system: Optional[str] = None) -> str:
+        client = self._get_client()
+
+        params = {
+            "model": self.config.model,
+            "max_tokens": 1024,
+            "messages": [{"role": "user", "content": message}]
+        }
+
+        if system:
+            params["system"] = system
+
+        response = client.messages.create(**params)
+        return response.content[0].text
