@@ -1,0 +1,26 @@
+rss_sources:
+  - name: "机器之心"
+    url: "https://rsshub.app/wechat/mp/name/jiqizhixin"
+    category: "多模态大模型"
+  - name: "自动驾驶之心"
+    url: "https://rsshub.app/wechat/mp/name/xxx"
+    category: "自动驾驶"
+
+categories:
+  - "AIGC视觉生成"
+  - "多模态大模型/大语言模型"
+  - "自动驾驶"
+  - "其他AI/深度学习领域相关"
+  - "其它"
+
+claude:
+  api_key: "${CLAUDE_API_KEY}"
+  base_url: "https://v2.aicodee.com"
+  model: "MiniMax-M2.7-highspeed"
+
+output:
+  base_dir: "./output"
+
+schedule:
+  days: ["monday", "wednesday"]
+  time: "09:00"
