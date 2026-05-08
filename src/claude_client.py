@@ -26,12 +26,12 @@ class ClaudeClient:
                 )
         return self._client
 
-    def send_message(self, message: str, system: Optional[str] = None) -> str:
+    def send_message(self, message: str, system: Optional[str] = None, max_tokens: int = 1024) -> str:
         client = self._get_client()
 
         params = {
             "model": self.config.model,
-            "max_tokens": 1024,
+            "max_tokens": max_tokens,
             "messages": [{"role": "user", "content": message}]
         }
 
@@ -39,4 +39,11 @@ class ClaudeClient:
             params["system"] = system
 
         response = client.messages.create(**params)
-        return response.content[0].text
+        for block in response.content:
+            if hasattr(block, 'text'):
+                return block.text
+        # Fallback: DeepSeek sometimes returns only ThinkingBlock w/o TextBlock
+        for block in response.content:
+            if hasattr(block, 'thinking'):
+                return block.thinking
+        raise ValueError(f"No text or thinking block found in response")

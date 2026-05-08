@@ -1,0 +1,86 @@
+# CI 专用配置 — API key 从环境变量注入
+# GitHub Actions 中设置 DEEPSEEK_API_KEY secret
+
+rss_sources:
+  # ===== AIGC 视觉生成 =====
+  - name: "AIGC创意猎人"
+    url: "https://rsshub.app/wechat/sogou/AIGCreativeHunter"
+    category: "AIGC视觉生成"
+  - name: "AIGC开放社区"
+    url: "https://raw.githubusercontent.com/osnsyc/Wechat-Scholar/main/channels/gh_92a47dd34b3c.xml"
+    category: "AIGC视觉生成"
+  - name: "AIGC weekly"
+    url: "https://quail.ink/op7418/feed/atom"
+    category: "AIGC视觉生成"
+
+  # ===== 多模态大模型/大语言模型 =====
+  - name: "量子位"
+    url: "https://www.qbitai.com/feed"
+    category: "多模态大模型/大语言模型"
+  - name: "新智元"
+    url: "https://wechat2rss.bestblogs.dev/feed/e531a18b21c34cf787b83ab444eef659d7a980de.xml"
+    category: "多模态大模型/大语言模型"
+
+  # ===== 其他AI/深度学习领域相关 =====
+  - name: "机器之心"
+    url: "https://wechat2rss.bestblogs.dev/feed/8d97af31b0de9e48da74558af128a4673d78c9a3.xml"
+    category: "其他AI/深度学习领域相关"
+  - name: "AI科技评论"
+    url: "https://wechat2rss.bestblogs.dev/feed/789e5fefb9cc2646ba7b680cb7a88378a34eb7a4.xml"
+    category: "其他AI/深度学习领域相关"
+  - name: "AI paper实验室"
+    url: "https://rsshub.app/wechat/sogou/gh_1cd34a03abb0"
+    category: "其他AI/深度学习领域相关"
+
+  # ===== 学术论文 =====
+  - name: "arXiv AI"
+    url: "https://rss.arxiv.org/rss/cs.AI"
+    category: "其他AI/深度学习领域相关"
+  - name: "arXiv 机器学习"
+    url: "https://rss.arxiv.org/rss/cs.LG"
+    category: "其他AI/深度学习领域相关"
+  - name: "arXiv 计算机视觉"
+    url: "https://rss.arxiv.org/rss/cs.CV"
+    category: "其他AI/深度学习领域相关"
+
+  # ===== AI专题 =====
+  - name: "AI前线"
+    url: "https://wechat2rss.bestblogs.dev/feed/25185b01482da0f485418ecb92e208b4416712fb.xml"
+    category: "其他AI/深度学习领域相关"
+  - name: "deeplearning.ai"
+    url: "https://rsshub.bestblogs.dev/deeplearning/the-batch"
+    category: "其他AI/深度学习领域相关"
+  - name: "Dify"
+    url: "https://wechat2rss.bestblogs.dev/feed/e46c03a4cb65509e22ab9a8507888a2096319d65.xml"
+    category: "其他AI/深度学习领域相关"
+  - name: "Google AI Blog"
+    url: "https://blog.google/technology/ai/rss/"
+    category: "其他AI/深度学习领域相关"
+  - name: "Hacker News AI"
+    url: "https://hnrss.org/newest?q=AI"
+    category: "其他AI/深度学习领域相关"
+  - name: "Hugging Face 博客"
+    url: "https://huggingface.co/blog/feed.xml"
+    category: "其他AI/深度学习领域相关"
+  - name: "Last Week in AI"
+    url: "https://lastweek.in/ai/feed/"
+    category: "其他AI/深度学习领域相关"
+
+categories:
+  - "AIGC视觉生成"
+  - "多模态大模型/大语言模型"
+  - "自动驾驶"
+  - "其他AI/深度学习领域相关"
+  - "其它"
+
+claude:
+  api_key: "${DEEPSEEK_API_KEY}"
+  base_url: "https://api.deepseek.com/anthropic"
+  model: "deepseek-v4-pro"
+
+output:
+  base_dir: "./output"
+
+schedule:
+  days: ["monday", "wednesday"]
+  time: "09:00"
