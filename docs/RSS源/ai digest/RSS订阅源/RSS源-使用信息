@@ -1,0 +1,55 @@
+### RSSHub
+https://github.com/DIYgod/RSSHub
+
+### 路由精选
+https://jackyst0.github.io/awesome-rsshub-routes/
+
+### RSS其它推荐
+https://github.com/ginobefun/BestBlogs
+
+### BestBlogs
+https://www.bestblogs.dev/reading/follow
+
+### RSS搜索
+https://feeder.co/library/feeds/new
+
+### 微信公众号RSS源添加
+https://github.com/cooderl/wewe-rss
+
+已部署：
+```
+访问方式
+地址: http://localhost:4000
+授权码: 123567（在 /opt/wewe-rss-deploy/docker-compose.yml 中配置）
+```
+
+#### 使用流程
+第一步：打开管理界面
+浏览器访问 http://localhost:4000/dash
+
+第二步：添加微信读书账号
+进入 账号管理 → 点击 添加账号
+用微信扫码登录微信读书
+注意：不要勾选"24小时后自动退出"
+第三步：订阅公众号
+进入 公众号源 → 点击 添加
+去微信里打开任意公众号文章，点右上角分享 → 复制链接
+把链接粘贴进去提交即可
+添加频率别太高，否则会被封控 24 小时
+
+第四步：获取 RSS
+订阅后会生成 RSS 地址，格式如下：
+
+http://localhost:4000/feeds/MP_WXS_xxx.atom — Atom 格式
+http://localhost:4000/feeds/MP_WXS_xxx.rss — RSS 格式
+http://localhost:4000/feeds/MP_WXS_xxx.json — JSON 格式
+http://localhost:4000/feeds/all.atom — 全部订阅源聚合
+把 RSS 地址复制到你的 RSS 阅读器（如 Feedly、Inoreader、Fluent Reader 等）即可。
+
+可选的高级功能
+功能	示例
+标题过滤	?title_include=关键词
+标题排除	?title_exclude=广告
+手动更新	?update=true
+全文输出	环境变量设置 FEED_MODE=fulltext
+你的 wewe-rss 部署在 WSL 里，只要 WSL 不关机就一直运行。下次 Windows 重启后，在终端执行 wsl -u root bash -c 'dockerd &' 然后 wsl -u root bash -c 'cd /opt/wewe-rss-deploy && docker compose up -d' 即可恢复

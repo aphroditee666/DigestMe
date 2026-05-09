@@ -1,4 +1,4 @@
-# src/prompts.py
+# src/prompts_ai_digest.py
 import re
 
 CATEGORIES = {
@@ -8,6 +8,13 @@ CATEGORIES = {
     "小样本学习/强化学习": "小样本学习、强化学习相关",
     "其它": "不属于以上四类的内容"
 }
+
+CATEGORIES_TO_OUTPUT = [
+    "AIGC视觉生成",
+    "多模态大模型/大语言模型",
+    "自动驾驶",
+    "小样本学习/强化学习"
+]
 
 
 def build_classification_system_prompt() -> str:

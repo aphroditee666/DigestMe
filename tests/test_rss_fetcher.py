@@ -52,3 +52,69 @@ def test_fetch_empty_feed():
         articles = fetcher.fetch('测试号', 'https://example.com/rss')
 
     assert len(articles) == 0
+
+
+def test_fetch_extracts_content_value_first():
+    mock_entry = SimpleNamespace(
+        title='Article',
+        link='https://example.com/article',
+        published='Mon, 01 Jan 2026 10:00:00 GMT',
+        content=[{'value': '<p>Full content</p>'}],
+        summary='Summary content',
+        description='Description content'
+    )
+    mock_feed = SimpleNamespace(entries=[mock_entry])
+
+    with patch('feedparser.parse') as mock_parse:
+        mock_parse.return_value = mock_feed
+        article = RSSFetcher().fetch('Source', 'https://example.com/rss')[0]
+
+    assert article.content == '<p>Full content</p>'
+
+
+def test_fetch_extracts_summary_when_content_missing():
+    mock_entry = SimpleNamespace(
+        title='Article',
+        link='https://example.com/article',
+        published='Mon, 01 Jan 2026 10:00:00 GMT',
+        summary='Summary content',
+        description='Description content'
+    )
+    mock_feed = SimpleNamespace(entries=[mock_entry])
+
+    with patch('feedparser.parse') as mock_parse:
+        mock_parse.return_value = mock_feed
+        article = RSSFetcher().fetch('Source', 'https://example.com/rss')[0]
+
+    assert article.content == 'Summary content'
+
+
+def test_fetch_extracts_description_when_summary_missing():
+    mock_entry = SimpleNamespace(
+        title='Article',
+        link='https://example.com/article',
+        published='Mon, 01 Jan 2026 10:00:00 GMT',
+        description='Description content'
+    )
+    mock_feed = SimpleNamespace(entries=[mock_entry])
+
+    with patch('feedparser.parse') as mock_parse:
+        mock_parse.return_value = mock_feed
+        article = RSSFetcher().fetch('Source', 'https://example.com/rss')[0]
+
+    assert article.content == 'Description content'
+
+
+def test_fetch_defaults_content_to_empty_string():
+    mock_entry = SimpleNamespace(
+        title='Article',
+        link='https://example.com/article',
+        published='Mon, 01 Jan 2026 10:00:00 GMT'
+    )
+    mock_feed = SimpleNamespace(entries=[mock_entry])
+
+    with patch('feedparser.parse') as mock_parse:
+        mock_parse.return_value = mock_feed
+        article = RSSFetcher().fetch('Source', 'https://example.com/rss')[0]
+
+    assert article.content == ''

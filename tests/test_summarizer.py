@@ -3,7 +3,7 @@ import pytest
 from unittest.mock import Mock, patch
 from src.summarizer import Summarizer, ArticleSummary
 from src.claude_client import ClaudeConfig
-from src.prompts import clean_content
+from src.prompts_ai_digest import clean_content
 
 def test_generate_summary():
     config = ClaudeConfig(

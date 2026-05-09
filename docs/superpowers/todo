@@ -1,0 +1,4 @@
+验证 Docker Desktop 正常运行
+部署 WeWe RSS 容器：docker run -d --name wewe-rss -p 4000:4000 cooderl/wewe-rss
+添加你的微信公众号到 WeWe RSS 获取 RSS 源
+更新 config.yaml 配置

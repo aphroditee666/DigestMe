@@ -10,14 +10,37 @@ class Article:
     url: str
     published: Optional[datetime]
     source: str
+    content: str = ""
 
     def to_dict(self):
         return {
             'title': self.title,
             'url': self.url,
             'published': self.published.isoformat() if self.published else None,
-            'source': self.source
+            'source': self.source,
+            'content': self.content
         }
+
+def _extract_content(entry) -> str:
+    content = getattr(entry, 'content', None)
+    if isinstance(content, (list, tuple)) and content:
+        first = content[0]
+        if isinstance(first, dict):
+            value = first.get('value', '')
+        else:
+            value = getattr(first, 'value', '')
+        if value:
+            return value
+
+    summary = getattr(entry, 'summary', '')
+    if summary:
+        return summary
+
+    description = getattr(entry, 'description', '')
+    if description:
+        return description
+
+    return ""
 
 class RSSFetcher:
     def fetch(self, source_name: str, url: str, limit: int = 10) -> List[Article]:
@@ -40,7 +63,8 @@ class RSSFetcher:
                 title=title,
                 url=link,
                 published=published,
-                source=source_name
+                source=source_name,
+                content=_extract_content(entry)
             ))
 
         return articles

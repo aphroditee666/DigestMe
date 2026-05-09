@@ -91,20 +91,32 @@ rss_sources:
     category: "其它"
 
 categories:
-  - "AIGC视觉生成"
-  - "多模态大模型/大语言模型"
-  - "自动驾驶"
-  - "其他AI/深度学习领域相关"
-  - "其它"
+  - name: "AIGC视觉生成"
+    description: "图像生成/编辑、视频生成与编辑、3D生成与重建、扩散模型训练策略"
+  - name: "多模态大模型/大语言模型"
+    description: "多模态大模型、大语言模型相关"
+  - name: "自动驾驶"
+    description: "VLA/端到端/世界模型/驾驶仿真等自动驾驶相关"
+  - name: "小样本学习/强化学习"
+    description: "小样本学习、强化学习相关"
+  - name: "其它"
+    description: "不属于以上四类的内容"
 
 claude:
   api_key: "${CLAUDE_API_KEY}"
   base_url: "https://v2.aicodee.com"
   model: "MiniMax-M2.7-highspeed"
+  thinking: "disabled"
+
+digest:
+  recent_days: 3
+  cache_path: ".cache/digest_me_cache.json"
+  classification_batch_size: 30
+  prompts_module: "prompts_ai_digest"
 
 output:
   base_dir: "./output"
 
 schedule:
-  days: ["mondday", "wednesday"]
+  days: ["monday", "thursday"]
   time: "09:00"

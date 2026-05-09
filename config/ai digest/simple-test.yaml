@@ -1,0 +1,30 @@
+# 微信公众号 RSS 源配置
+# 使用 RSSHub 获取微信公众号 RSS
+
+rss_sources:
+  - name: "AIGC创意猎人"
+    url: "https://rsshub.app/wechat/sogou/AIGCreativeHunter"
+
+  - name: "arXiv AI"
+    url: "https://rss.arxiv.org/rss/cs.AI"
+
+
+claude:
+  api_key: "sk-e64ae321e3de40dea7c8d60185729f54"  # Another: sk-be4f347c61c24c3984bf634da1ae523b
+  base_url: "https://api.deepseek.com/anthropic"
+  # 可切换为 "deepseek-v4-flash" 或 "deepseek-v4-pro"
+  model: "deepseek-v4-flash"
+  thinking: "disabled"
+
+digest:
+  recent_days: 3
+  cache_path: ".cache/digest_me_cache.json"
+  classification_batch_size: 30
+  prompts_module: "prompts_ai_digest"
+
+output:
+  base_dir: "./output"
+
+schedule:
+  days: ["monday", "thursday"]
+  time: "09:00"

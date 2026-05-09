@@ -15,6 +15,7 @@ class ClaudeConfig:
     api_key: str
     base_url: str
     model: str
+    thinking: str = "disabled"
 
 @dataclass
 class OutputConfig:
@@ -26,11 +27,20 @@ class ScheduleConfig:
     time: str
 
 @dataclass
+class DigestConfig:
+    recent_days: int = 3
+    cache_path: str = ".cache/digest_me_cache.json"
+    classification_batch_size: int = 30
+    enable_trend_summary: bool = True
+    prompts_module: str = "prompts_ai_digest"
+
+@dataclass
 class Config:
     rss_sources: List[RSSSource]
     claude: ClaudeConfig
     output: OutputConfig
     schedule: ScheduleConfig
+    digest: DigestConfig = field(default_factory=DigestConfig)
 
 class ConfigLoader:
     def __init__(self, config_path: str):
@@ -60,7 +70,8 @@ class ConfigLoader:
         claude = ClaudeConfig(
             api_key=self._expand_env_vars(claude_data.get('api_key', '')),
             base_url=claude_data.get('base_url', ''),
-            model=claude_data.get('model', 'claude-sonnet-4-7')
+            model=claude_data.get('model', 'deepseek-v4-flash'),
+            thinking=claude_data.get('thinking', 'disabled')
         )
 
         output_data = data.get('output', {})
@@ -74,11 +85,21 @@ class ConfigLoader:
             time=schedule_data.get('time', '09:00')
         )
 
+        digest_data = data.get('digest', {})
+        digest = DigestConfig(
+            recent_days=digest_data.get('recent_days', 3),
+            cache_path=digest_data.get('cache_path', '.cache/digest_me_cache.json'),
+            classification_batch_size=digest_data.get('classification_batch_size', 30),
+            enable_trend_summary=digest_data.get('enable_trend_summary', True),
+            prompts_module=digest_data.get('prompts_module', 'prompts_ai_digest')
+        )
+
         return Config(
             rss_sources=rss_sources,
             claude=claude,
             output=output,
-            schedule=schedule
+            schedule=schedule,
+            digest=digest
         )
 
     def load(self) -> Config:

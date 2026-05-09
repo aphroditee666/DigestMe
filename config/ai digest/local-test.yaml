@@ -1,0 +1,35 @@
+# 本地 WeWe RSS 测试配置
+
+rss_sources:
+  # ===== AIGC 视觉生成 =====
+  - name: "AI生成未来"
+    url: "http://localhost:4000/feeds/MP_WXS_3876974925.atom"
+
+  # ===== 多模态大模型/大语言模型 =====
+  - name: "PaperWeekly"
+    url: "http://localhost:4000/feeds/MP_WXS_3201788143.atom"
+
+  # ===== 自动驾驶 =====
+  - name: "自动驾驶之心"
+    url: "http://localhost:4000/feeds/MP_WXS_3867515558.atom"
+
+
+claude:
+  api_key: "sk-e64ae321e3de40dea7c8d60185729f54"
+  base_url: "https://api.deepseek.com/anthropic"
+  # 可切换为 "deepseek-v4-flash" 或 "deepseek-v4-pro"
+  model: "deepseek-v4-flash"
+  thinking: "disabled"
+
+digest:
+  recent_days: 3
+  cache_path: ".cache/digest_me_cache.json"
+  classification_batch_size: 30
+  prompts_module: "prompts_ai_digest"
+
+output:
+  base_dir: "./output"
+
+schedule:
+  days: ["monday", "thursday"]
+  time: "09:00"

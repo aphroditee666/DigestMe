@@ -15,6 +15,18 @@ class MarkdownWriter:
         category_slug = category.replace("/", "_").replace(" ", "_")
         return f"{date_str}-{category_slug}-digest.md"
 
+    def _next_available_path(self, filepath: str) -> str:
+        if not os.path.exists(filepath):
+            return filepath
+
+        base, ext = os.path.splitext(filepath)
+        index = 1
+        while True:
+            candidate = f"{base}-{index}{ext}"
+            if not os.path.exists(candidate):
+                return candidate
+            index += 1
+
     def _render_trend_summary(self, ts: TrendSummary) -> str:
         lines = [
             "## 本周进展与趋势",
@@ -60,11 +72,11 @@ class MarkdownWriter:
     def write_all(self, articles_by_category: dict, trends_by_category: dict, generated_at: datetime) -> str:
         """Write all categories into a single markdown file."""
         date_str = generated_at.strftime("%Y-%m-%d")
-        filename = f"{date_str}-AI-digest.md"
-        filepath = os.path.join(self.base_dir, filename)
+        filename = f"{date_str}-digest.md"
+        filepath = self._next_available_path(os.path.join(self.base_dir, filename))
 
         lines = [
-            f"# AI资讯汇总",
+            f"# 资讯汇总",
             "",
             f"> 生成时间: {self._format_date(generated_at)}",
             "",
@@ -97,7 +109,7 @@ class MarkdownWriter:
         os.makedirs(category_dir, exist_ok=True)
 
         filename = self._get_filename(category, generated_at)
-        filepath = os.path.join(category_dir, filename)
+        filepath = self._next_available_path(os.path.join(category_dir, filename))
 
         lines = [
             f"# {category}资讯汇总",

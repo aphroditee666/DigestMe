@@ -4,7 +4,6 @@ import tempfile
 from unittest.mock import Mock, patch
 from src.config_loader import ConfigLoader
 from src.rss_fetcher import RSSFetcher
-from src.content_filter import ContentFilter
 from src.summarizer import Summarizer
 from src.markdown_writer import MarkdownWriter
 from src.claude_client import ClaudeConfig
@@ -73,11 +72,10 @@ This is test summary content.
             fetcher = RSSFetcher()
             articles = fetcher.fetch("TestChannel", "https://example.com/rss")
 
-            filter = ContentFilter(config.claude)
             summarizer = Summarizer(config.claude)
             writer = MarkdownWriter(config.output.base_dir)
 
-            category = filter.classify(articles[0].title, articles[0].source)
+            category = summarizer.classify_only(articles[0].title, articles[0].source)
             assert category == "多模态大模型/大语言模型"
 
             os.unlink(config_path)

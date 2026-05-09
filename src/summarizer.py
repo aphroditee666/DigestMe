@@ -1,15 +1,14 @@
 # src/summarizer.py
+import importlib
+import json
 import re
 from dataclasses import dataclass
 from typing import List
 from src.claude_client import ClaudeClient, ClaudeConfig
-from src.prompts import (
-    get_summarization_prompt,
-    get_classification_prompt,
-    get_trend_summary_prompt,
-    build_classification_system_prompt,
-    build_summarization_system_prompt,
-)
+
+
+def _default_prompts():
+    return importlib.import_module("src.prompts_ai_digest")
 
 @dataclass
 class ArticleSummary:
@@ -21,29 +20,60 @@ class ArticleSummary:
     arxiv_url: str = ""
     github_url: str = ""
 
+
+def _extract_json_array(text: str) -> str:
+    start = text.find("[")
+    end = text.rfind("]")
+    if start == -1 or end == -1 or end < start:
+        return text
+    return text[start:end + 1]
+
+
 class Summarizer:
-    def __init__(self, config: ClaudeConfig):
+    def __init__(self, config: ClaudeConfig, prompts=None):
         self.client = ClaudeClient(config)
+        self.prompts = prompts or _default_prompts()
 
     def classify_only(self, title: str, source: str) -> str:
         """Lightweight classification — no article body, tiny output. Saves tokens for '其它' articles."""
         response = self.client.send_message(
-            message=get_classification_prompt(title=title, source=source),
-            system=build_classification_system_prompt(),
+            message=self.prompts.get_classification_prompt(title=title, source=source),
+            system=self.prompts.build_classification_system_prompt(),
             max_tokens=50
         )
         text = response.strip()
-        # Robust matching: find which category name appears in the response
-        from src.prompts import CATEGORIES
-        for cat in CATEGORIES:
+        for cat in self.prompts.CATEGORIES:
             if cat in text:
                 return cat
         return text  # fallback to raw response
 
+    def classify_batch(self, items: List[dict]) -> dict:
+        """Classify many articles in one LLM call. Returns {index: category}."""
+        if not items:
+            return {}
+
+        article_lines = []
+        for item in items:
+            article_lines.append(
+                f'{item["index"]}. title={item["title"]} source={item["source"]}'
+            )
+        prompt = (
+            "Classify each article below. Return only a JSON array. "
+            'Each item must have "index" and "category".\n\n'
+            + "\n".join(article_lines)
+        )
+        response = self.client.send_message(
+            message=prompt,
+            system=self.prompts.build_classification_system_prompt(),
+            max_tokens=max(100, len(items) * 30)
+        )
+        data = json.loads(_extract_json_array(response))
+        return {int(item["index"]): item["category"] for item in data}
+
     def summarize(self, title: str, source: str, url: str, content: str = "") -> ArticleSummary:
         response = self.client.send_message(
-            message=get_summarization_prompt(title=title, source=source, url=url, content=content),
-            system=build_summarization_system_prompt(),
+            message=self.prompts.get_summarization_prompt(title=title, source=source, url=url, content=content),
+            system=self.prompts.build_summarization_system_prompt(),
             max_tokens=800
         )
 
@@ -86,11 +116,12 @@ class TrendSummary:
 
 
 class TrendSummarizer:
-    def __init__(self, config: ClaudeConfig):
+    def __init__(self, config: ClaudeConfig, prompts=None):
         self.client = ClaudeClient(config)
+        self.prompts = prompts or _default_prompts()
 
     def summarize_trends(self, category: str, articles: List[ArticleSummary]) -> TrendSummary:
-        prompt = get_trend_summary_prompt(category_name=category, articles=articles)
+        prompt = self.prompts.get_trend_summary_prompt(category_name=category, articles=articles)
         response = self.client.send_message(prompt)
 
         summary_match = re.search(
