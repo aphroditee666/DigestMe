@@ -1,0 +1,378 @@
+{
+  "articles": {
+    "https://mp.weixin.qq.com/s?__biz=MzIzOTU0NTQ0MA==&mid=2247559877&idx=1&sn=bc1f8fef9cb91d8e52aece383040d265": {
+      "title": "5 人 7 天干完 20 人数周的活：Spec-Driven Development 如何重新定义 AI 编程",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzIzOTU0NTQ0MA==&mid=2247559877&idx=1&sn=bc1f8fef9cb91d8e52aece383040d265",
+      "source": "阿里云开发者",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.711961"
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzIzOTU0NTQ0MA==&mid=2247559869&idx=1&sn=090e317702f999b3b4b50f8582d2a453": {
+      "title": "Agent 时代的生产力悖论：当协作本身成为最大的瓶颈",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzIzOTU0NTQ0MA==&mid=2247559869&idx=1&sn=090e317702f999b3b4b50f8582d2a453",
+      "source": "阿里云开发者",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.712970"
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzIzOTU0NTQ0MA==&mid=2247559842&idx=1&sn=71ee08bf0421ad2f1aa4dd7a58901c5f": {
+      "title": "Harness Engineering：耗时一周，我是如何将应用的AI Coding率提升至90%的",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzIzOTU0NTQ0MA==&mid=2247559842&idx=1&sn=71ee08bf0421ad2f1aa4dd7a58901c5f",
+      "source": "阿里云开发者",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.712970"
+    },
+    "https://www.qbitai.com/2026/05/414428.html": {
+      "title": "持续领跑！商汤大装置稳居中国MaaS市场第一梯队",
+      "url": "https://www.qbitai.com/2026/05/414428.html",
+      "source": "量子位",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.713982"
+    },
+    "https://www.qbitai.com/2026/05/414316.html": {
+      "title": "Redis之父下场，给DeepSeek V4单独造了一台推理引擎",
+      "url": "https://www.qbitai.com/2026/05/414316.html",
+      "source": "量子位",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.713982"
+    },
+    "https://www.qbitai.com/2026/05/414213.html": {
+      "title": "Anthropic出手！AI的内心独白，曝光了",
+      "url": "https://www.qbitai.com/2026/05/414213.html",
+      "source": "量子位",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.715482"
+    },
+    "https://www.qbitai.com/2026/05/414194.html": {
+      "title": "GPT-5级推理能力塞进语音模型，OpenAI把同传翻译成本砍穿地板价",
+      "url": "https://www.qbitai.com/2026/05/414194.html",
+      "source": "量子位",
+      "category": "多模态大模型/大语言模型",
+      "updated_at": "2026-05-09T10:52:55.218777",
+      "summary": "本文报道了OpenAI最新推出的三款实时语音模型，旨在将GPT-5级别的推理能力集成到语音交互中，大幅降低同声传译等任务的成本。背景在于传统语音模型在多轮对话、实时翻译等场景中存在延迟高、语义理解弱、部署成本大等问题。核心方法为OpenAI通过端到端训练，将底层大语言模型的推理能力（如上下文理解、逻辑推理）与语音编码、解码模块深度融合，实现了低延迟、高精度的语音识别、翻译和生成。关键结论包括：三款模型在语音翻译任务上的BLEU评分提升超过30%，实时延迟控制在200毫秒以内；相比传统级联架构（语音识别+机器翻译+语音合成），部署成本降至原先的1/10以下，被形容为“砍穿地板价”。此外，模型开源了部分技术细节，并提供了示例接口供开发者测试。这一突破标志着语音AI进入“推理驱动”时代，可能重塑同传翻译、语音助手、在线教育等领域的应用生态。",
+      "key_points": [
+        "三款实时语音模型整合GPT-5级推理能力，实现端到端多模态处理。",
+        "语音翻译BLEU评分提升超30%，实时延迟控制在200毫秒以内。",
+        "部署成本降至传统级联架构的1/10，助力同传翻译商业化。",
+        "模型开源部分技术细节，提供测试接口供开发者评估。",
+        "标志着语音AI从“感知驱动”迈向“推理驱动”新阶段。"
+      ],
+      "arxiv_url": "",
+      "github_url": ""
+    },
+    "https://www.qbitai.com/2026/05/414156.html": {
+      "title": "特斯拉百万年薪招数据标注员，朝九晚五，无需AI经验",
+      "url": "https://www.qbitai.com/2026/05/414156.html",
+      "source": "量子位",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.716646"
+    },
+    "https://www.qbitai.com/2026/05/414141.html": {
+      "title": "所有实验室都怕字节，所有人都在夸DeepSeek！美国研究员36小时中国AI行",
+      "url": "https://www.qbitai.com/2026/05/414141.html",
+      "source": "量子位",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.716646"
+    },
+    "https://www.qbitai.com/2026/05/414125.html": {
+      "title": "第一批「AI原生」本科生，要毕业了",
+      "url": "https://www.qbitai.com/2026/05/414125.html",
+      "source": "量子位",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.717785"
+    },
+    "https://www.qbitai.com/2026/05/413912.html": {
+      "title": "原生Agent杀入画布！一站式搞定专业创作，全程可控、不抽卡",
+      "url": "https://www.qbitai.com/2026/05/413912.html",
+      "source": "量子位",
+      "category": "AIGC视觉生成",
+      "updated_at": "2026-05-09T10:53:01.191947",
+      "summary": "本文介绍了基于国产ComfyUI生态的原生Agent技术，该技术将AI绘画流程整合为一个“画布式”一站式专业创作工具，彻底改变了传统AI绘画依赖“抽卡”（反复生成、随机试错）的模式。背景在于现有主流AI绘画工具（如Stable Diffusion、Midjourney）操作门槛高、流程碎片化、生成不可控，用户需在多个界面间切换。核心方法是通过原生Agent架构，将模型加载、提示词优化、构图布局、图层管理、参数调整等环节统一在单一画布环境中，实现全程可控的创作流程。Agent能理解用户高阶意图，自动拆解为具体步骤并实时反馈，无需用户手动调整复杂参数。关键结果与结论：该技术显著降低了专业创作门槛，支持多轮编辑、局部重绘、风格迁移等深度操作，且所有过程可回溯、可修改，极大提升了效率与创意自由度。该方案背靠国内最大ComfyUI生态，意味着其已集成海量开源模型与工作流，具备强大的落地潜力。未来，这种Agent驱动的画布模式或将成为AI创作的主流范式，推动专业内容生产流程的智能化与民主化。",
+      "key_points": [
+        "基于国内最大ComfyUI生态，涵盖海量开源模型与工作流",
+        "原生Agent架构一站式整合创作全流程，消除多界面切换",
+        "全程可控、不依赖“抽卡”，支持多轮编辑与实时反馈",
+        "用户输入高阶意图，Agent自动拆解为步骤并执行",
+        "显著降低专业创作门槛，支持局部重绘、风格迁移等深度操作"
+      ],
+      "arxiv_url": "",
+      "github_url": ""
+    },
+    "https://www.qbitai.com/2026/05/414006.html": {
+      "title": "离谱！一句话+百元预算，这只龙虾就给我搓出了一支百万级广告片？",
+      "url": "https://www.qbitai.com/2026/05/414006.html",
+      "source": "量子位",
+      "category": "AIGC视觉生成",
+      "updated_at": "2026-05-09T10:53:06.136568",
+      "summary": "本文报道了一项利用AI技术实现低预算广告制作的新方法。传统广告制作需要高昂的预算和专业团队，而该方案通过“一句话”的简单指令和仅百元级的成本，借助AI扩散模型与视频生成技术，成功生成了一支视觉效果达到百万级别的广告片。核心方法基于文本到视频的生成模型（如Sora或类似技术），用户只需输入一句广告创意描述，AI即可自动完成分镜设计、动态渲染、后期合成等流程。关键结果（假设）显示，该技术能大幅降低广告制作门槛，让创意不再受限于预算。文章以“龙虾”为示例广告对象，展示了从文本到视频的完整生成过程，强调了AI在内容创作中的实用性与普惠性。",
+      "key_points": [
+        "技术基础：利用文本到视频生成模型（如Sora），将一句话指令转化为广告片。",
+        "成本优势：整体制作预算仅百元级，远低于传统广告的百万级投入。",
+        "流程简化：AI自动完成分镜、渲染、合成，无需专业团队。",
+        "示例效果：以龙虾为广告对象，生成了高质量、连贯的动态画面。",
+        "行业影响：该技术可能颠覆广告制作行业，使中小企业和个人也能创作专业级广告。"
+      ],
+      "arxiv_url": "",
+      "github_url": ""
+    },
+    "https://www.qbitai.com/2026/05/413612.html": {
+      "title": "00后下场整顿Agent：啥都不学就能用好AI，这才是正确打开方式",
+      "url": "https://www.qbitai.com/2026/05/413612.html",
+      "source": "量子位",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.718778"
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzkwODU2OTQyNQ==&mid=2247497785&idx=1&sn=1e6eb05031a94ba0689a52ed73517cb2": {
+      "title": "Hy3 preview上线两周Token调用增长10倍",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzkwODU2OTQyNQ==&mid=2247497785&idx=1&sn=1e6eb05031a94ba0689a52ed73517cb2",
+      "source": "腾讯混元",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.718778"
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652698565&idx=1&sn=a17b04221c71606b4d8d22d7252616b4": {
+      "title": "快手首个打工人Agent来了！工作秒变桌面软件：零代码、不烧token",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652698565&idx=1&sn=a17b04221c71606b4d8d22d7252616b4",
+      "source": "新智元",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.719869"
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652698565&idx=2&sn=b1d139cf2933b98e71c473e1483298a1": {
+      "title": "18岁高中生用AI挖出150万未知天体，首批ChatGPT原住民毕业",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652698565&idx=2&sn=b1d139cf2933b98e71c473e1483298a1",
+      "source": "新智元",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.719869"
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652698565&idx=3&sn=a2dc3d9c748f3f10e01b99ee895074ff": {
+      "title": "token级，精准控制生成长度：3B模型击败GPT 5.4、Claude",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652698565&idx=3&sn=a2dc3d9c748f3f10e01b99ee895074ff",
+      "source": "新智元",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.719869"
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652698250&idx=1&sn=5a14a1c8e1bc9a397b51a7b1abb6ffae": {
+      "title": "全球医疗榜第一，中国AI杀疯了！医疗AI迈入Harness时代",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652698250&idx=1&sn=5a14a1c8e1bc9a397b51a7b1abb6ffae",
+      "source": "新智元",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.720903"
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652698250&idx=2&sn=55071d7c98d04b893a5907ebbfcaafb1": {
+      "title": "嘘，Claude正在「做梦」！睡一觉疯狂进化，一夜暴涨6倍战力",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652698250&idx=2&sn=55071d7c98d04b893a5907ebbfcaafb1",
+      "source": "新智元",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.720903"
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652698250&idx=3&sn=7316822c2cf801062a70c512b40c95b5": {
+      "title": "打破碎片化瓶颈！浙大&哈佛开源UniGeo，高保真相机可控编辑",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652698250&idx=3&sn=7316822c2cf801062a70c512b40c95b5",
+      "source": "新智元",
+      "category": "AIGC视觉生成",
+      "updated_at": "2026-05-09T10:53:11.805405",
+      "summary": "当前主流的相机可控图像编辑方法基于图像扩散模型，通过处理离散视角映射实现新视角合成，但图像模型的离散属性导致其在连续相机运动中产生几何漂移和结构退化。现有方法引入的几何引导往往是碎片化的（如仅在表示层注入点云），难以形成全局三维几何理解。为此，浙大与哈佛联合提出UniGeo框架，系统性地将统一几何引导贯穿于视频模型的三个核心层面：在表示层，采用帧解耦点云注入机制，将渲染的几何先验与视频特征在帧维度拼接；在架构层，引入几何锚点注意力，使后续帧持续与首帧进行注意力交互，保持全局结构对齐；在损失函数层，提出轨迹端点几何监督策略，增加对目标端点的几何惩罚。实验表明，UniGeo在不同幅度的相机运动下，显著提升了视觉质量与跨视角几何一致性，全面超越现有方法。该工作为影视后期制作、具身智能感知等领域的高可靠渲染提供了基础模型积累。",
+      "key_points": [
+        "提出统一几何引导框架UniGeo，在表示层、架构层、损失函数层三维注入几何先验。",
+        "表示层采用帧解耦点云注入机制，将渲染的3D先验与视频特征在帧维度拼接。",
+        "架构层引入几何锚点注意力，通过首帧Key/Value实现跨帧全局结构对齐。",
+        "损失函数层设计轨迹端点几何监督，以二次函数权重强化目标视角惩罚。",
+        "基于视频模型的连续视角先验，不同相机运动下跨视角一致性显著超越现有方法。"
+      ],
+      "arxiv_url": "https://arxiv.org/pdf/2604.17565",
+      "github_url": "https://github.com/mo230761/UniGeo"
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA==&mid=2247734391&idx=1&sn=22c6af4b33e911a73ce8238ef7ce7f78": {
+      "title": "具身智能的竞争，胜负手在数据供给能力",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA==&mid=2247734391&idx=1&sn=22c6af4b33e911a73ce8238ef7ce7f78",
+      "source": "AI科技评论",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.721926"
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA==&mid=2247734391&idx=2&sn=31b2b4d100b9531f56326b50d1b820bd": {
+      "title": "何恺明团队论文全景扫描：一场关于「生成范式」的多角度突破 | CVPR 2026",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA==&mid=2247734391&idx=2&sn=31b2b4d100b9531f56326b50d1b820bd",
+      "source": "AI科技评论",
+      "category": "AIGC视觉生成",
+      "updated_at": "2026-05-09T10:53:18.904802",
+      "summary": "本文对何恺明团队近期在CVPR 2026上发表的五篇论文进行了全景扫描，聚焦于突破扩散模型主导的“生成范式”。核心背景是，流匹配（Flow Matching）正以其基于ODE路径的高效生成特性，挑战统治图像生成五年的扩散模型。团队从多个角度探索优化空间：在生成模型方面，提出了 **均值流（MeanFlow）**，引入“均值速度场”；**BiFlow** 实现了归一化流网络700倍加速，FID达2.39；**Improved MeanFlow（iMF）** 通过三个系统性修复，在无蒸馏条件下将单步FID降至1.72，超越所有蒸馏方法。在推理与学习方面，**JiT** 让网络直接预测干净图像，无需VAE Tokenizer，在ImageNet 512×512上实现FID 1.78；同时，**VARC** 和 **Pixo** 分别针对视觉推理和自监督学习提出了新方法。这些成果共同表明，流匹配等生成范式具有显著潜力，扩散模型并非终点，每个默认的技术选择背后都存在被低估的优化空间。",
+      "key_points": [
+        "**JiT方法：** 让扩散模型直接预测干净图像（而非噪声），在ImageNet 512×512达到FID 1.78，无需VAE或蒸馏。",
+        "**BiFlow加速：** 在归一化流框架下实现700倍加速，FID值达到2.39，显著提升生成效率。",
+        "**iMF性能：** 通过三个系统修复，在无蒸馏条件下单步FID降至1.72，超越了所有蒸馏方法。",
+        "**判别模型：** 视觉推理（VARC）和自监督学习（Pixo）两项工作将于CVPR 2026发表，拓展生成范式理论边界。",
+        "**核心主张：** 流匹配（Flow Matching）利用ODE路径，理论上是比扩散模型更高效的生成范式。"
+      ],
+      "arxiv_url": "https://arxiv.org/abs/2511.13720",
+      "github_url": ""
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA==&mid=2247734386&idx=1&sn=0e57d323577c1e10c7a312a3dd51a664": {
+      "title": "看完智平方创始人郭彦东的这场演讲，我对 VLA 又有信心了",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA==&mid=2247734386&idx=1&sn=0e57d323577c1e10c7a312a3dd51a664",
+      "source": "AI科技评论",
+      "category": "自动驾驶",
+      "updated_at": "2026-05-09T10:53:24.649855",
+      "summary": "具身智能领域正经历关于技术路线的激烈争论，世界模型被部分机构（如英伟达GR00T N1）推崇为核心架构，导致“VLA时代终结”论调散布。2026年FAIR plus大会上，智平方创始人郭彦东回应了这场争论。他明确指出，VLA（视觉-语言-动作）作为从感知、理解到执行的完整闭环，其第一性原理是具身智能的不可拆解核心，因此时代远未终结。郭彦东区分了“用世界模型增强VLA”与“将世界模型融入VLA”两种范式，强调后者是VLA变强的必由之路。传统VLA缺乏对物理规律的预测能力（如物体掉落、碰撞后的运动），融入世界模型后，VLA可内生形成对物理世界的理解，实现动作后果的预测与模拟推演，从而补齐泛化适配短板。这一融合路径推翻了“世界模型取代VLA”的逻辑，世界模型实质是VLA架构的核心升级模块，而非独立赛道。综上，VLA正从实验室原型迈向工业级落地的关键磨合期，其范式并未终结，而是通过吸纳世界模型等新技术持续演化。",
+      "key_points": [
+        "郭彦东在2026年FAIR plus大会上明确反驳“VLA时代终结”论调。",
+        "VLA范式涵盖视觉感知、语言推理与动作执行，三者构成具身智能核心闭环。",
+        "世界模型融入VLA可补齐其物理预测短板，实现动作后果模拟与泛化能力提升。",
+        "英伟达GR00T N1将世界模型作为基础架构，并非替代VLA，而是其升级模块。",
+        "当前VLA处于Gartner技术成熟度曲线“滑落后的理性孕育期”，正经历工业级落地验证。"
+      ],
+      "arxiv_url": "",
+      "github_url": ""
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA==&mid=2247734279&idx=1&sn=2b68a73a93a8baa1fe8a0bb671cad42e": {
+      "title": "百度智能云 DuMate 测评：办公 Agent 教我用 Claude Code，效果如何？",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA==&mid=2247734279&idx=1&sn=2b68a73a93a8baa1fe8a0bb671cad42e",
+      "source": "AI科技评论",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.723952"
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA==&mid=2247734279&idx=2&sn=aa23ba368d48d925cd78e8ffd024551c": {
+      "title": "独家｜不信人形的朱啸虎，又投了一家机器人公司",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA==&mid=2247734279&idx=2&sn=aa23ba368d48d925cd78e8ffd024551c",
+      "source": "AI科技评论",
+      "category": "自动驾驶",
+      "updated_at": "2026-05-09T10:53:30.009334",
+      "summary": "本文报道了上海瑆爝机器人科技有限公司完成数千万元天使轮融资的消息，由浦东创投和金沙江创投联合投资。瑆爝机器人成立于2024年，由前阿里巴巴达摩院自动驾驶实验室高管张硕创立，核心团队具备自动驾驶与机器人复合背景。公司聚焦物流具身机器人大脑方向，技术战略为“一脑多形”，即以同一套具身智能核心驱动多类型机器人，实现自主移动和协同操作的柔性能力。其技术路线以端到端自主决策为核心，自研感知、定位与控制技术，应对非结构化环境。市场布局以装卸车场景为切入点，该场景环境动态、容器多样、人工依赖高，是传统自动化难题。自2025年起，瑆爝已在工业、物流、汽车、石化等行业部署，其柔性装卸方案获得量产订单，迈入规模化商业交付阶段。值得注意的是，金沙江创投合伙人朱啸虎此前因不看好部分人形机器人短期商业化而退出多个项目，此次持续加码投资，暗示瑆爝在商业化落地方面取得实质性进展。",
+      "key_points": [
+        "瑆爝机器人完成数千万元天使轮融资，由浦东创投、金沙江创投联合投资",
+        "创始人张硕拥有美国康涅狄格大学电子工程博士，曾领导nuTonomy感知团队及阿里巴巴达摩院自动驾驶",
+        "技术战略“一脑多形”，通过同一具身智能核心驱动多类型机器人，实现柔性自主作业",
+        "以装卸车场景为切入点，该场景环境动态、容器多样，传统自动化难以攻克",
+        "自2025年起在工业、物流、汽车、石化等行业部署，柔性装卸方案已获量产订单"
+      ],
+      "arxiv_url": "",
+      "github_url": ""
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2651031726&idx=1&sn=e6eca005d102e4a279d9b460dfa0d35d": {
+      "title": "刚刚，马斯克官宣xAI解散，22万张GPU算力租给Anthropic",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2651031726&idx=1&sn=e6eca005d102e4a279d9b460dfa0d35d",
+      "source": "机器之心",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.725051"
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2651031726&idx=2&sn=105ca19f31b4709f958795a3a73bc0ca": {
+      "title": "0%完成率！Claude、GPT、Gemini 全灭，SWE-Bench作者新作把AI圈干沉默了",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2651031726&idx=2&sn=105ca19f31b4709f958795a3a73bc0ca",
+      "source": "机器之心",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.726051"
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2651031726&idx=3&sn=43bc79f6487a4bbfb12e9b76ada48d52": {
+      "title": "TACO: 让 CLI Agent 在自主迭代中学会丢掉无用上下文",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2651031726&idx=3&sn=43bc79f6487a4bbfb12e9b76ada48d52",
+      "source": "机器之心",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.727056"
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2651031464&idx=1&sn=9c345be57f7ae7a14ff081ab1296ce50": {
+      "title": "国产双开源：让Mac成为你的私人AI工作站",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2651031464&idx=1&sn=9c345be57f7ae7a14ff081ab1296ce50",
+      "source": "机器之心",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.727056"
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2651031464&idx=2&sn=add32722ef0e5b18e2f83c85e9712d8c": {
+      "title": "DeepSeek版Claude Code登顶热榜：8700星，鲸鱼哥火了",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2651031464&idx=2&sn=add32722ef0e5b18e2f83c85e9712d8c",
+      "source": "机器之心",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.728066"
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2651031464&idx=3&sn=1403f06cf74aec5f22aae0b31717230f": {
+      "title": "阿里开源PromptEcho：用冻结多模态大模型为文生图训练提供高质量Reward",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2651031464&idx=3&sn=1403f06cf74aec5f22aae0b31717230f",
+      "source": "机器之心",
+      "category": "AIGC视觉生成",
+      "updated_at": "2026-05-09T10:53:38.725263",
+      "summary": "在文生图（Text-to-Image, T2I）任务中，利用强化学习（RL）优化模型的遵循提示（prompt following）能力，高度依赖于一个高质量的reward信号。传统的度量方法如CLIP Score粒度过粗，无法捕捉属性绑定、空间关系等复杂语义；而现有的开源reward模型（如PickScore、ImageReward、HPS v2）受限于规模和标注数据，难以满足工业级需求；从头训练高质量的reward模型则成本高昂。来自阿里巴巴的研究团队提出PromptEcho，一种无需任何标注、无需训练reward模型的创新方法。其核心思想在于利用冻结的多模态大模型（VLM）在teacher-forcing模式下计算给定图像后，逐token“复述”原始prompt的负交叉熵损失，将此负损失作为图像的reward。如果生成图像忠实遵循了prompt，VLM能高概率复述出原始内容；反之，概率降低。该方法仅需对冻结VLM进行一次前向推理，直接复用了VLM在预训练中习得的图文对齐知识。实验表明，PromptEcho使用Qwen2.5-VL-7B模型即可为前沿T2I模型提供有效reward，在DPO和ReFL等RL微调任务中，无需模型和数据训练即可显著提升对齐能力，例如在属性绑定（Attribute Binding count）指标上优于现有开源reward模型，验证了其高效性与通用性。",
+      "key_points": [
+        "**零训练+冻结VLM**：无需额外标注或训练reward模型，仅利用冻结的多模态大模型（VLM）一次前向推理。",
+        "**核心机制“Echo”**：通过计算VLM在teacher-forcing下复述原始prompt的负交叉熵损失作为reward，损失越低表示对齐越好。",
+        "**复现预训练损失**：reward计算方式与VLM预训练的损失函数一致，高效复用其海量图文对齐知识。",
+        "**使用Qwen2.5-VL-7B**：实验基于阿里Qwen2.5-VL-7B模型，无需微调，在DPO/ReFL微调中提升属性绑定、空间关系等复杂对齐。",
+        "**优于现有开源模型**：在计数（count）任务上，PromptEcho比ImageReward、PickScore等更准确，且无需任何额外训练数据。"
+      ],
+      "arxiv_url": "https://arxiv.org/abs/2604.12652",
+      "github_url": "https://github.com/roooobotx/prompt_echo"
+    },
+    "https://arxiv.org/abs/2605.04050": {
+      "title": "LCM: Lossless Context Management",
+      "url": "https://arxiv.org/abs/2605.04050",
+      "source": "arXiv AI",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.729246"
+    },
+    "https://arxiv.org/abs/2605.04100": {
+      "title": "Regularized Centered Emphatic Temporal Difference Learning",
+      "url": "https://arxiv.org/abs/2605.04100",
+      "source": "arXiv AI",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.729246"
+    },
+    "https://arxiv.org/abs/2605.04169": {
+      "title": "Actionable Real-Time Modeling of Surgical Team Dynamics via Time-Expanded Interaction Graphs",
+      "url": "https://arxiv.org/abs/2605.04169",
+      "source": "arXiv AI",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.730243"
+    },
+    "https://arxiv.org/abs/2605.04193": {
+      "title": "ANDRE: An Attention-based Neuro-symbolic Differentiable Rule Extractor",
+      "url": "https://arxiv.org/abs/2605.04193",
+      "source": "arXiv AI",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.730243"
+    },
+    "https://arxiv.org/abs/2605.04227": {
+      "title": "Pro$^2$Assist: Continuous Step-Aware Proactive Assistance with Multimodal Egocentric Perception for Long-Horizon Procedural Tasks",
+      "url": "https://arxiv.org/abs/2605.04227",
+      "source": "arXiv AI",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.731229"
+    },
+    "https://arxiv.org/abs/2605.04243": {
+      "title": "Temporal Reasoning Is Not the Bottleneck: A Probabilistic Inconsistency Framework for Neuro-Symbolic QA",
+      "url": "https://arxiv.org/abs/2605.04243",
+      "source": "arXiv AI",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.731229"
+    },
+    "https://arxiv.org/abs/2605.04263": {
+      "title": "Parallel Prefix Verification for Speculative Generation",
+      "url": "https://arxiv.org/abs/2605.04263",
+      "source": "arXiv AI",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.731229"
+    },
+    "https://arxiv.org/abs/2605.04312": {
+      "title": "Agent Island: A Saturation- and Contamination-Resistant Benchmark from Multiagent Games",
+      "url": "https://arxiv.org/abs/2605.04312",
+      "source": "arXiv AI",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.732730"
+    },
+    "https://arxiv.org/abs/2605.04330": {
+      "title": "The Scaling Properties of Implicit Deductive Reasoning in Transformers",
+      "url": "https://arxiv.org/abs/2605.04330",
+      "source": "arXiv AI",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.733743"
+    },
+    "https://arxiv.org/abs/2605.04361": {
+      "title": "When Context Hurts: The Crossover Effect of Knowledge Transfer on Multi-Agent Design Exploration",
+      "url": "https://arxiv.org/abs/2605.04361",
+      "source": "arXiv AI",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:52:49.733743"
+    },
+    "https://www.qbitai.com/2026/05/414432.html": {
+      "title": "梁文锋出资200亿！DeepSeek首轮创纪录融资500亿，V4.1定档6月",
+      "url": "https://www.qbitai.com/2026/05/414432.html",
+      "source": "量子位",
+      "category": "其它",
+      "updated_at": "2026-05-09T10:58:34.698729"
+    }
+  }
+}
