@@ -30,11 +30,6 @@ jobs:
           path: .cache
           key: digest-cache-${{ github.ref_name }}
 
-      - name: Inject API key
-        run: |
-          sed -i 's|sk-e64ae321e3de40dea7c8d60185729f54|${DEEPSEEK_API_KEY}|g' \
-            config/ai_digest/config_ai_digest_outer_rss_merge_v0.yaml
-
       - name: Run digest
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}

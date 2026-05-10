@@ -364,7 +364,7 @@ rss_sources:
     enrich: false
 
 claude:
-  api_key: "sk-e64ae321e3de40dea7c8d60185729f54"
+  api_key: "${DEEPSEEK_API_KEY}"
   base_url: "https://api.deepseek.com/anthropic"
   model: "deepseek-v4-flash"
   thinking: "disabled"
