@@ -101,7 +101,7 @@ def render(config_path: str, with_trends: bool = False):
         "config_path": config_path,
     }
 
-    html_writer = HTMLWriter(config.output.base_dir)
+    html_writer = HTMLWriter(config.output.base_dir, pages_url=config.output.pages_url)
     html_path = html_writer.write_all(articles_by_category, trends_by_category, generated_at, stats)
     logger.info(f"Rendered: {html_path}")
     return html_path

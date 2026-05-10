@@ -303,8 +303,9 @@ _JS = r"""
 
 
 class HTMLWriter:
-    def __init__(self, base_dir: str):
+    def __init__(self, base_dir: str, pages_url: str = ""):
         self.base_dir = base_dir
+        self.pages_url = pages_url.rstrip("/") if pages_url else ""
 
     def write_all(
         self,
@@ -495,9 +496,10 @@ class HTMLWriter:
         time_str = stats["generated_at"].strftime("%H:%M")
         filename = os.path.basename(filepath)
         rel_path = os.path.relpath(filepath, parent).replace("\\", "/")
+        pages_rel = f"{self.pages_url}/{rel_path}" if self.pages_url else rel_path
 
         total = stats.get("articles_summarized", 0)
-        entry = (f"- [{time_str} HTML — {filename}]({rel_path})"
+        entry = (f"- [{time_str} HTML — {filename}]({pages_rel})"
                  f" | 摘要 {total} 篇 | Token {stats.get('token_total', 0):,}")
 
         if os.path.exists(readme_path):

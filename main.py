@@ -339,7 +339,7 @@ def run_once(config_path: str):
 
     # HTML output
     if output_format in ("html", "both"):
-        html_writer = HTMLWriter(config.output.base_dir)
+        html_writer = HTMLWriter(config.output.base_dir, pages_url=config.output.pages_url)
         html_path = html_writer.write_all(articles_by_category, trends_by_category, generated_at, stats, file_index=file_index)
         stats["file_size"] = Path(html_path).stat().st_size
         html_writer.update_readme(html_path, stats)

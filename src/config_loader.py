@@ -31,6 +31,7 @@ class ClaudeConfig:
 class OutputConfig:
     base_dir: str
     output_format: str = "both"  # "markdown" | "html" | "both"
+    pages_url: str = ""  # GitHub Pages base URL, e.g. https://user.github.io/repo
 
 @dataclass
 class ScheduleConfig:

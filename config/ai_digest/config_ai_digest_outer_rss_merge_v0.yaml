@@ -382,6 +382,7 @@ digest:
 output:
   base_dir: "./output/ai_digest"
   output_format: "both"
+  pages_url: "https://aphroditee666.github.io/DigestMe/output/ai_digest"
 
 schedule:
   days: ["monday", "thursday"]
