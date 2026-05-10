@@ -2,25 +2,12 @@
 # 使用 RSSHub 获取微信公众号 RSS
 
 rss_sources:
-
   - name: "AIGC创意猎人"
     url: "https://rsshub.app/wechat/sogou/AIGCreativeHunter"
 
-  - name: "阿里云开发者"
-    url: "https://wechat2rss.bestblogs.dev/feed/39fc51b0b1316137e608c45da5dbbca4f9eb9538.xml"
-  - name: "量子位"
-    url: "https://www.qbitai.com/feed"
-  - name: "腾讯混元"
-    url: "https://wechat2rss.bestblogs.dev/feed/306ce19a1ca590c9c2df781789e828d1acfa1356.xml"
-  - name: "新智元"
-    url: "https://wechat2rss.bestblogs.dev/feed/e531a18b21c34cf787b83ab444eef659d7a980de.xml"
-
-  - name: "AI科技评论"
-    url: "https://wechat2rss.bestblogs.dev/feed/789e5fefb9cc2646ba7b680cb7a88378a34eb7a4.xml"
-  - name: "机器之心"
-    url: "https://wechat2rss.bestblogs.dev/feed/8d97af31b0de9e48da74558af128a4673d78c9a3.xml"
   - name: "arXiv AI"
     url: "https://rss.arxiv.org/rss/cs.AI"
+
 
 claude:
   api_key: "sk-e64ae321e3de40dea7c8d60185729f54"  # Another: sk-be4f347c61c24c3984bf634da1ae523b
@@ -33,11 +20,10 @@ digest:
   recent_days: 3
   cache_path: ".cache/digest_me_cache.json"
   classification_batch_size: 30
-  enable_trend_summary: true
   prompts_module: "prompts_ai_digest"
 
 output:
-  base_dir: "./output"
+  base_dir: "./output/ai_digest"
 
 schedule:
   days: ["monday", "thursday"]

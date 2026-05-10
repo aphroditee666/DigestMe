@@ -1,0 +1,388 @@
+# DigestMe AI Digest 精简配置（55源 / Tier分档）
+# Tier 1（技术/算法型）: limit=15, enrich=true  — 完整正文扩展
+# Tier 2（新闻/产品型）: limit=8,  enrich=false — RSS摘要即可，省HTTP
+
+rss_sources:
+  # ============================================================
+  # AIGC视觉生成 — Tier 1（技术/算法型）
+  # ============================================================
+  - name: "字节跳动Seed"
+    url: "https://wechat2rss.bestblogs.dev/feed/6efd40bb335d2037f365d284cb5e00f0843e737e.xml"
+    category: "AIGC视觉生成"
+    limit: 15
+    enrich: true
+
+  - name: "机器之心SOTA模型"
+    url: "https://wechat2rss.bestblogs.dev/feed/2f520471856d56c7b3a95cd09eb777149b32828a.xml"
+    category: "AIGC视觉生成"
+    limit: 15
+    enrich: true
+
+  - name: "Hugging Face 博客"
+    url: "https://huggingface.co/blog/feed.xml"
+    category: "AIGC视觉生成"
+    limit: 15
+    enrich: true
+
+  - name: "AIGC创意猎人"
+    url: "https://rsshub.app/wechat/sogou/AIGCreativeHunter"
+    category: "AIGC视觉生成"
+    limit: 15
+    enrich: true
+
+  - name: "AIGC开放社区"
+    url: "https://raw.githubusercontent.com/osnsyc/Wechat-Scholar/main/channels/gh_92a47dd34b3c.xml"
+    category: "AIGC视觉生成"
+    limit: 15
+    enrich: true
+
+  - name: "AIGC weekly"
+    url: "https://quail.ink/op7418/feed/atom"
+    category: "AIGC视觉生成"
+    limit: 15
+    enrich: true
+
+  # ============================================================
+  # AIGC视觉生成 — Tier 2（产品/工具/教程型）
+  # ============================================================
+  - name: "十字路口Crossing"
+    url: "https://wechat2rss.bestblogs.dev/feed/20492a5f2d3637c178c01ab0bab7ed86a4a0995b.xml"
+    category: "AIGC视觉生成"
+    limit: 8
+    enrich: false
+
+  - name: "花叔"
+    url: "https://wechat2rss.bestblogs.dev/feed/ed3e181242a4622709081439d802523ecf7b78f2.xml"
+    category: "AIGC视觉生成"
+    limit: 8
+    enrich: false
+
+  - name: "优设"
+    url: "https://wechat2rss.bestblogs.dev/feed/8fee9d33e883a769a59a5a3e27d249cf8567b55a.xml"
+    category: "AIGC视觉生成"
+    limit: 8
+    enrich: false
+
+  - name: "MiniMax 稀宇科技"
+    url: "https://wechat2rss.bestblogs.dev/feed/00306b171f754d463b28cf83f3ba086ad009b430.xml"
+    category: "AIGC视觉生成"
+    limit: 8
+    enrich: false
+
+  - name: "Hugging Face"
+    url: "https://wechat2rss.bestblogs.dev/feed/8b68fdb4f24ab2287100988a8cec36363fec4214.xml"
+    category: "AIGC视觉生成"
+    limit: 8
+    enrich: false
+
+  # ============================================================
+  # 多模态大模型/大语言模型 — Tier 1（技术/算法型）
+  # ============================================================
+  - name: "arXiv AI"
+    url: "https://rss.arxiv.org/rss/cs.AI"
+    category: "多模态大模型/大语言模型"
+    limit: 15
+    enrich: true
+
+  - name: "arXiv 机器学习"
+    url: "https://rss.arxiv.org/rss/cs.LG"
+    category: "多模态大模型/大语言模型"
+    limit: 15
+    enrich: true
+
+  - name: "arXiv 计算机视觉"
+    url: "https://rss.arxiv.org/rss/cs.CV"
+    category: "多模态大模型/大语言模型"
+    limit: 15
+    enrich: true
+
+  - name: "arXiv 机器人"
+    url: "https://rss.arxiv.org/rss/cs.RO"
+    category: "自动驾驶"
+    limit: 15
+    enrich: true
+
+  - name: "Google DeepMind Blog"
+    url: "https://deepmind.com/blog/feed/basic/"
+    category: "多模态大模型/大语言模型"
+    limit: 15
+    enrich: true
+
+  - name: "Google DeepMind"
+    url: "https://deepmind.google/blog/rss.xml"
+    category: "多模态大模型/大语言模型"
+    limit: 15
+    enrich: true
+
+  - name: "OpenAI 博客"
+    url: "https://openai.com/news/rss.xml"
+    category: "多模态大模型/大语言模型"
+    limit: 15
+    enrich: true
+
+  - name: "Anthropic News"
+    url: "https://rsshub.bestblogs.dev/anthropic/news"
+    category: "多模态大模型/大语言模型"
+    limit: 15
+    enrich: true
+
+  - name: "Google AI Blog"
+    url: "https://blog.google/technology/ai/rss/"
+    category: "多模态大模型/大语言模型"
+    limit: 15
+    enrich: true
+
+  - name: "Latent Space"
+    url: "https://www.latent.space/feed"
+    category: "多模态大模型/大语言模型"
+    limit: 15
+    enrich: true
+
+  - name: "Simon Willison's Blog"
+    url: "https://simonwillison.net/atom/everything/"
+    category: "多模态大模型/大语言模型"
+    limit: 15
+    enrich: true
+
+  - name: "夕小瑶科技说"
+    url: "https://wechat2rss.bestblogs.dev/feed/64b57d666259aee6bd097e76164e4a8371f0ad04.xml"
+    category: "多模态大模型/大语言模型"
+    limit: 15
+    enrich: true
+
+  - name: "大模型智能"
+    url: "https://wechat2rss.bestblogs.dev/feed/bfc6440c1a2443fab9a6bf607137d41db5cd5c93.xml"
+    category: "多模态大模型/大语言模型"
+    limit: 8
+    enrich: false
+
+  - name: "山行AI"
+    url: "https://wechat2rss.bestblogs.dev/feed/98bc16b6f53902a2ab511b4faa3499e0a1c78eb1.xml"
+    category: "多模态大模型/大语言模型"
+    limit: 15
+    enrich: true
+
+  - name: "AINLP"
+    url: "https://wechat2rss.bestblogs.dev/feed/875df1d1a991bf9250ba9813e3148f58ef2240d4.xml"
+    category: "多模态大模型/大语言模型"
+    limit: 15
+    enrich: true
+
+  - name: "LangChain Blog"
+    url: "https://blog.langchain.dev/rss/"
+    category: "多模态大模型/大语言模型"
+    limit: 15
+    enrich: true
+
+  - name: "LlamaIndex Blog"
+    url: "https://www.llamaindex.ai/blog/feed"
+    category: "多模态大模型/大语言模型"
+    limit: 15
+    enrich: true
+
+  - name: "语言即世界language is world"
+    url: "https://wechat2rss.bestblogs.dev/feed/e1ed0d3edd93f90aef602105eb7ca51b35b7060a.xml"
+    category: "多模态大模型/大语言模型"
+    limit: 15
+    enrich: true
+
+  - name: "AI paper实验室"
+    url: "https://rsshub.app/wechat/sogou/gh_1cd34a03abb0"
+    category: "多模态大模型/大语言模型"
+    limit: 15
+    enrich: true
+
+  # ============================================================
+  # 多模态大模型/大语言模型 — Tier 2（新闻/产品/周刊型）
+  # ============================================================
+  - name: "量子位"
+    url: "https://www.qbitai.com/feed"
+    category: "多模态大模型/大语言模型"
+    limit: 8
+    enrich: false
+
+  - name: "机器之心"
+    url: "https://wechat2rss.bestblogs.dev/feed/8d97af31b0de9e48da74558af128a4673d78c9a3.xml"
+    category: "多模态大模型/大语言模型"
+    limit: 8
+    enrich: false
+
+  - name: "有新Newin"
+    url: "https://wechat2rss.bestblogs.dev/feed/74554dcb3da8982083426b871bc8c314a9de9729.xml"
+    category: "多模态大模型/大语言模型"
+    limit: 8
+    enrich: false
+
+  - name: "智谱"
+    url: "https://wechat2rss.bestblogs.dev/feed/433d2134dca54d80804daf32e8be546155be3300.xml"
+    category: "多模态大模型/大语言模型"
+    limit: 8
+    enrich: false
+
+  - name: "阶跃星辰"
+    url: "https://wechat2rss.bestblogs.dev/feed/3e2714d06aa36142e8ed6b3f4e5cf9090a069dd2.xml"
+    category: "多模态大模型/大语言模型"
+    limit: 8
+    enrich: false
+
+  - name: "CSDN"
+    url: "https://wechat2rss.bestblogs.dev/feed/b0b7f2852aecdcc5a0eb08d33afc1c08b855d98b.xml"
+    category: "多模态大模型/大语言模型"
+    limit: 8
+    enrich: false
+
+  - name: "数字生命卡兹克"
+    url: "https://wechat2rss.bestblogs.dev/feed/ff621c3e98d6ae6fceb3397e57441ffc6ea3c17f.xml"
+    category: "多模态大模型/大语言模型"
+    limit: 8
+    enrich: false
+
+  - name: "AI产品黄叔"
+    url: "https://wechat2rss.bestblogs.dev/feed/1f1030491e15e5349aae42367513d6b3f70a8f8b.xml"
+    category: "多模态大模型/大语言模型"
+    limit: 8
+    enrich: false
+
+  - name: "Last Week in AI"
+    url: "https://lastweekin.ai/feed/"
+    category: "多模态大模型/大语言模型"
+    limit: 8
+    enrich: false
+
+  - name: "Gino Notes"
+    url: "https://www.ginonotes.com/feed.xml"
+    category: "多模态大模型/大语言模型"
+    limit: 8
+    enrich: false
+
+  - name: "deeplearning.ai"
+    url: "https://rsshub.bestblogs.dev/deeplearning/the-batch"
+    category: "多模态大模型/大语言模型"
+    limit: 8
+    enrich: false
+
+  - name: "Jina AI"
+    url: "https://wechat2rss.bestblogs.dev/feed/ff2c5468828ebe7236afd6c1d128e219774487c2.xml"
+    category: "多模态大模型/大语言模型"
+    limit: 8
+    enrich: false
+
+  - name: "魔搭ModelScope社区"
+    url: "https://wechat2rss.bestblogs.dev/feed/d993a885260f96057b9a4c96212cb2c95bb5054b.xml"
+    category: "多模态大模型/大语言模型"
+    limit: 8
+    enrich: false
+
+  - name: "青哥谈AI"
+    url: "https://wechat2rss.bestblogs.dev/feed/00a1da3493512c20aff1ea5a0d1a02537e931b36.xml"
+    category: "多模态大模型/大语言模型"
+    limit: 8
+    enrich: false
+
+  - name: "InfoQ 中文"
+    url: "https://wechat2rss.bestblogs.dev/feed/13da94d7eb314b49fa251cb7e8399cae29d772db.xml"
+    category: "多模态大模型/大语言模型"
+    limit: 8
+    enrich: false
+
+  - name: "新智元"
+    url: "https://wechat2rss.bestblogs.dev/feed/e531a18b21c34cf787b83ab444eef659d7a980de.xml"
+    category: "多模态大模型/大语言模型"
+    limit: 8
+    enrich: false
+
+  - name: "AI科技评论"
+    url: "https://wechat2rss.bestblogs.dev/feed/789e5fefb9cc2646ba7b680cb7a88378a34eb7a4.xml"
+    category: "多模态大模型/大语言模型"
+    limit: 8
+    enrich: false
+
+  - name: "AI前线"
+    url: "https://wechat2rss.bestblogs.dev/feed/25185b01482da0f485418ecb92e208b4416712fb.xml"
+    category: "多模态大模型/大语言模型"
+    limit: 8
+    enrich: false
+
+  - name: "Hacker News AI"
+    url: "https://hnrss.org/newest?q=AI"
+    category: "多模态大模型/大语言模型"
+    limit: 8
+    enrich: false
+
+  # ============================================================
+  # Coding Agent — Tier 1（技术/工具型）
+  # ============================================================
+  - name: "freeCodeCamp.org"
+    url: "https://www.freecodecamp.org/news/rss/"
+    category: "Coding Agent"
+    limit: 15
+    enrich: true
+
+  - name: "掘金本周最热"
+    url: "https://rsshub.bestblogs.dev/juejin/trending/all/weekly"
+    category: "Coding Agent"
+    limit: 8
+    enrich: false
+
+  - name: "稀土掘金技术社区"
+    url: "https://wechat2rss.bestblogs.dev/feed/33ecd2122ae788ea02dfcf1df857a54b9ae1338d.xml"
+    category: "Coding Agent"
+    limit: 15
+    enrich: true
+
+  - name: "强少来了"
+    url: "https://wechat2rss.bestblogs.dev/feed/3c36fe804f63a7b936e372a37929d81fa0ad948a.xml"
+    category: "Coding Agent"
+    limit: 15
+    enrich: true
+
+  - name: "随机小分队"
+    url: "https://wechat2rss.bestblogs.dev/feed/115e814e7b12d373a55459cb2aea3223152f2af2.xml"
+    category: "Coding Agent"
+    limit: 15
+    enrich: true
+
+  - name: "宝玉的分享"
+    url: "https://baoyu.io/feed.xml"
+    category: "Coding Agent"
+    limit: 15
+    enrich: true
+
+  # ============================================================
+  # Coding Agent — Tier 2（产品/官方动态型）
+  # ============================================================
+  - name: "GitHub Blog"
+    url: "https://github.blog/feed/"
+    category: "Coding Agent"
+    limit: 8
+    enrich: false
+
+  - name: "Dify"
+    url: "https://wechat2rss.bestblogs.dev/feed/e46c03a4cb65509e22ab9a8507888a2096319d65.xml"
+    category: "Coding Agent"
+    limit: 8
+    enrich: false
+
+claude:
+  api_key: "sk-e64ae321e3de40dea7c8d60185729f54"
+  base_url: "https://api.deepseek.com/anthropic"
+  model: "deepseek-v4-flash"
+  thinking: "disabled"
+
+digest:
+  recent_days: 4
+  cache_path: ".cache/digest_me_cache.json"
+  classification_batch_size: 30
+  summarization_batch_size: 5
+  enable_trend_summary: true
+  prompts_module: "prompts_ai_digest"
+  enrich_content: true
+  enrich_min_chars: 500
+
+output:
+  base_dir: "./output/ai_digest"
+  output_format: "both"
+
+schedule:
+  days: ["monday", "thursday"]
+  time: "09:00"

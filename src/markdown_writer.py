@@ -3,6 +3,13 @@ from datetime import datetime
 from typing import List, Optional
 from src.summarizer import ArticleSummary, TrendSummary
 
+
+def _format_size(size_bytes: int) -> str:
+    if size_bytes >= 1024:
+        return f"{size_bytes // 1024}KB"
+    return f"{size_bytes}B"
+
+
 class MarkdownWriter:
     def __init__(self, base_dir: str):
         self.base_dir = base_dir
@@ -84,8 +91,9 @@ class MarkdownWriter:
             ""
         ]
 
-        for category, articles in articles_by_category.items():
-            if not articles:
+        for category, subtypes in articles_by_category.items():
+            total = sum(len(v) for v in subtypes.values())
+            if total == 0:
                 continue
             lines.append(f"# {category}")
             lines.append("")
@@ -94,15 +102,77 @@ class MarkdownWriter:
             if trend:
                 lines.append(self._render_trend_summary(trend))
 
-            for article in articles:
-                lines.append(self._render_article(article))
-                lines.append("---")
+            for subtype, articles in subtypes.items():
+                if not articles:
+                    continue
+                lines.append(f"## {subtype}")
                 lines.append("")
+
+                for article in articles:
+                    lines.append(self._render_article(article))
+                    lines.append("---")
+                    lines.append("")
 
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write("\n".join(lines))
 
         return filepath
+
+    def update_readme(self, filepath: str, stats: dict) -> str:
+        """Prepend the latest run entry to output/README.md with stats."""
+        # Write README one level above base_dir so it sits at output/README.md
+        parent = os.path.dirname(self.base_dir.rstrip("/\\")) or self.base_dir
+        readme_path = os.path.join(parent, "README.md")
+
+        date_str = stats["generated_at"].strftime("%Y-%m-%d")
+        time_str = stats["generated_at"].strftime("%H:%M")
+        filename = os.path.basename(filepath)
+        rel_path = os.path.relpath(filepath, parent).replace("\\", "/")
+        size_str = _format_size(stats["file_size"])
+
+        cat_parts = []
+        for cat, count in stats.get("categories", {}).items():
+            if count > 0:
+                cat_parts.append(f"{cat}:{count}")
+        cat_line = " | ".join(cat_parts)
+
+        config_name = stats.get("config_path", "").replace("\\", "/")
+        entry_lines = [
+            f"- [{time_str} — {filename}]({rel_path}) ({size_str})",
+            f"  > 配置: `{config_name}` | 抓取 {stats['articles_seen']} 篇(近期 {stats['articles_recent']}) | 摘要 {stats['articles_summarized']} 篇 | Token {stats['token_total']:,} | {stats['llm_time']:.1f}s",
+        ]
+        if cat_line:
+            entry_lines.append(f"  > {cat_line}")
+
+        new_entry = "\n".join(entry_lines)
+
+        if os.path.exists(readme_path):
+            with open(readme_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+        else:
+            content = "# 日报索引\n\n> 生成时间倒序排列，最新在上。\n\n"
+
+        date_header = f"## {date_str}"
+        if date_header in content:
+            content = content.replace(date_header + "\n", date_header + "\n\n" + new_entry + "\n")
+        else:
+            lines = content.split("\n")
+            insert_pos = 0
+            for i, line in enumerate(lines):
+                if line.startswith("## "):
+                    insert_pos = i
+                    break
+            if insert_pos == 0:
+                # After header lines (title + blank + quote + blank)
+                insert_pos = 4
+            section = [f"## {date_str}", "", new_entry, ""]
+            lines = lines[:insert_pos] + section + lines[insert_pos:]
+            content = "\n".join(lines)
+
+        with open(readme_path, 'w', encoding='utf-8') as f:
+            f.write(content)
+
+        return readme_path
 
     def write(self, category: str, articles: List[ArticleSummary], generated_at: datetime, trend_summary: Optional[TrendSummary] = None) -> str:
         category_dir = os.path.join(self.base_dir, category)

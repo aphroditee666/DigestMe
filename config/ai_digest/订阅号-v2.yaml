@@ -2,21 +2,17 @@
 # 微信公众号 RSS 源配置
 
 rss_sources:
-  # ===== AIGC 视觉生成 =====
+  # ===== 微信公众号 =====
   - name: "AIGC创意猎人"
     url: "https://rsshub.app/wechat/sogou/AIGCreativeHunter"
   - name: "AIGC开放社区"
     url: "https://raw.githubusercontent.com/osnsyc/Wechat-Scholar/main/channels/gh_92a47dd34b3c.xml"
   - name: "AIGC weekly"
     url: "https://quail.ink/op7418/feed/atom"
-
-  # ===== 多模态大模型/大语言模型 =====
   - name: "量子位"
     url: "https://www.qbitai.com/feed"
   - name: "新智元"
     url: "https://wechat2rss.bestblogs.dev/feed/e531a18b21c34cf787b83ab444eef659d7a980de.xml"
-
-  # ===== 小样本学习/强化学习 =====
   - name: "机器之心"
     url: "https://wechat2rss.bestblogs.dev/feed/8d97af31b0de9e48da74558af128a4673d78c9a3.xml"
   - name: "AI科技评论"
@@ -27,14 +23,10 @@ rss_sources:
   # ===== 学术论文 =====
   - name: "arXiv AI"
     url: "https://rss.arxiv.org/rss/cs.AI"
-  - name: "arXiv NLP"
-    url: "https://rss.arxiv.org/rss/cs.CL"
-  - name: "arXiv 机器学习"
-    url: "https://rss.arxiv.org/rss/cs.LG"
   - name: "arXiv 计算机视觉"
     url: "https://rss.arxiv.org/rss/cs.CV"
 
-  # ===== AI专题 =====
+  # ===== 其他AI专题 =====
   - name: "AI at Meta Blog"
     url: "https://rsshub.app/meta/ai/blog"
   - name: "AI Musings by Mu"
@@ -51,18 +43,14 @@ rss_sources:
     url: "https://wechat2rss.bestblogs.dev/feed/4915f3747653bbb9c7975323c11b768d2b9cd6c9.xml"
   - name: "AI科技大本营"
     url: "https://wechat2rss.bestblogs.dev/feed/dfd3b5e742e32d8032a445832373191957202bf3.xml"
-  - name: "Anthropic News"
-    url: "https://rsshub.bestblogs.dev/anthropic/news"
+
   - name: "Databricks"
     url: "https://www.databricks.com/feed"
   - name: "Datawhale"
     url: "https://wechat2rss.bestblogs.dev/feed/ea0dd8bddfe4fbfb32eaa81a1e1b628d45e97a80.xml"
-  - name: "deeplearning.ai"
-    url: "https://rsshub.bestblogs.dev/deeplearning/the-batch"
   - name: "DeeplearningAI"
     url: "https://wechat2rss.bestblogs.dev/feed/9d094d066a5faacff0eb0a6b95efbba20d4f1fc9.xml"
-  - name: "DeepSeek"
-    url: "https://wechat2rss.bestblogs.dev/feed/1709da4f538d4ce4fb6d7a8ba1a5a1c297919601.xml"
+
   - name: "Dify"
     url: "https://wechat2rss.bestblogs.dev/feed/e46c03a4cb65509e22ab9a8507888a2096319d65.xml"
   - name: "Elevate"
@@ -147,7 +135,7 @@ digest:
   prompts_module: "prompts_ai_digest"
 
 output:
-  base_dir: "./output"
+  base_dir: "./output/ai_digest"
 
 schedule:
   days: ["monday", "thursday"]

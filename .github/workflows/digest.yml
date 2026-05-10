@@ -2,8 +2,8 @@ name: AI Digest
 
 on:
   schedule:
-    # 每周一、三 UTC 02:00 = 北京时间 10:00
-    - cron: '0 2 * * 1,3'
+    # 每周一、四 UTC 01:00 = 北京时间 09:00
+    - cron: '0 1 * * 1,4'
   workflow_dispatch:
 
 jobs:
@@ -24,10 +24,22 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Restore cache
+        uses: actions/cache@v4
+        with:
+          path: .cache
+          key: digest-cache-${{ github.run_id }}
+          restore-keys: digest-cache-
+
+      - name: Inject API key
+        run: |
+          sed -i 's|sk-e64ae321e3de40dea7c8d60185729f54|${DEEPSEEK_API_KEY}|g' \
+            config/ai_digest/config_ai_digest_outer_rss_merge_v0.yaml
+
       - name: Run digest
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-        run: python main.py --once --config config/ci.yaml
+        run: python main.py --once --config config/ai_digest/config_ai_digest_outer_rss_merge_v0.yaml
 
       - name: Commit and push
         run: |

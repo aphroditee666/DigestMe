@@ -19,6 +19,7 @@ class ArticleSummary:
     key_points: List[str]
     arxiv_url: str = ""
     github_url: str = ""
+    subtype: str = ""
 
 
 def _extract_json_array(text: str) -> str:
@@ -48,7 +49,7 @@ class Summarizer:
         return text  # fallback to raw response
 
     def classify_batch(self, items: List[dict]) -> dict:
-        """Classify many articles in one LLM call. Returns {index: category}."""
+        """Classify many articles in one LLM call. Returns {index: {"category": str, "subtype": str}}."""
         if not items:
             return {}
 
@@ -59,18 +60,48 @@ class Summarizer:
             )
         prompt = (
             "Classify each article below. Return only a JSON array. "
-            'Each item must have "index" and "category".\n\n'
+            'Each item must have "index", "category", and "subtype".\n\n'
             + "\n".join(article_lines)
         )
         response = self.client.send_message(
             message=prompt,
             system=self.prompts.build_classification_system_prompt(),
-            max_tokens=max(100, len(items) * 30)
+            max_tokens=max(100, len(items) * 40)
         )
         data = json.loads(_extract_json_array(response))
-        return {int(item["index"]): item["category"] for item in data}
+        return {int(item["index"]): {"category": item["category"], "subtype": item.get("subtype", "")} for item in data}
 
-    def summarize(self, title: str, source: str, url: str, content: str = "") -> ArticleSummary:
+    def summarize_batch(self, articles: list) -> dict:
+        """Batch summarize multiple articles. Returns {index: ArticleSummary}."""
+        if not articles:
+            return {}
+
+        prompt = self.prompts.get_batch_summarization_prompt(articles)
+        response = self.client.send_message(
+            message=prompt,
+            system=self.prompts.BATCH_SUMMARIZATION_SYSTEM,
+            max_tokens=max(800, len(articles) * 1600)
+        )
+        data = json.loads(_extract_json_array(response))
+
+        results = {}
+        # Build lookup: index → input article for title/url/source
+        lookup = {a["index"]: a for a in articles}
+        for item in data:
+            idx = int(item["index"])
+            a = lookup.get(idx)
+            results[idx] = ArticleSummary(
+                title=a["title"] if a else "",
+                url=a["url"] if a else "",
+                source=a["source"] if a else "",
+                summary=item.get("summary", ""),
+                key_points=item.get("key_points", []),
+                arxiv_url=item.get("arxiv_url", ""),
+                github_url=item.get("github_url", "")
+            )
+        return results
+
+    def summarize(self, title: str, source: str, url: str, content: str = "", subtype: str = "") -> ArticleSummary:
         response = self.client.send_message(
             message=self.prompts.get_summarization_prompt(title=title, source=source, url=url, content=content),
             system=self.prompts.build_summarization_system_prompt(),
@@ -104,7 +135,8 @@ class Summarizer:
             summary=summary,
             key_points=key_points,
             arxiv_url=arxiv_url,
-            github_url=github_url
+            github_url=github_url,
+            subtype=subtype,
         )
 
 

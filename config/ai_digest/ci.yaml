@@ -63,7 +63,7 @@ digest:
   prompts_module: "prompts_ai_digest"
 
 output:
-  base_dir: "./output"
+  base_dir: "./output/ai_digest"
 
 schedule:
   days: ["monday", "thursday"]

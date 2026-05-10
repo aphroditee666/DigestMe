@@ -4,11 +4,21 @@ import yaml
 from dataclasses import dataclass, field
 from typing import List
 
+SUBTYPE_TECH = "技术/算法"
+SUBTYPE_PRODUCT = "产品/应用"
+
 @dataclass
 class RSSSource:
     name: str
     url: str
     category: str
+    limit: int = 20
+    enrich: bool = True
+    subtype: str = ""
+
+    def __post_init__(self):
+        if not self.subtype:
+            self.subtype = SUBTYPE_TECH if self.enrich else SUBTYPE_PRODUCT
 
 @dataclass
 class ClaudeConfig:
@@ -20,6 +30,7 @@ class ClaudeConfig:
 @dataclass
 class OutputConfig:
     base_dir: str
+    output_format: str = "both"  # "markdown" | "html" | "both"
 
 @dataclass
 class ScheduleConfig:
@@ -31,8 +42,11 @@ class DigestConfig:
     recent_days: int = 3
     cache_path: str = ".cache/digest_me_cache.json"
     classification_batch_size: int = 30
+    summarization_batch_size: int = 5
     enable_trend_summary: bool = True
     prompts_module: str = "prompts_ai_digest"
+    enrich_content: bool = True
+    enrich_min_chars: int = 500
 
 @dataclass
 class Config:
@@ -61,7 +75,9 @@ class ConfigLoader:
             RSSSource(
                 name=src['name'],
                 url=src['url'],
-                category=src.get('category', '其它')
+                category=src.get('category', '其它'),
+                limit=src.get('limit', 10),
+                enrich=src.get('enrich', True)
             )
             for src in data.get('rss_sources', [])
         ]
@@ -90,8 +106,11 @@ class ConfigLoader:
             recent_days=digest_data.get('recent_days', 3),
             cache_path=digest_data.get('cache_path', '.cache/digest_me_cache.json'),
             classification_batch_size=digest_data.get('classification_batch_size', 30),
+            summarization_batch_size=digest_data.get('summarization_batch_size', 5),
             enable_trend_summary=digest_data.get('enable_trend_summary', True),
-            prompts_module=digest_data.get('prompts_module', 'prompts_ai_digest')
+            prompts_module=digest_data.get('prompts_module', 'prompts_ai_digest'),
+            enrich_content=digest_data.get('enrich_content', False),
+            enrich_min_chars=digest_data.get('enrich_min_chars', 500)
         )
 
         return Config(

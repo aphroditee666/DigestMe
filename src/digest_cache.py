@@ -53,9 +53,15 @@ class DigestCache:
         entry = self._data.get("articles", {}).get(self._key(url, source, title), {})
         return entry.get("category")
 
-    def set_category(self, url: str, source: str, title: str, category: str):
+    def get_subtype(self, url: str, source: str, title: str) -> Optional[str]:
+        entry = self._data.get("articles", {}).get(self._key(url, source, title), {})
+        return entry.get("subtype")
+
+    def set_category(self, url: str, source: str, title: str, category: str, subtype: str = ""):
         entry = self._entry(url, source, title)
         entry["category"] = category
+        if subtype:
+            entry["subtype"] = subtype
         entry["updated_at"] = datetime.now().isoformat()
         self._save()
 
@@ -72,6 +78,7 @@ class DigestCache:
             key_points=entry.get("key_points", []),
             arxiv_url=entry.get("arxiv_url", ""),
             github_url=entry.get("github_url", ""),
+            subtype=entry.get("subtype", ""),
         )
 
     def set_summary(self, summary: ArticleSummary):
@@ -81,6 +88,7 @@ class DigestCache:
             "key_points": summary.key_points,
             "arxiv_url": summary.arxiv_url,
             "github_url": summary.github_url,
+            "subtype": summary.subtype,
             "updated_at": datetime.now().isoformat(),
         })
         self._save()
