@@ -76,11 +76,15 @@ class MarkdownWriter:
         lines.append("")
         return "\n".join(lines)
 
-    def write_all(self, articles_by_category: dict, trends_by_category: dict, generated_at: datetime) -> str:
+    def write_all(self, articles_by_category: dict, trends_by_category: dict, generated_at: datetime, file_index: int = None) -> str:
         """Write all categories into a single markdown file."""
         date_str = generated_at.strftime("%Y-%m-%d")
-        filename = f"{date_str}-digest.md"
-        filepath = self._next_available_path(os.path.join(self.base_dir, filename))
+        if file_index is not None:
+            filename = f"{date_str}-digest.md" if file_index == 0 else f"{date_str}-digest-{file_index}.md"
+            filepath = os.path.join(self.base_dir, filename)
+        else:
+            filename = f"{date_str}-digest.md"
+            filepath = self._next_available_path(os.path.join(self.base_dir, filename))
 
         lines = [
             f"# 资讯汇总",

@@ -1,5 +1,6 @@
 # main.py
 import importlib
+import os
 import sys
 import argparse
 import logging
@@ -69,6 +70,32 @@ def _classify_pending(summarizer: Summarizer, pending: list, batch_size: int) ->
                     "subtype": ""  # empty → backfill from source default in caller
                 }
     return results
+
+
+def _compute_digest_index(base_dir: str, date_str: str) -> int:
+    """Return the next available index across .md and .html (0 = no suffix)."""
+    prefix = f"{date_str}-digest"
+    max_idx = -1
+    if not os.path.isdir(base_dir):
+        return 0
+    for fname in os.listdir(base_dir):
+        if not fname.startswith(prefix):
+            continue
+        if not (fname.endswith('.md') or fname.endswith('.html')):
+            continue
+        stem = fname[len(prefix):]
+        for ext in ('.md', '.html'):
+            if stem.endswith(ext):
+                stem = stem[:-len(ext)]
+                break
+        if stem == '':
+            max_idx = max(max_idx, 0)
+        elif stem.startswith('-'):
+            try:
+                max_idx = max(max_idx, int(stem[1:]))
+            except ValueError:
+                pass
+    return max_idx + 1
 
 
 def run_once(config_path: str):
@@ -260,6 +287,8 @@ def run_once(config_path: str):
 
     generated_at = datetime.now()
     output_format = config.output.output_format
+    date_str = generated_at.strftime("%Y-%m-%d")
+    file_index = _compute_digest_index(config.output.base_dir, date_str)
 
     # Token & timing report
     s1 = summarizer.client.stats
@@ -303,7 +332,7 @@ def run_once(config_path: str):
 
     # Markdown output
     if output_format in ("markdown", "both"):
-        md_path = writer.write_all(articles_by_category, trends_by_category, generated_at)
+        md_path = writer.write_all(articles_by_category, trends_by_category, generated_at, file_index=file_index)
         stats["file_size"] = Path(md_path).stat().st_size
         writer.update_readme(md_path, stats)
         logger.info(f"Wrote digest (md): {md_path}")
@@ -311,7 +340,7 @@ def run_once(config_path: str):
     # HTML output
     if output_format in ("html", "both"):
         html_writer = HTMLWriter(config.output.base_dir)
-        html_path = html_writer.write_all(articles_by_category, trends_by_category, generated_at, stats)
+        html_path = html_writer.write_all(articles_by_category, trends_by_category, generated_at, stats, file_index=file_index)
         stats["file_size"] = Path(html_path).stat().st_size
         html_writer.update_readme(html_path, stats)
         logger.info(f"Wrote digest (html): {html_path}")

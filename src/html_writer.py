@@ -311,11 +311,16 @@ class HTMLWriter:
         articles_by_category: dict,
         trends_by_category: dict,
         generated_at: datetime,
-        stats: dict
+        stats: dict,
+        file_index: int = None
     ) -> str:
         date_str = generated_at.strftime("%Y-%m-%d")
-        filename = f"{date_str}-digest.html"
-        filepath = self._next_available_path(os.path.join(self.base_dir, filename))
+        if file_index is not None:
+            filename = f"{date_str}-digest.html" if file_index == 0 else f"{date_str}-digest-{file_index}.html"
+            filepath = os.path.join(self.base_dir, filename)
+        else:
+            filename = f"{date_str}-digest.html"
+            filepath = self._next_available_path(os.path.join(self.base_dir, filename))
 
         cat_counts = stats.get("categories", {})
         all_categories = list(articles_by_category.keys())
