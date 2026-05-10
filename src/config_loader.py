@@ -2,10 +2,29 @@ import os
 import re
 import yaml
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import List
 
 SUBTYPE_TECH = "技术/算法"
 SUBTYPE_PRODUCT = "产品/应用"
+
+
+def _load_dotenv(path: str = ".env"):
+    """Load KEY=VALUE pairs from a .env file into os.environ (no override)."""
+    env_path = Path(path)
+    if not env_path.is_file():
+        return
+    with open(env_path, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            if "=" not in line:
+                continue
+            key, _, value = line.partition("=")
+            key, value = key.strip(), value.strip().strip('"').strip("'")
+            if key and key not in os.environ:
+                os.environ[key] = value
 
 @dataclass
 class RSSSource:
@@ -123,6 +142,7 @@ class ConfigLoader:
         )
 
     def load(self) -> Config:
+        _load_dotenv()
         with open(self.config_path, 'r', encoding='utf-8') as f:
             data = yaml.safe_load(f)
         return self._parse_config(data)
