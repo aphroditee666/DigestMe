@@ -1,6 +1,9 @@
 # 日报索引
 
 > 生成时间倒序排列，最新在上。
+> 
+> **预览 HTML**：启用 [GitHub Pages](https://github.com/aphroditee666/DigestMe/settings/pages) 后访问 `https://aphroditee666.github.io/DigestMe/output/ai_digest/`
+> 或直接用 [htmlpreview](https://htmlpreview.github.io/) 拼 URL：`https://htmlpreview.github.io/?https://github.com/aphroditee666/DigestMe/blob/main/output/ai_digest/<文件名>`
 
 ## 2026-05-11
 
