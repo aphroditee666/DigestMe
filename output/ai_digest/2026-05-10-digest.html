@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Digest — 2026-05-10</title>
+<style>
+
+:root {
+    --bg: #fafafa;
+    --surface: #fff;
+    --border: #e5e5e5;
+    --text: #1a1a1a;
+    --text-secondary: #666;
+    --text-muted: #999;
+    --accent: #2563eb;
+    --accent-light: #eff6ff;
+    --badge-bg: #f3f4f6;
+    --trend-bg: #fefce8;
+    --trend-border: #e5c43d;
+    --shadow: 0 1px 3px rgba(0,0,0,.08);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,.1);
+    --radius: 8px;
+    --font: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans SC",sans-serif;
+    --mono: "SF Mono","Fira Code","Fira Mono","Roboto Mono",monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #111827;
+        --surface: #1f2937;
+        --border: #374151;
+        --text: #f3f4f6;
+        --text-secondary: #9ca3af;
+        --text-muted: #6b7280;
+        --accent: #60a5fa;
+        --accent-light: #1e3a5f;
+        --badge-bg: #374151;
+        --trend-bg: #292524;
+        --trend-border: #a68b02;
+        --shadow: 0 1px 3px rgba(0,0,0,.3);
+        --shadow-hover: 0 4px 12px rgba(0,0,0,.5);
+    }
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+/* Stats Bar */
+.stats-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(8px);
+}
+.stats-bar .container {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px;
+}
+.stats-date { font-weight: 600; font-size: 15px; }
+.stats-num { font-size: 14px; color: var(--text-secondary); }
+.stats-token { font-size: 12px; color: var(--text-muted); font-family: var(--mono); }
+.stats-categories { display: flex; flex-wrap: wrap; gap: 6px; margin-left: auto; }
+.cat-pill {
+    display: inline-block; padding: 2px 10px; border-radius: 12px;
+    font-size: 12px; background: var(--badge-bg); color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+/* Search */
+.search-bar {
+    padding: 12px 0;
+    background: var(--bg);
+    position: sticky; top: 58px; z-index: 99;
+}
+.search-input {
+    width: 100%; padding: 10px 16px; border: 1px solid var(--border);
+    border-radius: 8px; font-size: 14px; font-family: var(--font);
+    background: var(--surface); color: var(--text);
+    outline: none; transition: border-color .2s;
+}
+.search-input:focus { border-color: var(--accent); }
+
+/* Tab Bar */
+.tab-bar {
+    padding: 8px 0 16px;
+    display: flex; gap: 6px; flex-wrap: wrap;
+}
+.tab-btn {
+    padding: 6px 14px; border: 1px solid var(--border); border-radius: 20px;
+    background: var(--surface); color: var(--text-secondary);
+    font-size: 13px; cursor: pointer; transition: all .15s;
+    font-family: var(--font); white-space: nowrap;
+}
+.tab-btn:hover { border-color: var(--accent); color: var(--accent); }
+.tab-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.tab-count { font-size: 11px; opacity: .7; margin-left: 2px; }
+
+/* Category Section */
+.category-section { margin-bottom: 40px; }
+.category-header {
+    font-size: 20px; font-weight: 700; margin-bottom: 16px;
+    padding-bottom: 8px; border-bottom: 2px solid var(--border);
+}
+
+/* Trend Card */
+.trend-card {
+    background: var(--trend-bg); border: 1px solid var(--trend-border);
+    border-radius: var(--radius); margin-bottom: 20px; overflow: hidden;
+}
+.trend-card summary {
+    padding: 14px 18px; cursor: pointer; font-weight: 600;
+    font-size: 14px; user-select: none;
+    color: var(--text); list-style: none;
+}
+.trend-card summary::-webkit-details-marker { display: none; }
+.trend-card summary::before { content: "▸ "; display: inline-block; transition: transform .2s; }
+.trend-card[open] summary::before { transform: rotate(90deg); }
+.trend-body { padding: 0 18px 16px; font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+.trend-body ul { margin-top: 8px; padding-left: 18px; }
+.trend-body li { margin-bottom: 4px; }
+
+/* Article Grid */
+.article-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 16px;
+}
+
+/* Article Card */
+.article-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 18px 20px;
+    box-shadow: var(--shadow); transition: box-shadow .2s;
+    display: flex; flex-direction: column;
+}
+.article-card:hover { box-shadow: var(--shadow-hover); }
+.article-card.hidden { display: none; }
+
+.article-title {
+    font-size: 15px; font-weight: 600; line-height: 1.4; margin-bottom: 8px;
+}
+.article-title a { color: var(--text); text-decoration: none; }
+.article-title a:hover { color: var(--accent); }
+
+.article-meta {
+    font-size: 12px; color: var(--text-muted); margin-bottom: 10px;
+    display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+}
+.article-source {
+    font-weight: 500; color: var(--text-secondary);
+}
+
+.article-summary {
+    font-size: 13px; color: var(--text-secondary); line-height: 1.6;
+    display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical;
+    overflow: hidden; margin-bottom: 10px; flex: 1;
+}
+
+.article-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.badge {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    font-size: 11px; font-family: var(--mono); text-decoration: none;
+    background: var(--badge-bg); color: var(--text-secondary);
+    transition: background .15s;
+}
+.badge:hover { background: var(--accent-light); color: var(--accent); }
+.badge.arxiv { border-left: 2px solid #b23b3b; }
+.badge.github { border-left: 2px solid #333; }
+
+.article-points { font-size: 12px; color: var(--text-muted); }
+.article-points ul { padding-left: 16px; }
+.article-points li { margin-bottom: 2px; }
+
+/* Footer */
+.page-footer {
+    text-align: center; padding: 24px 0 40px;
+    font-size: 12px; color: var(--text-muted);
+    border-top: 1px solid var(--border); margin-top: 40px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .article-grid { grid-template-columns: 1fr; }
+    .stats-bar .container { flex-direction: column; align-items: flex-start; }
+    .stats-categories { margin-left: 0; }
+    .search-bar { top: 100px; }
+    .tab-bar { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
+}
+
+</style>
+</head>
+<body>
+<div class="stats-bar"><div class="container"><span class="stats-date">2026-05-10 18:55</span><span class="stats-num">共 3 篇摘要</span><span class="stats-token">Token 12,345</span><div class="stats-categories"><span class="cat-pill">AIGC视觉生成:2</span><span class="cat-pill">多模态大模型/大语言模型:1</span></div></div></div>
+<div class="search-bar"><div class="container"><input type="text" id="search" class="search-input" placeholder="搜索标题、来源、摘要... (按 / 聚焦)"></div></div>
+<div class="container"><div class="tab-bar"><button class="tab-btn active" data-category="all">全部<span class="tab-count">3</span></button><button class="tab-btn" data-category="AIGC视觉生成">AIGC视觉生成<span class="tab-count">2</span></button><button class="tab-btn" data-category="多模态大模型/大语言模型">多模态大模型/大语言模型<span class="tab-count">1</span></button></div></div>
+<div class="container">
+<section class="category-section" data-category="AIGC视觉生成">
+<h2 class="category-header">AIGC视觉生成</h2>
+<details class="trend-card" open><summary>本周趋势 · AIGC视觉生成</summary><div class="trend-body"><p>本周AIGC视觉生成领域呈现模型轻量化与端侧部署趋势，字节跳动开源0.39B移动端模型，何恺明团队在无蒸馏单步生成上取得FID 1.72的突破。</p><ul><li>模型轻量化与端侧推理加速</li><li>生成范式的底层逻辑重构</li><li>可控性与几何引导的深度结合</li></ul></div></details>
+<div class="article-grid">
+<article class="article-card" data-search-text="字节跳动开源0.39B端侧图像生成模型Z-Image，手机实时出图 AIGC开放社区 字节跳动开源了一个名为Z-Image的端侧图像生成模型，参数量仅0.39B，无需云端即可在手机上实现实时图像生成与编辑，极大降低了AIGC技术门槛。 参数量仅0.39B适用于移动端 无需云端支持实现本地实时生成 由字节跳动开源降低AIGC应用门槛">
+<div class="article-title"><a href="http://example.com/1" target="_blank" rel="noopener">字节跳动开源0.39B端侧图像生成模型Z-Image，手机实时出图</a></div>
+<div class="article-meta"><span class="article-source">AIGC开放社区</span></div>
+<div class="article-summary">字节跳动开源了一个名为Z-Image的端侧图像生成模型，参数量仅0.39B，无需云端即可在手机上实现实时图像生成与编辑，极大降低了AIGC技术门槛。</div>
+<div class="article-badges"><a href="https://arxiv.org/abs/2605.01001" class="badge arxiv" target="_blank" rel="noopener">arXiv</a><a href="https://github.com/example/z-image" class="badge github" target="_blank" rel="noopener">GitHub</a></div>
+<div class="article-points"><ul><li>参数量仅0.39B适用于移动端</li><li>无需云端支持实现本地实时生成</li><li>由字节跳动开源降低AIGC应用门槛</li></ul></div>
+</article>
+<article class="article-card" data-search-text="SDFlow：VQ潜空间中并行流匹配消除暴露偏差 arXiv AI 提出SDFlow框架，在冻结的VQ潜空间中通过流匹配实现并行序列生成，用全局传输图替代自回归，彻底消除暴露偏差。 第一个在VQ潜空间中进行流匹配的并行框架 消除暴露偏差显著提升长序列生成 代码已开源">
+<div class="article-title"><a href="http://example.com/2" target="_blank" rel="noopener">SDFlow：VQ潜空间中并行流匹配消除暴露偏差</a></div>
+<div class="article-meta"><span class="article-source">arXiv AI</span></div>
+<div class="article-summary">提出SDFlow框架，在冻结的VQ潜空间中通过流匹配实现并行序列生成，用全局传输图替代自回归，彻底消除暴露偏差。</div>
+<div class="article-badges"><a href="https://arxiv.org/abs/2605.05736" class="badge arxiv" target="_blank" rel="noopener">arXiv</a><a href="https://anonymous.4open.science/r/SDFlow-D6F3/" class="badge github" target="_blank" rel="noopener">GitHub</a></div>
+<div class="article-points"><ul><li>第一个在VQ潜空间中进行流匹配的并行框架</li><li>消除暴露偏差显著提升长序列生成</li><li>代码已开源</li></ul></div>
+</article>
+</div>
+</section>
+<section class="category-section" data-category="多模态大模型/大语言模型">
+<h2 class="category-header">多模态大模型/大语言模型</h2>
+<div class="article-grid">
+<article class="article-card" data-search-text="Claude Opus 4.7发布：推理能力再突破 Anthropic News Anthropic发布Claude Opus 4.7，在推理基准测试上取得显著提升，特别是在长上下文推理和代码生成任务中表现突出。 推理基准测试显著提升 长上下文推理能力增强 代码生成任务表现突出">
+<div class="article-title"><a href="http://example.com/3" target="_blank" rel="noopener">Claude Opus 4.7发布：推理能力再突破</a></div>
+<div class="article-meta"><span class="article-source">Anthropic News</span></div>
+<div class="article-summary">Anthropic发布Claude Opus 4.7，在推理基准测试上取得显著提升，特别是在长上下文推理和代码生成任务中表现突出。</div>
+<div class="article-points"><ul><li>推理基准测试显著提升</li><li>长上下文推理能力增强</li><li>代码生成任务表现突出</li></ul></div>
+</article>
+</div>
+</section>
+</div>
+<footer class="page-footer"><div class="container">Generated at 2026-05-10 18:55 · 100 seen · 3 summarized · 12,345 tokens · 35.2s</div></footer>
+<script>
+
+(function() {
+    const searchInput = document.getElementById('search');
+    const cards = document.querySelectorAll('.article-card');
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const sections = document.querySelectorAll('.category-section');
+    const trendCards = document.querySelectorAll('.trend-card');
+
+    // Search filter
+    searchInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase().trim();
+        cards.forEach(function(card) {
+            const text = (card.getAttribute('data-search-text') || '').toLowerCase();
+            card.classList.toggle('hidden', query && text.indexOf(query) === -1);
+        });
+        // Update category visibility after search
+        updateCategoryVisibility();
+    });
+
+    // Tab filter
+    tabBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            tabBtns.forEach(function(b) { b.classList.remove('active'); });
+            this.classList.add('active');
+            filterByTab(this.getAttribute('data-category'));
+        });
+    });
+
+    function filterByTab(cat) {
+        sections.forEach(function(section) {
+            if (cat === 'all' || section.getAttribute('data-category') === cat) {
+                section.style.display = '';
+            } else {
+                section.style.display = 'none';
+            }
+        });
+        // Re-apply search on visible cards
+        var query = searchInput.value.toLowerCase().trim();
+        cards.forEach(function(card) {
+            if (card.closest('.category-section').style.display === 'none') {
+                card.classList.add('hidden');
+            } else if (query) {
+                var text = (card.getAttribute('data-search-text') || '').toLowerCase();
+                card.classList.toggle('hidden', text.indexOf(query) === -1);
+            } else {
+                card.classList.remove('hidden');
+            }
+        });
+        updateCategoryVisibility();
+    }
+
+    function updateCategoryVisibility() {
+        sections.forEach(function(section) {
+            var visibleCards = section.querySelectorAll('.article-card:not(.hidden)');
+            var trendCard = section.querySelector('.trend-card');
+            var hasContent = visibleCards.length > 0;
+            section.style.display = hasContent ? '' : 'none';
+        });
+    }
+
+    // Keyboard shortcut: / to focus search
+    document.addEventListener('keydown', function(e) {
+        if (e.key === '/' && document.activeElement !== searchInput) {
+            e.preventDefault();
+            searchInput.focus();
+        }
+        if (e.key === 'Escape') { searchInput.blur(); }
+    });
+})();
+
+</script>
+</body>
+</html>
