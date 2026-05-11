@@ -4,6 +4,12 @@
 
 ## 2026-05-11
 
+- [05:05 HTML — 2026-05-11-digest-14.html](ai_digest/2026-05-11-digest-14.html) | 摘要 81 篇 | Token 39,180
+
+- [05:05 — 2026-05-11-digest-14.md](ai_digest/2026-05-11-digest-14.md) (123KB)
+  > 配置: `config/ai_digest/config_ai_digest_outer_rss_merge_v0.yaml` | 抓取 537 篇(近期 220) | 摘要 81 篇 | Token 39,180 | 205.0s
+  > AIGC视觉生成:22 | 多模态大模型/大语言模型:18 | 自动驾驶:8 | Coding Agent:33
+
 - [01:39 HTML — 2026-05-11-digest-13.html](https://aphroditee666.github.io/DigestMe/output/ai_digest/2026-05-11-digest-13.html) | 摘要 77 篇 | Token 8,489
 
 - [01:39 — 2026-05-11-digest-11.md](ai_digest/2026-05-11-digest-11.md) (114KB)
