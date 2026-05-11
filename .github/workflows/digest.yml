@@ -2,8 +2,8 @@ name: AI Digest
 
 on:
   schedule:
-    # 每周一、四 UTC 01:00 = 北京时间 09:00
-    - cron: '0 1 * * 1,4'
+    # 每周一、四 UTC 06:30 = 北京时间 14:30
+    - cron: '30 6 * * 1,4'
   workflow_dispatch:
 
 jobs:
