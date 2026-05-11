@@ -112,7 +112,9 @@ class ConfigLoader:
 
         output_data = data.get('output', {})
         output = OutputConfig(
-            base_dir=output_data.get('base_dir', './output')
+            base_dir=output_data.get('base_dir', './output'),
+            pages_url=output_data.get('pages_url', ''),
+            output_format=output_data.get('output_format', 'both')
         )
 
         schedule_data = data.get('schedule', {})
