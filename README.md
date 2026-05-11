@@ -2,7 +2,7 @@
 
 [![DigestMe](https://github.com/aphroditee666/DigestMe/actions/workflows/digest.yml/badge.svg)](https://github.com/aphroditee666/DigestMe/actions/workflows/digest.yml)
 
-📋 [查看日报索引 →](output/README.md)
+📋 [查看AI摘要索引 →](output/README.md)
 
 从 RSS 源抓取文章，AI 分类并生成摘要，输出 Markdown 日报。订阅什么领域完全由配置文件决定 — 财经、科技、学术、产品……你配什么源，它就推送什么。
 
