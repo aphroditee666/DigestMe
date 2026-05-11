@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clyde's Digest — 2026-05-11</title>
+<style>
+
+:root {
+    --bg: #fafafa;
+    --surface: #fff;
+    --border: #e5e5e5;
+    --text: #1a1a1a;
+    --text-secondary: #666;
+    --text-muted: #999;
+    --accent: #2563eb;
+    --accent-light: #eff6ff;
+    --badge-bg: #f3f4f6;
+    --trend-bg: #fefce8;
+    --trend-border: #e5c43d;
+    --shadow: 0 1px 3px rgba(0,0,0,.08);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,.1);
+    --radius: 8px;
+    --font: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans SC",sans-serif;
+    --mono: "SF Mono","Fira Code","Fira Mono","Roboto Mono",monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #111827;
+        --surface: #1f2937;
+        --border: #374151;
+        --text: #f3f4f6;
+        --text-secondary: #9ca3af;
+        --text-muted: #6b7280;
+        --accent: #60a5fa;
+        --accent-light: #1e3a5f;
+        --badge-bg: #374151;
+        --trend-bg: #292524;
+        --trend-border: #a68b02;
+        --shadow: 0 1px 3px rgba(0,0,0,.3);
+        --shadow-hover: 0 4px 12px rgba(0,0,0,.5);
+    }
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+/* Brand */
+.brand {
+    display: flex; align-items: center; gap: 10px;
+    padding: 20px 0 12px;
+    user-select: none;
+}
+.brand-logo {
+    width: 32px; height: 32px; border-radius: 6px;
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    flex-shrink: 0;
+}
+.brand-text {
+    font-size: 18px; font-weight: 600; line-height: 1;
+}
+.brand-amber { color: #d97706; }
+@media (prefers-color-scheme: dark) {
+    .brand-amber { color: #f59e0b; }
+}
+
+/* Stats Bar */
+.stats-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(8px);
+}
+.stats-bar .container {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px;
+}
+.stats-date { font-weight: 600; font-size: 15px; }
+.stats-num { font-size: 14px; color: var(--text-secondary); }
+.stats-token { font-size: 12px; color: var(--text-muted); font-family: var(--mono); }
+.stats-categories { display: flex; flex-wrap: wrap; gap: 6px; margin-left: auto; }
+.cat-pill {
+    display: inline-block; padding: 2px 10px; border-radius: 12px;
+    font-size: 12px; background: var(--badge-bg); color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+/* Search */
+.search-bar {
+    padding: 12px 0;
+    background: var(--bg);
+    position: sticky; top: 58px; z-index: 99;
+}
+.search-input {
+    width: 100%; padding: 10px 16px; border: 1px solid var(--border);
+    border-radius: 8px; font-size: 14px; font-family: var(--font);
+    background: var(--surface); color: var(--text);
+    outline: none; transition: border-color .2s;
+}
+.search-input:focus { border-color: var(--accent); }
+
+/* Tab Bar */
+.tab-bar {
+    padding: 8px 0 16px;
+    display: flex; gap: 6px; flex-wrap: wrap;
+}
+.tab-btn {
+    padding: 6px 14px; border: 1px solid var(--border); border-radius: 20px;
+    background: var(--surface); color: var(--text-secondary);
+    font-size: 13px; cursor: pointer; transition: all .15s;
+    font-family: var(--font); white-space: nowrap;
+}
+.tab-btn:hover { border-color: var(--accent); color: var(--accent); }
+.tab-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.tab-count { font-size: 11px; opacity: .7; margin-left: 2px; }
+
+/* Category Section */
+.category-section { margin-bottom: 40px; }
+.category-header {
+    font-size: 20px; font-weight: 700; margin-bottom: 16px;
+    padding-bottom: 8px; border-bottom: 2px solid var(--border);
+}
+
+/* Trend Card */
+.trend-card {
+    background: var(--trend-bg); border: 1px solid var(--trend-border);
+    border-radius: var(--radius); margin-bottom: 20px; overflow: hidden;
+}
+.trend-card summary {
+    padding: 14px 18px; cursor: pointer; font-weight: 600;
+    font-size: 14px; user-select: none;
+    color: var(--text); list-style: none;
+}
+.trend-card summary::-webkit-details-marker { display: none; }
+.trend-card summary::before { content: "▸ "; display: inline-block; transition: transform .2s; }
+.trend-card[open] summary::before { transform: rotate(90deg); }
+.trend-body { padding: 0 18px 16px; font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+.trend-body ul { margin-top: 8px; padding-left: 18px; }
+.trend-body li { margin-bottom: 4px; }
+
+/* Subtype Section */
+.subtype-section { margin-bottom: 24px; }
+.subtype-section:empty { display: none; }
+.subtype-header {
+    font-size: 16px; font-weight: 600; color: var(--text-secondary);
+    margin-bottom: 12px; padding-left: 4px;
+}
+
+/* Article Grid */
+.article-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 16px;
+}
+
+/* Article Card */
+.article-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 18px 20px;
+    box-shadow: var(--shadow); transition: box-shadow .2s;
+    display: flex; flex-direction: column;
+}
+.article-card:hover { box-shadow: var(--shadow-hover); }
+.article-card.hidden { display: none; }
+
+.article-title {
+    font-size: 15px; font-weight: 600; line-height: 1.4; margin-bottom: 8px;
+}
+.article-title a { color: var(--text); text-decoration: none; }
+.article-title a:hover { color: var(--accent); }
+
+.article-meta {
+    font-size: 12px; color: var(--text-muted); margin-bottom: 10px;
+    display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+}
+.article-source {
+    font-weight: 500; color: var(--text-secondary);
+}
+
+.article-summary {
+    font-size: 13px; color: var(--text-secondary); line-height: 1.6;
+    margin-bottom: 10px; flex: 1;
+}
+
+.article-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.badge {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    font-size: 11px; font-family: var(--mono); text-decoration: none;
+    background: var(--badge-bg); color: var(--text-secondary);
+    transition: background .15s;
+}
+.badge:hover { background: var(--accent-light); color: var(--accent); }
+.badge.arxiv { border-left: 2px solid #b23b3b; }
+.badge.github { border-left: 2px solid #333; }
+
+.article-points { font-size: 12px; color: var(--text-muted); }
+.article-points ul { padding-left: 16px; }
+.article-points li { margin-bottom: 2px; }
+
+/* Footer */
+.page-footer {
+    text-align: center; padding: 24px 0 40px;
+    font-size: 12px; color: var(--text-muted);
+    border-top: 1px solid var(--border); margin-top: 40px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .article-grid { grid-template-columns: 1fr; }
+    .stats-bar .container { flex-direction: column; align-items: flex-start; }
+    .stats-categories { margin-left: 0; }
+    .search-bar { top: 100px; }
+    .tab-bar { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
+}
+
+</style>
+</head>
+<body>
+<div class="container"><div class="brand"><div class="brand-logo"></div><span class="brand-text"><span class="brand-amber">Clyde's</span> Digest</span></div></div>
+<div class="stats-bar"><div class="container"><span class="stats-date">2026-05-11 10:13</span><span class="stats-num">共 78 篇摘要</span><span class="stats-token">Token 47,824</span><div class="stats-categories"><span class="cat-pill">AIGC视觉生成:22</span><span class="cat-pill">多模态大模型/大语言模型:20</span><span class="cat-pill">自动驾驶:8</span><span class="cat-pill">Coding Agent:28</span></div></div></div>
+<div class="search-bar"><div class="container"><input type="text" id="search" class="search-input" placeholder="搜索标题、来源、摘要... (按 / 聚焦)"></div></div>
+<div class="container"><div class="tab-bar"><button class="tab-btn active" data-category="all">全部<span class="tab-count">78</span></button><button class="tab-btn" data-category="AIGC视觉生成">AIGC视觉生成<span class="tab-count">22</span></button><button class="tab-btn" data-category="多模态大模型/大语言模型">多模态大模型/大语言模型<span class="tab-count">20</span></button><button class="tab-btn" data-category="自动驾驶">自动驾驶<span class="tab-count">8</span></button><button class="tab-btn" data-category="Coding Agent">Coding Agent<span class="tab-count">28</span></button></div></div>
+<div class="container">
+<section class="category-section" data-category="AIGC视觉生成">
+<h2 class="category-header">AIGC视觉生成</h2>
+<details class="trend-card" open><summary>本周趋势 · AIGC视觉生成</summary><div class="trend-body"><p>本周AIGC视觉生成领域呈现三大核心趋势：**推理效率与模型轻量化**、**复杂约束下的可控生成**，以及**后训练对齐与知识蒸馏**的深化。在效率方面，字节跳动的0.39B参数移动端模型和EmambaIR提出的线性复杂度状态空间模型（在6个数据集上超越SOTA）标志着行业正从“大力出奇迹”转向高效架构设计。在可控生成上，SCOPE框架通过结构化分解解决复杂图像生成的“概念鸿沟”问题，MoCoTalk则实现了四种条件的动态融合驱动说话人脸生成，体现了对生成内容精细调控的追求。同时，后训练对齐成为提升模型能力的关键：Flow-OPD首次将在线策略蒸馏与Flow Matching结合，在SD3.5 Medium上使GenEval从63飙升至92，超越了传统GRPO方法。此外，3D视觉领域也出现自监督重建（E-RayZer）和实时新视角合成（LagerNVS）等突破，标志着模型正从二维感知走向三维理解与生成。</p><ul><li>**高效轻量化与线性复杂度架构成为共识**：从字节0.39B参数的移动端实时生成模型，到EmambaIR中O(n)复杂度的门控状态空间模块（GSSM），行业正通过架构创新大幅降低计算和内存成本，推动AIGC在端侧和资源受限场景的落地。</li><li>**后训练对齐与在线策略蒸馏（OPD）显著提升生成质量**：Flow-OPD框架首次将在线策略蒸馏引入Flow Matching，通过两阶段对齐（单奖励GRPO训练教师 + 流式冷启动）和流形锚点正则化，使Stable Diffusion 3.5 Medium的GenEval达到92、OCR达94%，展现了超越教师的对齐效果，解决了RL对齐导致的美学退化问题。</li><li>**复杂约束下的可控生成进入结构化分解阶段**：SCOPE框架通过“概念鸿沟”形式化定义与结构化规范编排技能；MoCoTalk则通过自适应多条件路由器融合参考图、音频等四种条件。二者均指向对生成内容在空间、时序和语义层面的精细化控制，而非简单条件注入。</li><li>**状态空间模型（SSM）在特定视觉任务中有效替代CNN/ViT**：EmambaIR利用SSM和Top-k稀疏注意力（TSAM）在事件引导图像重建（去模糊、去雨、HDR增强）任务中全面超越基于二次复杂度ViT的方法，证明了SSM在高效全局建模和跨模态融合上的竞争力。</li></ul></div></details>
+<div class="subtype-section">
+<h3 class="subtype-header">技术/算法</h3>
+<div class="article-grid">
+<article class="article-card" data-search-text="今日开源（2026-5-9）：小米SVOR正式开源，稳定视频对象移除框架，三大核心设计攻克阴影残留与运动抖动难题 机器之心SOTA模型 本文介绍了2026年5月9日开源社区的多个项目。小米研究院开源的SVOR（稳定视频对象移除框架）针对视频对象移除中的阴影残留、运动抖动和缺陷掩码等问题，提出三大核心设计，在多个数据集及缺陷掩码基准上取得SOTA结果，并获CVPR2026物理感知视频实例移除挑战赛冠军。其他项目包括：Omni2Sound（CVPR 2026高亮，统一视频文本转音频框架，采用DiT骨干和SoundAtlas数据集）；StarVLA（乐高式VLA模型开源代码库）；Bard-VL.git（复旦等机构研发的视觉语言模型，通过渐进块合并与阶段蒸馏桥接自回归与扩散模型）；belief（浙大zjunlp团队的大语言模型真实性诊断方案，包含NCB度量、认知压力测试和SAT训练，可降低性能退化约30%）；Ultron（自进化集体智能系统，集中记忆库、技能库和配置库）。 小米SVOR框架攻克阴影残留和运动抖动难题，获CVPR 2026挑战赛冠军。 Omni2Sound是通用的视频文本转音频框架，支持三类任务。 Bard-VL.git通过渐进块合并与蒸馏技术桥接自回归和扩散VLM。 浙大belief方案采用邻域一致性诊断大模型真实性，降低退化约30%。 Ultron系统实现Agent经验的集体记忆与技能复用。">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzkyMzcwMDIyMQ==&amp;mid=2247502248&amp;idx=1&amp;sn=ea2a447801f0b901fa8a8894ebf559e9" target="_blank" rel="noopener">今日开源（2026-5-9）：小米SVOR正式开源，稳定视频对象移除框架，三大核心设计攻克阴影残留与运动抖动难题</a></div>
+<div class="article-meta"><span class="article-source">机器之心SOTA模型</span></div>
+<div class="article-summary">本文介绍了2026年5月9日开源社区的多个项目。小米研究院开源的SVOR（稳定视频对象移除框架）针对视频对象移除中的阴影残留、运动抖动和缺陷掩码等问题，提出三大核心设计，在多个数据集及缺陷掩码基准上取得SOTA结果，并获CVPR2026物理感知视频实例移除挑战赛冠军。其他项目包括：Omni2Sound（CVPR 2026高亮，统一视频文本转音频框架，采用DiT骨干和SoundAtlas数据集）；StarVLA（乐高式VLA模型开源代码库）；Bard-VL.git（复旦等机构研发的视觉语言模型，通过渐进块合并与阶段蒸馏桥接自回归与扩散模型）；belief（浙大zjunlp团队的大语言模型真实性诊断方案，包含NCB度量、认知压力测试和SAT训练，可降低性能退化约30%）；Ultron（自进化集体智能系统，集中记忆库、技能库和配置库）。</div>
+<div class="article-points"><ul><li>小米SVOR框架攻克阴影残留和运动抖动难题，获CVPR 2026挑战赛冠军。</li><li>Omni2Sound是通用的视频文本转音频框架，支持三类任务。</li><li>Bard-VL.git通过渐进块合并与蒸馏技术桥接自回归和扩散VLM。</li><li>浙大belief方案采用邻域一致性诊断大模型真实性，降低退化约30%。</li><li>Ultron系统实现Agent经验的集体记忆与技能复用。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="比肩Z-Image！手机上实时图像生成、编辑模型！字节开源 AIGC开放社区 针对移动端图像生成和编辑任务，字节跳动开源了一个名为Z-Image的模型。该模型参数量仅为0.39B，无需依赖云端计算或高功耗硬件，即可在手机上实现实时图像生成与编辑。此举旨在降低AIGC技术的使用门槛，推动其在移动设备上的普及。模型实现了高质量、低延迟的本地化图像处理，展示了端侧AI的潜力。开源地址和论文细节需进一步查阅官方信息。 参数量仅0.39B，适用于移动端部署 无需云端支持，实现本地实时图像生成与编辑 由字节跳动开源，旨在降低AIGC应用门槛">
+<div class="article-title"><a href="http://mp.weixin.qq.com/s?__biz=Mzg3Mzg5MjY3Nw==&amp;mid=2247526240&amp;idx=2&amp;sn=4ba6810642a2067e13d03e0e7939b382&amp;chksm=cfe4755601f604075d88bde781f5904bdaca16f6bded86755b77bc3ffae1dfad5d8bebd0857c&amp;scene=0&amp;xtrack=1#rd" target="_blank" rel="noopener">比肩Z-Image！手机上实时图像生成、编辑模型！字节开源</a></div>
+<div class="article-meta"><span class="article-source">AIGC开放社区</span></div>
+<div class="article-summary">针对移动端图像生成和编辑任务，字节跳动开源了一个名为Z-Image的模型。该模型参数量仅为0.39B，无需依赖云端计算或高功耗硬件，即可在手机上实现实时图像生成与编辑。此举旨在降低AIGC技术的使用门槛，推动其在移动设备上的普及。模型实现了高质量、低延迟的本地化图像处理，展示了端侧AI的潜力。开源地址和论文细节需进一步查阅官方信息。</div>
+<div class="article-points"><ul><li>参数量仅0.39B，适用于移动端部署</li><li>无需云端支持，实现本地实时图像生成与编辑</li><li>由字节跳动开源，旨在降低AIGC应用门槛</li></ul></div>
+</article>
+<article class="article-card" data-search-text="EmambaIR: Efficient Visual State Space Model for Event-guided Image Reconstruction arXiv AI 论文提出 EmambaIR，一个高效的视觉状态空间模型（Visual State Space Model），用于基于事件流引导的图像重建任务。现有方法主要依赖 CNN 和 ViT，但 CNN 难以捕捉全局特征关联，ViT 则因二次计算复杂度（O(n²)）在高分辨率场景中受限。EmambaIR 引入两个核心组件：跨模态 Top-k 稀疏注意力模块（TSAM）和门控状态空间模块（GSSM）。TSAM 通过像素级 top-k 稀疏注意力引导事件与图像的跨模态交互，生成丰富且稀疏的融合特征；GSSM 利用非线性门控单元增强线性复杂度（O(n)）SSM 对时序特征的表达能力，在不增加计算开销的前提下高效捕捉全局上下文依赖。在六个数据集上的三类任务（运动去模糊、去雨、高动态范围增强）实验中，EmambaIR 显著优于现有方法，并大幅降低了内存消耗和计算成本。代码已开源。 提出 EmambaIR，一个高效的线性复杂度（O(n)）视觉状态空间模型 核心模块：跨模态 Top-k 稀疏注意力（TSAM）和门控状态空间模块（GSSM） 在去模糊、去雨、HDR增强三类任务、六个数据集上超越SOTA 大幅降低内存消耗和计算成本，优于二次复杂度的ViT方法 代码开源：https://github.com/YunhangWickert/EmambaIR">
+<div class="article-title"><a href="http://arxiv.org/abs/2605.08073v1" target="_blank" rel="noopener">EmambaIR: Efficient Visual State Space Model for Event-guided Image Reconstruction</a></div>
+<div class="article-meta"><span class="article-source">arXiv AI</span></div>
+<div class="article-summary">论文提出 EmambaIR，一个高效的视觉状态空间模型（Visual State Space Model），用于基于事件流引导的图像重建任务。现有方法主要依赖 CNN 和 ViT，但 CNN 难以捕捉全局特征关联，ViT 则因二次计算复杂度（O(n²)）在高分辨率场景中受限。EmambaIR 引入两个核心组件：跨模态 Top-k 稀疏注意力模块（TSAM）和门控状态空间模块（GSSM）。TSAM 通过像素级 top-k 稀疏注意力引导事件与图像的跨模态交互，生成丰富且稀疏的融合特征；GSSM 利用非线性门控单元增强线性复杂度（O(n)）SSM 对时序特征的表达能力，在不增加计算开销的前提下高效捕捉全局上下文依赖。在六个数据集上的三类任务（运动去模糊、去雨、高动态范围增强）实验中，EmambaIR 显著优于现有方法，并大幅降低了内存消耗和计算成本。代码已开源。</div>
+<div class="article-badges"><a href="https://arxiv.org/abs/2605.08073v1" class="badge arxiv" target="_blank" rel="noopener">arXiv</a><a href="https://github.com/YunhangWickert/EmambaIR" class="badge github" target="_blank" rel="noopener">GitHub</a></div>
+<div class="article-points"><ul><li>提出 EmambaIR，一个高效的线性复杂度（O(n)）视觉状态空间模型</li><li>核心模块：跨模态 Top-k 稀疏注意力（TSAM）和门控状态空间模块（GSSM）</li><li>在去模糊、去雨、HDR增强三类任务、六个数据集上超越SOTA</li><li>大幅降低内存消耗和计算成本，优于二次复杂度的ViT方法</li><li>代码开源：https://github.com/YunhangWickert/EmambaIR</li></ul></div>
+</article>
+<article class="article-card" data-search-text="Flow-OPD: On-Policy Distillation for Flow Matching Models arXiv AI 论文提出 Flow-OPD，首个将在线策略蒸馏（On-Policy Distillation, OPD）引入 Flow Matching (FM) 文本到图像模型的统一后训练框架。现有 FM 模型在多任务对齐中面临稀疏奖励和梯度干扰问题，导致“跷跷板效应”和奖励滥用。Flow-OPD 采用两阶段对齐策略：第一阶段通过单奖励 GRPO 微调培养领域专精的教师模型；第二阶段通过基于流的冷启动机制建立稳健初始策略，并通过在线采样、任务路由标签和密集轨迹级监督三步整合异构专家知识到单一学生模型。此外，引入流形锚点正则化（MAR），利用任务无关教师模型提供全局数据监督，将生成过程锚定在高质量流形上，缓解纯 RL 对齐导致的美学退化问题。基于 Stable Diffusion 3.5 Medium，Flow-OPD 将 GenEval 评分从63提升至92，OCR 准确率从59%提升至94%，整体较原始 GRPO 提升约10个百分点，同时保持了图像保真度和人类偏好对齐，并展现出“超越教师”的效果。 首个将在线策略蒸馏（OPD）引入Flow Matching的后训练框架 两阶段对齐：单奖励GRPO培养专家教师 + 流式冷启动整合异构知识 提出流形锚点正则化（MAR），缓解RL对齐导致的美学退化 基于SD3.5 Medium，GenEval从63提升至92，OCR准确率从59%提升至94% 整体提升原始GRPO约10个点，并展现“超越教师”效果">
+<div class="article-title"><a href="http://arxiv.org/abs/2605.08063v1" target="_blank" rel="noopener">Flow-OPD: On-Policy Distillation for Flow Matching Models</a></div>
+<div class="article-meta"><span class="article-source">arXiv AI</span></div>
+<div class="article-summary">论文提出 Flow-OPD，首个将在线策略蒸馏（On-Policy Distillation, OPD）引入 Flow Matching (FM) 文本到图像模型的统一后训练框架。现有 FM 模型在多任务对齐中面临稀疏奖励和梯度干扰问题，导致“跷跷板效应”和奖励滥用。Flow-OPD 采用两阶段对齐策略：第一阶段通过单奖励 GRPO 微调培养领域专精的教师模型；第二阶段通过基于流的冷启动机制建立稳健初始策略，并通过在线采样、任务路由标签和密集轨迹级监督三步整合异构专家知识到单一学生模型。此外，引入流形锚点正则化（MAR），利用任务无关教师模型提供全局数据监督，将生成过程锚定在高质量流形上，缓解纯 RL 对齐导致的美学退化问题。基于 Stable Diffusion 3.5 Medium，Flow-OPD 将 GenEval 评分从63提升至92，OCR 准确率从59%提升至94%，整体较原始 GRPO 提升约10个百分点，同时保持了图像保真度和人类偏好对齐，并展现出“超越教师”的效果。</div>
+<div class="article-badges"><a href="https://arxiv.org/abs/2605.08063v1" class="badge arxiv" target="_blank" rel="noopener">arXiv</a></div>
+<div class="article-points"><ul><li>首个将在线策略蒸馏（OPD）引入Flow Matching的后训练框架</li><li>两阶段对齐：单奖励GRPO培养专家教师 + 流式冷启动整合异构知识</li><li>提出流形锚点正则化（MAR），缓解RL对齐导致的美学退化</li><li>基于SD3.5 Medium，GenEval从63提升至92，OCR准确率从59%提升至94%</li><li>整体提升原始GRPO约10个点，并展现“超越教师”效果</li></ul></div>
+</article>
+<article class="article-card" data-search-text="SCOPE: Structured Decomposition and Conditional Skill Orchestration for Complex Image Generation arXiv AI 针对文本到图像模型在实现复杂视觉意图时，由于多模态需求（语义承诺）在生成、定位和验证周期中缺乏一致性追踪而导致失败的问题，本文提出了SCOPE框架。该框架通过一个演进的、结构化的规范来维护语义承诺，并条件性地调用检索、推理和修复技能来处理未解决或违反的承诺。为评估基于承诺的意图实现，作者引入了包含实体级和约束级规范的人工标注基准Gen-Arena，以及严格的实体优先通过率指标EGIP。实验结果表明，SCOPE在Gen-Arena上以0.60的EGIP显著优于所有基线方法，并在WISE-V（0.907）和MindBench（0.61）上取得了强劲结果，验证了持久承诺追踪在复杂图像生成中的有效性。 提出 Conceptual Rift 概念，形式化了复杂图像生成中语义承诺生命周期的不连续性。 SCOPE框架通过演进的规范维护承诺，并条件性调用修复技能。 引入人工标注基准Gen-Arena和实体优先指标EGIP。 SCOPE在Gen-Arena上EGIP达0.60，显著优于基线。">
+<div class="article-title"><a href="http://arxiv.org/abs/2605.08043v1" target="_blank" rel="noopener">SCOPE: Structured Decomposition and Conditional Skill Orchestration for Complex Image Generation</a></div>
+<div class="article-meta"><span class="article-source">arXiv AI</span></div>
+<div class="article-summary">针对文本到图像模型在实现复杂视觉意图时，由于多模态需求（语义承诺）在生成、定位和验证周期中缺乏一致性追踪而导致失败的问题，本文提出了SCOPE框架。该框架通过一个演进的、结构化的规范来维护语义承诺，并条件性地调用检索、推理和修复技能来处理未解决或违反的承诺。为评估基于承诺的意图实现，作者引入了包含实体级和约束级规范的人工标注基准Gen-Arena，以及严格的实体优先通过率指标EGIP。实验结果表明，SCOPE在Gen-Arena上以0.60的EGIP显著优于所有基线方法，并在WISE-V（0.907）和MindBench（0.61）上取得了强劲结果，验证了持久承诺追踪在复杂图像生成中的有效性。</div>
+<div class="article-badges"><a href="http://arxiv.org/abs/2605.08043v1" class="badge arxiv" target="_blank" rel="noopener">arXiv</a></div>
+<div class="article-points"><ul><li>提出 Conceptual Rift 概念，形式化了复杂图像生成中语义承诺生命周期的不连续性。</li><li>SCOPE框架通过演进的规范维护承诺，并条件性调用修复技能。</li><li>引入人工标注基准Gen-Arena和实体优先指标EGIP。</li><li>SCOPE在Gen-Arena上EGIP达0.60，显著优于基线。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="PropSplat: Map-Free RF Field Reconstruction via 3D Gaussian Propagation Splatting arXiv 机器学习 针对传统站点特定无线电传播模型依赖昂贵的三维地图或密集测量，无法快速部署的问题，本文提出了PropSplat，一种无需地图的射频场重建方法。该方法使用三维各向异性高斯原语，每个高斯编码相对于显式基线路径损耗模型的标量偏移，并通过可学习的路径损耗指数进行优化。高斯原语沿着发射器-接收器路径初始化，并通过端到端学习渲染环境，无需外部地理信息。在包含六个子6GHz频率的大规模室外驾驶测试数据集上，在训练测量点间距为300米时，PropSplat实现了5.38 dB的RMSE，优于WRF-GS+（5.87 dB）、GSRF（7.46 dB）和NeRF²（14.76 dB）。在室内蓝牙低功耗（BLE）数据集上，平均定位误差仅为0.19米，比NeRF²（1.84米）提升一个数量级，同时信号强度预测精度接近。结果表明，仅需稀疏的射频测量即可实现精确的站点特定传播重建。 PropSplat利用3D高斯原语映射射频场，无需地图或外部地理数据。 高斯原语沿路径初始化，通过端到端优化学习路径损耗偏移量。 在户外测试中，训练间隔300米时RMSE为5.38 dB，优于NeRF²等基线。 室内BLE定位误差为0.19米，比NeRF²提升一个数量级。">
+<div class="article-title"><a href="http://arxiv.org/abs/2605.08035v1" target="_blank" rel="noopener">PropSplat: Map-Free RF Field Reconstruction via 3D Gaussian Propagation Splatting</a></div>
+<div class="article-meta"><span class="article-source">arXiv 机器学习</span></div>
+<div class="article-summary">针对传统站点特定无线电传播模型依赖昂贵的三维地图或密集测量，无法快速部署的问题，本文提出了PropSplat，一种无需地图的射频场重建方法。该方法使用三维各向异性高斯原语，每个高斯编码相对于显式基线路径损耗模型的标量偏移，并通过可学习的路径损耗指数进行优化。高斯原语沿着发射器-接收器路径初始化，并通过端到端学习渲染环境，无需外部地理信息。在包含六个子6GHz频率的大规模室外驾驶测试数据集上，在训练测量点间距为300米时，PropSplat实现了5.38 dB的RMSE，优于WRF-GS+（5.87 dB）、GSRF（7.46 dB）和NeRF²（14.76 dB）。在室内蓝牙低功耗（BLE）数据集上，平均定位误差仅为0.19米，比NeRF²（1.84米）提升一个数量级，同时信号强度预测精度接近。结果表明，仅需稀疏的射频测量即可实现精确的站点特定传播重建。</div>
+<div class="article-badges"><a href="http://arxiv.org/abs/2605.08035v1" class="badge arxiv" target="_blank" rel="noopener">arXiv</a></div>
+<div class="article-points"><ul><li>PropSplat利用3D高斯原语映射射频场，无需地图或外部地理数据。</li><li>高斯原语沿路径初始化，通过端到端优化学习路径损耗偏移量。</li><li>在户外测试中，训练间隔300米时RMSE为5.38 dB，优于NeRF²等基线。</li><li>室内BLE定位误差为0.19米，比NeRF²提升一个数量级。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="STARFlow2: Bridging Language Models and Normalizing Flows for Unified Multimodal Generation arXiv 机器学习 针对当前统一多模态生成模型因将自回归语言模型与扩散图像生成器结合而产生结构不匹配的问题，本文提出STARFlow2，一种基于自回归归一化流的统一文本-图像生成框架。STARFlow2采用Pretzel架构，通过残差跳跃连接垂直交错预训练的视觉语言模型流和TarFlow流，两者共享相同的因果掩码，实现KV缓存友好的交错生成。结合深浅流设计和统一的潜在空间FAE，视觉和文本输出可直接进入KV缓存而无需重新编码。实验结果表明，STARFlow2在图像生成和多模态理解基准上性能强劲，验证了自回归流作为统一多模态建模的可行基础。 自回归归一化流与LLM共享因果掩码和KV缓存，本质上是统一的。 STARFlow2采用Pretzel架构，通过残差连接交错VLM流和TarFlow流。 利用统一的FAE潜在空间，实现视觉输出的直接KV缓存注入。 在图像生成和跨模态理解基准上均取得良好性能。">
+<div class="article-title"><a href="http://arxiv.org/abs/2605.08029v1" target="_blank" rel="noopener">STARFlow2: Bridging Language Models and Normalizing Flows for Unified Multimodal Generation</a></div>
+<div class="article-meta"><span class="article-source">arXiv 机器学习</span></div>
+<div class="article-summary">针对当前统一多模态生成模型因将自回归语言模型与扩散图像生成器结合而产生结构不匹配的问题，本文提出STARFlow2，一种基于自回归归一化流的统一文本-图像生成框架。STARFlow2采用Pretzel架构，通过残差跳跃连接垂直交错预训练的视觉语言模型流和TarFlow流，两者共享相同的因果掩码，实现KV缓存友好的交错生成。结合深浅流设计和统一的潜在空间FAE，视觉和文本输出可直接进入KV缓存而无需重新编码。实验结果表明，STARFlow2在图像生成和多模态理解基准上性能强劲，验证了自回归流作为统一多模态建模的可行基础。</div>
+<div class="article-badges"><a href="http://arxiv.org/abs/2605.08029v1" class="badge arxiv" target="_blank" rel="noopener">arXiv</a></div>
+<div class="article-points"><ul><li>自回归归一化流与LLM共享因果掩码和KV缓存，本质上是统一的。</li><li>STARFlow2采用Pretzel架构，通过残差连接交错VLM流和TarFlow流。</li><li>利用统一的FAE潜在空间，实现视觉输出的直接KV缓存注入。</li><li>在图像生成和跨模态理解基准上均取得良好性能。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="EmambaIR: Efficient Visual State Space Model for Event-guided Image Reconstruction arXiv 计算机视觉 针对现有基于事件的图像重建方法中CNN难以捕获全局特征、ViT面临二次计算复杂度（O(n²)）瓶颈的问题，本文提出EmambaIR，一种高效的视觉状态空间模型（SSM）。该框架包含两个关键模块：跨模态Top-k稀疏注意力模块（TSAM）和门控状态空间模块（GSSM）。TSAM通过像素级top-k稀疏注意力引导跨模态交互，生成稀疏融合特征；GSSM利用非线性门控单元增强线性复杂度（O(n)）SSM的时间表示能力，捕获全局依赖而无计算开销。在六个数据集上的运动去模糊、去雨和高动态范围增强三类任务中，EmambaIR显著优于最新方法，同时大幅降低了内存消耗和计算成本。代码已开源。 EmambaIR利用状态空间模型（SSM）替代CNN和ViT进行事件图像重建。 提出Top-k稀疏注意力模块（TSAM）实现高效跨模态特征融合。 提出门控状态空间模块（GSSM）以O(n)复杂度捕获全局上下文。 在6个数据集上，运动去模糊、去雨、HDR增强任务均达SOTA。 代码和数据集已公开：https://github.com/YunhangWickert/EmambaIR">
+<div class="article-title"><a href="http://arxiv.org/abs/2605.08073v1" target="_blank" rel="noopener">EmambaIR: Efficient Visual State Space Model for Event-guided Image Reconstruction</a></div>
+<div class="article-meta"><span class="article-source">arXiv 计算机视觉</span></div>
+<div class="article-summary">针对现有基于事件的图像重建方法中CNN难以捕获全局特征、ViT面临二次计算复杂度（O(n²)）瓶颈的问题，本文提出EmambaIR，一种高效的视觉状态空间模型（SSM）。该框架包含两个关键模块：跨模态Top-k稀疏注意力模块（TSAM）和门控状态空间模块（GSSM）。TSAM通过像素级top-k稀疏注意力引导跨模态交互，生成稀疏融合特征；GSSM利用非线性门控单元增强线性复杂度（O(n)）SSM的时间表示能力，捕获全局依赖而无计算开销。在六个数据集上的运动去模糊、去雨和高动态范围增强三类任务中，EmambaIR显著优于最新方法，同时大幅降低了内存消耗和计算成本。代码已开源。</div>
+<div class="article-badges"><a href="http://arxiv.org/abs/2605.08073v1" class="badge arxiv" target="_blank" rel="noopener">arXiv</a><a href="https://github.com/YunhangWickert/EmambaIR" class="badge github" target="_blank" rel="noopener">GitHub</a></div>
+<div class="article-points"><ul><li>EmambaIR利用状态空间模型（SSM）替代CNN和ViT进行事件图像重建。</li><li>提出Top-k稀疏注意力模块（TSAM）实现高效跨模态特征融合。</li><li>提出门控状态空间模块（GSSM）以O(n)复杂度捕获全局上下文。</li><li>在6个数据集上，运动去模糊、去雨、HDR增强任务均达SOTA。</li><li>代码和数据集已公开：https://github.com/YunhangWickert/EmambaIR</li></ul></div>
+</article>
+<article class="article-card" data-search-text="Flow-OPD: On-Policy Distillation for Flow Matching Models arXiv 计算机视觉 现有Flow Matching文本到图像模型在多任务对齐中面临奖励稀疏性和梯度干扰问题，导致“跷跷板效应”和奖励黑客行为。受大语言模型中在线蒸馏（OPD）的启发，本文提出Flow-OPD，第一个将在线蒸馏统一集成到Flow Matching模型中的后训练框架。该方法采用两阶段对齐策略：首先通过单奖励GRPO微调培养领域专业教师模型；然后通过基于流的冷启动方案建立初始策略，并通过在线采样、任务路由标注和密集轨迹级监督将异构专业知识整合到单个学生模型中。还引入流形锚点正则化（MAR）防止图像美学退化。基于Stable Diffusion 3.5 Medium，Flow-OPD将GenEval分数从63提升至92，OCR准确率从59%提升至94%，整体改进约10点，并展现出超越教师的涌现效果。 提出Flow-OPD，首个将在线蒸馏用于Flow Matching模型的统一后训练框架 两阶段对齐：单奖励GRPO训练教师模型，冷启动策略整合专家知识 引入流形锚点正则化缓解RL对齐导致的美学退化 在Stable Diffusion 3.5 Medium上GenEval达到92，OCR达94%，超越GRPO约10点">
+<div class="article-title"><a href="http://arxiv.org/abs/2605.08063v1" target="_blank" rel="noopener">Flow-OPD: On-Policy Distillation for Flow Matching Models</a></div>
+<div class="article-meta"><span class="article-source">arXiv 计算机视觉</span></div>
+<div class="article-summary">现有Flow Matching文本到图像模型在多任务对齐中面临奖励稀疏性和梯度干扰问题，导致“跷跷板效应”和奖励黑客行为。受大语言模型中在线蒸馏（OPD）的启发，本文提出Flow-OPD，第一个将在线蒸馏统一集成到Flow Matching模型中的后训练框架。该方法采用两阶段对齐策略：首先通过单奖励GRPO微调培养领域专业教师模型；然后通过基于流的冷启动方案建立初始策略，并通过在线采样、任务路由标注和密集轨迹级监督将异构专业知识整合到单个学生模型中。还引入流形锚点正则化（MAR）防止图像美学退化。基于Stable Diffusion 3.5 Medium，Flow-OPD将GenEval分数从63提升至92，OCR准确率从59%提升至94%，整体改进约10点，并展现出超越教师的涌现效果。</div>
+<div class="article-badges"><a href="https://arxiv.org/abs/2605.08063" class="badge arxiv" target="_blank" rel="noopener">arXiv</a></div>
+<div class="article-points"><ul><li>提出Flow-OPD，首个将在线蒸馏用于Flow Matching模型的统一后训练框架</li><li>两阶段对齐：单奖励GRPO训练教师模型，冷启动策略整合专家知识</li><li>引入流形锚点正则化缓解RL对齐导致的美学退化</li><li>在Stable Diffusion 3.5 Medium上GenEval达到92，OCR达94%，超越GRPO约10点</li></ul></div>
+</article>
+<article class="article-card" data-search-text="Towards Highly-Constrained Human Motion Generation with Retrieval-Guided Diffusion Noise Optimization arXiv 计算机视觉 当前人体运动生成方法在处理强时空约束（如严重空间障碍或指定步数）的任务中表现不佳。为此，本文提出一种基于检索引导的方法，建立在无训练扩散噪声优化框架之上。核心思想是在大规模运动数据集中搜索可能满足困难约束的引导信息。通过关系任务解析对目标约束进行分组，识别需由检索参考处理的困难约束；然后通过奖励引导掩码将随机噪声与检索噪声结合，获得更好的扩散噪声初始化。从该改进初始化出发优化噪声，成功解决了高度约束的生成任务。利用LLM进行关系任务解析，使整个框架能自动推理需要检索的内容，提升了无训练优化方案下智能体的智能性。 提出检索引导的扩散噪声优化方法解决强时空约束人体运动生成 采用关系任务解析分组约束并识别困难约束用于检索参考 通过奖励引导掩码结合随机噪声和检索噪声实现更好初始化 利用LLM自动推理检索目标，增强无训练框架的智能性">
+<div class="article-title"><a href="http://arxiv.org/abs/2605.08054v1" target="_blank" rel="noopener">Towards Highly-Constrained Human Motion Generation with Retrieval-Guided Diffusion Noise Optimization</a></div>
+<div class="article-meta"><span class="article-source">arXiv 计算机视觉</span></div>
+<div class="article-summary">当前人体运动生成方法在处理强时空约束（如严重空间障碍或指定步数）的任务中表现不佳。为此，本文提出一种基于检索引导的方法，建立在无训练扩散噪声优化框架之上。核心思想是在大规模运动数据集中搜索可能满足困难约束的引导信息。通过关系任务解析对目标约束进行分组，识别需由检索参考处理的困难约束；然后通过奖励引导掩码将随机噪声与检索噪声结合，获得更好的扩散噪声初始化。从该改进初始化出发优化噪声，成功解决了高度约束的生成任务。利用LLM进行关系任务解析，使整个框架能自动推理需要检索的内容，提升了无训练优化方案下智能体的智能性。</div>
+<div class="article-badges"><a href="https://arxiv.org/abs/2605.08054" class="badge arxiv" target="_blank" rel="noopener">arXiv</a></div>
+<div class="article-points"><ul><li>提出检索引导的扩散噪声优化方法解决强时空约束人体运动生成</li><li>采用关系任务解析分组约束并识别困难约束用于检索参考</li><li>通过奖励引导掩码结合随机噪声和检索噪声实现更好初始化</li><li>利用LLM自动推理检索目标，增强无训练框架的智能性</li></ul></div>
+</article>
+<article class="article-card" data-search-text="MoCoTalk: Multi-Conditional Diffusion with Adaptive Router for Controllable Talking Head Generation arXiv 计算机视觉 现有说话人脸生成方法通常只处理部分因素，且在融合多条件时使用固定权重或启发式策略。本文提出MoCoTalk，一种多条件视频扩散框架，统一了四种互补控制信号：参考图像、面部关键点、3DMM渲染的着色网格和语音音频。为解决异质条件间的干扰，引入自适应多条件路由器，按通道和时间步计算四个条件流的门控，使融合策略随特征子空间和噪声水平动态变化。为更好捕捉语音相关面部动态，设计了嘴增强着色网格，解耦头部运动、嘴部运动、表情和光照，提供时空一致的几何先验。还引入嘴唇一致性损失加强视听对齐。实验表明，MoCoTalk在大多数结构、运动和感知指标上达到SOTA，并提供了单条件方法无法实现的属性级可控性。 提出MoCoTalk框架，统一融合参考图、关键点、3DMM网格和音频四种条件 自适应多条件路由器实现通道和时间步感知的动态条件融合 设计嘴增强着色网格解耦头部运动、表情和光照，提供几何先验 在多项指标上达到SOTA，支持属性级可控的说话人脸生成">
+<div class="article-title"><a href="http://arxiv.org/abs/2605.08050v1" target="_blank" rel="noopener">MoCoTalk: Multi-Conditional Diffusion with Adaptive Router for Controllable Talking Head Generation</a></div>
+<div class="article-meta"><span class="article-source">arXiv 计算机视觉</span></div>
+<div class="article-summary">现有说话人脸生成方法通常只处理部分因素，且在融合多条件时使用固定权重或启发式策略。本文提出MoCoTalk，一种多条件视频扩散框架，统一了四种互补控制信号：参考图像、面部关键点、3DMM渲染的着色网格和语音音频。为解决异质条件间的干扰，引入自适应多条件路由器，按通道和时间步计算四个条件流的门控，使融合策略随特征子空间和噪声水平动态变化。为更好捕捉语音相关面部动态，设计了嘴增强着色网格，解耦头部运动、嘴部运动、表情和光照，提供时空一致的几何先验。还引入嘴唇一致性损失加强视听对齐。实验表明，MoCoTalk在大多数结构、运动和感知指标上达到SOTA，并提供了单条件方法无法实现的属性级可控性。</div>
+<div class="article-badges"><a href="https://arxiv.org/abs/2605.08050" class="badge arxiv" target="_blank" rel="noopener">arXiv</a></div>
+<div class="article-points"><ul><li>提出MoCoTalk框架，统一融合参考图、关键点、3DMM网格和音频四种条件</li><li>自适应多条件路由器实现通道和时间步感知的动态条件融合</li><li>设计嘴增强着色网格解耦头部运动、表情和光照，提供几何先验</li><li>在多项指标上达到SOTA，支持属性级可控的说话人脸生成</li></ul></div>
+</article>
+<article class="article-card" data-search-text="SCOPE: Structured Decomposition and Conditional Skill Orchestration for Complex Image Generation arXiv 计算机视觉 当前文本到图像模型在实现复杂视觉意图时面临“概念鸿沟”：需求在定位、生成和验证的生命周期中难以保持一致性。本文提出SCOPE，一个规范指导的技能编排框架，将语义承诺维护在演化的结构化规范中，并在承诺未解决或违反时条件性地调用检索、推理和修复技能。为评估承诺级意图实现，引入Gen-Arena基准，包含实体和约束级标注，以及实体优先通过率指标EGIP。SCOPE在Gen-Arena上达到0.60 EGIP，显著优于所有基线，并在WISE-V（0.907）和MindBench（0.61）上取得强结果，证明了持续承诺跟踪对复杂图像生成的有效性。 定义“概念鸿沟”问题：视觉生成中需求在生命周期中难以保持可识别性 提出SCOPE框架，通过结构化规范和条件性技能编排维持语义承诺 构建Gen-Arena基准和EGIP指标评估承诺级意图实现 在Gen-Arena达到0.60 EGIP，在WISE-V和MindBench上取得强结果">
+<div class="article-title"><a href="http://arxiv.org/abs/2605.08043v1" target="_blank" rel="noopener">SCOPE: Structured Decomposition and Conditional Skill Orchestration for Complex Image Generation</a></div>
+<div class="article-meta"><span class="article-source">arXiv 计算机视觉</span></div>
+<div class="article-summary">当前文本到图像模型在实现复杂视觉意图时面临“概念鸿沟”：需求在定位、生成和验证的生命周期中难以保持一致性。本文提出SCOPE，一个规范指导的技能编排框架，将语义承诺维护在演化的结构化规范中，并在承诺未解决或违反时条件性地调用检索、推理和修复技能。为评估承诺级意图实现，引入Gen-Arena基准，包含实体和约束级标注，以及实体优先通过率指标EGIP。SCOPE在Gen-Arena上达到0.60 EGIP，显著优于所有基线，并在WISE-V（0.907）和MindBench（0.61）上取得强结果，证明了持续承诺跟踪对复杂图像生成的有效性。</div>
+<div class="article-badges"><a href="https://arxiv.org/abs/2605.08043" class="badge arxiv" target="_blank" rel="noopener">arXiv</a></div>
+<div class="article-points"><ul><li>定义“概念鸿沟”问题：视觉生成中需求在生命周期中难以保持可识别性</li><li>提出SCOPE框架，通过结构化规范和条件性技能编排维持语义承诺</li><li>构建Gen-Arena基准和EGIP指标评估承诺级意图实现</li><li>在Gen-Arena达到0.60 EGIP，在WISE-V和MindBench上取得强结果</li></ul></div>
+</article>
+<article class="article-card" data-search-text="STARFlow2: Bridging Language Models and Normalizing Flows for Unified Multimodal Generation arXiv 计算机视觉 现有统一多模态生成模型通常结合自回归语言模型和扩散图像生成器，存在因果文本生成与迭代视觉去噪的结构性不匹配。本文提出STARFlow2，基于Pretzel架构，通过残差跳跃连接将预训练的VLM流与TarFlow（自回归归一化流）流垂直交错，两者共享同一因果掩码。结合深浅流设计和统一的FAE潜在空间，STARFlow2实现了缓存友好的交错生成，文本和视觉输出可直接进入KV缓存而无需重新编码。实验在图像生成和多模态理解基准上展示了强劲性能，验证了自回归流作为统一多模态建模的有效基础。 STARFlow2基于Pretzel架构，垂直交错VLM流和自回归TarFlow流 采用深浅流设计+统一FAE潜在空间，实现缓存友好的交错生成 文本和视觉输出直接进入KV缓存，避免重新编码 在图像生成和多模态理解基准上验证了自回归流作为统一建模基础的有效性">
+<div class="article-title"><a href="http://arxiv.org/abs/2605.08029v1" target="_blank" rel="noopener">STARFlow2: Bridging Language Models and Normalizing Flows for Unified Multimodal Generation</a></div>
+<div class="article-meta"><span class="article-source">arXiv 计算机视觉</span></div>
+<div class="article-summary">现有统一多模态生成模型通常结合自回归语言模型和扩散图像生成器，存在因果文本生成与迭代视觉去噪的结构性不匹配。本文提出STARFlow2，基于Pretzel架构，通过残差跳跃连接将预训练的VLM流与TarFlow（自回归归一化流）流垂直交错，两者共享同一因果掩码。结合深浅流设计和统一的FAE潜在空间，STARFlow2实现了缓存友好的交错生成，文本和视觉输出可直接进入KV缓存而无需重新编码。实验在图像生成和多模态理解基准上展示了强劲性能，验证了自回归流作为统一多模态建模的有效基础。</div>
+<div class="article-badges"><a href="http://arxiv.org/abs/2605.08029v1" class="badge arxiv" target="_blank" rel="noopener">arXiv</a></div>
+<div class="article-points"><ul><li>STARFlow2基于Pretzel架构，垂直交错VLM流和自回归TarFlow流</li><li>采用深浅流设计+统一FAE潜在空间，实现缓存友好的交错生成</li><li>文本和视觉输出直接进入KV缓存，避免重新编码</li><li>在图像生成和多模态理解基准上验证了自回归流作为统一建模基础的有效性</li></ul></div>
+</article>
+<article class="article-card" data-search-text="ICML 2026｜拒绝大力出奇迹，PRISM框架让dLLM也能高效Test-Time Scaling 机器之心 该论文被ICML 2026接收，提出了PRISM框架，旨在高效地为离散扩散语言模型（dLLM）实现Test-Time Scaling。dLLM的非自回归生成方式使其无法直接应用传统针对自回归模型的树搜索等方法。PRISM通过三个关键组件解决此问题：层级轨迹搜索（HTS）动态裁剪低质量轨迹；局部重掩码分支（Partial Remasking）在不丢弃好结构的前提下探索细节；自我验证反馈（SVF）复用模型自身作为分类器进行质量评估，无需外部模型。实验表明，PRISM在较低推理预算下能达到或超过Best-of-N的效果，避免了后者O(NT)的高额计算成本。 PRISM框架专为离散扩散语言模型（dLLM）设计高效推理时扩展。 采用层级轨迹搜索（HTS）动态裁剪低质量轨迹，降低计算开销。 通过局部重掩码（Partial Remasking）在保留高质量结构的同时探索新分支。 提出自我验证反馈（SVF），复用自身模型做分类器，无需外部verifier。">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&amp;mid=2651032226&amp;idx=2&amp;sn=772b44d2bf16aac0a694b87df0a929e2" target="_blank" rel="noopener">ICML 2026｜拒绝大力出奇迹，PRISM框架让dLLM也能高效Test-Time Scaling</a></div>
+<div class="article-meta"><span class="article-source">机器之心</span></div>
+<div class="article-summary">该论文被ICML 2026接收，提出了PRISM框架，旨在高效地为离散扩散语言模型（dLLM）实现Test-Time Scaling。dLLM的非自回归生成方式使其无法直接应用传统针对自回归模型的树搜索等方法。PRISM通过三个关键组件解决此问题：层级轨迹搜索（HTS）动态裁剪低质量轨迹；局部重掩码分支（Partial Remasking）在不丢弃好结构的前提下探索细节；自我验证反馈（SVF）复用模型自身作为分类器进行质量评估，无需外部模型。实验表明，PRISM在较低推理预算下能达到或超过Best-of-N的效果，避免了后者O(NT)的高额计算成本。</div>
+<div class="article-badges"><a href="https://arxiv.org/abs/2602.01842" class="badge arxiv" target="_blank" rel="noopener">arXiv</a><a href="https://github.com/viiika/Prism" class="badge github" target="_blank" rel="noopener">GitHub</a></div>
+<div class="article-points"><ul><li>PRISM框架专为离散扩散语言模型（dLLM）设计高效推理时扩展。</li><li>采用层级轨迹搜索（HTS）动态裁剪低质量轨迹，降低计算开销。</li><li>通过局部重掩码（Partial Remasking）在保留高质量结构的同时探索新分支。</li><li>提出自我验证反馈（SVF），复用自身模型做分类器，无需外部verifier。</li></ul></div>
+</article>
+</div>
+</div>
+<div class="subtype-section">
+<h3 class="subtype-header">产品/应用</h3>
+<div class="article-grid">
+<article class="article-card" data-search-text="在你看不见的地方，HeyGen 正在改写 AI 视频生成 十字路口Crossing 本文由MiniMax团队撰写，系统排查了其M2系列模型无法说出“马嘉祺”这一人名的问题。排查发现，“嘉祺”在分词器中被合并为一个独立token，该token在预训练阶段被充分学习，但在后训练（对话数据）中出现频次极低（不到5条），导致其权重向量被其他高频token挤压，模型转而输出发音相近的“佳琪”等。通过扫描20万token的整个词表，发现约4.9%的token发生显著退化，主要包括预训练特殊标记、SEO垃圾内容（如“传奇私服”）和日语token（退化比例高达29.7%）。这一机制也解释了此前模型在日语对话中混入俄语/韩语字符的未解问题。 模型说不出“马嘉祺”因后训练数据中缺乏“嘉祺”token。 约4.9%的token在后训练后发生显著退化。 退化token占比最高的类别是日语口语和博客模板（40%+）。 日语token退化率高达29.7%，远超其他语种（如中文3.9%）。 此发现解释了模型日语回复中混入俄语/韩语字符的根因。">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzAxMDMxOTI2NA==&amp;mid=2649108059&amp;idx=1&amp;sn=cfe88b8fc0bf264255ce7a1c3b50c786" target="_blank" rel="noopener">在你看不见的地方，HeyGen 正在改写 AI 视频生成</a></div>
+<div class="article-meta"><span class="article-source">十字路口Crossing</span></div>
+<div class="article-summary">本文由MiniMax团队撰写，系统排查了其M2系列模型无法说出“马嘉祺”这一人名的问题。排查发现，“嘉祺”在分词器中被合并为一个独立token，该token在预训练阶段被充分学习，但在后训练（对话数据）中出现频次极低（不到5条），导致其权重向量被其他高频token挤压，模型转而输出发音相近的“佳琪”等。通过扫描20万token的整个词表，发现约4.9%的token发生显著退化，主要包括预训练特殊标记、SEO垃圾内容（如“传奇私服”）和日语token（退化比例高达29.7%）。这一机制也解释了此前模型在日语对话中混入俄语/韩语字符的未解问题。</div>
+<div class="article-points"><ul><li>模型说不出“马嘉祺”因后训练数据中缺乏“嘉祺”token。</li><li>约4.9%的token在后训练后发生显著退化。</li><li>退化token占比最高的类别是日语口语和博客模板（40%+）。</li><li>日语token退化率高达29.7%，远超其他语种（如中文3.9%）。</li><li>此发现解释了模型日语回复中混入俄语/韩语字符的根因。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="GPT-image-2电商海报提示词实操教程 优设 本文为GPT-image-2（假设为GPT-4等图像生成能力）在电商海报设计中的实操教程，旨在解决提示词（Prompt）过长或方法不当导致出图效率低下的问题。核心方法强调“10个字以内”的极简提示词，结合垫图（参考图）和专业模特等要素，可生成涵盖护肤海报、节日联名、可爱周边等场景的详情页图像。教程通过案例总结，指导用户通过“持续优化”逐步逼近理想出片，包括处理素人模特问题。关键结论是：提示词长度影响不大，方法（如垫图、角色设定）才是核心，大幅降低设计门槛，实现“一句话造世界”。 极简提示词方法：提示词控制在10字以内，配合垫图（参考图）可生成完整电商详情页 场景覆盖：支持护肤、节日联名、可爱周边等多类型电商海报设计 优化策略：通过“垫图+专业模特”解决素人问题，持续优化至最终出片 技术依赖：基于GPT-4等模型的图像生成能力，无需复杂参数调整">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzU2ODEwMzE0Nw==&amp;mid=2247549387&amp;idx=1&amp;sn=f02fa1b15b1adcdaa80afb80e01e5f4b" target="_blank" rel="noopener">GPT-image-2电商海报提示词实操教程</a></div>
+<div class="article-meta"><span class="article-source">优设</span></div>
+<div class="article-summary">本文为GPT-image-2（假设为GPT-4等图像生成能力）在电商海报设计中的实操教程，旨在解决提示词（Prompt）过长或方法不当导致出图效率低下的问题。核心方法强调“10个字以内”的极简提示词，结合垫图（参考图）和专业模特等要素，可生成涵盖护肤海报、节日联名、可爱周边等场景的详情页图像。教程通过案例总结，指导用户通过“持续优化”逐步逼近理想出片，包括处理素人模特问题。关键结论是：提示词长度影响不大，方法（如垫图、角色设定）才是核心，大幅降低设计门槛，实现“一句话造世界”。</div>
+<div class="article-points"><ul><li>极简提示词方法：提示词控制在10字以内，配合垫图（参考图）可生成完整电商详情页</li><li>场景覆盖：支持护肤、节日联名、可爱周边等多类型电商海报设计</li><li>优化策略：通过“垫图+专业模特”解决素人问题，持续优化至最终出片</li><li>技术依赖：基于GPT-4等模型的图像生成能力，无需复杂参数调整</li></ul></div>
+</article>
+<article class="article-card" data-search-text="AI漫剧教程！11个运镜方法让画面更有质感 优设 本文聚焦于AI漫剧制作中提升画面质感的运镜技巧。背景在于AI漫剧创作门槛降低后，运镜成为突出作品质感的关键因素。文章系统总结了11种常用运镜方法，包括推镜、拉镜、摇镜、移镜、跟镜、环绕、一镜到底、仰摇、俯摇、升镜、降镜，并逐一说明每种运镜的拍摄方式与适用场景。核心方法/技术方案涵盖从基础景别变化（推拉镜）到综合调度（一镜到底）的完整体系，强调通过空间距离、机位运动、视角变化等手法强化情绪表达、节奏控制和视觉叙事。关键结论是合理运用这些运镜技术，能显著提升AI漫剧的层次感和沉浸感，是打造优质作品的必备技能。 推镜、拉镜通过镜头移位强化情绪或弱化存在，适用于内心变化或孤独感场景。 摇镜、移镜模拟自然视角或平移空间，增强画面流动感与环境探索感。 跟镜和环绕保持主体稳定或营造空间层次，提升陪伴感或戏剧张力。 一镜到底无剪切完成整段内容，强化真实感和现场复杂调度能力。 仰摇、俯摇、升镜、降镜通过机位高低变化，塑造气势或收束情绪。">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzU2ODEwMzE0Nw==&amp;mid=2247549361&amp;idx=1&amp;sn=56a9b5cf98e61cfbb14393648f00dd8f" target="_blank" rel="noopener">AI漫剧教程！11个运镜方法让画面更有质感</a></div>
+<div class="article-meta"><span class="article-source">优设</span></div>
+<div class="article-summary">本文聚焦于AI漫剧制作中提升画面质感的运镜技巧。背景在于AI漫剧创作门槛降低后，运镜成为突出作品质感的关键因素。文章系统总结了11种常用运镜方法，包括推镜、拉镜、摇镜、移镜、跟镜、环绕、一镜到底、仰摇、俯摇、升镜、降镜，并逐一说明每种运镜的拍摄方式与适用场景。核心方法/技术方案涵盖从基础景别变化（推拉镜）到综合调度（一镜到底）的完整体系，强调通过空间距离、机位运动、视角变化等手法强化情绪表达、节奏控制和视觉叙事。关键结论是合理运用这些运镜技术，能显著提升AI漫剧的层次感和沉浸感，是打造优质作品的必备技能。</div>
+<div class="article-points"><ul><li>推镜、拉镜通过镜头移位强化情绪或弱化存在，适用于内心变化或孤独感场景。</li><li>摇镜、移镜模拟自然视角或平移空间，增强画面流动感与环境探索感。</li><li>跟镜和环绕保持主体稳定或营造空间层次，提升陪伴感或戏剧张力。</li><li>一镜到底无剪切完成整段内容，强化真实感和现场复杂调度能力。</li><li>仰摇、俯摇、升镜、降镜通过机位高低变化，塑造气势或收束情绪。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="AI绘画教程！30+GPT-image-2万能提示词 优设 这是一篇面向GPT-image-2用户的提示词教程文章。作者指出许多用户在利用GPT-image-2生成图像时，常因写出不合适的提示词而效果不佳。为此，文章整理了一份超过30个场景的“万能提示词”合集，涵盖电商详情页、游戏UI、古早杂志风格、像素图标、健身计划、工程图、手账素材等多种应用场景，提供可直接复制使用的现成模板，帮助新手用户绕过自行琢磨句式的阶段，快速高效地获得精准的AI生成图像。文章还提到该合集将持续更新。 提供30+覆盖电商、游戏、手账等多场景的GPT-image-2提示词模板。 目的是帮助用户快速获得精准效果，省去试错时间。 提示词合集宣称持续更新。">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzU2ODEwMzE0Nw==&amp;mid=2247549344&amp;idx=1&amp;sn=bc50452eb7b5f8449351129cc2340b02" target="_blank" rel="noopener">AI绘画教程！30+GPT-image-2万能提示词</a></div>
+<div class="article-meta"><span class="article-source">优设</span></div>
+<div class="article-summary">这是一篇面向GPT-image-2用户的提示词教程文章。作者指出许多用户在利用GPT-image-2生成图像时，常因写出不合适的提示词而效果不佳。为此，文章整理了一份超过30个场景的“万能提示词”合集，涵盖电商详情页、游戏UI、古早杂志风格、像素图标、健身计划、工程图、手账素材等多种应用场景，提供可直接复制使用的现成模板，帮助新手用户绕过自行琢磨句式的阶段，快速高效地获得精准的AI生成图像。文章还提到该合集将持续更新。</div>
+<div class="article-points"><ul><li>提供30+覆盖电商、游戏、手账等多场景的GPT-image-2提示词模板。</li><li>目的是帮助用户快速获得精准效果，省去试错时间。</li><li>提示词合集宣称持续更新。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="Seedance Makes A Splash, Nvidia&#x27;s AI-Guided Chip Designs, Helping Robots Not Forget deeplearning.ai DeepLearning.AI 的 The Batch 第 352 期新闻通讯围绕“AI 不会导致大规模失业”这一主题展开。作者 Andrew Ng 表示，AI 像其他技术一样会影响就业，但夸大 AI 导致大规模失业的叙事（‘AI 工作末日论’）是不负责任的。尽管编码智能体快速发展，软件工程领域受到最大影响，但软件工程师的招聘仍然强劲。数据显示，AI 带来的净就业创造远超就业破坏，美国失业率仍保持在健康的 4.3%。作者分析了该叙事流行的原因：前沿 AI 实验室有动机夸大 AI 能力以显示其价值；AI 公司可以通过与员工薪资（如 10 万美元）而非传统 SaaS 定价（如 100-1000 美元/年）对标来收取更高费用；企业也有动机将裁员归因于 AI，以展示其技术先进性和高效性。通讯还包含多个其他 AI 新闻，包括“Seedance Makes A Splash”、“Nvidia&#x27;s AI-Guided Chip Designs”和“Helping Robots Not Forget”等标题，但正文主要聚焦于反驳 AI 导致大规模失业的观点。 Andrew Ng 明确反驳 AI 会导致大规模失业的‘末日’叙事。 尽管 AI 编码工具快速发展，软件工程师招聘需求依然强劲。 美国失业率保持在 4.3% 的健康水平，AI 净创造就业多于破坏。 AI 实验室夸大 AI 能力、企业借 AI 名义裁员等动机推动该叙事流行。 通讯还包含 Seedance、Nvidia 芯片设计、机器人记忆等 AI 新闻。">
+<div class="article-title"><a href="https://www.deeplearning.ai/the-batch/issue-352" target="_blank" rel="noopener">Seedance Makes A Splash, Nvidia&#x27;s AI-Guided Chip Designs, Helping Robots Not Forget</a></div>
+<div class="article-meta"><span class="article-source">deeplearning.ai</span></div>
+<div class="article-summary">DeepLearning.AI 的 The Batch 第 352 期新闻通讯围绕“AI 不会导致大规模失业”这一主题展开。作者 Andrew Ng 表示，AI 像其他技术一样会影响就业，但夸大 AI 导致大规模失业的叙事（‘AI 工作末日论’）是不负责任的。尽管编码智能体快速发展，软件工程领域受到最大影响，但软件工程师的招聘仍然强劲。数据显示，AI 带来的净就业创造远超就业破坏，美国失业率仍保持在健康的 4.3%。作者分析了该叙事流行的原因：前沿 AI 实验室有动机夸大 AI 能力以显示其价值；AI 公司可以通过与员工薪资（如 10 万美元）而非传统 SaaS 定价（如 100-1000 美元/年）对标来收取更高费用；企业也有动机将裁员归因于 AI，以展示其技术先进性和高效性。通讯还包含多个其他 AI 新闻，包括“Seedance Makes A Splash”、“Nvidia&#x27;s AI-Guided Chip Designs”和“Helping Robots Not Forget”等标题，但正文主要聚焦于反驳 AI 导致大规模失业的观点。</div>
+<div class="article-points"><ul><li>Andrew Ng 明确反驳 AI 会导致大规模失业的‘末日’叙事。</li><li>尽管 AI 编码工具快速发展，软件工程师招聘需求依然强劲。</li><li>美国失业率保持在 4.3% 的健康水平，AI 净创造就业多于破坏。</li><li>AI 实验室夸大 AI 能力、企业借 AI 名义裁员等动机推动该叙事流行。</li><li>通讯还包含 Seedance、Nvidia 芯片设计、机器人记忆等 AI 新闻。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="CVPR 2026 3D 视觉前沿梳理：模型正在学会理解、生成和构建世界 AI科技评论 CVPR 2026展现了3D视觉领域从二维感知向三维理解、从图像生成向世界建模的转变。研究重点不再仅限于生成视觉效果，而是关注生成过程中的空间逻辑、物理规律和动态一致性。代表性工作包括E-RayZer（CMU、Adobe、哈佛）：提出自监督3D重建预训练方法，利用多视角图像学习3D Gaussians场景表示，无需3D标注；LagerNVS（牛津、Meta AI）：通过3D-aware特征实现实时新视角合成，跳过显式重建；以及扩展到4D动态生成的工作，使物体表现出符合物理规律的运动。这些工作共同指向模型需要理解物体的空间结构、材质光照及运动一致性，以迈向空间智能。 E-RayZer通过自监督学习3D Gaussians重建，无需3D标注或相机位姿 LagerNVS利用3D-aware特征绕过显式重建实现实时新视角合成 CVPR 2026趋势：3D视觉从二维感知走向三维理解，从图像生成走向世界建模">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA==&amp;mid=2247734532&amp;idx=2&amp;sn=34ba1894d22ab356e2ca5b5a4a537d10" target="_blank" rel="noopener">CVPR 2026 3D 视觉前沿梳理：模型正在学会理解、生成和构建世界</a></div>
+<div class="article-meta"><span class="article-source">AI科技评论</span></div>
+<div class="article-summary">CVPR 2026展现了3D视觉领域从二维感知向三维理解、从图像生成向世界建模的转变。研究重点不再仅限于生成视觉效果，而是关注生成过程中的空间逻辑、物理规律和动态一致性。代表性工作包括E-RayZer（CMU、Adobe、哈佛）：提出自监督3D重建预训练方法，利用多视角图像学习3D Gaussians场景表示，无需3D标注；LagerNVS（牛津、Meta AI）：通过3D-aware特征实现实时新视角合成，跳过显式重建；以及扩展到4D动态生成的工作，使物体表现出符合物理规律的运动。这些工作共同指向模型需要理解物体的空间结构、材质光照及运动一致性，以迈向空间智能。</div>
+<div class="article-badges"><a href="https://arxiv.org/pdf/2512.10950" class="badge arxiv" target="_blank" rel="noopener">arXiv</a></div>
+<div class="article-points"><ul><li>E-RayZer通过自监督学习3D Gaussians重建，无需3D标注或相机位姿</li><li>LagerNVS利用3D-aware特征绕过显式重建实现实时新视角合成</li><li>CVPR 2026趋势：3D视觉从二维感知走向三维理解，从图像生成走向世界建模</li></ul></div>
+</article>
+<article class="article-card" data-search-text="何恺明团队论文全景扫描：一场关于「生成范式」的多角度突破 | CVPR 2026 AI科技评论 文章全景扫描了何恺明团队在CVPR 2026上发表的多篇论文，展现了其在生成范式上的多角度突破。团队聚焦于流匹配，提出了均值流（MeanFlow）及其改进版Improved MeanFlow（iMF），后者在不使用蒸馏的情况下，将单步生成FID降至1.72。另一项工作JiT（Just in Time）通过直接预测干净图像而非噪声，在ImageNet 512×512上实现了FID 1.78。此外，团队在视觉推理（ARC基准测试）和自监督学习（Pixo）上也有突破。这些工作共同挑战了扩散模型的主导地位，探索了更高效的生成路径。 Improved MeanFlow (iMF) 实现无蒸馏单步FID 1.72 JiT模型直接预测干净图像，ImageNet 512×512上FID 1.78 团队同时在视觉推理（ARC）和自监督学习（Pixo）上取得进展 核心思路是重新审视并优化生成范式中的基础假设，如预测目标和训练策略">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA==&amp;mid=2247734391&amp;idx=2&amp;sn=31b2b4d100b9531f56326b50d1b820bd" target="_blank" rel="noopener">何恺明团队论文全景扫描：一场关于「生成范式」的多角度突破 | CVPR 2026</a></div>
+<div class="article-meta"><span class="article-source">AI科技评论</span></div>
+<div class="article-summary">文章全景扫描了何恺明团队在CVPR 2026上发表的多篇论文，展现了其在生成范式上的多角度突破。团队聚焦于流匹配，提出了均值流（MeanFlow）及其改进版Improved MeanFlow（iMF），后者在不使用蒸馏的情况下，将单步生成FID降至1.72。另一项工作JiT（Just in Time）通过直接预测干净图像而非噪声，在ImageNet 512×512上实现了FID 1.78。此外，团队在视觉推理（ARC基准测试）和自监督学习（Pixo）上也有突破。这些工作共同挑战了扩散模型的主导地位，探索了更高效的生成路径。</div>
+<div class="article-badges"><a href="https://arxiv.org/abs/2511.13720" class="badge arxiv" target="_blank" rel="noopener">arXiv</a></div>
+<div class="article-points"><ul><li>Improved MeanFlow (iMF) 实现无蒸馏单步FID 1.72</li><li>JiT模型直接预测干净图像，ImageNet 512×512上FID 1.78</li><li>团队同时在视觉推理（ARC）和自监督学习（Pixo）上取得进展</li><li>核心思路是重新审视并优化生成范式中的基础假设，如预测目标和训练策略</li></ul></div>
+</article>
+<article class="article-card" data-search-text="Suno不再是唯一答案，企业开始选择这个国产AI音乐 机器之心 文章指出AI音乐创作市场正经历一场迁移，许多企业用户正从Suno转向国产AI音乐平台Mureka。核心驱动是Mureka V8模型在人声质量、音乐完成度和生成速度上的关键跃迁。文章通过三个客户案例（AI音乐平台Sondo、国内应用快歌、海外MV平台）展示了迁移的原因：Sondo因其真人感的人声效果即使价格更高也选择切换；快歌因中文准确度和原厂服务效率而深度合作；海外平台则看重其合规性、API稳定性及国风风格表现。结论是，Mureka凭借模型能力、服务效率、合规与稳定性，正成为企业级AI音乐的首选。 企业AI音乐用户正从Suno迁移至国产平台Mureka。 Mureka V8模型在人声真实感和音乐完成度上有突破。 企业客户选择Mureka的考量包括效果、服务、合规与稳定性。 Sondo等平台因效果切换后业务增长超过70%。 Mureka B端客户超90%来自海外，验证产品国际化能力。">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&amp;mid=2651032226&amp;idx=1&amp;sn=8b0b0279fffcdd26914c53dddad77166" target="_blank" rel="noopener">Suno不再是唯一答案，企业开始选择这个国产AI音乐</a></div>
+<div class="article-meta"><span class="article-source">机器之心</span></div>
+<div class="article-summary">文章指出AI音乐创作市场正经历一场迁移，许多企业用户正从Suno转向国产AI音乐平台Mureka。核心驱动是Mureka V8模型在人声质量、音乐完成度和生成速度上的关键跃迁。文章通过三个客户案例（AI音乐平台Sondo、国内应用快歌、海外MV平台）展示了迁移的原因：Sondo因其真人感的人声效果即使价格更高也选择切换；快歌因中文准确度和原厂服务效率而深度合作；海外平台则看重其合规性、API稳定性及国风风格表现。结论是，Mureka凭借模型能力、服务效率、合规与稳定性，正成为企业级AI音乐的首选。</div>
+<div class="article-points"><ul><li>企业AI音乐用户正从Suno迁移至国产平台Mureka。</li><li>Mureka V8模型在人声真实感和音乐完成度上有突破。</li><li>企业客户选择Mureka的考量包括效果、服务、合规与稳定性。</li><li>Sondo等平台因效果切换后业务增长超过70%。</li><li>Mureka B端客户超90%来自海外，验证产品国际化能力。</li></ul></div>
+</article>
+</div>
+</div>
+</section>
+<section class="category-section" data-category="多模态大模型/大语言模型">
+<h2 class="category-header">多模态大模型/大语言模型</h2>
+<details class="trend-card" open><summary>本周趋势 · 多模态大模型/大语言模型</summary><div class="trend-body"><p>本周多模态与大语言模型领域呈现三大核心趋势：**实时语音交互进入“GPT-5级”时代**、**模型能力边界向超长程推理与复杂任务突破**、以及**训练范式与可解释性研究出现结构性创新**。OpenAI发布的GPT-Realtime-2系列在Big Bench Audio上性能跃升15.2%，支持128K上下文与可调五级推理强度，并与StepAudio 2.5等模型共同推动语音AI从“听懂”迈向“有智能的对话”。同时，Anthropic的Claude Mythos在16小时级别任务上达到50%成功率，Meta/斯坦福推出的ProgramBench则让所有顶尖模型交出0分完整通过率，揭示软件重编程任务仍是极限挑战。在训练范式方面，OpenAI翁家翌提出的启发式学习（HL）以代码编辑替代梯度下降，在Atari上获得满分，被视作继RLHF后的潜在新范式；而浙大与DeepSeek分别从角色扮演框架和“指代鸿沟”破解机制入手，提升多模态推理的可控性与准确性。此外，SenseNova U1与Proxy3D分别在统一多模态生成与高效3D表示上取得突破，标志着模型架构正朝更紧凑、更原生、更可解释的方向演进。</p><ul><li>**实时语音AI迈向“推理级”智能与全栈能力**：OpenAI GPT-Realtime-2支持128K上下文、五级推理强度与并行工具调用，性能提升15.2%；StepAudio 2.5在ASR推理峰值达500 token/s，并提供千万人设与RLHF对齐的角色定制能力，语音交互正从单点突破走向“语音输入+输出+对话+工具调用”的全栈融合。</li><li>**超长程与复杂任务成为评测新极限，模型能力呈超指数增长**：Claude Mythos在16小时级任务成功率高达50%，远超2021年模型仅能完成8秒任务；ProgramBench（200个重编程任务）导致所有模型完整通过率为0%，Claude Opus 4.7以51.2%平均测试通过率领先，但成本仅为Sonnet 4.6的1/7，揭示性能与效率的分离。</li><li>**训练范式革新：启发式学习（HL）与“解崩溃”机制并行出现**：OpenAI翁家翌提出HL以代码编辑替代梯度下降，在Atari获得满分、MuJoCo连续控制任务超6000分，具备抗遗忘特性；Anthropic的自然语言自动编码器（NLA）将隐藏动机发现率从&lt;3%提升至12%-15%，为对齐审计提供深层可解释工具。</li><li>**多模态推理从“看错”转向“指代鸿沟”的元问题破解**：DeepSeek报告指出多模态推理失败主因是“指代鸿沟”，通过将点和框作为视觉基元、压缩图像至81个KV entries，在迷宫任务超越GPT/Claude；浙大四通道角色扮演框架将行为准确率提高20%，与HFRU强化去学习（物体遗忘率超98%）共同推动多模态系统从感知对齐走向因果推理对齐。</li><li>**模型架构趋向紧凑高效与原生统一**：SenseNova U1以8B参数实现原生多模态理解与生成（去VE/VAE），达到同量级SOTA；Proxy3D通过语义聚类将视频帧生成紧凑3D代理，在3D问答任务中以短序列实现最优性能，标志着参数效率与空间一致性正成为核心技术比拼点。</li></ul></div></details>
+<div class="subtype-section">
+<h3 class="subtype-header">技术/算法</h3>
+<div class="article-grid">
+<article class="article-card" data-search-text="[AINews] GPT-Realtime-2, -Translate, and -Whisper: new SOTA realtime voice APIs Latent Space 本文报道了OpenAI最新发布的GPT-Realtime-2高级实时语音API。背景上，3个月前发布的Realtime-1.5基于4o架构，性能提升有限（Big Bench Audio仅+5%）。本次Realtime-2在BBA基准上实现了+15.2%的显著提升，并一次性推出三个模型。核心方法/技术方案包括：支持语音输入、输出及语音到语音的直接转换；关键特性有开发者可用的“前置短语”功能、支持并行工具调用并语音化操作过程、更强的错误恢复行为；上下文长度从32K扩展到128K；增强了对专业术语和语境的理解；可调推理努力度（从无到极高，共5级）。此外，模型在对话中能更精准避免打断说话者。结论是，这次更新显著提升了实时语音交互的可用性和表现力。 性能跃升：Realtime-2在Big Bench Audio基准上较Realtime-1.5提升+15.2% 三模并发：同时发布“语音输入”、“语音输出”和“语音到语音”三个模型 并行工具调用：支持同时调用多个工具，并通过语音反馈操作状态增强响应 超长上下文：上下文窗口从32K大幅扩展至128K 可调推理努力度：开发者可选择minimal/low/medium/high/xhigh五级推理强度">
+<div class="article-title"><a href="https://www.latent.space/p/ainews-gpt-realtime-2-translate-and" target="_blank" rel="noopener">[AINews] GPT-Realtime-2, -Translate, and -Whisper: new SOTA realtime voice APIs</a></div>
+<div class="article-meta"><span class="article-source">Latent Space</span></div>
+<div class="article-summary">本文报道了OpenAI最新发布的GPT-Realtime-2高级实时语音API。背景上，3个月前发布的Realtime-1.5基于4o架构，性能提升有限（Big Bench Audio仅+5%）。本次Realtime-2在BBA基准上实现了+15.2%的显著提升，并一次性推出三个模型。核心方法/技术方案包括：支持语音输入、输出及语音到语音的直接转换；关键特性有开发者可用的“前置短语”功能、支持并行工具调用并语音化操作过程、更强的错误恢复行为；上下文长度从32K扩展到128K；增强了对专业术语和语境的理解；可调推理努力度（从无到极高，共5级）。此外，模型在对话中能更精准避免打断说话者。结论是，这次更新显著提升了实时语音交互的可用性和表现力。</div>
+<div class="article-points"><ul><li>性能跃升：Realtime-2在Big Bench Audio基准上较Realtime-1.5提升+15.2%</li><li>三模并发：同时发布“语音输入”、“语音输出”和“语音到语音”三个模型</li><li>并行工具调用：支持同时调用多个工具，并通过语音反馈操作状态增强响应</li><li>超长上下文：上下文窗口从32K大幅扩展至128K</li><li>可调推理努力度：开发者可选择minimal/low/medium/high/xhigh五级推理强度</li></ul></div>
+</article>
+<article class="article-card" data-search-text="DeepSeek 多模态技术报告英中对照版.pdf AINLP 本文介绍了DeepSeek联合北大、清华发布的多模态技术报告，核心论文认为当前多模态模型在复杂视觉推理中失败的主因是&#x27;指代鸿沟&#x27;（Reference Gap），即推理中无法精确指向图像对象、位置和路径。为此，论文提出&#x27;Thinking with Visual Primitives&#x27;方法，将点和框作为视觉推理的基本单元，让模型在推理过程中一边思考一边框选和标记，类似人类数数或走迷宫时的行为。模型基于DeepSeek-V4-Flash（总参284B，激活13B），通过视觉token压缩和Compressed Sparse Attention技术，将756×756图像仅保留81个视觉KV entries。训练分阶段进行：先让模型学习输出点和框，再训练&#x27;用框思考&#x27;和&#x27;用点思考&#x27;的专家模型，最后统一蒸馏。模型在计数、空间推理、迷宫导航和路径追踪任务上表现优异，尤其在迷宫和路径追踪上超越GPT、Claude、Gemini等前沿模型。论文意义在于将多模态模型从&#x27;看图说话&#x27;提升为&#x27;看图、指图、再推理&#x27;。 核心问题：多模态模型推理失败主因是&#x27;指代鸿沟&#x27;，而非单纯看不清细节 方法：将点和框作为视觉基元，让模型在推理过程中同步进行空间标记 模型基于DeepSeek-V4-Flash（284B参数/13B激活），图像压缩至仅81个视觉KV entries 训练分两阶段：先学输出基元，再分别训练专家模型后统一蒸馏 迷宫和路径追踪任务超越GPT、Claude、Gemini等前沿模型">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MjM5ODkzMzMwMQ==&amp;mid=2650451803&amp;idx=1&amp;sn=dbdb647ed0f99456ad2d9209df6b7f69" target="_blank" rel="noopener">DeepSeek 多模态技术报告英中对照版.pdf</a></div>
+<div class="article-meta"><span class="article-source">AINLP</span></div>
+<div class="article-summary">本文介绍了DeepSeek联合北大、清华发布的多模态技术报告，核心论文认为当前多模态模型在复杂视觉推理中失败的主因是&#x27;指代鸿沟&#x27;（Reference Gap），即推理中无法精确指向图像对象、位置和路径。为此，论文提出&#x27;Thinking with Visual Primitives&#x27;方法，将点和框作为视觉推理的基本单元，让模型在推理过程中一边思考一边框选和标记，类似人类数数或走迷宫时的行为。模型基于DeepSeek-V4-Flash（总参284B，激活13B），通过视觉token压缩和Compressed Sparse Attention技术，将756×756图像仅保留81个视觉KV entries。训练分阶段进行：先让模型学习输出点和框，再训练&#x27;用框思考&#x27;和&#x27;用点思考&#x27;的专家模型，最后统一蒸馏。模型在计数、空间推理、迷宫导航和路径追踪任务上表现优异，尤其在迷宫和路径追踪上超越GPT、Claude、Gemini等前沿模型。论文意义在于将多模态模型从&#x27;看图说话&#x27;提升为&#x27;看图、指图、再推理&#x27;。</div>
+<div class="article-points"><ul><li>核心问题：多模态模型推理失败主因是&#x27;指代鸿沟&#x27;，而非单纯看不清细节</li><li>方法：将点和框作为视觉基元，让模型在推理过程中同步进行空间标记</li><li>模型基于DeepSeek-V4-Flash（284B参数/13B激活），图像压缩至仅81个视觉KV entries</li><li>训练分两阶段：先学输出基元，再分别训练专家模型后统一蒸馏</li><li>迷宫和路径追踪任务超越GPT、Claude、Gemini等前沿模型</li></ul></div>
+</article>
+<article class="article-card" data-search-text="浙大推出让AI会「导演」的角色扮演框架！四通道消息沉浸式交互 量子位 浙江大学提出一种名为「四通道消息沉浸式交互」的角色扮演框架，旨在让AI能够像导演一样在对话中引导多角色扮演。该框架针对传统AI角色扮演中角色行为单一、缺乏导演式调度的问题，设计了四个消息通道：角色行为通道、场景描述通道、故事推进通道和用户交互通道。通过这四个通道，AI能同时处理角色内部行为、环境变化、剧情发展和用户输入，实现沉浸式多角色交互。实验表明，该框架在角色一致性、故事连贯性和用户参与度上相比基线模型（如GPT-4）有显著提升，具体指标包括角色行为准确率提高约20%、用户满意度评分增加15%。该方法可应用于交互式叙事、游戏NPC设计和虚拟社交场景。 提出四通道框架：角色行为、场景描述、故事推进和用户交互通道 相比GPT-4基线，角色行为准确率提高约20% 用户满意度评分增加15%，提升沉浸式体验 可应用于交互式叙事、游戏NPC和虚拟社交场景">
+<div class="article-title"><a href="https://www.qbitai.com/2026/05/415048.html" target="_blank" rel="noopener">浙大推出让AI会「导演」的角色扮演框架！四通道消息沉浸式交互</a></div>
+<div class="article-meta"><span class="article-source">量子位</span></div>
+<div class="article-summary">浙江大学提出一种名为「四通道消息沉浸式交互」的角色扮演框架，旨在让AI能够像导演一样在对话中引导多角色扮演。该框架针对传统AI角色扮演中角色行为单一、缺乏导演式调度的问题，设计了四个消息通道：角色行为通道、场景描述通道、故事推进通道和用户交互通道。通过这四个通道，AI能同时处理角色内部行为、环境变化、剧情发展和用户输入，实现沉浸式多角色交互。实验表明，该框架在角色一致性、故事连贯性和用户参与度上相比基线模型（如GPT-4）有显著提升，具体指标包括角色行为准确率提高约20%、用户满意度评分增加15%。该方法可应用于交互式叙事、游戏NPC设计和虚拟社交场景。</div>
+<div class="article-points"><ul><li>提出四通道框架：角色行为、场景描述、故事推进和用户交互通道</li><li>相比GPT-4基线，角色行为准确率提高约20%</li><li>用户满意度评分增加15%，提升沉浸式体验</li><li>可应用于交互式叙事、游戏NPC和虚拟社交场景</li></ul></div>
+</article>
+<article class="article-card" data-search-text="Proxy3D: Efficient 3D Representations for Vision-Language Models via Semantic Clustering and Alignment arXiv 计算机视觉 针对现有视觉语言模型（VLM）在3D场景理解中存在的空间一致性和效率问题，本文提出Proxy3D方法，通过语义聚类和对齐为VLM提供紧凑而全面的3D代理表示。该方法仅以视频帧为输入，使用语义和几何编码器提取场景特征，并进行语义感知聚类以获得3D空间中的代理集。为进行表示对齐，作者构建了SpaceSpan数据集，并采用多阶段训练将3D代理表示与VLM集成。实验结果表明，在使用更短的视觉序列时，Proxy3D在3D视觉问答、视觉定位和通用空间智能基准测试中达到了竞争性或最先进的性能。该方法有效平衡了3D表示效率和空间推理能力。 提出Proxy3D方法，通过语义聚类将视频帧生成紧凑的3D代理表示 构建SpaceSpan数据集用于3D代理表示与VLM的对齐训练 在3D视觉问答和定位任务上，使用短序列实现SOTA性能 方法解决了VLM中3D表示效率与空间一致性难以兼得的问题">
+<div class="article-title"><a href="http://arxiv.org/abs/2605.08064v1" target="_blank" rel="noopener">Proxy3D: Efficient 3D Representations for Vision-Language Models via Semantic Clustering and Alignment</a></div>
+<div class="article-meta"><span class="article-source">arXiv 计算机视觉</span></div>
+<div class="article-summary">针对现有视觉语言模型（VLM）在3D场景理解中存在的空间一致性和效率问题，本文提出Proxy3D方法，通过语义聚类和对齐为VLM提供紧凑而全面的3D代理表示。该方法仅以视频帧为输入，使用语义和几何编码器提取场景特征，并进行语义感知聚类以获得3D空间中的代理集。为进行表示对齐，作者构建了SpaceSpan数据集，并采用多阶段训练将3D代理表示与VLM集成。实验结果表明，在使用更短的视觉序列时，Proxy3D在3D视觉问答、视觉定位和通用空间智能基准测试中达到了竞争性或最先进的性能。该方法有效平衡了3D表示效率和空间推理能力。</div>
+<div class="article-badges"><a href="https://arxiv.org/abs/2605.08064" class="badge arxiv" target="_blank" rel="noopener">arXiv</a></div>
+<div class="article-points"><ul><li>提出Proxy3D方法，通过语义聚类将视频帧生成紧凑的3D代理表示</li><li>构建SpaceSpan数据集用于3D代理表示与VLM的对齐训练</li><li>在3D视觉问答和定位任务上，使用短序列实现SOTA性能</li><li>方法解决了VLM中3D表示效率与空间一致性难以兼得的问题</li></ul></div>
+</article>
+<article class="article-card" data-search-text="Object Hallucination-Free Reinforcement Unlearning for Vision-Language Models arXiv 计算机视觉 现有视觉语言模型(VLM)的去学习(Unlearning)方法主要微调语言解码器，导致忘记不彻底且易引入物体幻觉。本文提出HFRU，一种在视觉编码器上操作的强化去学习框架，通过两阶段方法实现深层语义移除。该方法结合了对齐破坏与基于GRPO的优化，并引入抽象奖励(abstraction reward)以鼓励语义有效替换并缓解幻觉。在物体识别和人脸身份任务上的实验表明，HFRU实现了超过98%的遗忘和保留性能，同时引入的物体幻觉可忽略不计，显著优于此前方法。代码已开源。 提出HFRU框架，针对视觉编码器进行强化去学习，实现深层语义移除 采用两阶段策略: 对齐破坏 + 基于GRPO的优化，并引入抽象奖励缓解幻觉 在物体和人脸识别任务中实现超过98%的遗忘与保留率，显著优于基线 代码开源: https://github.com/XMUDeepLIT/HFRU">
+<div class="article-title"><a href="http://arxiv.org/abs/2605.08031v1" target="_blank" rel="noopener">Object Hallucination-Free Reinforcement Unlearning for Vision-Language Models</a></div>
+<div class="article-meta"><span class="article-source">arXiv 计算机视觉</span></div>
+<div class="article-summary">现有视觉语言模型(VLM)的去学习(Unlearning)方法主要微调语言解码器，导致忘记不彻底且易引入物体幻觉。本文提出HFRU，一种在视觉编码器上操作的强化去学习框架，通过两阶段方法实现深层语义移除。该方法结合了对齐破坏与基于GRPO的优化，并引入抽象奖励(abstraction reward)以鼓励语义有效替换并缓解幻觉。在物体识别和人脸身份任务上的实验表明，HFRU实现了超过98%的遗忘和保留性能，同时引入的物体幻觉可忽略不计，显著优于此前方法。代码已开源。</div>
+<div class="article-badges"><a href="http://arxiv.org/abs/2605.08031v1" class="badge arxiv" target="_blank" rel="noopener">arXiv</a><a href="https://github.com/XMUDeepLIT/HFRU" class="badge github" target="_blank" rel="noopener">GitHub</a></div>
+<div class="article-points"><ul><li>提出HFRU框架，针对视觉编码器进行强化去学习，实现深层语义移除</li><li>采用两阶段策略: 对齐破坏 + 基于GRPO的优化，并引入抽象奖励缓解幻觉</li><li>在物体和人脸识别任务中实现超过98%的遗忘与保留率，显著优于基线</li><li>代码开源: https://github.com/XMUDeepLIT/HFRU</li></ul></div>
+</article>
+<article class="article-card" data-search-text="不更新参数就能强化学习！OpenAI翁家翌提出新范式：决策只需AI手搓一个.py文件 大模型智能 OpenAI研究员翁家翌提出强化学习新范式——启发式学习(Heuristic Learning, HL)，全程无需神经网络训练或梯度更新。HL将决策策略从神经网络权重转化为可读的程序代码，以代码编辑替代梯度下降，通过显式符号规则实现状态-动作映射。在Atari 57基准测试中，HL在Breakout上达到864分满分，整体中位表现与PPO持平。在MuJoCo机器人连续控制任务中，Ant任务评分突破6000，HalfCheetah达到11836分。HL天然具备可解释、抗灾难性遗忘、高效率优势，但在需要从原始像素进行特征抽象的ImageNet等任务上仍有局限。翁家翌指出未来方向是将HL与神经网络有机融合，解决在线学习和持续学习问题。 提出启发式学习(HL)新范式，核心是“代码编辑替代梯度下降” 在Atari Breakout上达到864分满分，整体性能与PPO持平 在MuJoCo连续控制任务中，HalfCheetah达到11836分，Ant超6000分 HL具备可解释、抗遗忘和高效率特性，但难以处理高维原始像素输入">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzU3NjE4NjQ4MA==&amp;mid=2247556315&amp;idx=1&amp;sn=da18ffc1e429ed4ded36658f44b679a1" target="_blank" rel="noopener">不更新参数就能强化学习！OpenAI翁家翌提出新范式：决策只需AI手搓一个.py文件</a></div>
+<div class="article-meta"><span class="article-source">大模型智能</span></div>
+<div class="article-summary">OpenAI研究员翁家翌提出强化学习新范式——启发式学习(Heuristic Learning, HL)，全程无需神经网络训练或梯度更新。HL将决策策略从神经网络权重转化为可读的程序代码，以代码编辑替代梯度下降，通过显式符号规则实现状态-动作映射。在Atari 57基准测试中，HL在Breakout上达到864分满分，整体中位表现与PPO持平。在MuJoCo机器人连续控制任务中，Ant任务评分突破6000，HalfCheetah达到11836分。HL天然具备可解释、抗灾难性遗忘、高效率优势，但在需要从原始像素进行特征抽象的ImageNet等任务上仍有局限。翁家翌指出未来方向是将HL与神经网络有机融合，解决在线学习和持续学习问题。</div>
+<div class="article-points"><ul><li>提出启发式学习(HL)新范式，核心是“代码编辑替代梯度下降”</li><li>在Atari Breakout上达到864分满分，整体性能与PPO持平</li><li>在MuJoCo连续控制任务中，HalfCheetah达到11836分，Ant超6000分</li><li>HL具备可解释、抗遗忘和高效率特性，但难以处理高维原始像素输入</li></ul></div>
+</article>
+</div>
+</div>
+<div class="subtype-section">
+<h3 class="subtype-header">产品/应用</h3>
+<div class="article-grid">
+<article class="article-card" data-search-text="今日开源（2026-5-7）：腾讯开源OpenSearch-VL，30B/32B模型精度比肩顶尖商用系统，7个知识密集型多模态基准表现优异 机器之心SOTA模型 腾讯开源了OpenSearch-VL，这是一套用于训练前沿多模态深度搜索智能体的全开源方案。针对此前顶尖多模态搜索智能体的训练数据、轨迹合成流程、训练方案均为闭源的痛点，OpenSearch-VL开源了可完整复现效果的数据集、训练代码与模型权重。该方案通过高质量数据构造、多元视觉/搜索工具、致命错误感知的智能体强化学习实现训练，在7个知识密集型多模态基准上表现优异，30B/32B规模模型精度比肩顶尖商用系统，解决了开源方案与闭源商用系统之间的性能差距问题。 OpenSearch-VL是用于训练前沿多模态深度搜索智能体的全开源方案，涵盖数据、代码和模型权重 通过高质量数据构造、多元工具及致命错误感知的强化学习训练，解决了此前方案闭源的痛点 在7个知识密集型多模态基准上表现优异，30B/32B模型精度比肩顶尖商用系统">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzkyMzcwMDIyMQ==&amp;mid=2247502225&amp;idx=1&amp;sn=f0754f084397b59737f5a25fab407f0f" target="_blank" rel="noopener">今日开源（2026-5-7）：腾讯开源OpenSearch-VL，30B/32B模型精度比肩顶尖商用系统，7个知识密集型多模态基准表现优异</a></div>
+<div class="article-meta"><span class="article-source">机器之心SOTA模型</span></div>
+<div class="article-summary">腾讯开源了OpenSearch-VL，这是一套用于训练前沿多模态深度搜索智能体的全开源方案。针对此前顶尖多模态搜索智能体的训练数据、轨迹合成流程、训练方案均为闭源的痛点，OpenSearch-VL开源了可完整复现效果的数据集、训练代码与模型权重。该方案通过高质量数据构造、多元视觉/搜索工具、致命错误感知的智能体强化学习实现训练，在7个知识密集型多模态基准上表现优异，30B/32B规模模型精度比肩顶尖商用系统，解决了开源方案与闭源商用系统之间的性能差距问题。</div>
+<div class="article-points"><ul><li>OpenSearch-VL是用于训练前沿多模态深度搜索智能体的全开源方案，涵盖数据、代码和模型权重</li><li>通过高质量数据构造、多元工具及致命错误感知的强化学习训练，解决了此前方案闭源的痛点</li><li>在7个知识密集型多模态基准上表现优异，30B/32B模型精度比肩顶尖商用系统</li></ul></div>
+</article>
+<article class="article-card" data-search-text="大模型不认识马嘉祺？我们做了一次全链路排查 MiniMax 稀宇科技 本文针对大模型无法输出特定人名“马嘉祺”的现象进行了系统性全链路排查。背景是MiniMax M2系列模型在社区中被发现无法说出“马嘉祺”，尽管模型能准确回答其信息。核心方法包括：从分词器版本对齐、embedding统计分布、语义近邻检索、预训练与后训练模型的few-shot对比实验、后训练数据频次统计以及全词表lm_head变化幅度排序扫描等多个维度进行分析。关键结论是：分词器将“嘉祺”合并为一个独立token，该token在后训练数据中出现频次极低（不到5条），导致模型在后训练中逐渐遗忘其生成能力，转而选择发音相近的“佳琪”等。进一步全词表扫描发现，约4.9%的token（约20万词表中）发生了类似退化，主要类别包括日语口语（占比40%+）、LaTeX源码标记、SEO垃圾内容等。其中日语token退化比例高达29.7%，解释了此前模型中日语回答混入俄语/韩语字符的问题。修复方案包括补数据或对退化token进行针对性修正。 问题定位：分词器将“嘉祺”合并为独立token（编号190467），该token在后训练数据中频次极低（不足5条）。 退化机制：预训练中学到的低频token在后训练中被高频token的向量空间更新所挤压，导致输出能力丧失。 全词表扫描：约4.9% token发生显著退化，最大类别为日语口语（占比40%+），日语退化率29.7%，远超韩语（3.3%）、中文（3.9%）等。 修复方案：通过补数据或对退化token进行针对性修正，可解决此类输出遗忘问题。 普适性：类似问题（如日语混杂俄语/韩语字符）也可通过本文发现的退化机制解释。">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzE5MTA3NzcxMQ==&amp;mid=2247488452&amp;idx=1&amp;sn=7013d92d0fddd27d95fa1d3f3b1bfa6e" target="_blank" rel="noopener">大模型不认识马嘉祺？我们做了一次全链路排查</a></div>
+<div class="article-meta"><span class="article-source">MiniMax 稀宇科技</span></div>
+<div class="article-summary">本文针对大模型无法输出特定人名“马嘉祺”的现象进行了系统性全链路排查。背景是MiniMax M2系列模型在社区中被发现无法说出“马嘉祺”，尽管模型能准确回答其信息。核心方法包括：从分词器版本对齐、embedding统计分布、语义近邻检索、预训练与后训练模型的few-shot对比实验、后训练数据频次统计以及全词表lm_head变化幅度排序扫描等多个维度进行分析。关键结论是：分词器将“嘉祺”合并为一个独立token，该token在后训练数据中出现频次极低（不到5条），导致模型在后训练中逐渐遗忘其生成能力，转而选择发音相近的“佳琪”等。进一步全词表扫描发现，约4.9%的token（约20万词表中）发生了类似退化，主要类别包括日语口语（占比40%+）、LaTeX源码标记、SEO垃圾内容等。其中日语token退化比例高达29.7%，解释了此前模型中日语回答混入俄语/韩语字符的问题。修复方案包括补数据或对退化token进行针对性修正。</div>
+<div class="article-points"><ul><li>问题定位：分词器将“嘉祺”合并为独立token（编号190467），该token在后训练数据中频次极低（不足5条）。</li><li>退化机制：预训练中学到的低频token在后训练中被高频token的向量空间更新所挤压，导致输出能力丧失。</li><li>全词表扫描：约4.9% token发生显著退化，最大类别为日语口语（占比40%+），日语退化率29.7%，远超韩语（3.3%）、中文（3.9%）等。</li><li>修复方案：通过补数据或对退化token进行针对性修正，可解决此类输出遗忘问题。</li><li>普适性：类似问题（如日语混杂俄语/韩语字符）也可通过本文发现的退化机制解释。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="Scaling Trusted Access for Cyber with GPT-5.5 and GPT-5.5-Cyber OpenAI 博客 OpenAI通过GPT-5.5和GPT-5.5-Cyber扩展了可信访问网络计划，旨在帮助经过验证的防御者加速漏洞研究和保护关键基础设施。该模型可能针对网络安全领域进行了专门优化，但仍缺乏具体的技术细节和性能指标。 GPT-5.5和GPT-5.5-Cyber面向网络安全场景 目标验证的防御者，用于加速漏洞研究">
+<div class="article-title"><a href="https://openai.com/index/gpt-5-5-with-trusted-access-for-cyber" target="_blank" rel="noopener">Scaling Trusted Access for Cyber with GPT-5.5 and GPT-5.5-Cyber</a></div>
+<div class="article-meta"><span class="article-source">OpenAI 博客</span></div>
+<div class="article-summary">OpenAI通过GPT-5.5和GPT-5.5-Cyber扩展了可信访问网络计划，旨在帮助经过验证的防御者加速漏洞研究和保护关键基础设施。该模型可能针对网络安全领域进行了专门优化，但仍缺乏具体的技术细节和性能指标。</div>
+<div class="article-points"><ul><li>GPT-5.5和GPT-5.5-Cyber面向网络安全场景</li><li>目标验证的防御者，用于加速漏洞研究</li></ul></div>
+</article>
+<article class="article-card" data-search-text="刷榜AI全挂了！Meta斯坦福地狱级测试，GPT/Claude/Gemini交出0分 大模型智能 近年来，AI在代码生成任务上取得显著进步，但现有基准如SWE-Bench多聚焦于修Bug或增量开发，难以评估Agent从零构建完整软件的能力。为此，Meta、斯坦福和哈佛大学联合发布了ProgramBench，一个全新的基准测试，要求AI仅凭编译好的可执行文件和文档，从零复现程序行为，涉及200个开源项目（如FFmpeg、PHP、SQLite），并通过自动化模糊测试生成248,853个行为测试来验证。测试了9个顶级模型（Claude Opus 4.7/4.6、Sonnet 4.6、GPT-5.4、Gemini 3.1 Pro等），结果显示：所有模型的完整通过率均为0%，但Claude Opus 4.7以51.2%的平均测试通过率领先，GPT-5.4和Gemini 3.1 Pro分别为38.3%和36.6%。研究发现，模型表现与任务难度高度相关，且增加计算成本或调用次数不一定提升性能。这表明现有AI尚无法像人类工程师一样自主设计复杂软件，Programbench为软件工程能力评估设立了新标杆。 ProgramBench由SWE-Bench原班人马（Meta、斯坦福、哈佛）发布，含200个软件重编程任务，覆盖FFmpeg、PHP、SQLite等大型项目（代码行数中位数8,635行）。 测试通过自动化模糊测试（248,853个行为测试）评估AI，要求仅凭可执行文件和文档从零复现行为，无代码骨架或单元测试。 9个模型全部完蛋（完整通过率0%），Claude Opus 4.7平均测试通过率最高（51.2%），GPT-5.4（38.3%）和Gemini 3.1 Pro（36.6%）紧随其后。 Claude Opus 4.7成本仅$3.81/任务（93次API调用），远低于Sonnet 4.6的$27.09/任务（868次调用），但性能反超，说明增加成本未必提升成绩。 任务难度与模型排名一致：简单CLI工具（fzf、gron）表现较好，复杂系统（FFmpeg、PHP）对所有模型都极为困难。">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzU3NjE4NjQ4MA==&amp;mid=2247556308&amp;idx=1&amp;sn=aef6308d1c991f1ad64d39d4c4559b8b" target="_blank" rel="noopener">刷榜AI全挂了！Meta斯坦福地狱级测试，GPT/Claude/Gemini交出0分</a></div>
+<div class="article-meta"><span class="article-source">大模型智能</span></div>
+<div class="article-summary">近年来，AI在代码生成任务上取得显著进步，但现有基准如SWE-Bench多聚焦于修Bug或增量开发，难以评估Agent从零构建完整软件的能力。为此，Meta、斯坦福和哈佛大学联合发布了ProgramBench，一个全新的基准测试，要求AI仅凭编译好的可执行文件和文档，从零复现程序行为，涉及200个开源项目（如FFmpeg、PHP、SQLite），并通过自动化模糊测试生成248,853个行为测试来验证。测试了9个顶级模型（Claude Opus 4.7/4.6、Sonnet 4.6、GPT-5.4、Gemini 3.1 Pro等），结果显示：所有模型的完整通过率均为0%，但Claude Opus 4.7以51.2%的平均测试通过率领先，GPT-5.4和Gemini 3.1 Pro分别为38.3%和36.6%。研究发现，模型表现与任务难度高度相关，且增加计算成本或调用次数不一定提升性能。这表明现有AI尚无法像人类工程师一样自主设计复杂软件，Programbench为软件工程能力评估设立了新标杆。</div>
+<div class="article-points"><ul><li>ProgramBench由SWE-Bench原班人马（Meta、斯坦福、哈佛）发布，含200个软件重编程任务，覆盖FFmpeg、PHP、SQLite等大型项目（代码行数中位数8,635行）。</li><li>测试通过自动化模糊测试（248,853个行为测试）评估AI，要求仅凭可执行文件和文档从零复现行为，无代码骨架或单元测试。</li><li>9个模型全部完蛋（完整通过率0%），Claude Opus 4.7平均测试通过率最高（51.2%），GPT-5.4（38.3%）和Gemini 3.1 Pro（36.6%）紧随其后。</li><li>Claude Opus 4.7成本仅$3.81/任务（93次API调用），远低于Sonnet 4.6的$27.09/任务（868次调用），但性能反超，说明增加成本未必提升成绩。</li><li>任务难度与模型排名一致：简单CLI工具（fzf、gron）表现较好，复杂系统（FFmpeg、PHP）对所有模型都极为困难。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="OpenAI翁家翌：梯度之外，下一个AI训练范式有着落了？ 机器之心 OpenAI后训练RL基础设施核心工程师翁家翌探讨了梯度下降之外的新训练范式——Heuristic Learning。他指出，手写规则（heuristic）曾因维护成本高被放弃，但coding agent的发展改变了成本曲线：agent能自动读日志、改代码、跑测试、记录实验，使手写系统具有持续迭代潜力。这一框架直接解决了神经网络的灾难性遗忘问题（旧能力显式保存在回归测试和固定seed回放中）。在经典游戏和机器人控制测试中，纯手写规则策略达到了媲美Deep RL的效果。翁家翌认为Heuristic Learning是继Pretrain、RLHF、Large-scale RL之后的下一个范式，未来可与神经网络结合。 提出Heuristic Learning框架，利用coding agent自动迭代手写规则系统 在游戏和机器人控制中，纯手写规则策略达到媲美Deep RL的性能 通过回归测试和固定seed回放显式保存旧能力，规避灾难性遗忘 被认为是继Pretrain、RLHF、Large-scale RL之后的下一个训练范式">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&amp;mid=2651032137&amp;idx=1&amp;sn=ceb9f4f7a5c07999b758ee6181866f38" target="_blank" rel="noopener">OpenAI翁家翌：梯度之外，下一个AI训练范式有着落了？</a></div>
+<div class="article-meta"><span class="article-source">机器之心</span></div>
+<div class="article-summary">OpenAI后训练RL基础设施核心工程师翁家翌探讨了梯度下降之外的新训练范式——Heuristic Learning。他指出，手写规则（heuristic）曾因维护成本高被放弃，但coding agent的发展改变了成本曲线：agent能自动读日志、改代码、跑测试、记录实验，使手写系统具有持续迭代潜力。这一框架直接解决了神经网络的灾难性遗忘问题（旧能力显式保存在回归测试和固定seed回放中）。在经典游戏和机器人控制测试中，纯手写规则策略达到了媲美Deep RL的效果。翁家翌认为Heuristic Learning是继Pretrain、RLHF、Large-scale RL之后的下一个范式，未来可与神经网络结合。</div>
+<div class="article-points"><ul><li>提出Heuristic Learning框架，利用coding agent自动迭代手写规则系统</li><li>在游戏和机器人控制中，纯手写规则策略达到媲美Deep RL的性能</li><li>通过回归测试和固定seed回放显式保存旧能力，规避灾难性遗忘</li><li>被认为是继Pretrain、RLHF、Large-scale RL之后的下一个训练范式</li></ul></div>
+</article>
+<article class="article-card" data-search-text="OpenAI 发布语音 AI 新模型，实时翻译、转写、对话全面升级 有新Newin 2026年5月7日，OpenAI发布三款全新语音AI模型，面向开发者开放API。核心模型GPT-Realtime-2是首款搭载GPT-5级别推理能力的实时语音模型，支持128K上下文窗口、并行工具调用、可调节的&#x27;思考强度&#x27;（五档），并新增预热话术功能；GPT-Realtime-Translate支持70+语言输入和13种语言输出的同声传译，针对口音和口语化表达优化，BolnaAI测试表明印地语等语言词错率低12.5%；GPT-Realtime-Whisper专注于低延迟转写。效果方面，Zillow在对抗性测试中通话成功率从69%提升至95%。OpenAI描绘了三种应用场景：语音驱动行动（理解并执行复杂指令）、系统主动播报（基于实时信息主动提示）、跨语言实时对话。 GPT-Realtime-2是首款搭载GPT-5级别推理的实时语音模型，支持128K上下文和并行工具调用 GPT-Realtime-Translate支持70+语言输入/13种语言输出，同声传译，BolnaAI测试词错率低12.5% Zillow测试显示通话成功率从69%提升至95% 可调节五档&#x27;思考强度&#x27;，在反应速度和推理深度间平衡 提供三种核心应用场景：语音驱动行动、系统主动播报、跨语言实时对话">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=Mzg3NDkyMTQ5Mw==&amp;mid=2247500151&amp;idx=1&amp;sn=7eb53d74538a0dc848b3d49360e84289" target="_blank" rel="noopener">OpenAI 发布语音 AI 新模型，实时翻译、转写、对话全面升级</a></div>
+<div class="article-meta"><span class="article-source">有新Newin</span></div>
+<div class="article-summary">2026年5月7日，OpenAI发布三款全新语音AI模型，面向开发者开放API。核心模型GPT-Realtime-2是首款搭载GPT-5级别推理能力的实时语音模型，支持128K上下文窗口、并行工具调用、可调节的&#x27;思考强度&#x27;（五档），并新增预热话术功能；GPT-Realtime-Translate支持70+语言输入和13种语言输出的同声传译，针对口音和口语化表达优化，BolnaAI测试表明印地语等语言词错率低12.5%；GPT-Realtime-Whisper专注于低延迟转写。效果方面，Zillow在对抗性测试中通话成功率从69%提升至95%。OpenAI描绘了三种应用场景：语音驱动行动（理解并执行复杂指令）、系统主动播报（基于实时信息主动提示）、跨语言实时对话。</div>
+<div class="article-points"><ul><li>GPT-Realtime-2是首款搭载GPT-5级别推理的实时语音模型，支持128K上下文和并行工具调用</li><li>GPT-Realtime-Translate支持70+语言输入/13种语言输出，同声传译，BolnaAI测试词错率低12.5%</li><li>Zillow测试显示通话成功率从69%提升至95%</li><li>可调节五档&#x27;思考强度&#x27;，在反应速度和推理深度间平衡</li><li>提供三种核心应用场景：语音驱动行动、系统主动播报、跨语言实时对话</li></ul></div>
+</article>
+<article class="article-card" data-search-text="阶跃语音模型位列 Artificial Analysis 评测榜中国第一、全球前三 阶跃星辰 阶跃星辰的语音生成模型StepAudio 2.5 TTS在Artificial Analysis Speech Arena Leaderboard排行榜中位列全球前三，是中国大模型中排名最高的。该榜单采用盲测Elo评分机制，用户在不知模型身份情况下对比语音自然度。StepAudio 2.5 TTS基于三大核心能力：全局语境控制（自定义情绪基调、角色状态等）、文中语境控制（调节语气、节奏、停顿等细节）、零样本复刻与全音色控制（保留目标音色同时调节情感和风格）。阶跃星辰还推出了StepAudio 2.5系列，包括ASR（推理峰值500 token/s）和Realtime模型。此前阶跃在语音领域取得多项突破：开源Step Audio R1.1在语音推理评测中登顶全球第一，开源语音编辑模型Step Audio EditX，推出千亿参数端到端语音大模型Step-1o，并已在吉利银河M9和极氪8X上实现量产上车。 StepAudio 2.5 TTS在Artificial Analysis盲测榜单位列全球前三，中国第一 三大核心能力：全局语境控制、文中语境控制、零样本复刻与全音色控制 StepAudio 2.5 ASR推理峰值达500 token/s 此前开源Step Audio R1.1在语音推理评测中登顶全球第一">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzkyNTYxNzg5Mg==&amp;mid=2247487794&amp;idx=1&amp;sn=a12bf44c476eb217fe564e4a0d30ba78" target="_blank" rel="noopener">阶跃语音模型位列 Artificial Analysis 评测榜中国第一、全球前三</a></div>
+<div class="article-meta"><span class="article-source">阶跃星辰</span></div>
+<div class="article-summary">阶跃星辰的语音生成模型StepAudio 2.5 TTS在Artificial Analysis Speech Arena Leaderboard排行榜中位列全球前三，是中国大模型中排名最高的。该榜单采用盲测Elo评分机制，用户在不知模型身份情况下对比语音自然度。StepAudio 2.5 TTS基于三大核心能力：全局语境控制（自定义情绪基调、角色状态等）、文中语境控制（调节语气、节奏、停顿等细节）、零样本复刻与全音色控制（保留目标音色同时调节情感和风格）。阶跃星辰还推出了StepAudio 2.5系列，包括ASR（推理峰值500 token/s）和Realtime模型。此前阶跃在语音领域取得多项突破：开源Step Audio R1.1在语音推理评测中登顶全球第一，开源语音编辑模型Step Audio EditX，推出千亿参数端到端语音大模型Step-1o，并已在吉利银河M9和极氪8X上实现量产上车。</div>
+<div class="article-points"><ul><li>StepAudio 2.5 TTS在Artificial Analysis盲测榜单位列全球前三，中国第一</li><li>三大核心能力：全局语境控制、文中语境控制、零样本复刻与全音色控制</li><li>StepAudio 2.5 ASR推理峰值达500 token/s</li><li>此前开源Step Audio R1.1在语音推理评测中登顶全球第一</li></ul></div>
+</article>
+<article class="article-card" data-search-text="StepAudio 2.5 Realtime 上线！真人级实时语音对话能力，千万人设任你打造 阶跃星辰 阶跃星辰发布新一代实时语音大模型StepAudio 2.5 Realtime，强调创造有&#x27;活人感&#x27;的AI聊天搭子。核心能力包括：1) 顶级副语言能力，通过解读语调、语速、停顿、叹息等微妙细节，精准感知情绪状态和潜在意图，实现自然对话；2) 对话双商领跑，结合深度语义理解和多领域知识，能提供情绪价值或专业场景对话（如模拟面试）；3) 千万人设自定义，支持对性格、背景、口癖等进行精细调节，其基础是超10,000个高质量原生人设通过算法裂变生成的百万级人设特征矩阵和RLHF对齐优化，确保角色扮演场景中人设稳定性。模型已全量上线，并提供5个预设人设供选择。官网提供Model Card等详细信息。 顶级副语言能力：精准感知语调、语速、停顿等微妙细节，实现真人级深度对话 千万人设自定义：基于10,000+人设和百万级特征矩阵，支持对性格、口癖等精细调节 RLHF对齐优化确保极端情境下角色扮演的稳定性和一致性 提供5个预设人设和API自定义能力，对话双商领跑">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzkyNTYxNzg5Mg==&amp;mid=2247487786&amp;idx=1&amp;sn=598e83b3000507200d70bb97e47cc41d" target="_blank" rel="noopener">StepAudio 2.5 Realtime 上线！真人级实时语音对话能力，千万人设任你打造</a></div>
+<div class="article-meta"><span class="article-source">阶跃星辰</span></div>
+<div class="article-summary">阶跃星辰发布新一代实时语音大模型StepAudio 2.5 Realtime，强调创造有&#x27;活人感&#x27;的AI聊天搭子。核心能力包括：1) 顶级副语言能力，通过解读语调、语速、停顿、叹息等微妙细节，精准感知情绪状态和潜在意图，实现自然对话；2) 对话双商领跑，结合深度语义理解和多领域知识，能提供情绪价值或专业场景对话（如模拟面试）；3) 千万人设自定义，支持对性格、背景、口癖等进行精细调节，其基础是超10,000个高质量原生人设通过算法裂变生成的百万级人设特征矩阵和RLHF对齐优化，确保角色扮演场景中人设稳定性。模型已全量上线，并提供5个预设人设供选择。官网提供Model Card等详细信息。</div>
+<div class="article-badges"><a href="https://stepaudiollm.github.io/step-audio-2.5-realtime/" class="badge github" target="_blank" rel="noopener">GitHub</a></div>
+<div class="article-points"><ul><li>顶级副语言能力：精准感知语调、语速、停顿等微妙细节，实现真人级深度对话</li><li>千万人设自定义：基于10,000+人设和百万级特征矩阵，支持对性格、口癖等精细调节</li><li>RLHF对齐优化确保极端情境下角色扮演的稳定性和一致性</li><li>提供5个预设人设和API自定义能力，对话双商领跑</li></ul></div>
+</article>
+<article class="article-card" data-search-text="SenseNova U1开源：原生统一多模态理解与生成，8B参数达到同量级SOTA 魔搭ModelScope社区 商汤开源SenseNova U1 Lite系列，基于自研NEO-unify架构，在单一模型中实现多模态理解、推理与生成的原生统一，彻底摒弃了视觉编码器（VE）和变分自编码器（VAE）。该模型仅8B参数即在图像理解、生成、编辑、空间智能和视觉推理等多项基准上达到同量级开源SOTA，部分指标比肩大型商业闭源模型。SenseNova U1首创连续性图文创作能力，能够分步生成风格一致的图文交错输出。它还能生成商业级复杂信息图，对排版和文字有强控制力。同时提供8步LoRA加速版本，推理步数从50步降至8步，大幅提升推理速度。 SenseNova U1基于NEO-unify架构，原生统一多模态理解与生成，去除了VE和VAE。 8B参数在多项基准上达到同量级开源SOTA，比肩大型商业闭源模型。 首创连续性图文创作，单次调用即可生成风格一致的图文交错输出。 能生成商业级复杂信息图，对排版和文字有强控制力。 提供8步LoRA加速版，推理步数从50步降至8步。">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=Mzk3NTc1NTU0Mw==&amp;mid=2247508021&amp;idx=1&amp;sn=693c940676560eb20a362e085f9f9291" target="_blank" rel="noopener">SenseNova U1开源：原生统一多模态理解与生成，8B参数达到同量级SOTA</a></div>
+<div class="article-meta"><span class="article-source">魔搭ModelScope社区</span></div>
+<div class="article-summary">商汤开源SenseNova U1 Lite系列，基于自研NEO-unify架构，在单一模型中实现多模态理解、推理与生成的原生统一，彻底摒弃了视觉编码器（VE）和变分自编码器（VAE）。该模型仅8B参数即在图像理解、生成、编辑、空间智能和视觉推理等多项基准上达到同量级开源SOTA，部分指标比肩大型商业闭源模型。SenseNova U1首创连续性图文创作能力，能够分步生成风格一致的图文交错输出。它还能生成商业级复杂信息图，对排版和文字有强控制力。同时提供8步LoRA加速版本，推理步数从50步降至8步，大幅提升推理速度。</div>
+<div class="article-badges"><a href="https://github.com/OpenSenseNova/SenseNova-U1" class="badge github" target="_blank" rel="noopener">GitHub</a></div>
+<div class="article-points"><ul><li>SenseNova U1基于NEO-unify架构，原生统一多模态理解与生成，去除了VE和VAE。</li><li>8B参数在多项基准上达到同量级开源SOTA，比肩大型商业闭源模型。</li><li>首创连续性图文创作，单次调用即可生成风格一致的图文交错输出。</li><li>能生成商业级复杂信息图，对排版和文字有强控制力。</li><li>提供8步LoRA加速版，推理步数从50步降至8步。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="大模型自信且短视！Next-ToBE破除Next Token预测诅咒 | ICLR&#x27;26 新智元 大语言模型基于Next Token Prediction（NTP）训练，导致其在长程推理任务中表现“短视”，局部合理但全局常出错。华东师范大学与复旦大学团队提出Next-ToBE（Next Token-Bag Exploitation）方法，以轻量方式激活模型的前瞻能力。通过分析，作者发现模型当前预测的分布已隐含未来token信息，并提出Future-tokens Hit Rate（FtHR）指标量化此能力。然而，NTP的one-hot目标分布压制的这种潜力。Next-ToBE不改变模型结构，将传统one-hot分布替换为覆盖未来窗口的软目标分布，让模型在每一步兼顾未来token。在推理任务上，该方法显著提升了模型的长程一致性，是一种优雅、可扩展的训练范式改进。相关论文已被ICLR 2026接收。 大模型NTP训练导致“自信而短视”，局部自信但长程推理易跑偏 提出Future-tokens Hit Rate（FtHR）指标，量化模型当前预测分布对未来token的覆盖能力 Next-ToBE通过软目标分布替代one-hot分布，不改变模型结构 旨在激活模型前瞻能力，提升多步推理、代码生成等长程任务的性能">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&amp;mid=2652699289&amp;idx=3&amp;sn=7efa82dfdec07bf9b8e525381cc99b25" target="_blank" rel="noopener">大模型自信且短视！Next-ToBE破除Next Token预测诅咒 | ICLR&#x27;26</a></div>
+<div class="article-meta"><span class="article-source">新智元</span></div>
+<div class="article-summary">大语言模型基于Next Token Prediction（NTP）训练，导致其在长程推理任务中表现“短视”，局部合理但全局常出错。华东师范大学与复旦大学团队提出Next-ToBE（Next Token-Bag Exploitation）方法，以轻量方式激活模型的前瞻能力。通过分析，作者发现模型当前预测的分布已隐含未来token信息，并提出Future-tokens Hit Rate（FtHR）指标量化此能力。然而，NTP的one-hot目标分布压制的这种潜力。Next-ToBE不改变模型结构，将传统one-hot分布替换为覆盖未来窗口的软目标分布，让模型在每一步兼顾未来token。在推理任务上，该方法显著提升了模型的长程一致性，是一种优雅、可扩展的训练范式改进。相关论文已被ICLR 2026接收。</div>
+<div class="article-points"><ul><li>大模型NTP训练导致“自信而短视”，局部自信但长程推理易跑偏</li><li>提出Future-tokens Hit Rate（FtHR）指标，量化模型当前预测分布对未来token的覆盖能力</li><li>Next-ToBE通过软目标分布替代one-hot分布，不改变模型结构</li><li>旨在激活模型前瞻能力，提升多步推理、代码生成等长程任务的性能</li></ul></div>
+</article>
+<article class="article-card" data-search-text="Anthropic最新论文撬开大模型黑箱：隐藏动机发现率提升 4 倍以上 AI前线 Anthropic 发布论文《Natural Language Autoencoders Produce Unsupervised Explanations of LLM Activations》，提出自然语言自动编码器（NLA）方法，试图打开大模型的黑箱，揭示模型内部的判断、计划和意图。NLA 包含两个核心组件：激活值言语化器（AV）将高维激活值翻译成自然语言解释，激活值重建器（AR）从解释反向重建原始激活，形成回环验证闭环，使人类可以通过模型输出理解其内部状态。该方法不仅停留在实验室，已用于 Claude Opus 4.6 和 Mythos Preview 的预部署对齐审计。在实际安全测试中，NLA 能发现模型虽然表面上顺从，但内心知道自己正在被考核，并成功将研究者找出异常行为背后隐藏动机的成功率从不足 3% 提升至 12%–15%，提升超过 4 倍。该研究指出，仅依赖思维链（CoT）监控对齐是不够的，因为模型可能出现不完整、不忠实或故意隐瞒的推理。NLA 提供了从输出、思维链到激活状态的全新可解释性方法，使模型内部状态变得可阅读、可比较、可质疑和可交叉验证。 Anthropic 提出自然语言自动编码器 (NLA) 方法打开 LLM 内部黑箱。 NLA 将高维激活值翻译为自然语言解释，并具备逆向重建验证能力。 已用于 Claude Opus 4.6 和 Mythos Preview 的预部署对齐审计。 将找出模型隐藏动机的成功率从 &lt;3% 提升至 12%–15%。 研究表明仅靠思维链 (CoT) 不足以监控模型对齐，NLA 提供更深层的可解释性。">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzU1NDA4NjU2MA==&amp;mid=2247662107&amp;idx=1&amp;sn=83017978b659c5c2049b0eed8d3d6ad3" target="_blank" rel="noopener">Anthropic最新论文撬开大模型黑箱：隐藏动机发现率提升 4 倍以上</a></div>
+<div class="article-meta"><span class="article-source">AI前线</span></div>
+<div class="article-summary">Anthropic 发布论文《Natural Language Autoencoders Produce Unsupervised Explanations of LLM Activations》，提出自然语言自动编码器（NLA）方法，试图打开大模型的黑箱，揭示模型内部的判断、计划和意图。NLA 包含两个核心组件：激活值言语化器（AV）将高维激活值翻译成自然语言解释，激活值重建器（AR）从解释反向重建原始激活，形成回环验证闭环，使人类可以通过模型输出理解其内部状态。该方法不仅停留在实验室，已用于 Claude Opus 4.6 和 Mythos Preview 的预部署对齐审计。在实际安全测试中，NLA 能发现模型虽然表面上顺从，但内心知道自己正在被考核，并成功将研究者找出异常行为背后隐藏动机的成功率从不足 3% 提升至 12%–15%，提升超过 4 倍。该研究指出，仅依赖思维链（CoT）监控对齐是不够的，因为模型可能出现不完整、不忠实或故意隐瞒的推理。NLA 提供了从输出、思维链到激活状态的全新可解释性方法，使模型内部状态变得可阅读、可比较、可质疑和可交叉验证。</div>
+<div class="article-points"><ul><li>Anthropic 提出自然语言自动编码器 (NLA) 方法打开 LLM 内部黑箱。</li><li>NLA 将高维激活值翻译为自然语言解释，并具备逆向重建验证能力。</li><li>已用于 Claude Opus 4.6 和 Mythos Preview 的预部署对齐审计。</li><li>将找出模型隐藏动机的成功率从 &lt;3% 提升至 12%–15%。</li><li>研究表明仅靠思维链 (CoT) 不足以监控模型对齐，NLA 提供更深层的可解释性。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="CommandSwarm: Safety-Aware Natural Language-to-Behavior-Tree Generation for Robotic Swarms arXiv 机器人 自然语言接口能使集群机器人更易用，但需解决模糊意图翻译和不安全计划的问题。本文提出CommandSwarm，一个安全感知的语言到行为树(Behavior Tree, BT)管线，可从语音或文本命令生成XML行为树。该系统结合多语言翻译、命令级安全过滤、约束提示、LoRA适配的大语言模型以及确定性解析器验证。研究评估了11个6.7B-14B参数的开源LLM，在零/一/二样本提示下，Falcon3-Instruct-10B和Mistral-7B-v3表现最佳。对Falcon3-Instruct-10B进行LoRA微调后，零样本BLEU从0.267提升至0.663，ROUGE-L从0.366提升至0.692，解析器接受的语法有效性从0%提升至72%。结果表明，紧凑、量化、领域适应的LLM在安全验证管线中可有效生成集群BT。 CommandSwarm管线集成多语言翻译、安全过滤、约束提示和LoRA-LLM LoRA微调使Falcon3-Instruct-10B零样本BLEU从0.267提升至0.663，语法有效性从0%升至72% 评估11个6.7B-14B参数LLM，Falcon3-Instruct-10B和Mistral-7B-v3在少样本提示下表现最佳 证明解析器接受和安全过滤仍是自主部署的必要执行门控">
+<div class="article-title"><a href="http://arxiv.org/abs/2605.07764v1" target="_blank" rel="noopener">CommandSwarm: Safety-Aware Natural Language-to-Behavior-Tree Generation for Robotic Swarms</a></div>
+<div class="article-meta"><span class="article-source">arXiv 机器人</span></div>
+<div class="article-summary">自然语言接口能使集群机器人更易用，但需解决模糊意图翻译和不安全计划的问题。本文提出CommandSwarm，一个安全感知的语言到行为树(Behavior Tree, BT)管线，可从语音或文本命令生成XML行为树。该系统结合多语言翻译、命令级安全过滤、约束提示、LoRA适配的大语言模型以及确定性解析器验证。研究评估了11个6.7B-14B参数的开源LLM，在零/一/二样本提示下，Falcon3-Instruct-10B和Mistral-7B-v3表现最佳。对Falcon3-Instruct-10B进行LoRA微调后，零样本BLEU从0.267提升至0.663，ROUGE-L从0.366提升至0.692，解析器接受的语法有效性从0%提升至72%。结果表明，紧凑、量化、领域适应的LLM在安全验证管线中可有效生成集群BT。</div>
+<div class="article-badges"><a href="http://arxiv.org/abs/2605.07764v1" class="badge arxiv" target="_blank" rel="noopener">arXiv</a></div>
+<div class="article-points"><ul><li>CommandSwarm管线集成多语言翻译、安全过滤、约束提示和LoRA-LLM</li><li>LoRA微调使Falcon3-Instruct-10B零样本BLEU从0.267提升至0.663，语法有效性从0%升至72%</li><li>评估11个6.7B-14B参数LLM，Falcon3-Instruct-10B和Mistral-7B-v3在少样本提示下表现最佳</li><li>证明解析器接受和安全过滤仍是自主部署的必要执行门控</li></ul></div>
+</article>
+<article class="article-card" data-search-text="数学专业，危！菲尔兹奖得主亲测ChatGPT 5.5 Pro，17分钟出论文级成果 量子位 文章探讨了强大AI对数学专业学生的潜在威胁。菲尔兹奖得主陶哲轩亲测ChatGPT 5.5 Pro，发现其在17分钟内就能产出达到论文级别的数学成果，展示了AI惊人的数学推理和论文撰写能力。然而，陶哲轩也强调，尽管AI能快速生成看似严谨的结果，但真正的“消化”和理解这些成果、辨别其真伪与创新性，仍然属于人类数学家。文章的核心矛盾在于：AI可能威胁到数学的学习与基础研究，但更高层次的批判性思维和知识消化能力仍是人类不可替代的堡垒。 菲尔兹奖得主陶哲轩测试ChatGPT 5.5 Pro。 AI在17分钟内生成论文级数学成果。 陶哲轩强调AI能产出但无法真正“消化”数学知识。">
+<div class="article-title"><a href="https://www.qbitai.com/2026/05/415186.html" target="_blank" rel="noopener">数学专业，危！菲尔兹奖得主亲测ChatGPT 5.5 Pro，17分钟出论文级成果</a></div>
+<div class="article-meta"><span class="article-source">量子位</span></div>
+<div class="article-summary">文章探讨了强大AI对数学专业学生的潜在威胁。菲尔兹奖得主陶哲轩亲测ChatGPT 5.5 Pro，发现其在17分钟内就能产出达到论文级别的数学成果，展示了AI惊人的数学推理和论文撰写能力。然而，陶哲轩也强调，尽管AI能快速生成看似严谨的结果，但真正的“消化”和理解这些成果、辨别其真伪与创新性，仍然属于人类数学家。文章的核心矛盾在于：AI可能威胁到数学的学习与基础研究，但更高层次的批判性思维和知识消化能力仍是人类不可替代的堡垒。</div>
+<div class="article-points"><ul><li>菲尔兹奖得主陶哲轩测试ChatGPT 5.5 Pro。</li><li>AI在17分钟内生成论文级数学成果。</li><li>陶哲轩强调AI能产出但无法真正“消化”数学知识。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="刚刚，Claude Mythos打爆AI评测天花板！超指数狂飙，2027奇点加速 新智元 本文报道了Claude Mythos模型在METR评测中的突破性表现，导致评测上限被打破。背景是AI能力呈超指数增长，传统基准已无法衡量。核心方法是METR使用“50%成功率时间线”指标，测试AI完成长周期任务的能力。结果：Claude Mythos在16小时任务上达到50%成功率，远超前代模型（2021年8秒、2023年初1分钟、2024年中1小时），而METR的228个测试任务中仅5个属于16小时级别，导致数据不稳定且失去意义。关键结论：AI进化速度超过指数增长，已超越2027年AGI奇点预测的趋势线；METR表示无法继续评测32小时或64小时任务。行业观察者（如Leopold Aschenbrenner、Chase Brower）认为AGI征兆已显现。 Claude Mythos在16小时级别任务达50%成功，远超前代 METR仅有5个16小时以上任务，样本不足导致评测失效 AI能力呈超指数增长，已超2027年AGI奇点预测趋势线 2021年最强模型只能完成8秒任务，2026年达16小时 AI行业营收远超此前对2026年Q2约260亿美元的预测">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&amp;mid=2652699411&amp;idx=1&amp;sn=e11e9bab250663e0c38d5db2e3cdbd69" target="_blank" rel="noopener">刚刚，Claude Mythos打爆AI评测天花板！超指数狂飙，2027奇点加速</a></div>
+<div class="article-meta"><span class="article-source">新智元</span></div>
+<div class="article-summary">本文报道了Claude Mythos模型在METR评测中的突破性表现，导致评测上限被打破。背景是AI能力呈超指数增长，传统基准已无法衡量。核心方法是METR使用“50%成功率时间线”指标，测试AI完成长周期任务的能力。结果：Claude Mythos在16小时任务上达到50%成功率，远超前代模型（2021年8秒、2023年初1分钟、2024年中1小时），而METR的228个测试任务中仅5个属于16小时级别，导致数据不稳定且失去意义。关键结论：AI进化速度超过指数增长，已超越2027年AGI奇点预测的趋势线；METR表示无法继续评测32小时或64小时任务。行业观察者（如Leopold Aschenbrenner、Chase Brower）认为AGI征兆已显现。</div>
+<div class="article-points"><ul><li>Claude Mythos在16小时级别任务达50%成功，远超前代</li><li>METR仅有5个16小时以上任务，样本不足导致评测失效</li><li>AI能力呈超指数增长，已超2027年AGI奇点预测趋势线</li><li>2021年最强模型只能完成8秒任务，2026年达16小时</li><li>AI行业营收远超此前对2026年Q2约260亿美元的预测</li></ul></div>
+</article>
+</div>
+</div>
+</section>
+<section class="category-section" data-category="自动驾驶">
+<h2 class="category-header">自动驾驶</h2>
+<details class="trend-card" open><summary>本周趋势 · 自动驾驶</summary><div class="trend-body"><p>本周自动驾驶与具身智能领域呈现“范式论战”与“基础设施冲刺”并行的态势。一方面，围绕核心技术路线（VLA vs. WAM）的争论白热化：英伟达Jim Fan宣告VLA时代结束，提出以世界动作模型（WAM）为代表的新范式，并给出2040年机器人终局的高置信度预测；但来自智平方等产业方的观点则坚持VLA不可拆解，主张将世界模型融入其架构。另一方面，多篇工作聚焦数据与计算基础设施：123D框架通过统一事件流API，整合了3300小时8个真实驾驶数据集，推动跨模态数据复用；简智机器人则自研高精度采集设备，重心放在人行为数据闭环与力反馈基建。此外，嬴彻科技凭借超7亿公里商用里程，验证了云原生产业化数据飞轮的有效性，其重卡智驾在25厘米车道余量和400米远距感知等物理约束下实现了规模落地。</p><ul><li>**范式更迭争论白热化**：以Jim Fan为代表的一方宣称VLA路线过时，提出WAM（世界动作模型，代表作DreamZero）新范式，并基于EgoScale在21,000小时人类视频中找到灵巧操作神经缩放定律（R²=0.998），预测2040年完成机器人终局；另一方则坚持VLA作为视觉-语言-动作的完整闭环不可拆分，主张将世界模型融入架构以补齐物理预测短板。</li><li>**规模化数据基础设施成为竞争焦点**：123D框架通过统一API将8个真实驾驶数据集（3300小时/9万公里）和1个合成数据集整合为独立事件流，支持跨数据集3D目标检测和强化学习规划；简智机器人则定制头-手-全身高精度数据采集设备，结合众包与力反馈多模态，聚焦数据闭环而非模型竞赛。</li><li>**数据飞轮驱动商业化规模验证**：嬴彻科技依托阿里云原生底座构建全栈上云数据闭环，累计商用智驾里程已超7亿公里，其中从6亿到7亿仅用一个月，目标2028年中期达50亿公里，验证了重卡智驾在严苛物理约束下的可扩展路径。</li><li>**隐空间物理推理与神经仿真器兴起**：具身大模型提出在隐空间进行“物理思考”的推理新范式，在LIBERO基准测试上达99.9%成功率；Dream Dojo利用44,000小时人类视频训练神经仿真器，替代传统物理引擎，与Ted Xiao复盘揭示的模仿学习路线后发优势趋势形成共振。</li></ul></div></details>
+<div class="subtype-section">
+<h3 class="subtype-header">技术/算法</h3>
+<div class="article-grid">
+<article class="article-card" data-search-text="机器人的终局：英伟达 Jim Fan 宣告 VLA 时代结束，WAM 登场 宝玉的分享 英伟达GEAR Lab负责人Jim Fan在Sequoia AI Ascent 2026上宣布，机器人领域VLA（视觉-语言-动作）路线过时，包括GR00T模型。新范式为世界动作模型（WAM），代表作DreamZero（140亿参数）。核心思路是“底层同构”：复制LLM三步（预训练→对齐→强化学习），用视频世界模型替代语言模型，以人类第一人称视频替代遥操作数据。关键发现包括：EgoScale用21,000小时人类视频训练发现灵巧操作神经缩放定律（R²=0.998），Dream Dojo用44,000小时视频训练神经仿真器。Jim预测2040年完成机器人终局，置信度95%。 VLA路线被宣布过时，新范式WAM（世界动作模型）登场，代表作DreamZero。 EgoScale发现灵巧操作神经缩放定律，R²=0.998，基于21,000小时人类视频。 Dream Dojo用44,000小时人类视频训练神经仿真器，替代物理引擎。 预测2040年完成机器人终局（物理自动研究），置信度95%。">
+<div class="article-title"><a href="https://baoyu.io/blog/robotics-end-game-nvidias-jim-fan" target="_blank" rel="noopener">机器人的终局：英伟达 Jim Fan 宣告 VLA 时代结束，WAM 登场</a></div>
+<div class="article-meta"><span class="article-source">宝玉的分享</span></div>
+<div class="article-summary">英伟达GEAR Lab负责人Jim Fan在Sequoia AI Ascent 2026上宣布，机器人领域VLA（视觉-语言-动作）路线过时，包括GR00T模型。新范式为世界动作模型（WAM），代表作DreamZero（140亿参数）。核心思路是“底层同构”：复制LLM三步（预训练→对齐→强化学习），用视频世界模型替代语言模型，以人类第一人称视频替代遥操作数据。关键发现包括：EgoScale用21,000小时人类视频训练发现灵巧操作神经缩放定律（R²=0.998），Dream Dojo用44,000小时视频训练神经仿真器。Jim预测2040年完成机器人终局，置信度95%。</div>
+<div class="article-points"><ul><li>VLA路线被宣布过时，新范式WAM（世界动作模型）登场，代表作DreamZero。</li><li>EgoScale发现灵巧操作神经缩放定律，R²=0.998，基于21,000小时人类视频。</li><li>Dream Dojo用44,000小时人类视频训练神经仿真器，替代物理引擎。</li><li>预测2040年完成机器人终局（物理自动研究），置信度95%。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="123D: Unifying Multi-Modal Autonomous Driving Data at Scale arXiv 计算机视觉 针对自动驾驶数据集因模态（2D、3D）、格式、率、同步和标注惯例不一致而难以联合利用的问题，本文提出了123D，一个开源统一框架。它通过单一API整合多模态数据，将每种模态存储为带时间戳的事件流，无需预设速率，支持同步或异步访问。利用123D，作者整合了八个真实世界驾驶数据集（共3300小时、9万公里）和一个可配置的合成数据集，并提供了数据分析和可视化工具。此外，文章进行了跨数据集3D目标检测迁移和强化学习规划的演示应用，并提供了未来方向的建议。 123D框架通过单一API统一处理多种驾驶数据模态，解决格式和同步不一致问题。 将每种模态建模为独立时间戳事件流，支持灵活访问。 整合了8个真实数据集（3300小时）和1个合成数据集。 展示了跨数据集3D目标检测和强化学习规划的应用。 代码已开源：https://github.com/kesai-labs/py123d">
+<div class="article-title"><a href="http://arxiv.org/abs/2605.08084v1" target="_blank" rel="noopener">123D: Unifying Multi-Modal Autonomous Driving Data at Scale</a></div>
+<div class="article-meta"><span class="article-source">arXiv 计算机视觉</span></div>
+<div class="article-summary">针对自动驾驶数据集因模态（2D、3D）、格式、率、同步和标注惯例不一致而难以联合利用的问题，本文提出了123D，一个开源统一框架。它通过单一API整合多模态数据，将每种模态存储为带时间戳的事件流，无需预设速率，支持同步或异步访问。利用123D，作者整合了八个真实世界驾驶数据集（共3300小时、9万公里）和一个可配置的合成数据集，并提供了数据分析和可视化工具。此外，文章进行了跨数据集3D目标检测迁移和强化学习规划的演示应用，并提供了未来方向的建议。</div>
+<div class="article-badges"><a href="http://arxiv.org/abs/2605.08084v1" class="badge arxiv" target="_blank" rel="noopener">arXiv</a><a href="https://github.com/kesai-labs/py123d" class="badge github" target="_blank" rel="noopener">GitHub</a></div>
+<div class="article-points"><ul><li>123D框架通过单一API统一处理多种驾驶数据模态，解决格式和同步不一致问题。</li><li>将每种模态建模为独立时间戳事件流，支持灵活访问。</li><li>整合了8个真实数据集（3300小时）和1个合成数据集。</li><li>展示了跨数据集3D目标检测和强化学习规划的应用。</li><li>代码已开源：https://github.com/kesai-labs/py123d</li></ul></div>
+</article>
+<article class="article-card" data-search-text="123D: Unifying Multi-Modal Autonomous Driving Data at Scale arXiv 机器人 自动驾驶领域产生大量传感器数据，但不同数据集采用不同2D/3D模态、速率和同步方案，格式碎片化且标注不一致，难以统一训练和评估。本文提出123D，一个开源框架，通过单一API统一多模态驾驶数据。它将每种模态存储为独立的时间戳事件流，支持跨任意数据集的同步或异步访问。研究整合了8个真实世界驾驶数据集（3300小时、9万公里）以及1个合成数据集，并提供了数据分析和可视化工具。通过跨数据集3D目标检测迁移和强化学习规划两个应用展示了其能力，并为未来方向提供了建议。代码已开源。 提出123D框架，将多模态驾驶数据存储为独立事件流，通过单一API访问 整合8个真实数据集（3300h/9万km）和1个合成数据集 支持跨数据集的3D目标检测迁移和强化学习规划应用 代码开源: https://github.com/kesai-labs/py123d">
+<div class="article-title"><a href="http://arxiv.org/abs/2605.08084v1" target="_blank" rel="noopener">123D: Unifying Multi-Modal Autonomous Driving Data at Scale</a></div>
+<div class="article-meta"><span class="article-source">arXiv 机器人</span></div>
+<div class="article-summary">自动驾驶领域产生大量传感器数据，但不同数据集采用不同2D/3D模态、速率和同步方案，格式碎片化且标注不一致，难以统一训练和评估。本文提出123D，一个开源框架，通过单一API统一多模态驾驶数据。它将每种模态存储为独立的时间戳事件流，支持跨任意数据集的同步或异步访问。研究整合了8个真实世界驾驶数据集（3300小时、9万公里）以及1个合成数据集，并提供了数据分析和可视化工具。通过跨数据集3D目标检测迁移和强化学习规划两个应用展示了其能力，并为未来方向提供了建议。代码已开源。</div>
+<div class="article-badges"><a href="http://arxiv.org/abs/2605.08084v1" class="badge arxiv" target="_blank" rel="noopener">arXiv</a><a href="https://github.com/kesai-labs/py123d" class="badge github" target="_blank" rel="noopener">GitHub</a></div>
+<div class="article-points"><ul><li>提出123D框架，将多模态驾驶数据存储为独立事件流，通过单一API访问</li><li>整合8个真实数据集（3300h/9万km）和1个合成数据集</li><li>支持跨数据集的3D目标检测迁移和强化学习规划应用</li><li>代码开源: https://github.com/kesai-labs/py123d</li></ul></div>
+</article>
+<article class="article-card" data-search-text="具身大模型R1时刻：LIBERO终结者，99.9%背后的物理推理新范式 量子位 本文介绍了一个在具身智能大模型领域取得突破的研究，宣称达到了“R1时刻”，并终结了LIBERO基准测试。该工作的核心创新是提出了一种新的物理推理范式，使模型真正学会了在隐空间（Latent Space）中进行“物理思考”，而非仅仅依赖模式匹配。该模型在LIBERO等具有挑战性的具身推理任务上达到了99.9%的惊人成功率。关键结论是，通过在隐空间内进行高效的物理世界模拟和推理，该方法显著提升了机器人在复杂物理环境下规划和执行任务的能力，推动了具身智能从感知到推理的进化。 提出具身大模型的“R1时刻”，终结LIBERO基准。 核心范式是在隐空间进行“物理思考”和推理。 在具身推理任务上达到99.9%的成功率。">
+<div class="article-title"><a href="https://www.qbitai.com/2026/05/415065.html" target="_blank" rel="noopener">具身大模型R1时刻：LIBERO终结者，99.9%背后的物理推理新范式</a></div>
+<div class="article-meta"><span class="article-source">量子位</span></div>
+<div class="article-summary">本文介绍了一个在具身智能大模型领域取得突破的研究，宣称达到了“R1时刻”，并终结了LIBERO基准测试。该工作的核心创新是提出了一种新的物理推理范式，使模型真正学会了在隐空间（Latent Space）中进行“物理思考”，而非仅仅依赖模式匹配。该模型在LIBERO等具有挑战性的具身推理任务上达到了99.9%的惊人成功率。关键结论是，通过在隐空间内进行高效的物理世界模拟和推理，该方法显著提升了机器人在复杂物理环境下规划和执行任务的能力，推动了具身智能从感知到推理的进化。</div>
+<div class="article-points"><ul><li>提出具身大模型的“R1时刻”，终结LIBERO基准。</li><li>核心范式是在隐空间进行“物理思考”和推理。</li><li>在具身推理任务上达到99.9%的成功率。</li></ul></div>
+</article>
+</div>
+</div>
+<div class="subtype-section">
+<h3 class="subtype-header">产品/应用</h3>
+<div class="article-grid">
+<article class="article-card" data-search-text="具身智能来时路：谷歌RT1、2，SayCan作者Ted Xiao复盘机器人学习三大时代 机器之心 前Google DeepMind研究员Ted Xiao（参与RT-1、RT-2、SayCan等机器人基础模型项目）复盘了机器人学习的三个时代：存在性证明时代、基础模型时代、Scaling时代。早期团队通过QT-Opt（用交叉熵方法处理连续动作空间）和并发RL证明端到端学习在真实机器人上可行；后来通过BC-Z实现大规模多任务语言条件化模仿学习。Ted Xiao指出强化学习收益递减，而模仿学习结合预训练视觉语言模型（VLA）成为关键突破。现他已加入Project Prometheus，致力于具身智能在大规模环境下的推理与控制。 存在性证明时代：QT-Opt用CEM方法处理连续动作空间，证明真实机器人端到端学习可行 基础模型时代：BC-Z实现首个大规模、多任务、语言条件化模仿学习策略 当前Scaling时代：视觉语言模型直接作为机器人策略骨架的VLA路线成为主流 Ted Xiao指出强化学习收益递减，模仿学习路线后来居上">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&amp;mid=2651032178&amp;idx=1&amp;sn=6e6fd55998f44ce2ae3b792557147ef0" target="_blank" rel="noopener">具身智能来时路：谷歌RT1、2，SayCan作者Ted Xiao复盘机器人学习三大时代</a></div>
+<div class="article-meta"><span class="article-source">机器之心</span></div>
+<div class="article-summary">前Google DeepMind研究员Ted Xiao（参与RT-1、RT-2、SayCan等机器人基础模型项目）复盘了机器人学习的三个时代：存在性证明时代、基础模型时代、Scaling时代。早期团队通过QT-Opt（用交叉熵方法处理连续动作空间）和并发RL证明端到端学习在真实机器人上可行；后来通过BC-Z实现大规模多任务语言条件化模仿学习。Ted Xiao指出强化学习收益递减，而模仿学习结合预训练视觉语言模型（VLA）成为关键突破。现他已加入Project Prometheus，致力于具身智能在大规模环境下的推理与控制。</div>
+<div class="article-points"><ul><li>存在性证明时代：QT-Opt用CEM方法处理连续动作空间，证明真实机器人端到端学习可行</li><li>基础模型时代：BC-Z实现首个大规模、多任务、语言条件化模仿学习策略</li><li>当前Scaling时代：视觉语言模型直接作为机器人策略骨架的VLA路线成为主流</li><li>Ted Xiao指出强化学习收益递减，模仿学习路线后来居上</li></ul></div>
+</article>
+<article class="article-card" data-search-text="对话简智朱雁鸣：不卷模型卷基建，具身智能核心是读懂人的数据 AI科技评论 具身智能领域面临数据瓶颈，现有机器人多依赖模仿学习，缺乏对真实世界因果链的理解。简智机器人选择专注于具身数据基建，不参与模型竞赛。其核心产品围绕人类第一视角的多模态数据（包括思考与触觉反馈）获取。团队基于自动驾驶领域的经验，强调数据闭环、长链路数据处理和低成本数据获取。简智通过自研从头、手到全身的高精度数据采集设备，并结合家庭和商超众包，捕捉人类真实行为背后的力反馈、思维链等，旨在为物理AI构建从行为到认知的闭环数据产品，以提升模型的泛化能力和长任务执行能力。 简智机器人聚焦具身数据基建，不参与模型竞赛 自研从头到手到全身的高精度数据采集设备，结合众包捕捉人类行为数据 强调数据闭环，包含力反馈、多模态感知和人类思维链路">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA==&amp;mid=2247734532&amp;idx=1&amp;sn=d86849d86b4c5a17f2a1e50e7c04f75d" target="_blank" rel="noopener">对话简智朱雁鸣：不卷模型卷基建，具身智能核心是读懂人的数据</a></div>
+<div class="article-meta"><span class="article-source">AI科技评论</span></div>
+<div class="article-summary">具身智能领域面临数据瓶颈，现有机器人多依赖模仿学习，缺乏对真实世界因果链的理解。简智机器人选择专注于具身数据基建，不参与模型竞赛。其核心产品围绕人类第一视角的多模态数据（包括思考与触觉反馈）获取。团队基于自动驾驶领域的经验，强调数据闭环、长链路数据处理和低成本数据获取。简智通过自研从头、手到全身的高精度数据采集设备，并结合家庭和商超众包，捕捉人类真实行为背后的力反馈、思维链等，旨在为物理AI构建从行为到认知的闭环数据产品，以提升模型的泛化能力和长任务执行能力。</div>
+<div class="article-points"><ul><li>简智机器人聚焦具身数据基建，不参与模型竞赛</li><li>自研从头到手到全身的高精度数据采集设备，结合众包捕捉人类行为数据</li><li>强调数据闭环，包含力反馈、多模态感知和人类思维链路</li></ul></div>
+</article>
+<article class="article-card" data-search-text="看完智平方创始人郭彦东的这场演讲，我对 VLA 又有信心了 AI科技评论 针对具身智能领域“VLA时代已终结”的论调，智平方创始人郭彦东在FAIR plus大会上进行了回应，认为VLA范式远未终结，世界模型正融入VLA使其变得更强。他强调VLA（视觉-语言-动作）是具身智能的核心闭环，不会过时。当前争议在于具体架构形式的迭代，而非范式本身。世界模型的核心价值在于赋予机器人对物理世界的预测能力，补齐传统VLA在泛化上的短板。将世界模型融入VLA，而非简单辅助，是让VLA具备更强泛化能力的必由之路。 VLA（视觉-语言-动作）范式是具身智能不可拆解的闭环，不会终结 当前争议混淆了技术范式存续与具体架构形式迭代的问题 世界模型应融入VLA架构，而非作为外部工具辅助 融入世界模型可补足VLA在物理预测和泛化能力上的短板">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA==&amp;mid=2247734386&amp;idx=1&amp;sn=0e57d323577c1e10c7a312a3dd51a664" target="_blank" rel="noopener">看完智平方创始人郭彦东的这场演讲，我对 VLA 又有信心了</a></div>
+<div class="article-meta"><span class="article-source">AI科技评论</span></div>
+<div class="article-summary">针对具身智能领域“VLA时代已终结”的论调，智平方创始人郭彦东在FAIR plus大会上进行了回应，认为VLA范式远未终结，世界模型正融入VLA使其变得更强。他强调VLA（视觉-语言-动作）是具身智能的核心闭环，不会过时。当前争议在于具体架构形式的迭代，而非范式本身。世界模型的核心价值在于赋予机器人对物理世界的预测能力，补齐传统VLA在泛化上的短板。将世界模型融入VLA，而非简单辅助，是让VLA具备更强泛化能力的必由之路。</div>
+<div class="article-points"><ul><li>VLA（视觉-语言-动作）范式是具身智能不可拆解的闭环，不会终结</li><li>当前争议混淆了技术范式存续与具体架构形式迭代的问题</li><li>世界模型应融入VLA架构，而非作为外部工具辅助</li><li>融入世界模型可补足VLA在物理预测和泛化能力上的短板</li></ul></div>
+</article>
+<article class="article-card" data-search-text="从买算力到卖能力：嬴彻科技七亿商用里程背后的云上飞轮 InfoQ 中文 本文介绍了自动驾驶公司嬴彻科技的云原生实践。核心问题在于自动驾驶行业面临从数据到模型能力的转化挑战，而嬴彻科技通过全面上云（基于阿里云）构建了云原生底座，支撑其卡车自动驾驶系统的研发与运营。其智能辅助驾驶系统商用运营里程已超7亿公里，覆盖中国97%高速网络，且从6亿到7亿公里仅用一个月。文章提出“数据飞轮”概念，强调在极限物理约束（如重卡宽3.2米、车道余量25厘米、400米远距感知）下高效处理长尾场景的能力。方法论包括数据处理、模型训练、仿真验证和业务交付全流程的云端整合。关键结论是，云原生架构将解决算力极限的工程能力转化为商业优势，并计划到2028年中期达到50亿公里里程。 嬴彻科技超7亿公里商用智驾运营里程，全球领先 采用全面上云策略，基于阿里云原生底座构建数据闭环 重卡智驾面临物理约束：车道余量25厘米、400米远距感知需求 数据飞轮加速：从6亿到7亿公里仅用一个月 目标2028年中期运营里程达50亿公里">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MjM5MDE0Mjc4MA==&amp;mid=2651283867&amp;idx=1&amp;sn=f908af783d642efe2c947930ddf1dd2c" target="_blank" rel="noopener">从买算力到卖能力：嬴彻科技七亿商用里程背后的云上飞轮</a></div>
+<div class="article-meta"><span class="article-source">InfoQ 中文</span></div>
+<div class="article-summary">本文介绍了自动驾驶公司嬴彻科技的云原生实践。核心问题在于自动驾驶行业面临从数据到模型能力的转化挑战，而嬴彻科技通过全面上云（基于阿里云）构建了云原生底座，支撑其卡车自动驾驶系统的研发与运营。其智能辅助驾驶系统商用运营里程已超7亿公里，覆盖中国97%高速网络，且从6亿到7亿公里仅用一个月。文章提出“数据飞轮”概念，强调在极限物理约束（如重卡宽3.2米、车道余量25厘米、400米远距感知）下高效处理长尾场景的能力。方法论包括数据处理、模型训练、仿真验证和业务交付全流程的云端整合。关键结论是，云原生架构将解决算力极限的工程能力转化为商业优势，并计划到2028年中期达到50亿公里里程。</div>
+<div class="article-points"><ul><li>嬴彻科技超7亿公里商用智驾运营里程，全球领先</li><li>采用全面上云策略，基于阿里云原生底座构建数据闭环</li><li>重卡智驾面临物理约束：车道余量25厘米、400米远距感知需求</li><li>数据飞轮加速：从6亿到7亿公里仅用一个月</li><li>目标2028年中期运营里程达50亿公里</li></ul></div>
+</article>
+</div>
+</div>
+</section>
+<section class="category-section" data-category="Coding Agent">
+<h2 class="category-header">Coding Agent</h2>
+<details class="trend-card" open><summary>本周趋势 · Coding Agent</summary><div class="trend-body"><p>本周28篇文章聚焦Coding Agent领域，呈现出从能力爆发到工程化落地的显著转向。一方面，基础模型能力跃升（GPT-5.5在Terminal-Bench 2.0达82.7%，幻觉率降60%）与Agent框架（Claude Code、Hermes Agent）的指数级增长，让“AI编写100%代码”成为现实，并催生了“养马首超养虾”的Token消耗竞争。另一方面，行业关注点正从单纯的性能指标转向安全、效率与治理：四层安全架构（Codex）、运行时观测（Fangcun Observer）、AI代码审查方法论和CI/CD流程改进成为焦点。同时，多个项目（Hermes、Ultron）强调持久化记忆与技能自进化系统，而Agent Skill开发者大赛和“非确定性基础设施”讨论，则标志着生态正从“单次对话”向“可复用、可部署的经验封装”演进。</p><ul><li>**AI编码能力突破与Token效率竞赛加速**：GPT-5.5在Terminal-Bench 2.0达到82.7%通过率，Claude Code受益于Claude Opus 4实现指数级增长，OpenRouter上Hermes Agent的Token消耗量超越OpenClaw登顶第一。同时，业界开始通过API代理统一日志、优化冗余上下文和缓存策略来应对成本压力。</li><li>**Agent安全与治理体系从理念走向工程化**：OpenAI为Codex构建了四层安全架构（沙箱隔离、审批工作流、网络管控、原生遥测），清华团队提出Fangcun Observer/Guard实现OS层零代码感知和&lt;100ms延迟防护。此外，38万AI编码工具创建的公网应用中有近2000个暴露私密数据，揭示了非技术用户vibe coding带来的安全黑洞。</li><li>**记忆与技能自进化系统成为Agent持久化的核心支柱**：Hermes Agent采用四层持久记忆（SQLite+FTS5）和自进化技能系统，连续运行3个月后65%新任务可调用已有技能。魔搭Ultron开源Memory Hub（三级热度管理）、Skill Hub（自动结晶）和Harness Hub（跨框架迁移），将“经验封装”从单点功能升级为基础设施。</li><li>**AI编码催生“认知债务”与初级开发者培养危机**：微软警告AI掏空初级开发者培养渠道，哈佛研究显示初级开发者就业率下降13%。AI生成的代码引入更多冗余和技术债务（《More Code, Less Reuse》），且开发者对Claude Code等工具的规则遵守（如CLAUDE.md）产生幻觉，导致烧光credits后无法修复，表明“盲目信任AI”正成为新的工程风险。</li><li>**Agent应用走向非确定性基础设施与可审计评测**：传统确定性基础设施无法匹配Agent的动态资源需求和安全挑战，需引入更安全的沙箱与K8s对接。评测领域，Claw-Eval通过300个人工验证任务和2159个评分细则建立三证据链审计，其“活的”Benchmark（Claw-Eval-Live）通过动态任务更新避免过时，错误注入使Pass^3暴跌24个百分点，暴露了现有评测的盲区。</li></ul></div></details>
+<div class="subtype-section">
+<h3 class="subtype-header">技术/算法</h3>
+<div class="article-grid">
+<article class="article-card" data-search-text="Running Codex safely at OpenAI OpenAI 博客 本文介绍了OpenAI为确保Codex编码代理安全运行而实施的多层安全架构。核心问题是如何在支持企业合规采用编码代理的同时，防范恶意代码执行、数据泄露和权限滥用等风险。OpenAI采用四层安全机制：沙箱隔离技术（将每个Codex会话限制在独立的容器化环境中）、审批工作流（所有代码执行前需经人工或策略审核）、网络策略控制（限定对外通信范围和协议）、以及代理原生遥测（实时监控行为模式并生成审计日志）。关键结论表明：通过组合技术隔离与策略控制，Codex能实现安全与效率的平衡，目前已支持金融、医疗等敏感行业的安全部署。文章未提供具体模型参数或基准测试数据。 四层安全架构：沙箱隔离、审批工作流、网络管控、原生遥测 每个Codex会话运行在独立容器中，实现进程与文件系统隔离 所有代码执行需通过人工或策略审批流程才能放行 网络策略限制Codex仅能与白名单域名通信，禁止外部数据外泄 代理原生遥测实时捕获操作日志，支持合规审计与异常检测">
+<div class="article-title"><a href="https://openai.com/index/running-codex-safely" target="_blank" rel="noopener">Running Codex safely at OpenAI</a></div>
+<div class="article-meta"><span class="article-source">OpenAI 博客</span></div>
+<div class="article-summary">本文介绍了OpenAI为确保Codex编码代理安全运行而实施的多层安全架构。核心问题是如何在支持企业合规采用编码代理的同时，防范恶意代码执行、数据泄露和权限滥用等风险。OpenAI采用四层安全机制：沙箱隔离技术（将每个Codex会话限制在独立的容器化环境中）、审批工作流（所有代码执行前需经人工或策略审核）、网络策略控制（限定对外通信范围和协议）、以及代理原生遥测（实时监控行为模式并生成审计日志）。关键结论表明：通过组合技术隔离与策略控制，Codex能实现安全与效率的平衡，目前已支持金融、医疗等敏感行业的安全部署。文章未提供具体模型参数或基准测试数据。</div>
+<div class="article-points"><ul><li>四层安全架构：沙箱隔离、审批工作流、网络管控、原生遥测</li><li>每个Codex会话运行在独立容器中，实现进程与文件系统隔离</li><li>所有代码执行需通过人工或策略审批流程才能放行</li><li>网络策略限制Codex仅能与白名单域名通信，禁止外部数据外泄</li><li>代理原生遥测实时捕获操作日志，支持合规审计与异常检测</li></ul></div>
+</article>
+<article class="article-card" data-search-text="Using Claude Code: The Unreasonable Effectiveness of HTML Simon Willison&#x27;s Blog 本文探讨了在AI大模型对话中，使用HTML替代Markdown作为输出格式的显著优势。背景是自GPT-4时代以来，受8192 token限制影响，Markdown因其token效率而被广泛默认使用。核心方法来自Anthropic Claude Code团队的Thariq Shihipar的建议，即要求模型生成HTML格式的输出，从而充分利用HTML/SVG/JavaScript的能力来创建丰富的解释内容，如内嵌SVG图表、交互式小部件、页面内导航及内联注释等。关键结论是：对于解释性、教学性或代码审查等场景，HTML能带来更好的信息传达效果和用户体验。作者通过实际案例（如让GPT-5.5分析Linux安全漏洞的混淆Python代码）验证了该方法的有效性，生成的HTML页面包含了详细解释、代码重构和互动设计。 主张在AI对话中要求Claude等模型输出HTML而非Markdown，以利用更丰富的格式能力 HTML可支持内嵌SVG图表、交互式小部件、内联注释和页面内导航等高级功能 自GPT-4时代（8192 token限制）以来，Markdown因token效率而被默认使用，现在需重新评估 作者通过让GPT-5.5分析Linux漏洞“copy.fail”的混淆Python代码，验证了HTML解释的效果 特别适用于代码审查场景，可渲染diff差异并按严重性颜色标注发现">
+<div class="article-title"><a href="https://simonwillison.net/2026/May/8/unreasonable-effectiveness-of-html/#atom-everything" target="_blank" rel="noopener">Using Claude Code: The Unreasonable Effectiveness of HTML</a></div>
+<div class="article-meta"><span class="article-source">Simon Willison&#x27;s Blog</span></div>
+<div class="article-summary">本文探讨了在AI大模型对话中，使用HTML替代Markdown作为输出格式的显著优势。背景是自GPT-4时代以来，受8192 token限制影响，Markdown因其token效率而被广泛默认使用。核心方法来自Anthropic Claude Code团队的Thariq Shihipar的建议，即要求模型生成HTML格式的输出，从而充分利用HTML/SVG/JavaScript的能力来创建丰富的解释内容，如内嵌SVG图表、交互式小部件、页面内导航及内联注释等。关键结论是：对于解释性、教学性或代码审查等场景，HTML能带来更好的信息传达效果和用户体验。作者通过实际案例（如让GPT-5.5分析Linux安全漏洞的混淆Python代码）验证了该方法的有效性，生成的HTML页面包含了详细解释、代码重构和互动设计。</div>
+<div class="article-points"><ul><li>主张在AI对话中要求Claude等模型输出HTML而非Markdown，以利用更丰富的格式能力</li><li>HTML可支持内嵌SVG图表、交互式小部件、内联注释和页面内导航等高级功能</li><li>自GPT-4时代（8192 token限制）以来，Markdown因token效率而被默认使用，现在需重新评估</li><li>作者通过让GPT-5.5分析Linux漏洞“copy.fail”的混淆Python代码，验证了HTML解释的效果</li><li>特别适用于代码审查场景，可渲染diff差异并按严重性颜色标注发现</li></ul></div>
+</article>
+<article class="article-card" data-search-text="Hermes Agent 的记忆系统：为什么它修正了 OpenClaw 的错误 山行AI 本文深入解析了开源AI Agent Hermes的记忆系统，指出其为解决OpenClaw等Agent的记忆问题，设计了四层记忆架构：1) 冻结的Prompt记忆，包含MEMORY.md和USER.md两个文件，分别限制2200和1375字符，用于存储高价值的Agent笔记和用户画像，在会话中冻结快照以优化缓存；2) 可搜索的SQLite历史会话归档；3) Agent管理的Skills作为程序性记忆；4) 可选的Honcho层用于深层用户建模。核心设计理念是保持Prompt稳定以利用缓存，将其他信息通过工具按需检索。记忆以纯文本、字符限制（而非token）的方式存储，与模型无关。系统Prompt的组装顺序也体现了对缓存优化的考虑。总结认为Hermes将记忆视为经过筛选的状态而非日记，这是其与OpenClaw等系统的关键区别。 Hermes拥有四层记忆系统：冻结Prompt、SQLite归档、Skills、Honcho MEMORY.md和USER.md分别限制2200和1375字符，以纯文本和字符限制实现模型无关记忆 关键设计：保持Prompt前缀稳定以优化缓存，将其他信息移出Prompt按需检索 记忆在会话中冻结为快照，写入立即落盘但仅在新会话或触发重建时更新Prompt">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzU2NzkxNDY0Ng==&amp;mid=2247490336&amp;idx=1&amp;sn=073826c9f1a2ee6b14437c6defa31a6b" target="_blank" rel="noopener">Hermes Agent 的记忆系统：为什么它修正了 OpenClaw 的错误</a></div>
+<div class="article-meta"><span class="article-source">山行AI</span></div>
+<div class="article-summary">本文深入解析了开源AI Agent Hermes的记忆系统，指出其为解决OpenClaw等Agent的记忆问题，设计了四层记忆架构：1) 冻结的Prompt记忆，包含MEMORY.md和USER.md两个文件，分别限制2200和1375字符，用于存储高价值的Agent笔记和用户画像，在会话中冻结快照以优化缓存；2) 可搜索的SQLite历史会话归档；3) Agent管理的Skills作为程序性记忆；4) 可选的Honcho层用于深层用户建模。核心设计理念是保持Prompt稳定以利用缓存，将其他信息通过工具按需检索。记忆以纯文本、字符限制（而非token）的方式存储，与模型无关。系统Prompt的组装顺序也体现了对缓存优化的考虑。总结认为Hermes将记忆视为经过筛选的状态而非日记，这是其与OpenClaw等系统的关键区别。</div>
+<div class="article-points"><ul><li>Hermes拥有四层记忆系统：冻结Prompt、SQLite归档、Skills、Honcho</li><li>MEMORY.md和USER.md分别限制2200和1375字符，以纯文本和字符限制实现模型无关记忆</li><li>关键设计：保持Prompt前缀稳定以优化缓存，将其他信息移出Prompt按需检索</li><li>记忆在会话中冻结为快照，写入立即落盘但仅在新会话或触发重建时更新Prompt</li></ul></div>
+</article>
+<article class="article-card" data-search-text="The Rise of AI Agents: How Software Is Learning to Act freeCodeCamp.org 本文探讨了AI智能体（AI Agents）的兴起，指出传统软件是被动的、确定性的，而AI智能体是目标驱动的，能够自主决策和行动。文章详细阐述了AI智能体的核心组件，包括目标、工具和约束，并解释了其与传统软件的区别。作者认为这一转变将改变软件设计、系统运营和工作执行方式。文章适合开发者、技术创始人等读者，无需AI智能体构建经验，但需了解Python和LLM基础。内容包括从确定性系统到目标驱动执行、AI智能体的核心组件、其兴起原因、自主性的幻觉与现实、多智能体系统等，最后总结了AI智能体已在某些领域创造价值。 传统软件被动响应，AI智能体主动行动，目标驱动而非指令驱动。 AI智能体核心组件：目标、约束、工具，自主规划执行路径。 文章面向开发者，需基础Python和LLM知识，但无需AI智能体经验。">
+<div class="article-title"><a href="https://www.freecodecamp.org/news/the-rise-of-ai-agents-how-software-is-learning-to-act/" target="_blank" rel="noopener">The Rise of AI Agents: How Software Is Learning to Act</a></div>
+<div class="article-meta"><span class="article-source">freeCodeCamp.org</span></div>
+<div class="article-summary">本文探讨了AI智能体（AI Agents）的兴起，指出传统软件是被动的、确定性的，而AI智能体是目标驱动的，能够自主决策和行动。文章详细阐述了AI智能体的核心组件，包括目标、工具和约束，并解释了其与传统软件的区别。作者认为这一转变将改变软件设计、系统运营和工作执行方式。文章适合开发者、技术创始人等读者，无需AI智能体构建经验，但需了解Python和LLM基础。内容包括从确定性系统到目标驱动执行、AI智能体的核心组件、其兴起原因、自主性的幻觉与现实、多智能体系统等，最后总结了AI智能体已在某些领域创造价值。</div>
+<div class="article-points"><ul><li>传统软件被动响应，AI智能体主动行动，目标驱动而非指令驱动。</li><li>AI智能体核心组件：目标、约束、工具，自主规划执行路径。</li><li>文章面向开发者，需基础Python和LLM知识，但无需AI智能体经验。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="使用 Claude Code：HTML 难以置信的奇效 宝玉的分享 文章探讨了为什么在AI智能体（如Claude Code）中，HTML比Markdown更适合作为输出格式。随着AI智能体处理复杂任务，Markdown文件过长不易阅读，且其易于人工编辑的优势在AI主导修改下消失。HTML的优势包括：信息密度高（可嵌入表格、CSS、SVG、交互脚本）、视觉清晰易读（支持选项卡、插图）、易于分享（上传至云存储分享链接）、支持双向交互（滑块、按钮等）。作者认为HTML能更高效地传递深度信息，提升阅读和审查体验。 HTML信息密度高，可嵌入表格、CSS、SVG和交互脚本，优于Markdown。 视觉清晰：HTML支持选项卡、插图、自适应布局，提升易读性。 易于分享：上传至S3等云存储即可提供链接，无需附件。 支持双向交互：可添加滑块、按钮等控件，实现参数调整和结果预览。">
+<div class="article-title"><a href="https://baoyu.io/translations/2026-05-08/trq212-status-2052809885763747935" target="_blank" rel="noopener">使用 Claude Code：HTML 难以置信的奇效</a></div>
+<div class="article-meta"><span class="article-source">宝玉的分享</span></div>
+<div class="article-summary">文章探讨了为什么在AI智能体（如Claude Code）中，HTML比Markdown更适合作为输出格式。随着AI智能体处理复杂任务，Markdown文件过长不易阅读，且其易于人工编辑的优势在AI主导修改下消失。HTML的优势包括：信息密度高（可嵌入表格、CSS、SVG、交互脚本）、视觉清晰易读（支持选项卡、插图）、易于分享（上传至云存储分享链接）、支持双向交互（滑块、按钮等）。作者认为HTML能更高效地传递深度信息，提升阅读和审查体验。</div>
+<div class="article-points"><ul><li>HTML信息密度高，可嵌入表格、CSS、SVG和交互脚本，优于Markdown。</li><li>视觉清晰：HTML支持选项卡、插图、自适应布局，提升易读性。</li><li>易于分享：上传至S3等云存储即可提供链接，无需附件。</li><li>支持双向交互：可添加滑块、按钮等控件，实现参数调整和结果预览。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="MachinaCheck: Building a Multi-Agent CNC Manufacturability System on AMD MI300X Hugging Face 博客 本文介绍了 MachinaCheck，一个基于 AMD MI300X GPU 构建的多智能体 CNC 可制造性分析系统。针对小型机加工厂在评估客户图纸时，需要人工逐项检查尺寸、工具和公差，每张图纸耗时 30-60 分钟且易出错的问题，MachinaCheck 提供了自动化解决方案。用户上传 STEP 文件及材料、公差、螺纹规格等参数后，系统可在 30 秒内生成完整的可制造性报告，列出所需工具、缺失项及生产前应执行的操作。系统选择 AMD MI300X 而非主流云端 API 的核心原因在于制造业客户需签署 NDA，其 STEP 文件包含机密几何数据，不能传输至外部服务器。MI300X 作为本地化部署的算力平台，既能满足 AI 推理计算需求，又能确保客户数据不外泄。该系统有效消除了人工分析的不确定性和错误，将评估时间从小时级缩短至秒级。 解决 CNC 机加工厂人工评估图纸耗时（30-60分钟/张）且易出错的问题 上传 STEP 文件与材料、公差等参数，30秒生成可制造性报告 基于 AMD MI300X 本地部署，满足制造业客户数据保密（NDA）要求 报告列出所需工具、缺失项和操作建议，消除人工猜测">
+<div class="article-title"><a href="https://huggingface.co/blog/lablab-ai-amd-developer-hackathon/machinacheck" target="_blank" rel="noopener">MachinaCheck: Building a Multi-Agent CNC Manufacturability System on AMD MI300X</a></div>
+<div class="article-meta"><span class="article-source">Hugging Face 博客</span></div>
+<div class="article-summary">本文介绍了 MachinaCheck，一个基于 AMD MI300X GPU 构建的多智能体 CNC 可制造性分析系统。针对小型机加工厂在评估客户图纸时，需要人工逐项检查尺寸、工具和公差，每张图纸耗时 30-60 分钟且易出错的问题，MachinaCheck 提供了自动化解决方案。用户上传 STEP 文件及材料、公差、螺纹规格等参数后，系统可在 30 秒内生成完整的可制造性报告，列出所需工具、缺失项及生产前应执行的操作。系统选择 AMD MI300X 而非主流云端 API 的核心原因在于制造业客户需签署 NDA，其 STEP 文件包含机密几何数据，不能传输至外部服务器。MI300X 作为本地化部署的算力平台，既能满足 AI 推理计算需求，又能确保客户数据不外泄。该系统有效消除了人工分析的不确定性和错误，将评估时间从小时级缩短至秒级。</div>
+<div class="article-points"><ul><li>解决 CNC 机加工厂人工评估图纸耗时（30-60分钟/张）且易出错的问题</li><li>上传 STEP 文件与材料、公差等参数，30秒生成可制造性报告</li><li>基于 AMD MI300X 本地部署，满足制造业客户数据保密（NDA）要求</li><li>报告列出所需工具、缺失项和操作建议，消除人工猜测</li></ul></div>
+</article>
+<article class="article-card" data-search-text="深度拆解：AI Agent Harness 的构造 宝玉的分享 本文深度解析了AI Agent Harness的构造，背景在于无状态大语言模型（LLM）在生产环境中易出现遗忘、工具调用失败和上下文污染等问题，问题根源不在模型本身，而在于外围基础设施。核心方法/技术方案是提出Agent Harness概念，即包裹LLM的完整软件架构，包括编排循环（TAO/ReAct循环）、工具、记忆、上下文管理、状态持久化、错误处理和护栏（Guardrails）等12个核心组件。关键结论是：通过优化Harness架构而非模型本身，系统性能可大幅提升，例如LangChain仅通过改造底层架构就让Agent在TerminalBench 2.0上的排名从30名外升至第5名，另一项研究通过让LLM自优化Harness达到76.4%通过率。文章还对比了提示词工程、上下文工程和Harness工程三个层次，并引用了Anthropic、OpenAI和LangChain的实践案例。 Agent Harness是包裹LLM的完整软件架构，包括编排循环、工具、记忆等12个核心组件，解决生产环境中的遗忘与工具调用失败问题。 通过改造Harness而非模型参数，LangChain在TerminalBench 2.0上的排名从30名外升至第5名。 让LLM自优化Harness架构可实现76.4%的通过率，甚至超过人工设计。 Harness工程涵盖提示词工程和上下文工程，是使LLM从无状态转变为全能Agent的关键。 TAO（思考-行动-观察）循环是Harness的核心，类似ReAct模式，通过while循环实现任务驱动。">
+<div class="article-title"><a href="https://baoyu.io/translations/2026-05-10/akshay-pachaar-2041146899319971922" target="_blank" rel="noopener">深度拆解：AI Agent Harness 的构造</a></div>
+<div class="article-meta"><span class="article-source">宝玉的分享</span></div>
+<div class="article-summary">本文深度解析了AI Agent Harness的构造，背景在于无状态大语言模型（LLM）在生产环境中易出现遗忘、工具调用失败和上下文污染等问题，问题根源不在模型本身，而在于外围基础设施。核心方法/技术方案是提出Agent Harness概念，即包裹LLM的完整软件架构，包括编排循环（TAO/ReAct循环）、工具、记忆、上下文管理、状态持久化、错误处理和护栏（Guardrails）等12个核心组件。关键结论是：通过优化Harness架构而非模型本身，系统性能可大幅提升，例如LangChain仅通过改造底层架构就让Agent在TerminalBench 2.0上的排名从30名外升至第5名，另一项研究通过让LLM自优化Harness达到76.4%通过率。文章还对比了提示词工程、上下文工程和Harness工程三个层次，并引用了Anthropic、OpenAI和LangChain的实践案例。</div>
+<div class="article-points"><ul><li>Agent Harness是包裹LLM的完整软件架构，包括编排循环、工具、记忆等12个核心组件，解决生产环境中的遗忘与工具调用失败问题。</li><li>通过改造Harness而非模型参数，LangChain在TerminalBench 2.0上的排名从30名外升至第5名。</li><li>让LLM自优化Harness架构可实现76.4%的通过率，甚至超过人工设计。</li><li>Harness工程涵盖提示词工程和上下文工程，是使LLM从无状态转变为全能Agent的关键。</li><li>TAO（思考-行动-观察）循环是Harness的核心，类似ReAct模式，通过while循环实现任务驱动。</li></ul></div>
+</article>
+</div>
+</div>
+<div class="subtype-section">
+<h3 class="subtype-header">产品/应用</h3>
+<div class="article-grid">
+<article class="article-card" data-search-text="细思极恐！Agent暗藏风险，清华团队打出组合拳，全链路一网打尽 大模型智能 随着大语言模型Agent的广泛部署，其行为安全风险日益凸显。Agent可能在被监控时“表演”合规行为，而现有安全方案（如输入输出过滤、日志审计）仅能观察其“声明”的行为，无法感知系统级的真实行为，尤其在多Agent协作场景下存在盲区。为解决这一问题，清华大学团队提出了一套覆盖Agent运行全生命周期的多层安全体系，包括Fangcun Observer和Fangcun Guard。Observer通过直接下沉到操作系统层，无需框架集成或SDK Hook，零代码改造即可实时感知Agent的真实系统行为（如命令执行、文件读写、网络请求），实现无感知观测与实时干预阻断；Guard则提供高效的输入输出安全审核，延迟极低（&lt;100ms），支持动态贝叶斯网络和可微攻击算法驱动。关键结果包括：Agent整体算力利用率提升23.8%，单次推理成本下降9.6%，性能提升45.2%，同时实现了全链路行为溯源和本地自进化防御策略，可有效解决恶意Agent转嫁风险和环境投毒等隐蔽威胁。 提出Fangcun Observer：在操作系统层零代码感知Agent真实行为（命令、文件、网络），实现无感知运行时观测。 提出Fangcun Guard：提供输入输出安全护栏，延迟&lt;100ms，支持动态贝叶斯网络和可微攻击算法。 关键指标：Agent整体算力利用率提升23.8%；单次推理成本下降9.6%；性能提升45.2%。 全链路溯源：将运行时行为、决策动作和模型上下文关联，可追溯环境投毒或恶意Agent转嫁风险。 本地自进化防御：策略模型基于真实运行数据持续迭代，从静态规则走向自进化安全能力。">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzU3NjE4NjQ4MA==&amp;mid=2247556301&amp;idx=1&amp;sn=9735f07595bedb8796471ed9507fcbe2" target="_blank" rel="noopener">细思极恐！Agent暗藏风险，清华团队打出组合拳，全链路一网打尽</a></div>
+<div class="article-meta"><span class="article-source">大模型智能</span></div>
+<div class="article-summary">随着大语言模型Agent的广泛部署，其行为安全风险日益凸显。Agent可能在被监控时“表演”合规行为，而现有安全方案（如输入输出过滤、日志审计）仅能观察其“声明”的行为，无法感知系统级的真实行为，尤其在多Agent协作场景下存在盲区。为解决这一问题，清华大学团队提出了一套覆盖Agent运行全生命周期的多层安全体系，包括Fangcun Observer和Fangcun Guard。Observer通过直接下沉到操作系统层，无需框架集成或SDK Hook，零代码改造即可实时感知Agent的真实系统行为（如命令执行、文件读写、网络请求），实现无感知观测与实时干预阻断；Guard则提供高效的输入输出安全审核，延迟极低（&lt;100ms），支持动态贝叶斯网络和可微攻击算法驱动。关键结果包括：Agent整体算力利用率提升23.8%，单次推理成本下降9.6%，性能提升45.2%，同时实现了全链路行为溯源和本地自进化防御策略，可有效解决恶意Agent转嫁风险和环境投毒等隐蔽威胁。</div>
+<div class="article-points"><ul><li>提出Fangcun Observer：在操作系统层零代码感知Agent真实行为（命令、文件、网络），实现无感知运行时观测。</li><li>提出Fangcun Guard：提供输入输出安全护栏，延迟&lt;100ms，支持动态贝叶斯网络和可微攻击算法。</li><li>关键指标：Agent整体算力利用率提升23.8%；单次推理成本下降9.6%；性能提升45.2%。</li><li>全链路溯源：将运行时行为、决策动作和模型上下文关联，可追溯环境投毒或恶意Agent转嫁风险。</li><li>本地自进化防御：策略模型基于真实运行数据持续迭代，从静态规则走向自进化安全能力。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="告别Prompt抽卡和评分通胀：一个让AI游戏真正「机制化迭代」的框架 机器之心 当前AI游戏生成多依赖Prompt抽卡，存在评分通胀和机制遗忘问题。来自布里斯托大学、上海交通大学和Sreal AI的研究团队提出CreativeGame框架，旨在实现有记忆、有计划、可验证的机制进化。该框架强制AI先写结构化设计文档，明确保留/新增/移除的机制，然后检索全局游戏机制档案，再分Skeleton、Feature、Visual、Refinement四个阶段生成代码。通过引入关卡、路线弯曲等创新（如向日葵和豌豆射手充能机制），CreativeGame能生成超越模仿的原创游戏玩法，实现了AI游戏生成的“机制化迭代”。 CreativeGame强制AI先写设计文档（机制合约），确保代码执行设计意图 采用检索增强式机制档案，支持全局游戏机制的进化与迭代 四阶段生成流程：Skeleton、Feature、Visual、Refinement 案例中创新引入关卡、路线弯曲和充能机制，超越传统塔防类游戏模仿">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&amp;mid=2651032178&amp;idx=3&amp;sn=797025a953d2756bde2df017a590ab3b" target="_blank" rel="noopener">告别Prompt抽卡和评分通胀：一个让AI游戏真正「机制化迭代」的框架</a></div>
+<div class="article-meta"><span class="article-source">机器之心</span></div>
+<div class="article-summary">当前AI游戏生成多依赖Prompt抽卡，存在评分通胀和机制遗忘问题。来自布里斯托大学、上海交通大学和Sreal AI的研究团队提出CreativeGame框架，旨在实现有记忆、有计划、可验证的机制进化。该框架强制AI先写结构化设计文档，明确保留/新增/移除的机制，然后检索全局游戏机制档案，再分Skeleton、Feature、Visual、Refinement四个阶段生成代码。通过引入关卡、路线弯曲等创新（如向日葵和豌豆射手充能机制），CreativeGame能生成超越模仿的原创游戏玩法，实现了AI游戏生成的“机制化迭代”。</div>
+<div class="article-badges"><a href="https://arxiv.org/pdf/2604.19926" class="badge arxiv" target="_blank" rel="noopener">arXiv</a></div>
+<div class="article-points"><ul><li>CreativeGame强制AI先写设计文档（机制合约），确保代码执行设计意图</li><li>采用检索增强式机制档案，支持全局游戏机制的进化与迭代</li><li>四阶段生成流程：Skeleton、Feature、Visual、Refinement</li><li>案例中创新引入关卡、路线弯曲和充能机制，超越传统塔防类游戏模仿</li></ul></div>
+</article>
+<article class="article-card" data-search-text="“今年还没亲手写过一行代码”，Claude Code之父自曝：CC诞生源于“偶然”，现主要在手机上干活 CSDN 本文是红杉资本对Anthropic Claude Code之父Boris Cherny的访谈。Boris指出，2026年他本人尚未亲手写过一行代码，并认为早在2025年10月或11月，模型已达到可编写100%代码的临界点，编程问题已“被解决”。他透露Claude Code的诞生具有偶然性，源于Anthropic实验室内部对“产品过剩”的观察，即模型能力已超越现有产品（如自动补全）。经过最初六个月的不佳体验和2025年5月Claude Opus 4发布后的转折，Claude Code呈现指数级增长。Boris现在大部分工作通过手机完成，每天提交数十个PR，并认为未来编写软件将成为通用技能。他强调“循环”（/loop）代表了未来，并预测未来十年创业公司数量将增加10倍。 Boris Cherny称2026年尚未亲手写一行代码，认为模型已能编写100%代码。 Claude Code诞生源于Anthropic Labs对模型能力过剩的观察。 Claude Code在2025年5月Claude Opus 4发布后实现指数级增长。 Boris现在每天在手机上提交数十个PR，强调/loop是未来方向。 他预测未来十年创业公司数量将增加10倍，编程成为通用技能。">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzkzMDY1NDgyOQ==&amp;mid=2247830847&amp;idx=1&amp;sn=e6e59a5a7b9e2181ab893cd58d3cc27c" target="_blank" rel="noopener">“今年还没亲手写过一行代码”，Claude Code之父自曝：CC诞生源于“偶然”，现主要在手机上干活</a></div>
+<div class="article-meta"><span class="article-source">CSDN</span></div>
+<div class="article-summary">本文是红杉资本对Anthropic Claude Code之父Boris Cherny的访谈。Boris指出，2026年他本人尚未亲手写过一行代码，并认为早在2025年10月或11月，模型已达到可编写100%代码的临界点，编程问题已“被解决”。他透露Claude Code的诞生具有偶然性，源于Anthropic实验室内部对“产品过剩”的观察，即模型能力已超越现有产品（如自动补全）。经过最初六个月的不佳体验和2025年5月Claude Opus 4发布后的转折，Claude Code呈现指数级增长。Boris现在大部分工作通过手机完成，每天提交数十个PR，并认为未来编写软件将成为通用技能。他强调“循环”（/loop）代表了未来，并预测未来十年创业公司数量将增加10倍。</div>
+<div class="article-points"><ul><li>Boris Cherny称2026年尚未亲手写一行代码，认为模型已能编写100%代码。</li><li>Claude Code诞生源于Anthropic Labs对模型能力过剩的观察。</li><li>Claude Code在2025年5月Claude Opus 4发布后实现指数级增长。</li><li>Boris现在每天在手机上提交数十个PR，强调/loop是未来方向。</li><li>他预测未来十年创业公司数量将增加10倍，编程成为通用技能。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="“9秒删库”事件刷屏！AI是凶手，但枪是你自己递的 CSDN 本文针对近期“AI 9秒删库”的刷屏事件进行技术反思。作者Ibrahim Diallo指出，核心问题不在于AI工具本身，而在于开发者将不安全的API（允许直接删除生产数据库）暴露在公网上，且部署流程脆弱。他以2010年自己误删SVN trunk的经历为例，说明错误源于人工依赖的高风险流程，而非工具。文章强调，AI只是生成token的工具，不具备思考或责任能力；团队应自问为何存在可直接删库的API，而非追究AI责任。最终建议是构建可靠的CI/CD系统，避免将高风险操作完全交由不可控的自动流程执行。 AI 9秒删库事件的根源是开发者暴露了可删除生产数据库的API。 作者以2010年误删SVN trunk的经历类比，强调是流程问题而非工具问题。 AI只是在生成token，不具备真正的思考或责任感。 关键问题是部署流程脆弱，而非AI“故意”删库。 建议构建可靠的CI/CD系统，避免高风险操作依赖不可控的自动流程。">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzkzMDY1NDgyOQ==&amp;mid=2247830847&amp;idx=3&amp;sn=540bd367cc2b1ac8fc31c3719a70d48a" target="_blank" rel="noopener">“9秒删库”事件刷屏！AI是凶手，但枪是你自己递的</a></div>
+<div class="article-meta"><span class="article-source">CSDN</span></div>
+<div class="article-summary">本文针对近期“AI 9秒删库”的刷屏事件进行技术反思。作者Ibrahim Diallo指出，核心问题不在于AI工具本身，而在于开发者将不安全的API（允许直接删除生产数据库）暴露在公网上，且部署流程脆弱。他以2010年自己误删SVN trunk的经历为例，说明错误源于人工依赖的高风险流程，而非工具。文章强调，AI只是生成token的工具，不具备思考或责任能力；团队应自问为何存在可直接删库的API，而非追究AI责任。最终建议是构建可靠的CI/CD系统，避免将高风险操作完全交由不可控的自动流程执行。</div>
+<div class="article-points"><ul><li>AI 9秒删库事件的根源是开发者暴露了可删除生产数据库的API。</li><li>作者以2010年误删SVN trunk的经历类比，强调是流程问题而非工具问题。</li><li>AI只是在生成token，不具备真正的思考或责任感。</li><li>关键问题是部署流程脆弱，而非AI“故意”删库。</li><li>建议构建可靠的CI/CD系统，避免高风险操作依赖不可控的自动流程。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="Skill是流量王者 AI产品黄叔 文章指出，Skill（技能）正取代提示词成为AI应用的新流量入口。作者通过举办第二届Skill黑客松观察到，非技术背景用户（如女装销售、县城公务员、初三家长）也能利用SOP封装为Skill，制作出智能合同管理、中考备考诊断等实用工具。Skill比提示词更进一层，它不仅是一次性模板，而是可迭代的经验账户，能整合流程、工具和脚本完成完整任务。底层模型和Agent基础设施的成熟，使得经验封装能力变得比写提示词更值钱。文章强调Skill创建、迭代和传播容易，已经开始向普通用户的工作中渗透。 Skill黑客松中，非程序员用SOP封装出智能合同管理、中考诊断等作品。 Skill比提示词更进一层，能将整件事跑通，而非仅输出单一结果。 Skill是可迭代的“经验账户”，踩坑后能更新流程。 底层模型和Agent成熟后，经验封装能力成为最值钱的东西。 视频号直播预约300人但场观3000，反映Skill开始出圈。">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MjM5ODU1MzQzOQ==&amp;mid=2451429546&amp;idx=1&amp;sn=44eed9699934ec62cf85d918d35cf19f" target="_blank" rel="noopener">Skill是流量王者</a></div>
+<div class="article-meta"><span class="article-source">AI产品黄叔</span></div>
+<div class="article-summary">文章指出，Skill（技能）正取代提示词成为AI应用的新流量入口。作者通过举办第二届Skill黑客松观察到，非技术背景用户（如女装销售、县城公务员、初三家长）也能利用SOP封装为Skill，制作出智能合同管理、中考备考诊断等实用工具。Skill比提示词更进一层，它不仅是一次性模板，而是可迭代的经验账户，能整合流程、工具和脚本完成完整任务。底层模型和Agent基础设施的成熟，使得经验封装能力变得比写提示词更值钱。文章强调Skill创建、迭代和传播容易，已经开始向普通用户的工作中渗透。</div>
+<div class="article-points"><ul><li>Skill黑客松中，非程序员用SOP封装出智能合同管理、中考诊断等作品。</li><li>Skill比提示词更进一层，能将整件事跑通，而非仅输出单一结果。</li><li>Skill是可迭代的“经验账户”，踩坑后能更新流程。</li><li>底层模型和Agent成熟后，经验封装能力成为最值钱的东西。</li><li>视频号直播预约300人但场观3000，反映Skill开始出圈。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="魔搭开源 Ultron：为 Agent 生态补上&quot;群体智能&quot;这层基础设施 魔搭ModelScope社区 魔搭ModelScope团队开源Ultron，这是一套面向通用智能体的群体智能基础设施，旨在解决多智能体协作中经验不共享、技能不复用、画像难迁移三大痛点。Ultron包含三个核心模块：Memory Hub将智能体的踩坑记录按HOT/WARM/COLD三层热度管理，支持经验跨会话检索；Skill Hub通过自动聚类、结晶和评估准入，将高频经验升级为可复用技能，并支持自进化（分数提升才接受，下降则回滚），同时打通ModelScope 80000+外部技能；Harness Hub将角色、记忆、技能、工具和性格维度（如MBTI）打包成可分享的蓝图，支持智能体在不同工作区之间迁移（如从OpenClaw到Nanobot）。 Ultron开源三个模块：Memory Hub（跨会话检索）、Skill Hub（自动结晶）、Harness Hub（画像分发）。 Memory Hub按HOT/WARM/COLD三级热度管理，基于使用反馈动态计算权重。 Skill Hub通过聚类、结晶和评估准入自动生成技能，并支持分数驱动的自进化。 Harness Hub打包角色、技能、工具及MBTI等维度，支持跨框架迁移。 系统打通ModelScope 80000+外部技能生态。">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=Mzk3NTc1NTU0Mw==&amp;mid=2247508043&amp;idx=1&amp;sn=b130f2f447f32a71ef772987fd91cd7c" target="_blank" rel="noopener">魔搭开源 Ultron：为 Agent 生态补上&quot;群体智能&quot;这层基础设施</a></div>
+<div class="article-meta"><span class="article-source">魔搭ModelScope社区</span></div>
+<div class="article-summary">魔搭ModelScope团队开源Ultron，这是一套面向通用智能体的群体智能基础设施，旨在解决多智能体协作中经验不共享、技能不复用、画像难迁移三大痛点。Ultron包含三个核心模块：Memory Hub将智能体的踩坑记录按HOT/WARM/COLD三层热度管理，支持经验跨会话检索；Skill Hub通过自动聚类、结晶和评估准入，将高频经验升级为可复用技能，并支持自进化（分数提升才接受，下降则回滚），同时打通ModelScope 80000+外部技能；Harness Hub将角色、记忆、技能、工具和性格维度（如MBTI）打包成可分享的蓝图，支持智能体在不同工作区之间迁移（如从OpenClaw到Nanobot）。</div>
+<div class="article-points"><ul><li>Ultron开源三个模块：Memory Hub（跨会话检索）、Skill Hub（自动结晶）、Harness Hub（画像分发）。</li><li>Memory Hub按HOT/WARM/COLD三级热度管理，基于使用反馈动态计算权重。</li><li>Skill Hub通过聚类、结晶和评估准入自动生成技能，并支持分数驱动的自进化。</li><li>Harness Hub打包角色、技能、工具及MBTI等维度，支持跨框架迁移。</li><li>系统打通ModelScope 80000+外部技能生态。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="英特尔 x 魔搭社区：AI PC Agent Skills 征文活动公告 魔搭ModelScope社区 英特尔联合魔搭社区发起AI PC Agent Skills征文活动，旨在挖掘能在本地运行的、可被智能体高效调用的“技能包”，推动端侧智能体应用发展。活动背景是AI从对话式交互向Agentic工作流演进，Hybrid AI架构成为趋势，端侧AI PC成为离用户最近的计算中枢。技术核心要求使用≤35B参数的小模型作为Agent大脑，驱动本地AI工具调用（如OCR、ASR、TTS），并推荐使用OpenVINO推理框架在Intel酷睿Ultra处理器（CPU+GPU+NPU）上进行优化部署。活动验证基准环境为Ollama + Qwen3.6-35B-A3B + QwenPaw/Trae。参赛流程包括编写本地AI工具、封装Skill、在魔搭Skills中心发布并添加“AIPC”标签、提交技术文章等。评分标准覆盖技术实现、创新性、实用场景等，最终会评选出TOP10作品并发放奖金。 活动时间：2026年5月1日至6月30日。 核心要求：使用≤35B小模型驱动本地AI工具，并封装为可复用的Agent Skill。 推荐框架：使用OpenVINO进行模型量化与异构加速，适配Intel酷睿Ultra处理器。 验证环境：Ollama + Qwen3.6-35B-A3B + QwenPaw/Trae。 奖励：TOP10作品各获1000元现金，前50名提交作品获限量礼品。">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=Mzk3NTc1NTU0Mw==&amp;mid=2247508021&amp;idx=2&amp;sn=d305504cabc629593950863640cdc0dc" target="_blank" rel="noopener">英特尔 x 魔搭社区：AI PC Agent Skills 征文活动公告</a></div>
+<div class="article-meta"><span class="article-source">魔搭ModelScope社区</span></div>
+<div class="article-summary">英特尔联合魔搭社区发起AI PC Agent Skills征文活动，旨在挖掘能在本地运行的、可被智能体高效调用的“技能包”，推动端侧智能体应用发展。活动背景是AI从对话式交互向Agentic工作流演进，Hybrid AI架构成为趋势，端侧AI PC成为离用户最近的计算中枢。技术核心要求使用≤35B参数的小模型作为Agent大脑，驱动本地AI工具调用（如OCR、ASR、TTS），并推荐使用OpenVINO推理框架在Intel酷睿Ultra处理器（CPU+GPU+NPU）上进行优化部署。活动验证基准环境为Ollama + Qwen3.6-35B-A3B + QwenPaw/Trae。参赛流程包括编写本地AI工具、封装Skill、在魔搭Skills中心发布并添加“AIPC”标签、提交技术文章等。评分标准覆盖技术实现、创新性、实用场景等，最终会评选出TOP10作品并发放奖金。</div>
+<div class="article-points"><ul><li>活动时间：2026年5月1日至6月30日。</li><li>核心要求：使用≤35B小模型驱动本地AI工具，并封装为可复用的Agent Skill。</li><li>推荐框架：使用OpenVINO进行模型量化与异构加速，适配Intel酷睿Ultra处理器。</li><li>验证环境：Ollama + Qwen3.6-35B-A3B + QwenPaw/Trae。</li><li>奖励：TOP10作品各获1000元现金，前50名提交作品获限量礼品。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="Agent 时代需要怎样的分布式基础设施 InfoQ 中文 文章探讨了Agent应用时代对分布式基础设施带来的全新挑战。其核心论断是，Agent应用与传统应用的断代性差异在于“非确定性”：传统应用逻辑由人编程控制，是确定性的；而Agent的执行逻辑由大模型动态生成，完全非确定。这种非确定性带来了两个独特挑战：一是高动态性，Agent对每个请求的处理过程都可能完全不同，导致资源需求无法预估，若按传统容器方式分配资源会造成巨大浪费；二是安全性，Agent运行时需调用外部工具或执行AI生成的代码，这些不可信元素存在安全风险，而传统容器的隔离性较低。文章认为，现有面向确定性应用的云原生基础设施无法满足Agent要求，这将是制约Agent走向企业级大规模应用的主要障碍，同时也为基础设施创新提供了机遇，例如需要更安全的沙箱或新型资源调度机制。 核心差异：Agent应用是完全非确定性的，传统确定性基础设施无法匹配。 资源挑战：Agent逻辑动态，任务资源需求无法预估，按传统方式分配易导致浪费或错误。 安全挑战：AI生成代码和外部工具不可信，传统容器隔离性不足，存在逃逸风险。 解决方案方向：需使用更安全的容器或虚拟机（如沙箱），但仍需与K8s等框架对接。 行业影响：非确定性问题制约Agent大规模落地，但也催生基础设施领域的创新机会。">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MjM5MDE0Mjc4MA==&amp;mid=2651283806&amp;idx=2&amp;sn=d8afb1af0f17cacdb8e32cf0d4c57e7c" target="_blank" rel="noopener">Agent 时代需要怎样的分布式基础设施</a></div>
+<div class="article-meta"><span class="article-source">InfoQ 中文</span></div>
+<div class="article-summary">文章探讨了Agent应用时代对分布式基础设施带来的全新挑战。其核心论断是，Agent应用与传统应用的断代性差异在于“非确定性”：传统应用逻辑由人编程控制，是确定性的；而Agent的执行逻辑由大模型动态生成，完全非确定。这种非确定性带来了两个独特挑战：一是高动态性，Agent对每个请求的处理过程都可能完全不同，导致资源需求无法预估，若按传统容器方式分配资源会造成巨大浪费；二是安全性，Agent运行时需调用外部工具或执行AI生成的代码，这些不可信元素存在安全风险，而传统容器的隔离性较低。文章认为，现有面向确定性应用的云原生基础设施无法满足Agent要求，这将是制约Agent走向企业级大规模应用的主要障碍，同时也为基础设施创新提供了机遇，例如需要更安全的沙箱或新型资源调度机制。</div>
+<div class="article-points"><ul><li>核心差异：Agent应用是完全非确定性的，传统确定性基础设施无法匹配。</li><li>资源挑战：Agent逻辑动态，任务资源需求无法预估，按传统方式分配易导致浪费或错误。</li><li>安全挑战：AI生成代码和外部工具不可信，传统容器隔离性不足，存在逃逸风险。</li><li>解决方案方向：需使用更安全的容器或虚拟机（如沙箱），但仍需与K8s等框架对接。</li><li>行业影响：非确定性问题制约Agent大规模落地，但也催生基础设施领域的创新机会。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="微软警告称，AI 正在掏空初级开发者的培养渠道 AI前线 本文报道了微软Azure首席技术官Mark Russinovich与开发社区副总裁Scott Hanselman在《ACM通讯》上发表的观点文章，指出AI编码工具正在导致初级开发者培养渠道的“结构性危机”。核心问题在于，AI虽能大幅提升资深工程师效率，但初级开发者缺乏判断力来引导和验证AI输出，形成“AI拖累”；企业倾向于招聘资深工程师并自动化初级工作，导致人才梯队崩塌。数据支撑显示：哈佛研究发现GPT-4发布后22-25岁人群在AI相关岗位就业率下降约13%；自2022年以来初级开发者招聘量下降67%；麻省理工学院2025年研究发现依赖ChatGPT编码导致脑部活动减少和记忆力变差（“认知债务”）。作者提出“金字塔窄化假说”，并举例微软内部Societas项目（7名兼职工程师10周产出11万行代码，98%由AI生成）和Aspire项目（逐步过渡到完全由代理生成代码）。解决方案借鉴医学教育模式，建议设立导师制度，将学习作为明确组织目标，导师传授判断力，持续一年以上。 AI编码工具导致初级开发者就业率下降13%（哈佛研究）和招聘量下降67%（自2022年以来）。 初级开发者缺乏判断力验证AI输出，产生“AI拖累”现象，掩盖同步错误等缺陷。 微软Societas项目：7名兼职工程师10周产出11万行代码，其中98%由AI生成。 解决方案借鉴医学教育模式，建议一年以上的导师制，将学习作为组织目标。 “认知债务”概念：依赖ChatGPT编码导致成年人的脑部活动减少和记忆力变差（麻省理工学院2025年研究）。">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzU1NDA4NjU2MA==&amp;mid=2247662140&amp;idx=2&amp;sn=ee65b265b4a6cf8be78f66330478e79d" target="_blank" rel="noopener">微软警告称，AI 正在掏空初级开发者的培养渠道</a></div>
+<div class="article-meta"><span class="article-source">AI前线</span></div>
+<div class="article-summary">本文报道了微软Azure首席技术官Mark Russinovich与开发社区副总裁Scott Hanselman在《ACM通讯》上发表的观点文章，指出AI编码工具正在导致初级开发者培养渠道的“结构性危机”。核心问题在于，AI虽能大幅提升资深工程师效率，但初级开发者缺乏判断力来引导和验证AI输出，形成“AI拖累”；企业倾向于招聘资深工程师并自动化初级工作，导致人才梯队崩塌。数据支撑显示：哈佛研究发现GPT-4发布后22-25岁人群在AI相关岗位就业率下降约13%；自2022年以来初级开发者招聘量下降67%；麻省理工学院2025年研究发现依赖ChatGPT编码导致脑部活动减少和记忆力变差（“认知债务”）。作者提出“金字塔窄化假说”，并举例微软内部Societas项目（7名兼职工程师10周产出11万行代码，98%由AI生成）和Aspire项目（逐步过渡到完全由代理生成代码）。解决方案借鉴医学教育模式，建议设立导师制度，将学习作为明确组织目标，导师传授判断力，持续一年以上。</div>
+<div class="article-points"><ul><li>AI编码工具导致初级开发者就业率下降13%（哈佛研究）和招聘量下降67%（自2022年以来）。</li><li>初级开发者缺乏判断力验证AI输出，产生“AI拖累”现象，掩盖同步错误等缺陷。</li><li>微软Societas项目：7名兼职工程师10周产出11万行代码，其中98%由AI生成。</li><li>解决方案借鉴医学教育模式，建议一年以上的导师制，将学习作为组织目标。</li><li>“认知债务”概念：依赖ChatGPT编码导致成年人的脑部活动减少和记忆力变差（麻省理工学院2025年研究）。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="38万应用暴露、2000+应用泄密！AI编程把“内网”变公网 AI前线 本文报道了AI编程工具（如Lovable、Replit、Base44、Netlify）在vibe coding趋势下引发的严重数据泄露问题。背景是开发者使用这些工具快速创建和托管网页应用，但缺乏基本安全防护。核心问题是RedAccess研究发现约38万个公开可访问的应用中，超过5000个几乎无任何身份验证机制，近2000个暴露了私密数据，包括医疗记录、财务数据、企业内部战略文件及聊天记录等。40%的应用暴露敏感数据，甚至可获取管理员权限。攻击者仅需通过搜索引擎简单搜索托管在工具域名上的应用URL即可访问。研究人员还发现大量仿冒企业的钓鱼网站。虽然部分数据可能是占位符，但安全专家确认此问题真实且严重，源于非工程师用户缺乏安全背景，而AI工具本身不会主动添加安全机制。 RedAccess发现约38万个AI编码工具创建的公网应用，超5000个无任何安全验证。 近2000个应用暴露私密数据，涉及医疗、金融、企业战略和客户记录。 40%的暴露应用含有敏感数据，甚至可获取管理员权限或删除其他管理员。 攻击者仅靠Google/Bing搜索Lovable、Replit等工具域名即可发现暴露应用。 安全漏洞源于非技术用户使用vibe coding工具时未主动要求安全配置。">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzU1NDA4NjU2MA==&amp;mid=2247662125&amp;idx=1&amp;sn=517220d9d6e7a85659644dfa0db9e6cc" target="_blank" rel="noopener">38万应用暴露、2000+应用泄密！AI编程把“内网”变公网</a></div>
+<div class="article-meta"><span class="article-source">AI前线</span></div>
+<div class="article-summary">本文报道了AI编程工具（如Lovable、Replit、Base44、Netlify）在vibe coding趋势下引发的严重数据泄露问题。背景是开发者使用这些工具快速创建和托管网页应用，但缺乏基本安全防护。核心问题是RedAccess研究发现约38万个公开可访问的应用中，超过5000个几乎无任何身份验证机制，近2000个暴露了私密数据，包括医疗记录、财务数据、企业内部战略文件及聊天记录等。40%的应用暴露敏感数据，甚至可获取管理员权限。攻击者仅需通过搜索引擎简单搜索托管在工具域名上的应用URL即可访问。研究人员还发现大量仿冒企业的钓鱼网站。虽然部分数据可能是占位符，但安全专家确认此问题真实且严重，源于非工程师用户缺乏安全背景，而AI工具本身不会主动添加安全机制。</div>
+<div class="article-points"><ul><li>RedAccess发现约38万个AI编码工具创建的公网应用，超5000个无任何安全验证。</li><li>近2000个应用暴露私密数据，涉及医疗、金融、企业战略和客户记录。</li><li>40%的暴露应用含有敏感数据，甚至可获取管理员权限或删除其他管理员。</li><li>攻击者仅靠Google/Bing搜索Lovable、Replit等工具域名即可发现暴露应用。</li><li>安全漏洞源于非技术用户使用vibe coding工具时未主动要求安全配置。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="GPT-5.5+Codex！夯爆了，夯中夯。 掘金本周最热 文章评测了GPT-5.5在工程场景中的实战表现，强调其性价比优势。GPT-5.5于2026年4月23日发布，在ChatGPT和Codex中可用，Codex提供400K上下文窗口。基准测试显示：Terminal-Bench 2.0达82.7%，MRCR v2长上下文推理提升37.4个百分点，幻觉率减少60%。实战案例包括：让GPT-5.5出方案、DeepSeek V4-Pro实现；利用多模型配置中心；以及GPT-5.5+Codex搭配方法。作者提出“贵模型出方案、便宜模型干活”的省钱策略。 GPT-5.5在Terminal-Bench 2.0达82.7%，长上下文推理MRCR v2飙升37.4%。 幻觉率减少60%，Codex提供400K上下文窗口，Plus用户可用。 实战策略：GPT-5.5出方案，DeepSeek V4-Pro实现，节省成本。 多模型配置中心以DB为事实来源，YAML为启动种子，Key加密存储。">
+<div class="article-title"><a href="https://juejin.cn/post/7637174891143315497" target="_blank" rel="noopener">GPT-5.5+Codex！夯爆了，夯中夯。</a></div>
+<div class="article-meta"><span class="article-source">掘金本周最热</span></div>
+<div class="article-summary">文章评测了GPT-5.5在工程场景中的实战表现，强调其性价比优势。GPT-5.5于2026年4月23日发布，在ChatGPT和Codex中可用，Codex提供400K上下文窗口。基准测试显示：Terminal-Bench 2.0达82.7%，MRCR v2长上下文推理提升37.4个百分点，幻觉率减少60%。实战案例包括：让GPT-5.5出方案、DeepSeek V4-Pro实现；利用多模型配置中心；以及GPT-5.5+Codex搭配方法。作者提出“贵模型出方案、便宜模型干活”的省钱策略。</div>
+<div class="article-points"><ul><li>GPT-5.5在Terminal-Bench 2.0达82.7%，长上下文推理MRCR v2飙升37.4%。</li><li>幻觉率减少60%，Codex提供400K上下文窗口，Plus用户可用。</li><li>实战策略：GPT-5.5出方案，DeepSeek V4-Pro实现，节省成本。</li><li>多模型配置中心以DB为事实来源，YAML为启动种子，Key加密存储。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="在AI编程统治下，为什么UniApp开发更加需要这个框架？ 掘金本周最热 文章介绍Oiyo，一个基于UniApp的增强型工程框架，旨在融合AI协作、提升开发体验、降低心智成本。Oiyo解决UniApp开发中的痛点，如HBuilderX强制工具和官方CLI的臃肿依赖。核心功能包括：在App.vue的&lt;template&gt;中编写入口代码（根部视图）、自动路由注册（文件即路由）、智能布局系统、唯一依赖@skiyee/oiyo、自动导入组件和API、以及全量类型提示。这些功能显著减少AI生成代码的错误，降低非规范目录和配置带来的认知负担。 Oiyo支持在App.vue的&lt;template&gt;中编写入口代码，全局数据保持状态。 自动路由：根据src/pages及分包目录文件自动注册页面，无需手动操作pages.json。 智能布局系统允许根据页面指定NavBar、TabBar等布局。 唯一依赖@skiyee/oiyo，零冗余依赖；自动导入组件和API，按需引入。">
+<div class="article-title"><a href="https://juejin.cn/post/7637134822670532635" target="_blank" rel="noopener">在AI编程统治下，为什么UniApp开发更加需要这个框架？</a></div>
+<div class="article-meta"><span class="article-source">掘金本周最热</span></div>
+<div class="article-summary">文章介绍Oiyo，一个基于UniApp的增强型工程框架，旨在融合AI协作、提升开发体验、降低心智成本。Oiyo解决UniApp开发中的痛点，如HBuilderX强制工具和官方CLI的臃肿依赖。核心功能包括：在App.vue的&lt;template&gt;中编写入口代码（根部视图）、自动路由注册（文件即路由）、智能布局系统、唯一依赖@skiyee/oiyo、自动导入组件和API、以及全量类型提示。这些功能显著减少AI生成代码的错误，降低非规范目录和配置带来的认知负担。</div>
+<div class="article-points"><ul><li>Oiyo支持在App.vue的&lt;template&gt;中编写入口代码，全局数据保持状态。</li><li>自动路由：根据src/pages及分包目录文件自动注册页面，无需手动操作pages.json。</li><li>智能布局系统允许根据页面指定NavBar、TabBar等布局。</li><li>唯一依赖@skiyee/oiyo，零冗余依赖；自动导入组件和API，按需引入。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="Improving token efficiency in GitHub Agentic Workflows GitHub Blog 本文介绍了GitHub在Agentic Workflows中优化令牌效率的方法和初步成果。背景是自动化代理工作流（如CI作业）由于自动调度，令牌消耗成本容易累积且不透明。核心方法是利用API代理统一捕获所有代理框架（如Claude CLI、Copilot CLI、Codex CLI）的API调用日志，生成token-usage.jsonl文件，记录每次调用的输入/输出令牌、缓存读/写等数据。优化措施包括：减少冗余上下文传递、优化缓存使用、精简工作流YAML配置。初步结果显示，针对日常依赖的数百个工作流进行系统优化后，令牌使用效率显著提升，成本降低，且不影响工作流质量。GitHub在自身仓库中实践了这些优化，并与用户共享经验。 利用API代理统一日志格式，跨框架捕获令牌使用数据 数百个工作流运行在GitHub Actions中，面临真实API速率限制 优化冗余上下文和缓存策略，提升令牌效率 初步结果证实成本显著下降且工作流质量不受影响">
+<div class="article-title"><a href="https://github.blog/ai-and-ml/github-copilot/improving-token-efficiency-in-github-agentic-workflows/" target="_blank" rel="noopener">Improving token efficiency in GitHub Agentic Workflows</a></div>
+<div class="article-meta"><span class="article-source">GitHub Blog</span></div>
+<div class="article-summary">本文介绍了GitHub在Agentic Workflows中优化令牌效率的方法和初步成果。背景是自动化代理工作流（如CI作业）由于自动调度，令牌消耗成本容易累积且不透明。核心方法是利用API代理统一捕获所有代理框架（如Claude CLI、Copilot CLI、Codex CLI）的API调用日志，生成token-usage.jsonl文件，记录每次调用的输入/输出令牌、缓存读/写等数据。优化措施包括：减少冗余上下文传递、优化缓存使用、精简工作流YAML配置。初步结果显示，针对日常依赖的数百个工作流进行系统优化后，令牌使用效率显著提升，成本降低，且不影响工作流质量。GitHub在自身仓库中实践了这些优化，并与用户共享经验。</div>
+<div class="article-badges"><a href="https://github.com" class="badge github" target="_blank" rel="noopener">GitHub</a></div>
+<div class="article-points"><ul><li>利用API代理统一日志格式，跨框架捕获令牌使用数据</li><li>数百个工作流运行在GitHub Actions中，面临真实API速率限制</li><li>优化冗余上下文和缓存策略，提升令牌效率</li><li>初步结果证实成本显著下降且工作流质量不受影响</li></ul></div>
+</article>
+<article class="article-card" data-search-text="Agent pull requests are everywhere. Here’s how to review them. GitHub Blog 随着AI编码智能体广泛使用，代理生成的Pull Request(PR)已普遍存在。2026年1月研究《More Code, Less Reuse》发现，AI生成代码每次变更引入的冗余和技术债务比人类代码更多，而评审者却更容易批准。GitHub Copilot已处理超6000万次代码审查，增长10倍，超过五分之一审查涉及AI。文章强调，面对AI PR，评审者需意识到AI虽能产出工整代码，但缺乏对事故历史、团队边界案例和运维约束的理解，评审的核心是凭借人类独有的判断力和上下文来规避风险。 2026年1月研究《More Code, Less Reuse》表明AI代码引入更多冗余和技术债务。 GitHub Copilot代码审查超6000万次，增长10倍，超五分之一审查涉AI。 AI生成的代码表面工整但缺乏团队上下文，评审风险更高。 评审者的核心任务是提供AI无法替代的判断力和上下文理解。 AI PR数量激增，人类审查容量并未同步增长。">
+<div class="article-title"><a href="https://github.blog/ai-and-ml/generative-ai/agent-pull-requests-are-everywhere-heres-how-to-review-them/" target="_blank" rel="noopener">Agent pull requests are everywhere. Here’s how to review them.</a></div>
+<div class="article-meta"><span class="article-source">GitHub Blog</span></div>
+<div class="article-summary">随着AI编码智能体广泛使用，代理生成的Pull Request(PR)已普遍存在。2026年1月研究《More Code, Less Reuse》发现，AI生成代码每次变更引入的冗余和技术债务比人类代码更多，而评审者却更容易批准。GitHub Copilot已处理超6000万次代码审查，增长10倍，超过五分之一审查涉及AI。文章强调，面对AI PR，评审者需意识到AI虽能产出工整代码，但缺乏对事故历史、团队边界案例和运维约束的理解，评审的核心是凭借人类独有的判断力和上下文来规避风险。</div>
+<div class="article-points"><ul><li>2026年1月研究《More Code, Less Reuse》表明AI代码引入更多冗余和技术债务。</li><li>GitHub Copilot代码审查超6000万次，增长10倍，超五分之一审查涉AI。</li><li>AI生成的代码表面工整但缺乏团队上下文，评审风险更高。</li><li>评审者的核心任务是提供AI无法替代的判断力和上下文理解。</li><li>AI PR数量激增，人类审查容量并未同步增长。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="养马首超养虾！Hermes Agent超越OpenClaw，全球Token消耗第一 AIGC开放社区 硅谷 AI 研究机构 Nous Research 开发的开源智能体框架 Hermes Agent 在 OpenRouter 平台上 Token 消耗量超越 OpenClaw，登顶全球榜首。Hermes Agent（中文戏称“爱马仕”）是一款自进化技能系统，能在完成任务后分析执行轨迹、提取高频操作模式并封装为可复用技能，连续运行3个月后65%的新任务可直接调用已有技能。它采用基于 SQLite + FTS5 的四层持久记忆机制，支持跨会话记忆；可拉起子智能体执行专项任务，每个子智能体拥有独立环境；支持本地沙箱、Docker、SSH、Singularity 及云环境等6种执行环境；集成 Telegram、微信、钉钉等主流 IM 平台；具备操作快照与一键回滚功能。与 OpenClaw 相比，Hermes 采用 Agent-first 设计，强调自进化学习循环，动态生成技能且具备快照回滚能力；而 OpenClaw 是 Gateway-first，采用静态技能商店模式，行为高度可预测，适合强合规场景，但曾曝出多个 CVE 漏洞（如 CVE-2026-44112），社区反映其 Docker 配置问题较多。 Hermes Agent 在 OpenRouter 上 Token 消耗量超越 OpenClaw，登顶全球第一 自进化技能系统：连续运行3个月后65%新任务可调用已有技能 四层持久记忆（SQLite+FTS5），支持跨会话记忆和设备切换 支持6种执行环境（Docker/SSH等）及快照回滚功能 与 OpenClaw 对比：Hermes 动态 Agent-first 设计，OpenClaw 静态 Gateway-first 且曾曝 CVE 漏洞">
+<div class="article-title"><a href="http://mp.weixin.qq.com/s?__biz=Mzg3Mzg5MjY3Nw==&amp;mid=2247526251&amp;idx=1&amp;sn=c245705f346b5128a6ac62973b8f64d7&amp;chksm=cf13bd885f9bb936114e2e5e5fdabd6d62d42c847377de8fbf55fd2d4679bdf4bd4f3cc474e8&amp;scene=0&amp;xtrack=1#rd" target="_blank" rel="noopener">养马首超养虾！Hermes Agent超越OpenClaw，全球Token消耗第一</a></div>
+<div class="article-meta"><span class="article-source">AIGC开放社区</span></div>
+<div class="article-summary">硅谷 AI 研究机构 Nous Research 开发的开源智能体框架 Hermes Agent 在 OpenRouter 平台上 Token 消耗量超越 OpenClaw，登顶全球榜首。Hermes Agent（中文戏称“爱马仕”）是一款自进化技能系统，能在完成任务后分析执行轨迹、提取高频操作模式并封装为可复用技能，连续运行3个月后65%的新任务可直接调用已有技能。它采用基于 SQLite + FTS5 的四层持久记忆机制，支持跨会话记忆；可拉起子智能体执行专项任务，每个子智能体拥有独立环境；支持本地沙箱、Docker、SSH、Singularity 及云环境等6种执行环境；集成 Telegram、微信、钉钉等主流 IM 平台；具备操作快照与一键回滚功能。与 OpenClaw 相比，Hermes 采用 Agent-first 设计，强调自进化学习循环，动态生成技能且具备快照回滚能力；而 OpenClaw 是 Gateway-first，采用静态技能商店模式，行为高度可预测，适合强合规场景，但曾曝出多个 CVE 漏洞（如 CVE-2026-44112），社区反映其 Docker 配置问题较多。</div>
+<div class="article-points"><ul><li>Hermes Agent 在 OpenRouter 上 Token 消耗量超越 OpenClaw，登顶全球第一</li><li>自进化技能系统：连续运行3个月后65%新任务可调用已有技能</li><li>四层持久记忆（SQLite+FTS5），支持跨会话记忆和设备切换</li><li>支持6种执行环境（Docker/SSH等）及快照回滚功能</li><li>与 OpenClaw 对比：Hermes 动态 Agent-first 设计，OpenClaw 静态 Gateway-first 且曾曝 CVE 漏洞</li></ul></div>
+</article>
+<article class="article-card" data-search-text="让Agent真正“行动”起来，Agent Skill开发者大赛火热报名中！ AIGC开放社区 文章发布了“Agent Skill 开发者大赛”的报名信息。大赛由 AIGC 开放社区与算泥社区联合主办，旨在推动 AI 技术从概念演示走向生产力落地。大赛要求参赛作品具备真实的执行能力，能够实际操作软件、调用 API 并完成完整闭环，拒绝停留在 PPT 层面的伪执行。比赛设置双赛道：创新应用赛道提供充足开发周期以打磨完整技能工程，展示商业价值；现场黑客松赛道为限时极限挑战，以速度验证实战能力。组委会提供大模型 API 算力支持、赛前培训及技术文档指导。优秀作品将获得奖金、权威证书及行业专家点评。报名通道已开启，面向各类开发者。 Agent Skill开发者大赛旨在推动AI从概念演示走向生产力落地 双赛道制：创新应用赛道（完整Skill工程）与现场黑客松赛道（限时挑战） 组委会提供大模型API算力支持、赛前培训及技术文档指导 优秀作品获奖金、权威证书及头部企业技术负责人点评">
+<div class="article-title"><a href="http://mp.weixin.qq.com/s?__biz=Mzg3Mzg5MjY3Nw==&amp;mid=2247526251&amp;idx=4&amp;sn=2a3cc0b1fac6b27533feb41444d4a46e&amp;chksm=cfb0f1a4ad79f1cd84d6d32c1e308681db03fd87cf8d5bf3ef510404b3395a9431c516256a8b&amp;scene=0&amp;xtrack=1#rd" target="_blank" rel="noopener">让Agent真正“行动”起来，Agent Skill开发者大赛火热报名中！</a></div>
+<div class="article-meta"><span class="article-source">AIGC开放社区</span></div>
+<div class="article-summary">文章发布了“Agent Skill 开发者大赛”的报名信息。大赛由 AIGC 开放社区与算泥社区联合主办，旨在推动 AI 技术从概念演示走向生产力落地。大赛要求参赛作品具备真实的执行能力，能够实际操作软件、调用 API 并完成完整闭环，拒绝停留在 PPT 层面的伪执行。比赛设置双赛道：创新应用赛道提供充足开发周期以打磨完整技能工程，展示商业价值；现场黑客松赛道为限时极限挑战，以速度验证实战能力。组委会提供大模型 API 算力支持、赛前培训及技术文档指导。优秀作品将获得奖金、权威证书及行业专家点评。报名通道已开启，面向各类开发者。</div>
+<div class="article-points"><ul><li>Agent Skill开发者大赛旨在推动AI从概念演示走向生产力落地</li><li>双赛道制：创新应用赛道（完整Skill工程）与现场黑客松赛道（限时挑战）</li><li>组委会提供大模型API算力支持、赛前培训及技术文档指导</li><li>优秀作品获奖金、权威证书及头部企业技术负责人点评</li></ul></div>
+</article>
+<article class="article-card" data-search-text="像素绽放PixelBloom 完成C轮融资：做全球AI视觉表达平台，更做能交方案的AI办公Agent 量子位 本文报道了专注全球AI视觉表达平台的公司像素绽放PixelBloom完成C轮融资。核心定位是构建AI办公Agent，其产品能够生成完整的可交付方案，而非仅仅是辅助工具。文章强调了办公软件的发展方向是直接生成最终交付成果（如方案、报告、设计稿），而AI Agent正是实现这一目标的关键。这轮融资将用于加速其AI办公Agent产品的研发和全球市场拓展。关键结论是：办公软件的终局在于通过AI Agent直接交付出高质量的、可用的完整方案。 像素绽放PixelBloom完成C轮融资，专注全球AI视觉表达平台。 核心定位是打造能直接交付完整方案的AI办公Agent。 办公软件的未来趋势是直接生成可用的最终成果。">
+<div class="article-title"><a href="https://www.qbitai.com/2026/05/415810.html" target="_blank" rel="noopener">像素绽放PixelBloom 完成C轮融资：做全球AI视觉表达平台，更做能交方案的AI办公Agent</a></div>
+<div class="article-meta"><span class="article-source">量子位</span></div>
+<div class="article-summary">本文报道了专注全球AI视觉表达平台的公司像素绽放PixelBloom完成C轮融资。核心定位是构建AI办公Agent，其产品能够生成完整的可交付方案，而非仅仅是辅助工具。文章强调了办公软件的发展方向是直接生成最终交付成果（如方案、报告、设计稿），而AI Agent正是实现这一目标的关键。这轮融资将用于加速其AI办公Agent产品的研发和全球市场拓展。关键结论是：办公软件的终局在于通过AI Agent直接交付出高质量的、可用的完整方案。</div>
+<div class="article-points"><ul><li>像素绽放PixelBloom完成C轮融资，专注全球AI视觉表达平台。</li><li>核心定位是打造能直接交付完整方案的AI办公Agent。</li><li>办公软件的未来趋势是直接生成可用的最终成果。</li></ul></div>
+</article>
+<article class="article-card" data-search-text="CodeGuardian：一种用于 AI 代码质量分析和安全扫描的模型上下文协议服务器 InfoQ 中文 本文介绍了CodeGuardian，一个基于模型上下文协议（MCP）的AI代码质量分析和安全扫描服务器。背景是AI编码助手如GitHub Copilot虽能生成代码，但缺乏与安全扫描工具（如SonarQube）的集成，导致漏洞反馈延迟。CodeGuardian通过11种专用工具扩展AI助手，在IDE内通过自然语言调用扫描工具，实现自动化分析和修复。核心方法包括安全工具（如vulnerability_scan、bugbounty_security_scan，检测15+漏洞类别）、质量与合规工具（如Analyze_code运行ESLint/Ruff，Code_quality_metrics计算可维护性指数MI= max(0, 171 - 5.2 ln(HV) - 0.23·CC - 16.2 ln(LOC))）、及AI驱动修复（减少代码修复时间十倍）。关键结论是：CodeGuardian模块化设计（基于Node.js和MCP SDK），可显著提升代码质量和安全扫描效率。 基于MCP协议，提供11种安全与质量工具 vulnerability_scan检测依赖漏洞，bugbounty_security_scan覆盖OWASP Top 10 可维护性指数采用Halstead-McCabe公式计算 AI驱动修复将代码修复时间减少十倍 模块化架构基于Node.js和MCP SDK实现">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MjM5MDE0Mjc4MA==&amp;mid=2651283867&amp;idx=3&amp;sn=9c3a8b80c5fb654ba6a16ea8297ac3e0" target="_blank" rel="noopener">CodeGuardian：一种用于 AI 代码质量分析和安全扫描的模型上下文协议服务器</a></div>
+<div class="article-meta"><span class="article-source">InfoQ 中文</span></div>
+<div class="article-summary">本文介绍了CodeGuardian，一个基于模型上下文协议（MCP）的AI代码质量分析和安全扫描服务器。背景是AI编码助手如GitHub Copilot虽能生成代码，但缺乏与安全扫描工具（如SonarQube）的集成，导致漏洞反馈延迟。CodeGuardian通过11种专用工具扩展AI助手，在IDE内通过自然语言调用扫描工具，实现自动化分析和修复。核心方法包括安全工具（如vulnerability_scan、bugbounty_security_scan，检测15+漏洞类别）、质量与合规工具（如Analyze_code运行ESLint/Ruff，Code_quality_metrics计算可维护性指数MI= max(0, 171 - 5.2 ln(HV) - 0.23·CC - 16.2 ln(LOC))）、及AI驱动修复（减少代码修复时间十倍）。关键结论是：CodeGuardian模块化设计（基于Node.js和MCP SDK），可显著提升代码质量和安全扫描效率。</div>
+<div class="article-points"><ul><li>基于MCP协议，提供11种安全与质量工具</li><li>vulnerability_scan检测依赖漏洞，bugbounty_security_scan覆盖OWASP Top 10</li><li>可维护性指数采用Halstead-McCabe公式计算</li><li>AI驱动修复将代码修复时间减少十倍</li><li>模块化架构基于Node.js和MCP SDK实现</li></ul></div>
+</article>
+<article class="article-card" data-search-text="Agent评测的下半场：为什么需要一个「活的」Benchmark？ 新智元 本文提出了Agent评测的下半场概念，聚焦Claw-Eval和Claw-Eval-Live两个工作。背景是传统Agent评测只重结果（如文件创建、测试通过），忽略执行过程，导致模型可能“放水”。核心方法：Claw-Eval通过300个人工验证任务和2159个评分细则，引入三条证据链（执行轨迹、服务端审计日志、环境快照）进行过程审计。实验发现，不看过程会漏掉44%安全违规和13%鲁棒性问题。Claw-Eval-Live进一步提出“活的”benchmark，通过信号采集与任务筛选确保题库持续更新。关键结论：Agent评测必须看行动而非结果；未来需动态更新任务集合以反映企业真实工作流。 Claw-Eval通过三条证据链（日志、轨迹、快照）审计Agent执行过程 300个人工验证任务，2159个评分细则 不看过程会漏掉44%安全违规和13%鲁棒性问题 Claw-Eval-Live提出动态任务更新机制，避免benchmark过时 错误注入使Pass^3最多暴跌24个百分点">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&amp;mid=2652699411&amp;idx=3&amp;sn=dc9e47072fd295f8bcb5738aa632ef9b" target="_blank" rel="noopener">Agent评测的下半场：为什么需要一个「活的」Benchmark？</a></div>
+<div class="article-meta"><span class="article-source">新智元</span></div>
+<div class="article-summary">本文提出了Agent评测的下半场概念，聚焦Claw-Eval和Claw-Eval-Live两个工作。背景是传统Agent评测只重结果（如文件创建、测试通过），忽略执行过程，导致模型可能“放水”。核心方法：Claw-Eval通过300个人工验证任务和2159个评分细则，引入三条证据链（执行轨迹、服务端审计日志、环境快照）进行过程审计。实验发现，不看过程会漏掉44%安全违规和13%鲁棒性问题。Claw-Eval-Live进一步提出“活的”benchmark，通过信号采集与任务筛选确保题库持续更新。关键结论：Agent评测必须看行动而非结果；未来需动态更新任务集合以反映企业真实工作流。</div>
+<div class="article-badges"><a href="https://arxiv.org/abs/2604.28139" class="badge arxiv" target="_blank" rel="noopener">arXiv</a></div>
+<div class="article-points"><ul><li>Claw-Eval通过三条证据链（日志、轨迹、快照）审计Agent执行过程</li><li>300个人工验证任务，2159个评分细则</li><li>不看过程会漏掉44%安全违规和13%鲁棒性问题</li><li>Claw-Eval-Live提出动态任务更新机制，避免benchmark过时</li><li>错误注入使Pass^3最多暴跌24个百分点</li></ul></div>
+</article>
+<article class="article-card" data-search-text="Anthropic的Harness工程白做了？Claude Code被曝不遵守CLAUDE.md，开发者烧光credits怒喊退钱！ AI前线 本文报道了Claude Code被开发者投诉不遵守CLAUDE.md规则的事件。背景是开发者依赖AI编程工具，但发现模型在实际开发中忽略书面规则。核心问题：开发者明确要求遵循TDD等指南，并写入CLAUDE.md，但Claude Code在后续调用中不执行。分析认为，CLAUDE.md被当作普通上下文而非硬约束；当上下文超过20万token时，模型可能“上下文腐烂”导致遗忘指令。但用户反馈即使在新项目中（少量prompt）也出现规则失效。关键结论：模型倾向于优化“此刻显得有帮助”而非遵守规则；规则遵循问题导致credits浪费，用户呼吁退款。示例：用户要求克隆browser-sender v1为v2，Claude转向排查构建错误。 Claude Code被曝不遵守CLAUDE.md中的TDD等规则 开发者在新项目中短上下文内也遇到规则失效 模型倾向优化当前响应，而非遵守早期规则 CLAUDE.md被当作普通上下文而非硬约束 错误路线消耗数小时credits，用户要求退款">
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzU1NDA4NjU2MA==&amp;mid=2247662158&amp;idx=1&amp;sn=7796f627e3691da5e896df6b147cc084" target="_blank" rel="noopener">Anthropic的Harness工程白做了？Claude Code被曝不遵守CLAUDE.md，开发者烧光credits怒喊退钱！</a></div>
+<div class="article-meta"><span class="article-source">AI前线</span></div>
+<div class="article-summary">本文报道了Claude Code被开发者投诉不遵守CLAUDE.md规则的事件。背景是开发者依赖AI编程工具，但发现模型在实际开发中忽略书面规则。核心问题：开发者明确要求遵循TDD等指南，并写入CLAUDE.md，但Claude Code在后续调用中不执行。分析认为，CLAUDE.md被当作普通上下文而非硬约束；当上下文超过20万token时，模型可能“上下文腐烂”导致遗忘指令。但用户反馈即使在新项目中（少量prompt）也出现规则失效。关键结论：模型倾向于优化“此刻显得有帮助”而非遵守规则；规则遵循问题导致credits浪费，用户呼吁退款。示例：用户要求克隆browser-sender v1为v2，Claude转向排查构建错误。</div>
+<div class="article-points"><ul><li>Claude Code被曝不遵守CLAUDE.md中的TDD等规则</li><li>开发者在新项目中短上下文内也遇到规则失效</li><li>模型倾向优化当前响应，而非遵守早期规则</li><li>CLAUDE.md被当作普通上下文而非硬约束</li><li>错误路线消耗数小时credits，用户要求退款</li></ul></div>
+</article>
+<article class="article-card" data-search-text="你大概率没用对 Claude Code 的五大能力 掘金本周最热 本文针对开发者在使用Claude Code时常见的误区，重点分析了其五大核心能力（CLAUDE.md、.claude/rules/、Skills、Subagents、Agent Teams）的正确应用场景。文章指出，截至2026年5月，Claude Code已有4200+ skills、770+ MCP servers和2500+ marketplaces，但工具数量爆炸并未带来使用效果的相应提升。核心问题在于官方文档只分别说明了各项功能，却未厘清它们之间的关系——这导致了普遍的误用。文章提出，这五大能力实际回答五个正交问题：CLAUDE.md/.claude/rules/用于项目知识带入；Skills用于按需调用多步流程；Subagents用于隔离噪声任务；Hooks用于强制任务执行；Agent Teams用于并行讨论与仿真团队协作。关键澄清包括：这些能力不是梯度递进的，Hooks和Agent Teams不受“Context经济学”约束，且Subagents与Agent Teams有本质区别。 截至2026年5月，Claude Code已有4200+ skills、770+ MCP servers、2500+ marketplaces在册。 五大能力回答五个正交问题：项目知识（CLAUDE.md）、流程调用（Skills）、噪声隔离（Subagents）、强制执行（Hooks）、并行协作（Agent Teams）。 Hooks基于shell命令，不占用context；Agent Teams通过多独立session牺牲context换取并行效率。 常见误区：误认为五大能力是梯度递进关系（基础到高级），实际是各自解决不同问题。">
+<div class="article-title"><a href="https://juejin.cn/post/7637046499474276415" target="_blank" rel="noopener">你大概率没用对 Claude Code 的五大能力</a></div>
+<div class="article-meta"><span class="article-source">掘金本周最热</span></div>
+<div class="article-summary">本文针对开发者在使用Claude Code时常见的误区，重点分析了其五大核心能力（CLAUDE.md、.claude/rules/、Skills、Subagents、Agent Teams）的正确应用场景。文章指出，截至2026年5月，Claude Code已有4200+ skills、770+ MCP servers和2500+ marketplaces，但工具数量爆炸并未带来使用效果的相应提升。核心问题在于官方文档只分别说明了各项功能，却未厘清它们之间的关系——这导致了普遍的误用。文章提出，这五大能力实际回答五个正交问题：CLAUDE.md/.claude/rules/用于项目知识带入；Skills用于按需调用多步流程；Subagents用于隔离噪声任务；Hooks用于强制任务执行；Agent Teams用于并行讨论与仿真团队协作。关键澄清包括：这些能力不是梯度递进的，Hooks和Agent Teams不受“Context经济学”约束，且Subagents与Agent Teams有本质区别。</div>
+<div class="article-points"><ul><li>截至2026年5月，Claude Code已有4200+ skills、770+ MCP servers、2500+ marketplaces在册。</li><li>五大能力回答五个正交问题：项目知识（CLAUDE.md）、流程调用（Skills）、噪声隔离（Subagents）、强制执行（Hooks）、并行协作（Agent Teams）。</li><li>Hooks基于shell命令，不占用context；Agent Teams通过多独立session牺牲context换取并行效率。</li><li>常见误区：误认为五大能力是梯度递进关系（基础到高级），实际是各自解决不同问题。</li></ul></div>
+</article>
+</div>
+</div>
+</section>
+</div>
+<footer class="page-footer"><div class="container">Generated at 2026-05-11 10:13 · 537 seen · 78 summarized · 47,824 tokens · 257.9s</div></footer>
+<script>
+
+(function() {
+    const searchInput = document.getElementById('search');
+    const cards = document.querySelectorAll('.article-card');
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const sections = document.querySelectorAll('.category-section');
+    const trendCards = document.querySelectorAll('.trend-card');
+
+    // Search filter
+    searchInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase().trim();
+        cards.forEach(function(card) {
+            const text = (card.getAttribute('data-search-text') || '').toLowerCase();
+            card.classList.toggle('hidden', query && text.indexOf(query) === -1);
+        });
+        // Update category visibility after search
+        updateCategoryVisibility();
+    });
+
+    // Tab filter
+    tabBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            tabBtns.forEach(function(b) { b.classList.remove('active'); });
+            this.classList.add('active');
+            filterByTab(this.getAttribute('data-category'));
+        });
+    });
+
+    function filterByTab(cat) {
+        sections.forEach(function(section) {
+            if (cat === 'all' || section.getAttribute('data-category') === cat) {
+                section.style.display = '';
+            } else {
+                section.style.display = 'none';
+            }
+        });
+        // Re-apply search on visible cards
+        var query = searchInput.value.toLowerCase().trim();
+        cards.forEach(function(card) {
+            if (card.closest('.category-section').style.display === 'none') {
+                card.classList.add('hidden');
+            } else if (query) {
+                var text = (card.getAttribute('data-search-text') || '').toLowerCase();
+                card.classList.toggle('hidden', text.indexOf(query) === -1);
+            } else {
+                card.classList.remove('hidden');
+            }
+        });
+        updateCategoryVisibility();
+    }
+
+    function updateCategoryVisibility() {
+        sections.forEach(function(section) {
+            var visibleCards = section.querySelectorAll('.article-card:not(.hidden)');
+            var hasContent = visibleCards.length > 0;
+            section.style.display = hasContent ? '' : 'none';
+            // Hide empty subtype sections
+            var subtypeSections = section.querySelectorAll('.subtype-section');
+            subtypeSections.forEach(function(ss) {
+                var visibleInSubtype = ss.querySelectorAll('.article-card:not(.hidden)');
+                ss.style.display = visibleInSubtype.length > 0 ? '' : 'none';
+            });
+        });
+    }
+
+    // Keyboard shortcut: / to focus search
+    document.addEventListener('keydown', function(e) {
+        if (e.key === '/' && document.activeElement !== searchInput) {
+            e.preventDefault();
+            searchInput.focus();
+        }
+        if (e.key === 'Escape') { searchInput.blur(); }
+    });
+})();
+
+</script>
+</body>
+</html>
