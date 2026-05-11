@@ -139,7 +139,6 @@ rss_sources:
     category: "AIGC视觉生成"
     limit: 15
     enrich: true
-
   # ============================================================
   # AIGC视觉生成 — Tier 2（产品/工具/教程型）
   # ============================================================
@@ -176,24 +175,6 @@ rss_sources:
   # ============================================================
   # 多模态大模型/大语言模型 — Tier 1（技术/算法型）
   # ============================================================
-  - name: "arXiv AI"
-    url: "https://rss.arxiv.org/rss/cs.AI"
-    category: "多模态大模型/大语言模型"
-    limit: 15
-    enrich: true
-
-  - name: "arXiv 机器学习"
-    url: "https://rss.arxiv.org/rss/cs.LG"
-    category: "多模态大模型/大语言模型"
-    limit: 15
-    enrich: true
-
-  - name: "arXiv 计算机视觉"
-    url: "https://rss.arxiv.org/rss/cs.CV"
-    category: "多模态大模型/大语言模型"
-    limit: 15
-    enrich: true
-
   - name: "Google DeepMind Blog"
     url: "https://deepmind.com/blog/feed/basic/"
     category: "多模态大模型/大语言模型"
@@ -271,7 +252,6 @@ rss_sources:
     category: "多模态大模型/大语言模型"
     limit: 15
     enrich: true
-
   - name: "语言即世界language is world"
     url: "https://wechat2rss.bestblogs.dev/feed/e1ed0d3edd93f90aef602105eb7ca51b35b7060a.xml"
     category: "多模态大模型/大语言模型"
@@ -429,18 +409,11 @@ rss_sources:
   # ============================================================
   # 自动驾驶 — Tier 1（技术/算法型）
   # ============================================================
-  - name: "arXiv 机器人"
-    url: "https://rss.arxiv.org/rss/cs.RO"
-    category: "自动驾驶"
-    limit: 15
-    enrich: true
-
   - name: "自动驾驶之心"
     url: "http://localhost:4000/feeds/MP_WXS_3867515558.atom"
     category: "自动驾驶"
     limit: 15
     enrich: true
-
   # ============================================================
   # 自动驾驶 — Tier 2（新闻/企业动态型）
   # ============================================================
@@ -595,6 +568,64 @@ rss_sources:
     limit: 8
     enrich: false
 
+
+  # ============================================================
+  # 学术论文 — Tier 1（技术/算法型）
+  # ============================================================
+
+  - name: "顶会 CVPR/ICCV/ECCV"
+    url: "https://rss.arxiv.org/rss/search?query=CVPR+OR+ICCV+OR+ECCV&searchtype=all"
+    category: "学术论文"
+    limit: 15
+    enrich: true
+
+  - name: "arXiv AI"
+    url: "https://rss.arxiv.org/rss/cs.AI"
+    category: "学术论文"
+    limit: 15
+    enrich: true
+
+  - name: "arXiv 机器学习"
+    url: "https://rss.arxiv.org/rss/cs.LG"
+    category: "学术论文"
+    limit: 15
+    enrich: true
+
+  - name: "arXiv 计算机视觉"
+    url: "https://rss.arxiv.org/rss/cs.CV"
+    category: "学术论文"
+    limit: 15
+    enrich: true
+
+  - name: "顶会 NeurIPS/ICML/ICLR"
+    url: "https://rss.arxiv.org/rss/search?query=NeurIPS+OR+ICML+OR+ICLR&searchtype=all"
+    category: "学术论文"
+    limit: 15
+    enrich: true
+
+  - name: "顶会 AAAI/IJCAI"
+    url: "https://rss.arxiv.org/rss/search?query=AAAI+OR+IJCAI&searchtype=all"
+    category: "学术论文"
+    limit: 15
+    enrich: true
+
+  - name: "期刊 TPAMI/IJCV/JMLR/TNNLS/NMI"
+    url: "https://rss.arxiv.org/rss/search?query=TPAMI+OR+IJCV+OR+JMLR+OR+TNNLS+OR+%22Nature+Machine+Intelligence%22&searchtype=all"
+    category: "学术论文"
+    limit: 15
+    enrich: true
+
+  - name: "arXiv 机器人"
+    url: "https://rss.arxiv.org/rss/cs.RO"
+    category: "学术论文"
+    limit: 15
+    enrich: true
+
+  - name: "顶会 ICRA/CoRL/RSS"
+    url: "https://rss.arxiv.org/rss/search?query=ICRA+OR+CoRL+OR+RSS&searchtype=all"
+    category: "学术论文"
+    limit: 15
+    enrich: true
 claude:
   api_key: "${DEEPSEEK_API_KEY}"
   base_url: "https://api.deepseek.com/anthropic"
