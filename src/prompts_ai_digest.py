@@ -9,16 +9,14 @@ CATEGORIES = {
     "多模态大模型/大语言模型": "多模态大模型、大语言模型相关",
     "自动驾驶": "VLA/端到端/世界模型/驾驶仿真等自动驾驶相关",
     "Coding Agent": "编码Agent相关各类信息(如Claude Code、Codex、Cursor等), 以及Agent Skill、编码Agent在各类应用中的落地（如PPT生成、AI研究、自动化工作流等等）",
-    "学术论文": "来自arXiv、学术会议（NeurIPS/ICML/ICLR/CVPR/ICCV/ECCV/AAAI/IJCAI/ICRA/CoRL/RSS）、学术期刊（TPAMI/IJCV/JMLR/TNNLS/NMI）的AI/ML/CV/RO领域论文",
     "其它": "不属于以上类别的内容"
 }
 
 CATEGORIES_TO_OUTPUT = [
     "AIGC视觉生成",
-    "多模态大模型/大语言模型",
     "自动驾驶",
     "Coding Agent",
-    "学术论文"
+    "多模态大模型/大语言模型",
 ]
 
 
@@ -35,9 +33,8 @@ def build_classification_system_prompt() -> str:
 - 产品/应用：内容侧重产品发布、应用案例、行业动态、工具使用、商业合作、教程科普等应用层面内容
 
 重要规则：
-1. 对于学术论文（来源为arXiv等学术渠道或会议/期刊名称），统一归入「学术论文」类别，不再按内容细分到AIGC视觉生成等类别
-2. 批量分类时输出JSON数组，每项包含 "index"、"category"、"subtype" 三个字段
-3. 单篇分类时输出JSON对象，包含 "category" 和 "subtype" 两个字段"""
+1. 批量分类时输出JSON数组，每项包含 "index"、"category"、"subtype" 三个字段
+2. 单篇分类时输出JSON对象，包含 "category" 和 "subtype" 两个字段"""
 
 
 def build_summarization_system_prompt() -> str:

@@ -11,7 +11,7 @@ from src.config_loader import ConfigLoader, SUBTYPE_TECH, SUBTYPE_PRODUCT
 from src.digest_cache import DigestCache
 from src.rss_fetcher import RSSFetcher
 from src.custom_fetcher import register_all
-from src.summarizer import Summarizer, TrendSummarizer, TrendSummary
+from src.summarizer import Summarizer, TrendSummarizer, TrendSummary, ArticleSummary
 from src.markdown_writer import MarkdownWriter
 from src.html_writer import HTMLWriter
 from src.scheduler import Scheduler
@@ -113,6 +113,7 @@ def run_once(config_path: str):
     cache = DigestCache(config.digest.cache_path)
     source_enrich_map = {s.name: s.enrich for s in config.rss_sources}
     source_subtype_map = {s.name: s.subtype for s in config.rss_sources}
+    academic_source_names = {s.name for s in config.rss_sources if s.category == "学术论文"}
 
     articles_by_category = {cat: {SUBTYPE_TECH: [], SUBTYPE_PRODUCT: []} for cat in CATEGORIES_TO_OUTPUT}
     cutoff = datetime.now() - timedelta(days=config.digest.recent_days)
@@ -120,6 +121,7 @@ def run_once(config_path: str):
     pending_classification = []
     categories_by_index = {}
     subtypes_by_index = {}
+    seen_urls = set()
     total_seen = 0
     total_recent = 0
     total_summarized = 0
@@ -136,6 +138,10 @@ def run_once(config_path: str):
                     continue
 
                 total_recent += 1
+                if article.url in seen_urls:
+                    logger.info(f"  duplicate skipped: {article.title}")
+                    continue
+                seen_urls.add(article.url)
                 index = len(candidates)
                 candidates.append(article)
 
@@ -174,25 +180,32 @@ def run_once(config_path: str):
     pending_summarization = []
     for index, article in enumerate(candidates):
         category = categories_by_index.get(index, "")
+        is_academic = article.source in academic_source_names
         try:
-            if category in CATEGORIES_TO_OUTPUT:
-                subtype = subtypes_by_index.get(index) or source_subtype_map.get(article.source, SUBTYPE_PRODUCT)
-                cached_summary = cache.get_summary(article.url, article.source, article.title)
-                if cached_summary:
-                    if not cached_summary.subtype:
-                        cached_summary.subtype = subtype
-                    articles_by_category[category][cached_summary.subtype].append(cached_summary)
-                    total_summarized += 1
-                    logger.info(f"  cached {category}/{cached_summary.subtype}: {article.title}")
-                else:
-                    pending_summarization.append({
-                        "index": index,
-                        "article": article,
-                        "category": category,
-                        "subtype": subtype
-                    })
+            if is_academic:
+                if category not in ("AIGC视觉生成", "自动驾驶"):
+                    logger.info(f"  filtered academic {category}: {article.title}")
+                    continue
             else:
-                logger.info(f"  skipped {category}: {article.title}")
+                if category not in CATEGORIES_TO_OUTPUT:
+                    logger.info(f"  filtered {category}: {article.title}")
+                    continue
+
+            subtype = subtypes_by_index.get(index) or source_subtype_map.get(article.source, SUBTYPE_PRODUCT)
+            cached_summary = cache.get_summary(article.url, article.source, article.title)
+            if cached_summary:
+                if not cached_summary.subtype:
+                    cached_summary.subtype = subtype
+                articles_by_category[category][cached_summary.subtype].append(cached_summary)
+                total_summarized += 1
+                logger.info(f"  cached {category}/{cached_summary.subtype}: {article.title}")
+            else:
+                pending_summarization.append({
+                    "index": index,
+                    "article": article,
+                    "category": category,
+                    "subtype": subtype
+                })
         except Exception as e:
             logger.error(f"  failed to process article {article.title}: {e}")
             continue
@@ -348,10 +361,101 @@ def run_once(config_path: str):
     logger.info("Done")
 
 
+def render_only(config_path: str):
+    """Re-render HTML/MD from cache only — no fetching, no LLM calls."""
+    loader = ConfigLoader(config_path)
+    config = loader.load()
+
+    prompts = _load_prompts(config.digest.prompts_module)
+    CATEGORIES_TO_OUTPUT = prompts.CATEGORIES_TO_OUTPUT
+
+    cache = DigestCache(config.digest.cache_path)
+    source_subtype_map = {s.name: s.subtype for s in config.rss_sources}
+    academic_source_names = {s.name for s in config.rss_sources if s.category == "学术论文"}
+
+    articles_by_category = {cat: {SUBTYPE_TECH: [], SUBTYPE_PRODUCT: []} for cat in CATEGORIES_TO_OUTPUT}
+
+    total_summarized = 0
+    for key, entry in cache._data.get("articles", {}).items():
+        summary_text = entry.get("summary")
+        if not summary_text:
+            continue
+        category = entry.get("category", "")
+        source = entry.get("source", "")
+        is_academic = source in academic_source_names
+        if is_academic:
+            if category not in ("AIGC视觉生成", "自动驾驶"):
+                continue
+        elif category not in CATEGORIES_TO_OUTPUT:
+            continue
+        subtype = entry.get("subtype") or source_subtype_map.get(source, SUBTYPE_PRODUCT)
+        s = ArticleSummary(
+            title=entry.get("title", ""),
+            url=entry.get("url", ""),
+            source=entry.get("source", ""),
+            summary=summary_text,
+            key_points=entry.get("key_points", []),
+            arxiv_url=entry.get("arxiv_url", ""),
+            github_url=entry.get("github_url", ""),
+            subtype=subtype,
+        )
+        articles_by_category[category][subtype].append(s)
+        total_summarized += 1
+
+    logger.info(f"Loaded {total_summarized} cached summaries across {len(CATEGORIES_TO_OUTPUT)} categories")
+
+    # Trend summaries — re-run LLM calls (articles may have changed)
+    trend_summarizer = TrendSummarizer(config.claude, prompts=prompts) if config.digest.enable_trend_summary else None
+    trends_by_category = {}
+    if trend_summarizer:
+        for category, subtypes in articles_by_category.items():
+            all_articles = subtypes.get(SUBTYPE_TECH, []) + subtypes.get(SUBTYPE_PRODUCT, [])
+            if all_articles:
+                try:
+                    logger.info(f"Trend summary: {category} ({len(all_articles)} articles)")
+                    trends_by_category[category] = trend_summarizer.summarize_trends(category, all_articles)
+                except Exception as e:
+                    logger.error(f"Trend summary failed: {category}: {e}")
+
+    generated_at = datetime.now()
+    output_format = config.output.output_format
+    date_str = generated_at.strftime("%Y-%m-%d")
+    file_index = _compute_digest_index(config.output.base_dir, date_str)
+
+    category_counts = {cat: sum(len(v) for v in subtypes.values()) for cat, subtypes in articles_by_category.items()}
+    stats = {
+        "generated_at": generated_at,
+        "articles_seen": total_summarized,
+        "articles_recent": total_summarized,
+        "articles_summarized": total_summarized,
+        "categories": category_counts,
+        "token_total": 0,
+        "llm_time": 0,
+        "config_path": config_path,
+    }
+
+    if output_format in ("markdown", "both"):
+        writer = MarkdownWriter(config.output.base_dir)
+        md_path = writer.write_all(articles_by_category, trends_by_category, generated_at, file_index=file_index)
+        stats["file_size"] = Path(md_path).stat().st_size
+        writer.update_readme(md_path, stats)
+        logger.info(f"Wrote digest (md): {md_path}")
+
+    if output_format in ("html", "both"):
+        html_writer = HTMLWriter(config.output.base_dir, pages_url=config.output.pages_url)
+        html_path = html_writer.write_all(articles_by_category, trends_by_category, generated_at, stats, file_index=file_index)
+        stats["file_size"] = Path(html_path).stat().st_size
+        html_writer.update_readme(html_path, stats)
+        logger.info(f"Wrote digest (html): {html_path}")
+
+    logger.info("Render done")
+
+
 def main():
     parser = argparse.ArgumentParser(description='DigestMe — RSS digest generator')
     parser.add_argument('--config', default='config.yaml', help='Config file path')
     parser.add_argument('--once', action='store_true', help='Run once without scheduler')
+    parser.add_argument('--render-only', action='store_true', help='Re-render HTML/MD from cache only (no fetch, no LLM)')
     args = parser.parse_args()
 
     config_path = Path(args.config)
@@ -359,7 +463,9 @@ def main():
         logger.error(f"Config file does not exist: {config_path}")
         sys.exit(1)
 
-    if args.once:
+    if args.render_only:
+        render_only(str(config_path))
+    elif args.once:
         run_once(str(config_path))
     else:
         loader = ConfigLoader(str(config_path))

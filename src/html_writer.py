@@ -7,43 +7,56 @@ from src.summarizer import ArticleSummary, TrendSummary
 
 _CSS = r"""
 :root {
-    --bg: #fafafa;
+    --sidebar-w: 260px;
+    --topbar-h: 56px;
+    --primary: #6366f1;
+    --primary-light: #818cf8;
+    --primary-dark: #4f46e5;
+    --primary-bg: #eef2ff;
+    --accent: #8b5cf6;
+    --accent-light: #f5f3ff;
+    --bg: #f5f5f7;
     --surface: #fff;
-    --border: #e5e5e5;
-    --text: #1a1a1a;
-    --text-secondary: #666;
-    --text-muted: #999;
-    --accent: #2563eb;
-    --accent-light: #eff6ff;
-    --badge-bg: #f3f4f6;
-    --trend-bg: #fefce8;
-    --trend-border: #e5c43d;
-    --shadow: 0 1px 3px rgba(0,0,0,.08);
-    --shadow-hover: 0 4px 12px rgba(0,0,0,.1);
-    --radius: 8px;
+    --border: #e8e8ed;
+    --text: #1a1a2e;
+    --text-secondary: #5a5a7a;
+    --text-muted: #9999b0;
+    --shadow: 0 1px 3px rgba(0,0,0,.06);
+    --shadow-hover: 0 8px 24px rgba(99,102,241,.12);
+    --shadow-card: 0 2px 8px rgba(0,0,0,.04), 0 1px 2px rgba(0,0,0,.06);
+    --radius: 12px;
+    --radius-sm: 8px;
     --font: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans SC",sans-serif;
     --mono: "SF Mono","Fira Code","Fira Mono","Roboto Mono",monospace;
+    --card-hl: linear-gradient(135deg, #eef2ff 0%, #faf5ff 50%, #fdf2f8 100%);
+    --card-normal: linear-gradient(135deg, #fafafa 0%, #f8f8fc 100%);
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --bg: #111827;
-        --surface: #1f2937;
-        --border: #374151;
-        --text: #f3f4f6;
-        --text-secondary: #9ca3af;
-        --text-muted: #6b7280;
-        --accent: #60a5fa;
-        --accent-light: #1e3a5f;
-        --badge-bg: #374151;
-        --trend-bg: #292524;
-        --trend-border: #a68b02;
+        --primary: #818cf8;
+        --primary-light: #a5b4fc;
+        --primary-dark: #6366f1;
+        --primary-bg: #1e1b4b;
+        --accent: #a78bfa;
+        --accent-light: #1e1b4b;
+        --bg: #0f0f1a;
+        --surface: #1a1a2e;
+        --border: #2a2a40;
+        --text: #e8e8f0;
+        --text-secondary: #a0a0b8;
+        --text-muted: #6a6a80;
         --shadow: 0 1px 3px rgba(0,0,0,.3);
-        --shadow-hover: 0 4px 12px rgba(0,0,0,.5);
+        --shadow-hover: 0 8px 24px rgba(99,102,241,.25);
+        --shadow-card: 0 2px 8px rgba(0,0,0,.3);
+        --card-hl: linear-gradient(135deg, #1e1b4b 0%, #1a1a3e 50%, #2a1a3e 100%);
+        --card-normal: linear-gradient(135deg, #1a1a2e 0%, #1d1d35 100%);
     }
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
 
 body {
     font-family: var(--font);
@@ -53,251 +66,454 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-
-/* Brand */
-.brand {
-    display: flex; align-items: center; gap: 10px;
-    padding: 20px 0 12px;
-    user-select: none;
+/* ===== SIDEBAR ===== */
+.sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0;
+    width: var(--sidebar-w);
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    z-index: 200;
+    display: flex; flex-direction: column;
+    overflow-y: auto;
 }
-.brand-logo {
-    width: 32px; height: 32px; border-radius: 6px;
-    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+.sidebar-brand {
+    padding: 20px 24px 16px;
+    display: flex; align-items: center; gap: 10px;
     flex-shrink: 0;
 }
-.brand-text {
-    font-size: 18px; font-weight: 600; line-height: 1;
+.sidebar-logo {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 18px; font-weight: 700;
 }
-.brand-amber { color: #d97706; }
-@media (prefers-color-scheme: dark) {
-    .brand-amber { color: #f59e0b; }
+.sidebar-title { font-size: 17px; font-weight: 700; }
+.sidebar-title span { color: var(--primary); }
+
+.sidebar-nav {
+    flex: 1; padding: 4px 12px;
+}
+.sidebar-label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: .08em;
+    color: var(--text-muted); padding: 12px 12px 6px; font-weight: 600;
+}
+.sidebar-link {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px; border-radius: var(--radius-sm);
+    color: var(--text-secondary); text-decoration: none;
+    font-size: 14px; font-weight: 500;
+    transition: all .15s; cursor: pointer;
+    margin-bottom: 2px;
+}
+.sidebar-link:hover { background: var(--primary-bg); color: var(--primary); }
+.sidebar-link.active { background: var(--primary-bg); color: var(--primary); font-weight: 600; }
+.sidebar-count {
+    margin-left: auto; font-size: 12px; font-weight: 600;
+    background: var(--primary-bg); color: var(--primary);
+    padding: 1px 8px; border-radius: 10px; min-width: 24px; text-align: center;
+}
+.sidebar-link.active .sidebar-count { background: var(--primary); color: #fff; }
+
+.sidebar-footer {
+    padding: 12px 24px; border-top: 1px solid var(--border);
+    font-size: 12px; color: var(--text-muted); flex-shrink: 0;
 }
 
-/* Stats Bar */
-.stats-bar {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 16px 0;
+/* Sidebar resize handle */
+.sidebar-resize {
+    position: absolute; top: 0; right: 0; bottom: 0;
+    width: 5px; cursor: col-resize; z-index: 10;
+    background: transparent;
+    transition: background .2s;
+}
+.sidebar-resize:hover,
+.sidebar-resize.dragging {
+    background: var(--primary);
+}
+.sidebar.resizing { user-select: none; pointer-events: none; }
+
+/* Sidebar toggle for mobile */
+.sidebar-toggle {
+    display: none; position: fixed; top: 12px; left: 12px; z-index: 300;
+    width: 40px; height: 40px; border-radius: var(--radius-sm);
+    background: var(--surface); border: 1px solid var(--border);
+    font-size: 20px; cursor: pointer; align-items: center; justify-content: center;
+    box-shadow: var(--shadow);
+}
+
+/* ===== MAIN ===== */
+.main {
+    margin-left: var(--sidebar-w);
+    min-height: 100vh;
+}
+
+/* ===== TOP BAR ===== */
+.topbar {
     position: sticky; top: 0; z-index: 100;
-    backdrop-filter: blur(8px);
+    background: var(--bg); backdrop-filter: blur(12px);
+    padding: 12px 0; border-bottom: 1px solid transparent;
 }
-.stats-bar .container {
-    display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px;
+.topbar.scrolled { border-bottom-color: var(--border); }
+.topbar-inner {
+    max-width: 1100px; margin: 0 auto; padding: 0 32px;
+    display: flex; align-items: center; gap: 12px;
 }
-.stats-date { font-weight: 600; font-size: 15px; }
-.stats-num { font-size: 14px; color: var(--text-secondary); }
-.stats-token { font-size: 12px; color: var(--text-muted); font-family: var(--mono); }
-.stats-categories { display: flex; flex-wrap: wrap; gap: 6px; margin-left: auto; }
-.cat-pill {
-    display: inline-block; padding: 2px 10px; border-radius: 12px;
-    font-size: 12px; background: var(--badge-bg); color: var(--text-secondary);
-    white-space: nowrap;
+.topbar-search {
+    flex: 1; position: relative;
 }
-
-/* Search */
-.search-bar {
-    padding: 12px 0;
-    background: var(--bg);
-    position: sticky; top: 58px; z-index: 99;
-}
-.search-input {
-    width: 100%; padding: 10px 16px; border: 1px solid var(--border);
-    border-radius: 8px; font-size: 14px; font-family: var(--font);
+.topbar-search input {
+    width: 100%; padding: 10px 16px 10px 40px;
+    border: 1px solid var(--border); border-radius: 24px;
+    font-size: 14px; font-family: var(--font);
     background: var(--surface); color: var(--text);
-    outline: none; transition: border-color .2s;
+    outline: none; transition: all .2s;
 }
-.search-input:focus { border-color: var(--accent); }
+.topbar-search input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-bg); }
+.topbar-search-icon {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    color: var(--text-muted); font-size: 16px; pointer-events: none;
+}
+.topbar-stats {
+    font-size: 13px; color: var(--text-muted); white-space: nowrap;
+}
+.topbar-btn {
+    width: 38px; height: 38px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border); background: var(--surface);
+    color: var(--text-secondary); cursor: pointer; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .15s; text-decoration: none;
+}
+.topbar-btn:hover { border-color: var(--primary); color: var(--primary); }
 
-/* Tab Bar */
-.tab-bar {
-    padding: 8px 0 16px;
-    display: flex; gap: 6px; flex-wrap: wrap;
-}
-.tab-btn {
-    padding: 6px 14px; border: 1px solid var(--border); border-radius: 20px;
-    background: var(--surface); color: var(--text-secondary);
-    font-size: 13px; cursor: pointer; transition: all .15s;
-    font-family: var(--font); white-space: nowrap;
-}
-.tab-btn:hover { border-color: var(--accent); color: var(--accent); }
-.tab-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-.tab-count { font-size: 11px; opacity: .7; margin-left: 2px; }
+/* ===== CONTENT AREA ===== */
+.content { max-width: 1100px; margin: 0 auto; padding: 0 32px 60px; }
 
 /* Category Section */
-.category-section { margin-bottom: 40px; }
+.category-section { margin-bottom: 48px; scroll-margin-top: 80px; }
 .category-header {
-    font-size: 20px; font-weight: 700; margin-bottom: 16px;
-    padding-bottom: 8px; border-bottom: 2px solid var(--border);
+    display: flex; align-items: center; gap: 12px;
+    font-size: 22px; font-weight: 800; margin-bottom: 20px;
+}
+.category-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--primary); flex-shrink: 0;
+}
+.category-count {
+    font-size: 14px; font-weight: 500; color: var(--text-muted);
+    margin-left: 4px;
 }
 
 /* Trend Card */
 .trend-card {
-    background: var(--trend-bg); border: 1px solid var(--trend-border);
-    border-radius: var(--radius); margin-bottom: 20px; overflow: hidden;
+    background: linear-gradient(135deg, #fef3c7 0%, #fef9c3 100%);
+    border: 1px solid #fcd34d; border-radius: var(--radius);
+    margin-bottom: 24px; overflow: hidden;
+}
+@media (prefers-color-scheme: dark) {
+    .trend-card { background: linear-gradient(135deg, #292524 0%, #1c1917 100%); border-color: #a16207; }
 }
 .trend-card summary {
-    padding: 14px 18px; cursor: pointer; font-weight: 600;
-    font-size: 14px; user-select: none;
-    color: var(--text); list-style: none;
+    padding: 16px 24px; cursor: pointer; font-weight: 700; font-size: 15px;
+    user-select: none; color: #92400e; list-style: none;
+    display: flex; align-items: center; gap: 8px;
 }
+@media (prefers-color-scheme: dark) { .trend-card summary { color: #fbbf24; } }
 .trend-card summary::-webkit-details-marker { display: none; }
-.trend-card summary::before { content: "▸ "; display: inline-block; transition: transform .2s; }
-.trend-card[open] summary::before { transform: rotate(90deg); }
-.trend-body { padding: 0 18px 16px; font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
-.trend-body ul { margin-top: 8px; padding-left: 18px; }
-.trend-body li { margin-bottom: 4px; }
+.trend-card summary::before {
+    content: ""; display: inline-block; width: 20px; height: 20px;
+    background: #f59e0b; border-radius: 4px; flex-shrink: 0;
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 2a6 6 0 016 6v3l2 4H2l2-4V8a6 6 0 016-6z'/%3E%3C/svg%3E");
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 2a6 6 0 016 6v3l2 4H2l2-4V8a6 6 0 016-6z'/%3E%3C/svg%3E");
+}
+.trend-body { padding: 0 24px 20px; font-size: 14px; color: #78350f; line-height: 1.8; }
+@media (prefers-color-scheme: dark) { .trend-body { color: #fde68a; } }
+.trend-body ul { margin-top: 10px; padding-left: 20px; }
+.trend-body li { margin-bottom: 6px; }
 
 /* Subtype Section */
-.subtype-section { margin-bottom: 24px; }
-.subtype-section:empty { display: none; }
+.subtype-section { margin-bottom: 28px; }
 .subtype-header {
-    font-size: 16px; font-weight: 600; color: var(--text-secondary);
-    margin-bottom: 12px; padding-left: 4px;
+    font-size: 14px; font-weight: 700; color: var(--text-muted);
+    margin-bottom: 14px; text-transform: uppercase; letter-spacing: .04em;
+    padding-left: 4px;
 }
 
 /* Article Grid */
 .article-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
     gap: 16px;
 }
 
 /* Article Card */
 .article-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 18px 20px;
-    box-shadow: var(--shadow); transition: box-shadow .2s;
+    background: var(--card-normal);
+    border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px 22px;
+    box-shadow: var(--shadow-card); transition: all .25s;
     display: flex; flex-direction: column;
+    position: relative; overflow: hidden;
 }
-.article-card:hover { box-shadow: var(--shadow-hover); }
+.article-card::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-light), var(--accent));
+    opacity: 0; transition: opacity .25s;
+}
+.article-card:hover {
+    box-shadow: var(--shadow-hover); transform: translateY(-2px);
+}
+.article-card:hover::before { opacity: 1; }
+.article-card.highlight { background: var(--card-hl); }
 .article-card.hidden { display: none; }
 
 .article-title {
-    font-size: 15px; font-weight: 600; line-height: 1.4; margin-bottom: 8px;
+    font-size: 15px; font-weight: 650; line-height: 1.45; margin-bottom: 10px;
 }
 .article-title a { color: var(--text); text-decoration: none; }
-.article-title a:hover { color: var(--accent); }
+.article-title a:hover { color: var(--primary); }
 
 .article-meta {
     font-size: 12px; color: var(--text-muted); margin-bottom: 10px;
     display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
 }
 .article-source {
-    font-weight: 500; color: var(--text-secondary);
+    font-weight: 600; color: var(--primary); font-size: 11px;
+    background: var(--primary-bg); padding: 2px 10px; border-radius: 12px;
 }
 
 .article-summary {
-    font-size: 13px; color: var(--text-secondary); line-height: 1.6;
-    margin-bottom: 10px; flex: 1;
+    font-size: 13px; color: var(--text-secondary); line-height: 1.65;
+    margin-bottom: 12px; flex: 1;
 }
 
 .article-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
 .badge {
-    display: inline-block; padding: 2px 8px; border-radius: 4px;
-    font-size: 11px; font-family: var(--mono); text-decoration: none;
-    background: var(--badge-bg); color: var(--text-secondary);
-    transition: background .15s;
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 10px; border-radius: 6px;
+    font-size: 11px; font-weight: 600; font-family: var(--mono);
+    text-decoration: none; transition: all .15s;
 }
-.badge:hover { background: var(--accent-light); color: var(--accent); }
-.badge.arxiv { border-left: 2px solid #b23b3b; }
-.badge.github { border-left: 2px solid #333; }
+.badge.arxiv { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+.badge.arxiv:hover { background: #fef2f2; box-shadow: 0 0 0 2px #fecaca; }
+.badge.github { background: #f0f0f5; color: #333; border: 1px solid #d4d4d8; }
+.badge.github:hover { background: #e4e4e7; }
+@media (prefers-color-scheme: dark) {
+    .badge.arxiv { background: #3b1111; color: #fca5a5; border-color: #7f1d1d; }
+    .badge.github { background: #1f1f2e; color: #d4d4d8; border-color: #3f3f46; }
+}
 
 .article-points { font-size: 12px; color: var(--text-muted); }
-.article-points ul { padding-left: 16px; }
-.article-points li { margin-bottom: 2px; }
+.article-points ul { padding-left: 18px; }
+.article-points li { margin-bottom: 3px; }
+.article-points li::marker { color: var(--primary-light); }
 
 /* Footer */
 .page-footer {
-    text-align: center; padding: 24px 0 40px;
+    text-align: center; padding: 32px 32px 48px;
     font-size: 12px; color: var(--text-muted);
-    border-top: 1px solid var(--border); margin-top: 40px;
+    border-top: 1px solid var(--border); margin-top: 20px;
+}
+.page-footer span { margin: 0 6px; }
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+    :root { --sidebar-w: 0px; }
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform .25s;
+        box-shadow: 4px 0 20px rgba(0,0,0,.15);
+    }
+    .sidebar.open { transform: translateX(0); width: 280px; }
+    .sidebar-toggle { display: flex; }
+    .main { margin-left: 0; }
+    .article-grid { grid-template-columns: 1fr; }
+    .topbar-inner { padding: 0 16px; }
+    .content { padding: 0 16px 40px; }
+    .category-header { font-size: 18px; }
 }
 
-/* Mobile */
-@media (max-width: 768px) {
-    .article-grid { grid-template-columns: 1fr; }
-    .stats-bar .container { flex-direction: column; align-items: flex-start; }
-    .stats-categories { margin-left: 0; }
-    .search-bar { top: 100px; }
-    .tab-bar { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
+/* Sidebar overlay for mobile */
+.sidebar-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,.4);
+    z-index: 199;
 }
+.sidebar-overlay.visible { display: block; }
 """
 
 
 _JS = r"""
 (function() {
-    const searchInput = document.getElementById('search');
-    const cards = document.querySelectorAll('.article-card');
-    const tabBtns = document.querySelectorAll('.tab-btn');
-    const sections = document.querySelectorAll('.category-section');
-    const trendCards = document.querySelectorAll('.trend-card');
+    var searchInput = document.getElementById('search');
+    var cards = document.querySelectorAll('.article-card');
+    var sidebarLinks = document.querySelectorAll('.sidebar-link');
+    var sections = document.querySelectorAll('.category-section');
+    var topbar = document.querySelector('.topbar');
+    var backTop = document.getElementById('back-top');
+    var sidebar = document.querySelector('.sidebar');
+    var sidebarToggle = document.getElementById('sidebar-toggle');
+    var sidebarOverlay = document.querySelector('.sidebar-overlay');
+    var MAIN = document.querySelector('.main');
 
     // Search filter
-    searchInput.addEventListener('input', function() {
-        const query = this.value.toLowerCase().trim();
-        cards.forEach(function(card) {
-            const text = (card.getAttribute('data-search-text') || '').toLowerCase();
-            card.classList.toggle('hidden', query && text.indexOf(query) === -1);
-        });
-        // Update category visibility after search
-        updateCategoryVisibility();
-    });
-
-    // Tab filter
-    tabBtns.forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            tabBtns.forEach(function(b) { b.classList.remove('active'); });
-            this.classList.add('active');
-            filterByTab(this.getAttribute('data-category'));
-        });
-    });
-
-    function filterByTab(cat) {
-        sections.forEach(function(section) {
-            if (cat === 'all' || section.getAttribute('data-category') === cat) {
-                section.style.display = '';
-            } else {
-                section.style.display = 'none';
-            }
-        });
-        // Re-apply search on visible cards
+    function doSearch() {
         var query = searchInput.value.toLowerCase().trim();
         cards.forEach(function(card) {
-            if (card.closest('.category-section').style.display === 'none') {
-                card.classList.add('hidden');
-            } else if (query) {
-                var text = (card.getAttribute('data-search-text') || '').toLowerCase();
-                card.classList.toggle('hidden', text.indexOf(query) === -1);
+            var text = (card.getAttribute('data-search-text') || '').toLowerCase();
+            var match = !query || text.indexOf(query) !== -1;
+            card.classList.toggle('hidden', !match);
+        });
+        updateVisibility();
+    }
+    searchInput.addEventListener('input', doSearch);
+
+    // Sidebar nav click -> scroll + highlight
+    sidebarLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            var cat = this.getAttribute('data-category');
+            if (cat === 'all') {
+                window.scrollTo({top: 0, behavior: 'smooth'});
             } else {
-                card.classList.remove('hidden');
+                var target = document.querySelector('.category-section[data-category="' + cat + '"]');
+                if (target) {
+                    target.scrollIntoView({behavior: 'smooth', block: 'start'});
+                }
+            }
+            // Close mobile sidebar
+            if (window.innerWidth <= 768) {
+                sidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('visible');
             }
         });
-        updateCategoryVisibility();
-    }
+    });
 
-    function updateCategoryVisibility() {
+    // Highlight active sidebar link on scroll
+    var ticking = false;
+    function updateActiveNav() {
+        var scrollY = window.scrollY + 100;
+        var active = 'all';
         sections.forEach(function(section) {
-            var visibleCards = section.querySelectorAll('.article-card:not(.hidden)');
-            var hasContent = visibleCards.length > 0;
-            section.style.display = hasContent ? '' : 'none';
-            // Hide empty subtype sections
-            var subtypeSections = section.querySelectorAll('.subtype-section');
-            subtypeSections.forEach(function(ss) {
-                var visibleInSubtype = ss.querySelectorAll('.article-card:not(.hidden)');
-                ss.style.display = visibleInSubtype.length > 0 ? '' : 'none';
-            });
+            if (section.offsetTop <= scrollY) {
+                active = section.getAttribute('data-category');
+            }
         });
+        sidebarLinks.forEach(function(link) {
+            var cat = link.getAttribute('data-category');
+            link.classList.toggle('active', cat === active);
+        });
+        // Topbar shadow
+        topbar.classList.toggle('scrolled', window.scrollY > 20);
     }
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            requestAnimationFrame(function() {
+                updateActiveNav();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
 
-    // Keyboard shortcut: / to focus search
+    // Back to top
+    backTop.addEventListener('click', function() {
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+
+    // Mobile sidebar toggle
+    sidebarToggle.addEventListener('click', function() {
+        sidebar.classList.toggle('open');
+        sidebarOverlay.classList.toggle('visible');
+    });
+    sidebarOverlay.addEventListener('click', function() {
+        sidebar.classList.remove('open');
+        sidebarOverlay.classList.remove('visible');
+    });
+
+    // Keyboard shortcuts
     document.addEventListener('keydown', function(e) {
         if (e.key === '/' && document.activeElement !== searchInput) {
             e.preventDefault();
             searchInput.focus();
         }
-        if (e.key === 'Escape') { searchInput.blur(); }
+        if (e.key === 'Escape') {
+            searchInput.blur();
+            sidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('visible');
+        }
     });
+
+    function updateVisibility() {
+        sections.forEach(function(section) {
+            var vis = section.querySelectorAll('.article-card:not(.hidden)');
+            section.style.display = vis.length > 0 ? '' : 'none';
+            var subSecs = section.querySelectorAll('.subtype-section');
+            subSecs.forEach(function(ss) {
+                var sv = ss.querySelectorAll('.article-card:not(.hidden)');
+                ss.style.display = sv.length > 0 ? '' : 'none';
+            });
+        });
+    }
+
+    // Sidebar resize
+    var resizeHandle = document.getElementById('sidebar-resize');
+    var resizeSidebar = document.getElementById('sidebar');
+    var isResizing = false;
+    var startX, startW;
+    var MIN_W = 180, MAX_W = 500;
+
+    resizeHandle.addEventListener('mousedown', function(e) {
+        isResizing = true;
+        startX = e.clientX;
+        startW = resizeSidebar.offsetWidth;
+        resizeSidebar.classList.add('resizing');
+        resizeHandle.classList.add('dragging');
+        document.body.style.cursor = 'col-resize';
+        e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', function(e) {
+        if (!isResizing) return;
+        var dx = e.clientX - startX;
+        var newW = Math.max(MIN_W, Math.min(MAX_W, startW + dx));
+        resizeSidebar.style.width = newW + 'px';
+        MAIN.style.marginLeft = newW + 'px';
+    });
+
+    document.addEventListener('mouseup', function() {
+        if (!isResizing) return;
+        isResizing = false;
+        resizeSidebar.classList.remove('resizing');
+        resizeHandle.classList.remove('dragging');
+        document.body.style.cursor = '';
+        try { localStorage.setItem('digest-sidebar-w', resizeSidebar.offsetWidth); } catch(e) {}
+    });
+
+    // Restore sidebar width
+    try {
+        var savedW = parseInt(localStorage.getItem('digest-sidebar-w'));
+        if (savedW >= MIN_W && savedW <= MAX_W) {
+            resizeSidebar.style.width = savedW + 'px';
+            MAIN.style.marginLeft = savedW + 'px';
+        }
+    } catch(e) {}
+
+    // Highlight ~15% of cards for visual variety
+    var allCards = document.querySelectorAll('.article-card');
+    var hlCount = Math.round(allCards.length * 0.15);
+    var indices = Array.from({length: allCards.length}, function(_, i) { return i; });
+    for (var i = indices.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = indices[i]; indices[i] = indices[j]; indices[j] = t;
+    }
+    for (var k = 0; k < hlCount; k++) {
+        if (allCards[indices[k]]) {
+            allCards[indices[k]].classList.add('highlight');
+        }
+    }
+
+    updateActiveNav();
 })();
 """
 
@@ -325,6 +541,7 @@ class HTMLWriter:
 
         cat_counts = stats.get("categories", {})
         all_categories = list(articles_by_category.keys())
+        total_articles = sum(cat_counts.values())
 
         parts = [
             "<!DOCTYPE html>",
@@ -338,20 +555,71 @@ class HTMLWriter:
             "</style>",
             "</head>",
             "<body>",
-            '<div class="container"><div class="brand"><div class="brand-logo"></div><span class="brand-text"><span class="brand-amber">Clyde\'s</span> Digest</span></div></div>',
-            self._render_stats_bar(generated_at, stats, cat_counts),
-            self._render_search_bar(),
-            self._render_tab_bar(all_categories, cat_counts),
-            '<div class="container">',
+            # Mobile sidebar toggle
+            '<button id="sidebar-toggle" class="sidebar-toggle" aria-label="菜单">☰</button>',
+            '<div class="sidebar-overlay" id="sidebar-overlay"></div>',
+            # ---- Sidebar ----
+            '<aside class="sidebar" id="sidebar">',
+            '<div class="sidebar-brand">',
+            '<div class="sidebar-logo">D</div>',
+            '<div class="sidebar-title"><span>Clyde\'s</span> Digest</div>',
+            '</div>',
+            '<nav class="sidebar-nav">',
+            '<div class="sidebar-label">分类目录</div>',
+            f'<a class="sidebar-link active" data-category="all" href="#">全部<span class="sidebar-count">{total_articles}</span></a>',
         ]
+
+        for cat in all_categories:
+            count = cat_counts.get(cat, 0)
+            if count > 0:
+                parts.append(
+                    f'<a class="sidebar-link" data-category="{html.escape(cat)}" href="#">'
+                    f'{html.escape(cat)}<span class="sidebar-count">{count}</span></a>'
+                )
+        parts.append('</nav>')
+        parts.append('<div class="sidebar-resize" id="sidebar-resize"></div>')
+        parts.append(
+            '<div class="sidebar-footer">'
+            f'{generated_at.strftime("%Y-%m-%d %H:%M")}<br>'
+            f'共 {total_articles} 篇 · {stats.get("token_total", 0):,} tokens'
+            '</div>'
+        )
+        parts.append('</aside>')
+
+        # ---- Main Content ----
+        parts.append('<div class="main">')
+        # Top bar
+        parts.append('<div class="topbar"><div class="topbar-inner">')
+        parts.append(
+            '<div class="topbar-search">'
+            '<span class="topbar-search-icon">🔍</span>'
+            '<input type="text" id="search" placeholder="搜索标题、来源、摘要... (按 / 聚焦)">'
+            '</div>'
+        )
+        parts.append(
+            f'<span class="topbar-stats">{total_articles} 篇 · {stats.get("token_total", 0):,} tokens</span>'
+        )
+        parts.append(
+            '<button id="back-top" class="topbar-btn" title="回到顶部">↑</button>'
+        )
+        parts.append('</div></div>')
+
+        # Content
+        parts.append('<div class="content">')
 
         for category in all_categories:
             subtypes = articles_by_category.get(category, {})
             total_in_cat = sum(len(v) for v in subtypes.values())
             if total_in_cat == 0:
                 continue
-            parts.append(f'<section class="category-section" data-category="{html.escape(category)}">')
-            parts.append(f'<h2 class="category-header">{html.escape(category)}</h2>')
+            parts.append(f'<section class="category-section" id="cat-{html.escape(category)}" data-category="{html.escape(category)}">')
+            parts.append(
+                f'<h2 class="category-header">'
+                f'<span class="category-dot"></span>'
+                f'{html.escape(category)}'
+                f'<span class="category-count">· {total_in_cat} 篇</span>'
+                f'</h2>'
+            )
 
             trend = trends_by_category.get(category)
             if trend:
@@ -372,6 +640,8 @@ class HTMLWriter:
 
         parts.append('</div>')
         parts.append(self._render_footer(generated_at, stats))
+        parts.append('</div>')  # /.main
+
         parts.append("<script>")
         parts.append(_JS)
         parts.append("</script>")
@@ -383,42 +653,6 @@ class HTMLWriter:
             f.write("\n".join(parts))
 
         return filepath
-
-    def _render_stats_bar(self, generated_at, stats, cat_counts) -> str:
-        total_articles = sum(cat_counts.values())
-        pills = "".join(
-            f'<span class="cat-pill">{html.escape(cat)}:{count}</span>'
-            for cat, count in cat_counts.items() if count > 0
-        )
-        return (
-            '<div class="stats-bar">'
-            '<div class="container">'
-            f'<span class="stats-date">{generated_at.strftime("%Y-%m-%d %H:%M")}</span>'
-            f'<span class="stats-num">共 {total_articles} 篇摘要</span>'
-            f'<span class="stats-token">Token {stats.get("token_total", 0):,}</span>'
-            f'<div class="stats-categories">{pills}</div>'
-            '</div></div>'
-        )
-
-    def _render_search_bar(self) -> str:
-        return (
-            '<div class="search-bar"><div class="container">'
-            '<input type="text" id="search" class="search-input" '
-            'placeholder="搜索标题、来源、摘要... (按 / 聚焦)">'
-            '</div></div>'
-        )
-
-    def _render_tab_bar(self, categories, cat_counts) -> str:
-        total = sum(cat_counts.values())
-        buttons = [f'<button class="tab-btn active" data-category="all">全部<span class="tab-count">{total}</span></button>']
-        for cat in categories:
-            count = cat_counts.get(cat, 0)
-            if count > 0:
-                buttons.append(
-                    f'<button class="tab-btn" data-category="{html.escape(cat)}">'
-                    f'{html.escape(cat)}<span class="tab-count">{count}</span></button>'
-                )
-        return f'<div class="container"><div class="tab-bar">{"".join(buttons)}</div></div>'
 
     def _render_article_card(self, article: ArticleSummary) -> str:
         search_text = " ".join(
