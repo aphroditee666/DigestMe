@@ -32,26 +32,24 @@ _CSS = r"""
     --card-normal: linear-gradient(135deg, #fdfaf5 0%, #faf5ed 100%);
 }
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        --primary: #cba6f7;
-        --primary-light: #d9baf9;
-        --primary-dark: #b491e8;
-        --primary-bg: #2a2744;
-        --accent: #cba6f7;
-        --accent-light: #2a2744;
-        --bg: #1e1e2e;
-        --surface: #313244;
-        --border: #45475a;
-        --text: #cdd6f4;
-        --text-secondary: #a6adc8;
-        --text-muted: #6c7086;
-        --shadow: 0 1px 3px rgba(0,0,0,.4);
-        --shadow-hover: 0 8px 24px rgba(203,166,247,.18);
-        --shadow-card: 0 2px 8px rgba(0,0,0,.35);
-        --card-hl: linear-gradient(135deg, #313244 0%, #2a2744 50%, #36304a 100%);
-        --card-normal: linear-gradient(135deg, #313244 0%, #2d2f40 100%);
-    }
+[data-theme="dark"] {
+    --primary: #cba6f7;
+    --primary-light: #d9baf9;
+    --primary-dark: #b491e8;
+    --primary-bg: #2a2744;
+    --accent: #cba6f7;
+    --accent-light: #2a2744;
+    --bg: #1e1e2e;
+    --surface: #313244;
+    --border: #45475a;
+    --text: #cdd6f4;
+    --text-secondary: #a6adc8;
+    --text-muted: #6c7086;
+    --shadow: 0 1px 3px rgba(0,0,0,.4);
+    --shadow-hover: 0 8px 24px rgba(203,166,247,.18);
+    --shadow-card: 0 2px 8px rgba(0,0,0,.35);
+    --card-hl: linear-gradient(135deg, #313244 0%, #2a2744 50%, #36304a 100%);
+    --card-normal: linear-gradient(135deg, #313244 0%, #2d2f40 100%);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -269,15 +267,13 @@ body {
     border: 1px solid #fcd34d; border-radius: var(--radius);
     margin-bottom: 24px; overflow: hidden;
 }
-@media (prefers-color-scheme: dark) {
-    .trend-card { background: linear-gradient(135deg, #292524 0%, #1c1917 100%); border-color: #a16207; }
-}
+[data-theme="dark"] .trend-card { background: linear-gradient(135deg, #313244 0%, #2a2744 100%); border-color: #cba6f7; }
 .trend-card summary {
     padding: 16px 24px; cursor: pointer; font-weight: 700; font-size: 15px;
     user-select: none; color: #92400e; list-style: none;
     display: flex; align-items: center; gap: 8px;
 }
-@media (prefers-color-scheme: dark) { .trend-card summary { color: #fbbf24; } }
+[data-theme="dark"] .trend-card summary { color: #f9e2af; }
 .trend-card summary::-webkit-details-marker { display: none; }
 .trend-card summary::before {
     content: ""; display: inline-block; width: 20px; height: 20px;
@@ -286,7 +282,7 @@ body {
     -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 2a6 6 0 016 6v3l2 4H2l2-4V8a6 6 0 016-6z'/%3E%3C/svg%3E");
 }
 .trend-body { padding: 0 24px 20px; font-size: 14px; color: #78350f; line-height: 1.8; }
-@media (prefers-color-scheme: dark) { .trend-body { color: #fde68a; } }
+[data-theme="dark"] .trend-body { color: #cdd6f4; }
 .trend-body ul { margin-top: 10px; padding-left: 20px; }
 .trend-body li { margin-bottom: 6px; }
 
@@ -358,10 +354,8 @@ body {
 .badge.arxiv:hover { background: #fef2f2; box-shadow: 0 0 0 2px #fecaca; }
 .badge.github { background: #f0f0f5; color: #333; border: 1px solid #d4d4d8; }
 .badge.github:hover { background: #e4e4e7; }
-@media (prefers-color-scheme: dark) {
-    .badge.arxiv { background: #3b1111; color: #fca5a5; border-color: #7f1d1d; }
-    .badge.github { background: #1f1f2e; color: #d4d4d8; border-color: #3f3f46; }
-}
+[data-theme="dark"] .badge.arxiv { background: #3b1111; color: #fca5a5; border-color: #7f1d1d; }
+[data-theme="dark"] .badge.github { background: #1f1f2e; color: #d4d4d8; border-color: #3f3f46; }
 
 .article-points { font-size: 12px; color: var(--text-muted); }
 .article-points ul { padding-left: 18px; }
@@ -404,6 +398,22 @@ body {
 
 _JS = r"""
 (function() {
+    // ---- Theme toggle ----
+    var htmlEl = document.documentElement;
+    var themeToggle = document.getElementById('theme-toggle');
+    var savedTheme;
+    try { savedTheme = localStorage.getItem('digest-theme'); } catch(e) {}
+    if (!savedTheme) savedTheme = 'dark';
+    htmlEl.setAttribute('data-theme', savedTheme);
+    themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
+    themeToggle.addEventListener('click', function() {
+        var next = htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        htmlEl.setAttribute('data-theme', next);
+        themeToggle.textContent = next === 'dark' ? '☀️' : '🌙';
+        try { localStorage.setItem('digest-theme', next); } catch(e) {}
+    });
+
     var searchInput = document.getElementById('search');
     var cards = document.querySelectorAll('.article-card');
     var sections = document.querySelectorAll('.category-section');
@@ -659,7 +669,7 @@ class HTMLWriter:
 
         parts = [
             "<!DOCTYPE html>",
-            '<html lang="zh-CN">',
+            '<html lang="zh-CN" data-theme="dark">',
             "<head>",
             '<meta charset="UTF-8">',
             '<meta name="viewport" content="width=device-width,initial-scale=1">',
@@ -729,6 +739,9 @@ class HTMLWriter:
         )
         parts.append(
             f'<span class="topbar-stats">{total_articles} 篇 · {stats.get("token_total", 0):,} tokens</span>'
+        )
+        parts.append(
+            '<button id="theme-toggle" class="topbar-btn" title="切换主题">☀️</button>'
         )
         parts.append(
             '<button id="back-top" class="topbar-btn" title="回到顶部">↑</button>'
