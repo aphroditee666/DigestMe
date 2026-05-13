@@ -35,6 +35,17 @@ class Summarizer:
         self.client = ClaudeClient(config)
         self.prompts = prompts or _default_prompts()
 
+    def _normalize_category(self, raw: str) -> str:
+        """Map AI‑output category to a canonical CATEGORIES key."""
+        canonical = self.prompts.CATEGORIES
+        if raw in canonical:
+            return raw
+        # Check substring containment in both directions
+        for cat in canonical:
+            if raw in cat or cat in raw:
+                return cat
+        return "其它"
+
     def classify_only(self, title: str, source: str) -> str:
         """Lightweight classification — no article body, tiny output. Saves tokens for '其它' articles."""
         response = self.client.send_message(
@@ -46,7 +57,7 @@ class Summarizer:
         for cat in self.prompts.CATEGORIES:
             if cat in text:
                 return cat
-        return text  # fallback to raw response
+        return self._normalize_category(text)
 
     def classify_batch(self, items: List[dict]) -> dict:
         """Classify many articles in one LLM call. Returns {index: {"category": str, "subtype": str}}."""
@@ -69,7 +80,7 @@ class Summarizer:
             max_tokens=max(100, len(items) * 40)
         )
         data = json.loads(_extract_json_array(response))
-        return {int(item["index"]): {"category": item["category"], "subtype": item.get("subtype", "")} for item in data}
+        return {int(item["index"]): {"category": self._normalize_category(item["category"]), "subtype": item.get("subtype", "")} for item in data}
 
     def summarize_batch(self, articles: list) -> dict:
         """Batch summarize multiple articles. Returns {index: ArticleSummary}."""

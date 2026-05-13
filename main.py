@@ -7,7 +7,7 @@ import logging
 from datetime import datetime, timedelta
 from pathlib import Path
 
-from src.config_loader import ConfigLoader, SUBTYPE_TECH, SUBTYPE_PRODUCT
+from src.config_loader import ConfigLoader, SUBTYPE_TECH, SUBTYPE_PRODUCT, SUBTYPE_ACADEMIC
 from src.digest_cache import DigestCache
 from src.rss_fetcher import RSSFetcher
 from src.custom_fetcher import register_all
@@ -49,6 +49,20 @@ def _chunks(items, size: int):
     size = max(size, 1)
     for start in range(0, len(items), size):
         yield items[start:start + size]
+
+
+ACADEMIC_ELIGIBLE_CATEGORIES = {"AIGC视觉生成", "自动驾驶"}
+
+
+def _init_articles_by_category(categories):
+    """Return {category: {subtype: []}} with 3 subtypes for academic-eligible categories, 2 for others."""
+    result = {}
+    for cat in categories:
+        if cat in ACADEMIC_ELIGIBLE_CATEGORIES:
+            result[cat] = {SUBTYPE_ACADEMIC: [], SUBTYPE_TECH: [], SUBTYPE_PRODUCT: []}
+        else:
+            result[cat] = {SUBTYPE_TECH: [], SUBTYPE_PRODUCT: []}
+    return result
 
 
 def _classify_pending(summarizer: Summarizer, pending: list, batch_size: int) -> dict:
@@ -115,7 +129,7 @@ def run_once(config_path: str):
     source_subtype_map = {s.name: s.subtype for s in config.rss_sources}
     academic_source_names = {s.name for s in config.rss_sources if s.category == "学术论文"}
 
-    articles_by_category = {cat: {SUBTYPE_TECH: [], SUBTYPE_PRODUCT: []} for cat in CATEGORIES_TO_OUTPUT}
+    articles_by_category = _init_articles_by_category(CATEGORIES_TO_OUTPUT)
     cutoff = datetime.now() - timedelta(days=config.digest.recent_days)
     candidates = []
     pending_classification = []
@@ -149,7 +163,11 @@ def run_once(config_path: str):
                 if cached_category:
                     categories_by_index[index] = cached_category
                     cached_subtype = cache.get_subtype(article.url, article.source, article.title)
-                    subtypes_by_index[index] = cached_subtype or source_subtype_map.get(source.name, SUBTYPE_PRODUCT)
+                    default_subtype = source_subtype_map.get(source.name, SUBTYPE_PRODUCT)
+                    subtype = cached_subtype or default_subtype
+                    if source.name in academic_source_names:
+                        subtype = SUBTYPE_ACADEMIC
+                    subtypes_by_index[index] = subtype
                 else:
                     pending_classification.append({"index": index, "article": article})
 
@@ -173,6 +191,8 @@ def run_once(config_path: str):
             llm_subtype = result.get("subtype", "")
             source_default = source_subtype_map.get(article.source, SUBTYPE_PRODUCT)
             final_subtype = llm_subtype or source_default
+            if article.source in academic_source_names:
+                final_subtype = SUBTYPE_ACADEMIC
             subtypes_by_index[idx] = final_subtype
             cache.set_category(article.url, article.source, article.title, category, final_subtype)
 
@@ -192,6 +212,8 @@ def run_once(config_path: str):
                     continue
 
             subtype = subtypes_by_index.get(index) or source_subtype_map.get(article.source, SUBTYPE_PRODUCT)
+            if article.source in academic_source_names:
+                subtype = SUBTYPE_ACADEMIC
             cached_summary = cache.get_summary(article.url, article.source, article.title)
             if cached_summary:
                 if not cached_summary.subtype:
@@ -285,7 +307,7 @@ def run_once(config_path: str):
     trends_by_category = {}
     if trend_summarizer:
         for category, subtypes in articles_by_category.items():
-            all_articles = subtypes.get(SUBTYPE_TECH, []) + subtypes.get(SUBTYPE_PRODUCT, [])
+            all_articles = [a for articles in subtypes.values() for a in articles]
             if all_articles:
                 try:
                     logger.info(f"Trend summary: {category} ({len(all_articles)} articles)")
@@ -373,7 +395,7 @@ def render_only(config_path: str):
     source_subtype_map = {s.name: s.subtype for s in config.rss_sources}
     academic_source_names = {s.name for s in config.rss_sources if s.category == "学术论文"}
 
-    articles_by_category = {cat: {SUBTYPE_TECH: [], SUBTYPE_PRODUCT: []} for cat in CATEGORIES_TO_OUTPUT}
+    articles_by_category = _init_articles_by_category(CATEGORIES_TO_OUTPUT)
 
     total_summarized = 0
     for key, entry in cache._data.get("articles", {}).items():
@@ -386,9 +408,11 @@ def render_only(config_path: str):
         if is_academic:
             if category not in ("AIGC视觉生成", "自动驾驶"):
                 continue
+            subtype = SUBTYPE_ACADEMIC
         elif category not in CATEGORIES_TO_OUTPUT:
             continue
-        subtype = entry.get("subtype") or source_subtype_map.get(source, SUBTYPE_PRODUCT)
+        else:
+            subtype = entry.get("subtype") or source_subtype_map.get(source, SUBTYPE_PRODUCT)
         s = ArticleSummary(
             title=entry.get("title", ""),
             url=entry.get("url", ""),
@@ -409,7 +433,7 @@ def render_only(config_path: str):
     trends_by_category = {}
     if trend_summarizer:
         for category, subtypes in articles_by_category.items():
-            all_articles = subtypes.get(SUBTYPE_TECH, []) + subtypes.get(SUBTYPE_PRODUCT, [])
+            all_articles = [a for articles in subtypes.values() for a in articles]
             if all_articles:
                 try:
                     logger.info(f"Trend summary: {category} ({len(all_articles)} articles)")

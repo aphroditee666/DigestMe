@@ -8,64 +8,87 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 # Install dependencies
 pip install -r requirements.txt
 
-# Single run (fetches RSS → classifies → summarizes → writes markdown)
-python main.py --once
+# Single run (fetch → classify → summarize → write MD+HTML)
+python main.py --once --config config/ai_digest/config_ai_digest_outer_rss_merge_v0.yaml
 
-# Run with custom config
-python main.py --config path/to/config.yaml
+# Re-render MD/HTML from cache only (no fetch, no LLM calls except trends)
+python main.py --render-only --config path/to/config.yaml
 
-# Run with persistent scheduler (weekly, per config.yaml schedule section)
+# Run with persistent weekly scheduler
 python main.py
 
-# Run all tests
+# Run tests (uses unittest.mock for LLM calls)
 pytest
-
-# Run a single test file
-pytest tests/test_rss_fetcher.py
 ```
+
+On Windows, set `PYTHONIOENCODING=utf-8` to avoid GBK encoding crashes.
 
 ## Architecture
 
-Pipeline: `main.py` orchestrates **RSSFetcher → classification → Summarizer → MarkdownWriter**.
+Pipeline in `main.py`:
 
-1. **`main.py`** — Entry point. Iterates RSS sources, skips urls that are empty strings. Dynamically loads prompts module specified by `digest.prompts_module` in config, passes it to Summarizer/TrendSummarizer.
+```
+RSS fetch → AI classify (batch) → filter by source type → full-text enrich → AI summarize (batch) → trend summaries → write MD + HTML
+```
 
-2. **`src/config_loader.py`** — Parses `config.yaml`. Supports `${ENV_VAR}` expansion in config values. Defines `Config`, `RSSSource`, `ClaudeConfig`, `OutputConfig`, `ScheduleConfig` dataclasses.
+**Phase 1**: Fetch all RSS sources, dedup by URL (`seen_urls`), populate cache for previously seen articles, queue unseen for batch AI classification.
 
-3. **`src/rss_fetcher.py`** — Wraps `feedparser`. Extracts article content from `entry.content[0].value` (list), falls back to `entry.summary` (str), then `entry.description` (str). Returns `Article` dataclass with title/url/published/source/content.
+**Phase 2**: Filter classified articles by source type. Two kinds of sources:
+- **Academic** (`category: "学术论文"` in config) — AI classifies freely, then only AIGC视觉生成 + 自动驾驶 are kept; rest discarded.
+- **Non-academic** (category in CATEGORIES_TO_OUTPUT) — all 4 output categories kept; "其它" discarded.
 
-4. **`src/summarizer.py`** — Calls Claude API for classification (single + batch) and summarization. Parses response into `ArticleSummary` with summary text, key points list, and optional arXiv URL. Accepts a prompts module via constructor (defaults to `prompts_ai_digest`).
+**Phase 2.5**: Enrich short RSS content with full article body via `FullTextFetcher` (trafilatura-based).
 
-5. **`src/prompts_ai_digest.py`** — Prompt templates (`CLASSIFICATION_PROMPT`, `SUMMARIZATION_PROMPT`) and category definitions (`CATEGORIES`, `CATEGORIES_TO_OUTPUT`). This is the current domain module; switch domain by changing `digest.prompts_module` in config and providing a new `prompts_<domain>.py`.
+**Phase 3**: Batch summarize pending articles. Single-article fallback if batch fails.
 
-6. **`src/claude_client.py`** — Thin wrapper around `anthropic.Anthropic` SDK client. Lazy-initializes the client. `send_message()` takes a single user message and optional system prompt, returns the text response.
+**Phase 4**: Trend summaries per category, then write MD + HTML. Output files named `YYYY-MM-DD-digest-N.md/.html` where N auto-increments.
 
-7. **`src/markdown_writer.py`** — Writes one markdown file per category to `output/<category>/YYYY-MM-DD-<category_slug>-digest.md`. Renders article titles as clickable links, includes arXiv URLs when present.
+### Key modules
 
-8. **`src/scheduler.py`** — Wraps the `schedule` library. `schedule_weekly()` registers per-day jobs, `run()` loops with `schedule.run_pending()` + 60s sleep.
+| File | Purpose |
+|------|---------|
+| `main.py` | Orchestrator. `run_once()` for single run, `render_only()` for cache-only re-render. |
+| `src/config_loader.py` | YAML config parsing. `${ENV_VAR}` expansion. `RSSSource.subtype` defaults to `SUBTYPE_TECH` when `enrich: true`. |
+| `src/rss_fetcher.py` | `feedparser` wrapper. Supports custom fetcher registration per URL pattern. Returns `Article` dataclass. |
+| `src/custom_fetcher.py` | Custom fetchers: arXiv API (replaces broken weekend RSS), Meta AI Blog (GraphQL auth flow). Registered via `register_all()`. |
+| `src/summarizer.py` | `Summarizer` (classify + summarize) and `TrendSummarizer`. Batch and single-article modes. Parses JSON/structured text responses. |
+| `src/prompts_ai_digest.py` | `CATEGORIES`, `CATEGORIES_TO_OUTPUT`, system prompts, and prompt templates. Domain-swappable via `digest.prompts_module` in config. |
+| `src/claude_client.py` | Thin Anthropic SDK wrapper. Lazy init. Tracks token usage and call count via `client.stats`. |
+| `src/digest_cache.py` | JSON file cache keyed by article URL. Stores category, subtype, summary, key_points, arxiv_url, github_url. |
+| `src/full_text_fetcher.py` | Fetches full article HTML → trafilatura extract → replaces short RSS content. Supports custom site-specific fetchers. |
+| `src/html_writer.py` | HTML output with sidebar nav, search, gradient cards, dark mode, resizable sidebar. |
+| `src/markdown_writer.py` | Per-category markdown output. |
+| `src/scheduler.py` | `schedule` library wrapper. Weekly jobs with day + time config. |
 
 ## Configuration
 
-The domain/focus is entirely determined by the RSS sources and categories in the config file. No domain logic is hardcoded — swap the config and you have a different digest (finance, tech, academia, etc.).
+Domain determined entirely by `digest.prompts_module` + RSS sources in config. Key config fields:
 
-To add a new domain:
-1. Create `src/prompts_<domain>.py` with `CATEGORIES`, `CATEGORIES_TO_OUTPUT`, and prompt functions
-2. Set `digest.prompts_module: "prompts_<domain>"` in your config YAML
-
-Claude API is configured to use DeepSeek's Anthropic-compatible endpoint (`https://api.deepseek.com/anthropic`).
-
-## Output structure
-
-```
-output/
-  2026-05-06-digest.md
-  AI前沿/2026-05-06-AI前沿-digest.md
-  基础研究/2026-05-06-基础研究-digest.md
+```yaml
+rss_sources:
+  - name: "Source Name"
+    url: "https://..."
+    category: "AIGC视觉生成"   # "学术论文" = academic → filtered differently
+    limit: 15
+    enrich: true                # true → Tier 1 (full-text enrich + SUBTYPE_TECH)
+    subtype: ""                 # auto: enrich=true → 技术/算法, false → 产品/应用
+claude:
+  api_key: "${DEEPSEEK_API_KEY}"
+  base_url: "https://api.deepseek.com/anthropic"
+digest:
+  recent_days: 4
+  classification_batch_size: 30
+  summarization_batch_size: 5
+  enable_trend_summary: true
+  enrich_content: true
+output:
+  output_format: "both"  # "markdown", "html", or "both"
 ```
 
 ## Notes
 
-- `ClaudeConfig` dataclass is duplicated in both `config_loader.py:14` and `claude_client.py:6` — they should be kept in sync.
-- Sources with empty `url: ""` in config.yaml are silently skipped at runtime.
-- Tests use `unittest.mock` to patch the Anthropic client; integration tests expect mocked API responses.
-- On Windows, set `PYTHONIOENCODING=utf-8` to avoid GBK encoding crashes with emoji/Chinese in output.
+- `ClaudeConfig` is duplicated in `config_loader.py` and `claude_client.py` — keep in sync.
+- Sources with empty `url: ""` are silently skipped.
+- Dedup is URL-based: `seen_urls` in `run_once()`, cache key in `render_only()`.
+- arXiv API rate limit: 5s between calls, 3 retries on failure.
+- Cache key priority: URL > `source::title` fallback.

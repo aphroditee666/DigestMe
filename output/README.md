@@ -2,6 +2,52 @@
 
 > 生成时间倒序排列，最新在上。
 
+## 2026-05-13
+
+- [00:40 HTML — 2026-05-13-digest.html](https://aphroditee666.github.io/DigestMe/output/ai_digest/2026-05-13-digest.html) | 摘要 354 篇 | Token 0
+
+- [00:40 — 2026-05-13-digest.md](ai_digest/2026-05-13-digest.md) (469KB)
+  > 配置: `config/ai_digest/config_ai_digest_all_merge_v0.yaml` | 抓取 354 篇(近期 354) | 摘要 354 篇 | Token 0 | 0.0s
+  > AIGC视觉生成:81 | 自动驾驶:122 | Coding Agent:106 | 多模态大模型/大语言模型:45
+
+## 2026-05-12
+
+- [23:57 HTML — 2026-05-12-digest-5.html](https://aphroditee666.github.io/DigestMe/output/ai_digest/2026-05-12-digest-5.html) | 摘要 354 篇 | Token 0
+
+- [23:57 — 2026-05-12-digest-5.md](ai_digest/2026-05-12-digest-5.md) (466KB)
+  > 配置: `config/ai_digest/config_ai_digest_all_merge_v0.yaml` | 抓取 354 篇(近期 354) | 摘要 354 篇 | Token 0 | 0.0s
+  > AIGC视觉生成:81 | 自动驾驶:122 | Coding Agent:106 | 多模态大模型/大语言模型:45
+
+- [10:52 HTML — 2026-05-12-digest-4.html](https://aphroditee666.github.io/DigestMe/output/ai_digest/2026-05-12-digest-4.html) | 摘要 262 篇 | Token 36,919
+
+- [10:52 — 2026-05-12-digest-4.md](ai_digest/2026-05-12-digest-4.md) (350KB)
+  > 配置: `config/ai_digest/config_ai_digest_all_merge_v0.yaml` | 抓取 812 篇(近期 471) | 摘要 262 篇 | Token 36,919 | 86.1s
+  > AIGC视觉生成:70 | 自动驾驶:113 | Coding Agent:44 | 多模态大模型/大语言模型:35
+
+- [10:08 HTML — 2026-05-12-digest-3.html](https://aphroditee666.github.io/DigestMe/output/ai_digest/2026-05-12-digest-3.html) | 摘要 72 篇 | Token 27,762
+
+- [10:08 — 2026-05-12-digest-3.md](ai_digest/2026-05-12-digest-3.md) (114KB)
+  > 配置: `config/ai_digest/config_ai_digest_outer_rss_merge_v0.yaml` | 抓取 514 篇(近期 192) | 摘要 72 篇 | Token 27,762 | 147.7s
+  > AIGC视觉生成:22 | 多模态大模型/大语言模型:12 | 自动驾驶:11 | Coding Agent:27
+
+- [01:43 HTML — 2026-05-12-digest-2.html](https://aphroditee666.github.io/DigestMe/output/ai_digest/2026-05-12-digest-2.html) | 摘要 79 篇 | Token 15,611
+
+- [01:43 — 2026-05-12-digest-2.md](ai_digest/2026-05-12-digest-2.md) (127KB)
+  > 配置: `config/ai_digest/config_ai_digest_outer_rss_merge_v0.yaml` | 抓取 552 篇(近期 218) | 摘要 79 篇 | Token 15,611 | 64.4s
+  > AIGC视觉生成:30 | 多模态大模型/大语言模型:13 | 自动驾驶:7 | Coding Agent:29
+
+- [00:44 HTML — 2026-05-12-digest-1.html](https://aphroditee666.github.io/DigestMe/output/ai_digest/2026-05-12-digest-1.html) | 摘要 363 篇 | Token 0
+
+- [00:44 — 2026-05-12-digest-1.md](ai_digest/2026-05-12-digest-1.md) (480KB)
+  > 配置: `config/ai_digest/config_ai_digest_outer_rss_merge_v0.yaml` | 抓取 363 篇(近期 363) | 摘要 363 篇 | Token 0 | 0.0s
+  > AIGC视觉生成:91 | 多模态大模型/大语言模型:55 | 自动驾驶:115 | Coding Agent:102
+
+- [00:37 HTML — 2026-05-12-digest.html](https://aphroditee666.github.io/DigestMe/output/ai_digest/2026-05-12-digest.html) | 摘要 83 篇 | Token 15,689
+
+- [00:37 — 2026-05-12-digest.md](ai_digest/2026-05-12-digest.md) (131KB)
+  > 配置: `config/ai_digest/config_ai_digest_outer_rss_merge_v0.yaml` | 抓取 537 篇(近期 203) | 摘要 83 篇 | Token 15,689 | 61.7s
+  > AIGC视觉生成:27 | 多模态大模型/大语言模型:16 | 自动驾驶:7 | Coding Agent:33
+
 ## 2026-05-11
 
 - [21:11 HTML — 2026-05-11-digest-15.html](https://aphroditee666.github.io/DigestMe/output/ai_digest/2026-05-11-digest-15.html) | 摘要 272 篇 | Token 275,280

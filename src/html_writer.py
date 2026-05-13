@@ -115,6 +115,65 @@ body {
 }
 .sidebar-link.active .sidebar-count { background: var(--primary); color: #fff; }
 
+/* Sidebar Category Group (expandable) */
+.sidebar-cat-group { margin-bottom: 2px; }
+.sidebar-cat-header {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 12px; border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font-size: 14px; font-weight: 500;
+    transition: all .15s; cursor: pointer;
+    user-select: none;
+}
+.sidebar-cat-header:hover { background: var(--primary-bg); color: var(--primary); }
+.sidebar-cat-header.active { background: var(--primary-bg); color: var(--primary); font-weight: 600; }
+.sidebar-cat-header.active .sidebar-count { background: var(--primary); color: #fff; }
+
+.sidebar-cat-arrow {
+    width: 16px; height: 16px; flex-shrink: 0;
+    transition: transform .2s;
+    display: inline-block; position: relative;
+}
+.sidebar-cat-arrow::before {
+    content: ""; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0; height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid var(--text-muted);
+    transition: transform .2s;
+}
+.sidebar-cat-group.open .sidebar-cat-arrow::before {
+    transform: translate(-50%, -50%) rotate(0deg);
+}
+.sidebar-cat-group:not(.open) .sidebar-cat-arrow::before {
+    transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+.sidebar-sub-list {
+    overflow: hidden;
+    transition: max-height .3s ease, opacity .2s;
+}
+.sidebar-cat-group.open .sidebar-sub-list {
+    max-height: 300px; opacity: 1;
+}
+.sidebar-cat-group:not(.open) .sidebar-sub-list {
+    max-height: 0; opacity: 0;
+}
+
+.sidebar-sub-link {
+    display: flex; align-items: center; gap: 10px;
+    padding: 7px 12px 7px 36px;
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary); text-decoration: none;
+    font-size: 13px; font-weight: 400;
+    transition: all .15s; cursor: pointer;
+    margin-bottom: 1px;
+}
+.sidebar-sub-link:hover { background: var(--primary-bg); color: var(--primary); }
+.sidebar-sub-link.active { background: var(--primary-bg); color: var(--primary); font-weight: 600; }
+.sidebar-sub-link.active .sidebar-count { background: var(--primary); color: #fff; }
+
 .sidebar-footer {
     padding: 12px 24px; border-top: 1px solid var(--border);
     font-size: 12px; color: var(--text-muted); flex-shrink: 0;
@@ -232,7 +291,7 @@ body {
 .trend-body li { margin-bottom: 6px; }
 
 /* Subtype Section */
-.subtype-section { margin-bottom: 28px; }
+.subtype-section { margin-bottom: 28px; scroll-margin-top: 80px; }
 .subtype-header {
     font-size: 14px; font-weight: 700; color: var(--text-muted);
     margin-bottom: 14px; text-transform: uppercase; letter-spacing: .04em;
@@ -347,7 +406,6 @@ _JS = r"""
 (function() {
     var searchInput = document.getElementById('search');
     var cards = document.querySelectorAll('.article-card');
-    var sidebarLinks = document.querySelectorAll('.sidebar-link');
     var sections = document.querySelectorAll('.category-section');
     var topbar = document.querySelector('.topbar');
     var backTop = document.getElementById('back-top');
@@ -355,6 +413,11 @@ _JS = r"""
     var sidebarToggle = document.getElementById('sidebar-toggle');
     var sidebarOverlay = document.querySelector('.sidebar-overlay');
     var MAIN = document.querySelector('.main');
+
+    // Cached node lists
+    var catHeaders = document.querySelectorAll('.sidebar-cat-header');
+    var subLinks = document.querySelectorAll('.sidebar-sub-link');
+    var allLink = document.querySelector('.sidebar-link[data-category="all"]');
 
     // Search filter
     function doSearch() {
@@ -368,20 +431,26 @@ _JS = r"""
     }
     searchInput.addEventListener('input', doSearch);
 
-    // Sidebar nav click -> scroll + highlight
-    sidebarLinks.forEach(function(link) {
+    // ---- Sidebar category header toggle ----
+    catHeaders.forEach(function(header) {
+        header.addEventListener('click', function(e) {
+            var group = this.parentElement;
+            group.classList.toggle('open');
+        });
+    });
+
+    // ---- Sidebar sub-link click -> scroll to subtype section ----
+    subLinks.forEach(function(link) {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             var cat = this.getAttribute('data-category');
-            if (cat === 'all') {
-                window.scrollTo({top: 0, behavior: 'smooth'});
-            } else {
-                var target = document.querySelector('.category-section[data-category="' + cat + '"]');
-                if (target) {
-                    target.scrollIntoView({behavior: 'smooth', block: 'start'});
-                }
+            var subtype = this.getAttribute('data-subtype');
+            var target = document.querySelector(
+                '.subtype-section[data-category="' + cat + '"][data-subtype="' + subtype + '"]'
+            );
+            if (target) {
+                target.scrollIntoView({behavior: 'smooth', block: 'start'});
             }
-            // Close mobile sidebar
             if (window.innerWidth <= 768) {
                 sidebar.classList.remove('open');
                 sidebarOverlay.classList.remove('visible');
@@ -389,20 +458,59 @@ _JS = r"""
         });
     });
 
-    // Highlight active sidebar link on scroll
+    // ---- "全部" link -> scroll to top ----
+    if (allLink) {
+        allLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({top: 0, behavior: 'smooth'});
+            if (window.innerWidth <= 768) {
+                sidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('visible');
+            }
+        });
+    }
+
+    // ---- Highlight active sidebar items on scroll ----
     var ticking = false;
     function updateActiveNav() {
         var scrollY = window.scrollY + 100;
-        var active = 'all';
+        var activeCat = 'all';
+        var activeSub = null;
+
         sections.forEach(function(section) {
             if (section.offsetTop <= scrollY) {
-                active = section.getAttribute('data-category');
+                activeCat = section.getAttribute('data-category');
+                var subSecs = section.querySelectorAll('.subtype-section');
+                subSecs.forEach(function(ss) {
+                    if (ss.offsetTop <= scrollY) {
+                        activeSub = ss.getAttribute('data-subtype');
+                    }
+                });
             }
         });
-        sidebarLinks.forEach(function(link) {
-            var cat = link.getAttribute('data-category');
-            link.classList.toggle('active', cat === active);
+
+        // Highlight category headers & auto-expand active
+        catHeaders.forEach(function(header) {
+            var cat = header.getAttribute('data-category');
+            var isActive = cat === activeCat;
+            header.classList.toggle('active', isActive);
+            if (isActive) {
+                header.parentElement.classList.add('open');
+            }
         });
+
+        // Highlight subtype sub-links
+        subLinks.forEach(function(link) {
+            var cat = link.getAttribute('data-category');
+            var sub = link.getAttribute('data-subtype');
+            link.classList.toggle('active', cat === activeCat && sub === activeSub);
+        });
+
+        // "全部" link active when at top
+        if (allLink) {
+            allLink.classList.toggle('active', activeCat === 'all');
+        }
+
         // Topbar shadow
         topbar.classList.toggle('scrolled', window.scrollY > 20);
     }
@@ -543,6 +651,12 @@ class HTMLWriter:
         all_categories = list(articles_by_category.keys())
         total_articles = sum(cat_counts.values())
 
+        # Compute subtype counts per category for sidebar
+        subtype_counts = {}
+        for cat in all_categories:
+            subtypes = articles_by_category.get(cat, {})
+            subtype_counts[cat] = {sub: len(articles) for sub, articles in subtypes.items() if articles}
+
         parts = [
             "<!DOCTYPE html>",
             '<html lang="zh-CN">',
@@ -566,16 +680,33 @@ class HTMLWriter:
             '</div>',
             '<nav class="sidebar-nav">',
             '<div class="sidebar-label">分类目录</div>',
-            f'<a class="sidebar-link active" data-category="all" href="#">全部<span class="sidebar-count">{total_articles}</span></a>',
+            f'<a class="sidebar-link" data-category="all" href="#">全部<span class="sidebar-count">{total_articles}</span></a>',
         ]
 
         for cat in all_categories:
             count = cat_counts.get(cat, 0)
-            if count > 0:
+            if count == 0:
+                continue
+            sub_counts = subtype_counts.get(cat, {})
+            parts.append(f'<div class="sidebar-cat-group open">')
+            parts.append(
+                f'<div class="sidebar-cat-header" data-category="{html.escape(cat)}" role="button" tabindex="0">'
+                f'<span class="sidebar-cat-arrow"></span>'
+                f'<span class="sidebar-cat-label">{html.escape(cat)}</span>'
+                f'<span class="sidebar-count">{count}</span>'
+                f'</div>'
+            )
+            parts.append(f'<div class="sidebar-sub-list">')
+            for subtype, sub_count in sub_counts.items():
                 parts.append(
-                    f'<a class="sidebar-link" data-category="{html.escape(cat)}" href="#">'
-                    f'{html.escape(cat)}<span class="sidebar-count">{count}</span></a>'
+                    f'<a class="sidebar-sub-link" data-category="{html.escape(cat)}" '
+                    f'data-subtype="{html.escape(subtype)}" href="#">'
+                    f'{html.escape(subtype)}'
+                    f'<span class="sidebar-count">{sub_count}</span>'
+                    f'</a>'
                 )
+            parts.append('</div>')
+            parts.append('</div>')
         parts.append('</nav>')
         parts.append('<div class="sidebar-resize" id="sidebar-resize"></div>')
         parts.append(
@@ -628,7 +759,10 @@ class HTMLWriter:
             for subtype, articles in subtypes.items():
                 if not articles:
                     continue
-                parts.append(f'<div class="subtype-section">')
+                parts.append(
+                    f'<div class="subtype-section" data-category="{html.escape(category)}" '
+                    f'data-subtype="{html.escape(subtype)}">'
+                )
                 parts.append(f'<h3 class="subtype-header">{html.escape(subtype)}</h3>')
                 parts.append('<div class="article-grid">')
                 for article in articles:

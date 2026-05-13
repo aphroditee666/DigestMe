@@ -7,6 +7,7 @@ from typing import List
 
 SUBTYPE_TECH = "技术/算法"
 SUBTYPE_PRODUCT = "产品/应用"
+SUBTYPE_ACADEMIC = "学术论文"
 
 
 def _load_dotenv(path: str = ".env"):
