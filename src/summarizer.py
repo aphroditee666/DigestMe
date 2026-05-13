@@ -116,7 +116,8 @@ class Summarizer:
                 key_points=item.get("key_points", []),
                 arxiv_url=item.get("arxiv_url", ""),
                 github_url=item.get("github_url", ""),
-                verified_category=item.get("category", "")
+                verified_category=item.get("category", ""),
+                subtype=item.get("subtype", "")
             )
         return results
 
@@ -130,7 +131,12 @@ class Summarizer:
         category_match = re.search(r'### 分类\s*\n(.+)', response)
         verified_category = category_match.group(1).strip() if category_match else ""
 
-        summary_match = re.search(r'### 摘要\s*\n(.+?)(?=### 关键要点|### 分类|$)', response, re.DOTALL)
+        subtype_match = re.search(r'### 子类型\s*\n(.+)', response)
+        llm_subtype = subtype_match.group(1).strip() if subtype_match else ""
+        if llm_subtype and llm_subtype in ("学术论文", "技术/算法", "产品/应用"):
+            subtype = llm_subtype
+
+        summary_match = re.search(r'### 摘要\s*\n(.+?)(?=### 关键要点|### 分类|### 子类型|$)', response, re.DOTALL)
         summary = summary_match.group(1).strip() if summary_match else ""
 
         points_match = re.findall(r'- (.+)', response)

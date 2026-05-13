@@ -287,8 +287,11 @@ def run_once(config_path: str):
                         if new_cat is None:
                             continue
                         cat = new_cat
+                        subtype = s.subtype or item.get("subtype", SUBTYPE_PRODUCT)
                         if cat in ACADEMIC_ELIGIBLE_CATEGORIES:
                             subtype = SUBTYPE_ACADEMIC
+                        elif subtype == SUBTYPE_ACADEMIC:
+                            subtype = source_subtype_map.get(item["article"].source, SUBTYPE_PRODUCT)
                         elif subtype not in articles_by_category.get(cat, {}):
                             subtype = source_subtype_map.get(item["article"].source, SUBTYPE_PRODUCT)
                         s.subtype = subtype
@@ -309,8 +312,11 @@ def run_once(config_path: str):
                         if new_cat is None:
                             continue
                         cat = new_cat
+                        subtype = summary.subtype or item.get("subtype", SUBTYPE_PRODUCT)
                         if cat in ACADEMIC_ELIGIBLE_CATEGORIES:
                             subtype = SUBTYPE_ACADEMIC
+                        elif subtype == SUBTYPE_ACADEMIC:
+                            subtype = source_subtype_map.get(article.source, SUBTYPE_PRODUCT)
                         elif subtype not in articles_by_category.get(cat, {}):
                             subtype = source_subtype_map.get(article.source, SUBTYPE_PRODUCT)
                         summary.subtype = subtype
@@ -334,9 +340,14 @@ def run_once(config_path: str):
                         if new_cat is None:
                             continue
                         cat = new_cat
+                        subtype = summary.subtype or item.get("subtype", SUBTYPE_PRODUCT)
                         if cat in ACADEMIC_ELIGIBLE_CATEGORIES:
                             subtype = SUBTYPE_ACADEMIC
-                            summary.subtype = subtype
+                        elif subtype == SUBTYPE_ACADEMIC:
+                            subtype = source_subtype_map.get(article.source, SUBTYPE_PRODUCT)
+                        elif subtype not in articles_by_category.get(cat, {}):
+                            subtype = source_subtype_map.get(article.source, SUBTYPE_PRODUCT)
+                        summary.subtype = subtype
                         cache.set_summary(summary)
                         articles_by_category[cat][subtype].append(summary)
                         total_summarized += 1

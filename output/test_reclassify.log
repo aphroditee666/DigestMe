@@ -1,0 +1,1003 @@
+2026-05-13 21:45:13,278 - INFO - Fetching 99 RSS sources
+2026-05-13 21:45:13,283 - INFO - Fetching: 字节跳动Seed
+2026-05-13 21:45:18,060 - INFO -   old article skipped: Seed3D 2.0发布，更高精度、更强可用性
+2026-05-13 21:45:18,060 - INFO -   old article skipped: Seed 全双工语音大模型发布：懂倾听、抗干扰，走向更自然的交互
+2026-05-13 21:45:18,060 - INFO -   old article skipped: 字节跳动 Seed 2027 届大模型人才校招启动（含实习）
+2026-05-13 21:45:18,060 - INFO -   old article skipped: Seed2.0 正式发布
+2026-05-13 21:45:18,060 - INFO -   old article skipped: “思考”更深，生成更准｜Seedream 5.0 Lite 发布
+2026-05-13 21:45:18,060 - INFO -   old article skipped: Seedance 2.0 正式发布
+2026-05-13 21:45:18,060 - INFO -   old article skipped: Seed Prover 1.5：全新 Agentic 架构，更强数学推理表现
+2026-05-13 21:45:18,060 - INFO -   old article skipped: 通用Agent模型Seed1.8正式发布
+2026-05-13 21:45:18,060 - INFO -   old article skipped: 声画俱全，一镜入戏 | Seedance 1.5 pro 音视频创作模型正式发布
+2026-05-13 21:45:18,060 - INFO -   old article skipped: Seed Research｜GR-RL 发布：突破VLA精细操作瓶颈，首次实现真机强化学习穿鞋带
+2026-05-13 21:45:18,060 - INFO - Fetching: 机器之心SOTA模型
+2026-05-13 21:45:20,984 - INFO -   old article skipped: 今日开源（2026-5-12）：通义千问开源WebWorld，大规模网络世界模型覆盖网页智能体全链路，支持训练与评估一体化
+2026-05-13 21:45:20,984 - INFO -   old article skipped: 今日开源（2026-5-11）：微软Phi-Ground模型家族开源Phi-Ground-Any，基于Phi-3.5-vision-instruct微调，1680×1008分辨率实现GUI元素定位
+2026-05-13 21:45:20,984 - INFO -   old article skipped: 今日开源（2026-5-9）：小米SVOR正式开源，稳定视频对象移除框架，三大核心设计攻克阴影残留与运动抖动难题
+2026-05-13 21:45:20,984 - INFO -   old article skipped: 今日开源（2026-5-8）：小米发布OmniVoice，新型扩散语言模型支撑大规模多语言TTS，语音克隆与音色设计双能力集成
+2026-05-13 21:45:20,984 - INFO -   old article skipped: 今日开源（2026-5-7）：腾讯开源OpenSearch-VL，30B/32B模型精度比肩顶尖商用系统，7个知识密集型多模态基准表现优异
+2026-05-13 21:45:20,984 - INFO -   old article skipped: 今日开源（2026-5-6）：阿里开源PromptEcho，突破人工偏好标注扩展性瓶颈，显著提升文生图模型提示遵循能力
+2026-05-13 21:45:20,984 - INFO -   old article skipped: 今日开源（2026-4-30）：inclusionAI开源Ling-2.6，万亿参数兼顾推理效率与令牌开销，多项执行类基准达开源SOTA
+2026-05-13 21:45:20,984 - INFO -   old article skipped: 今日开源（2026-4-29）：商汤SenseNova-U1推出，原生架构兼顾性能与效率，语言视觉统一处理突破适配器限制
+2026-05-13 21:45:20,985 - INFO -   old article skipped: 今日开源（2026-4-28）：小米MiMo-V2.5家族开源，1M上下文窗口覆盖多模态感知与智能体工作流，MIT协议释放全模态能力
+2026-05-13 21:45:20,985 - INFO - Fetching: Hugging Face 博客
+2026-05-13 21:45:22,146 - INFO -   old article skipped: Building Blocks for Foundation Model Training and Inference on AWS
+2026-05-13 21:45:22,146 - INFO -   old article skipped: EMO: Pretraining mixture of experts for emergent modularity
+2026-05-13 21:45:22,146 - INFO -   old article skipped: vLLM V0 to V1: Correctness Before Corrections in RL
+2026-05-13 21:45:22,146 - INFO -   old article skipped: Adding Benchmaxxer Repellant to the Open ASR Leaderboard
+2026-05-13 21:45:22,146 - INFO -   old article skipped: Granite 4.1 LLMs: How They’re Built
+2026-05-13 21:45:22,146 - INFO -   old article skipped: DeepInfra on Hugging Face Inference Providers 🔥
+2026-05-13 21:45:22,146 - INFO -   old article skipped: Introducing NVIDIA Nemotron 3 Nano Omni: Long-Context Multimodal Intelligence for Documents, Audio and Video Agents
+2026-05-13 21:45:22,146 - INFO -   old article skipped: How to build scalable web apps with OpenAI's Privacy Filter
+2026-05-13 21:45:22,146 - INFO -   old article skipped: DeepSeek-V4: a million-token context that agents can actually use
+2026-05-13 21:45:22,146 - INFO -   old article skipped: How to Use Transformers.js in a Chrome Extension
+2026-05-13 21:45:22,146 - INFO -   old article skipped: QIMMA قِمّة ⛰: A Quality-First Arabic LLM Leaderboard
+2026-05-13 21:45:22,146 - INFO -   old article skipped: AI and the Future of Cybersecurity: Why Openness Matters
+2026-05-13 21:45:22,146 - INFO -   old article skipped: Ecom-RLVE: Adaptive Verifiable Environments for E-Commerce Conversational Agents
+2026-05-13 21:45:22,146 - INFO -   old article skipped: The PR you would have opened yourself
+2026-05-13 21:45:22,146 - INFO -   old article skipped: Training and Finetuning Multimodal Embedding & Reranker Models with Sentence Transformers
+2026-05-13 21:45:22,146 - INFO - Fetching: AIGC创意猎人
+2026-05-13 21:45:22,637 - INFO - Fetching: AIGC开放社区
+2026-05-13 21:45:23,691 - INFO -   old article skipped: 8720个AI岗位真相：LLM和Agent吃掉58%的岗位
+2026-05-13 21:45:23,691 - INFO -   old article skipped: OpenAI发布MRC超算协议，重塑10万GPU集群通信，AMD等合作推进
+2026-05-13 21:45:23,691 - INFO -   old article skipped: ICLR 2026清华霸榜，中国高校包揽全球前五，美国高质量底盘稳固
+2026-05-13 21:45:23,691 - INFO -   old article skipped: 报名通道即将关闭！Agent Skill 开发者大赛 最后 1 天
+2026-05-13 21:45:23,691 - INFO -   old article skipped: 养马首超养虾！Hermes Agent超越OpenClaw，全球Token消耗第一
+2026-05-13 21:45:23,691 - INFO -   old article skipped: 从Markdown到HTML：你与AI的沟通维度又升级了
+2026-05-13 21:45:23,691 - INFO -   old article skipped: 高盛：AI是否泡沫，要看接下来5年的7.6万亿美元基建
+2026-05-13 21:45:23,691 - INFO -   old article skipped: 让Agent真正“行动”起来，Agent Skill开发者大赛火热报名中！
+2026-05-13 21:45:23,691 - INFO -   old article skipped: 马斯克22万张GPU全给Claude，Anthropic估值1.2万亿成全球AI新王
+2026-05-13 21:45:23,691 - INFO -   old article skipped: DeepSeek 之后，月之暗面、阶跃星辰再融资
+2026-05-13 21:45:23,691 - INFO -   old article skipped: 红杉资本：AGI已至！未来100年的构想，100天就能实现
+2026-05-13 21:45:23,691 - INFO -   old article skipped: 让Agent真正“行动”起来，Agent Skill开发者大赛火热报名中！
+2026-05-13 21:45:23,691 - INFO - Fetching: AIGC weekly
+2026-05-13 21:45:35,821 - INFO -   old article skipped: AIGC Weekly #170
+2026-05-13 21:45:35,821 - INFO -   old article skipped: AIGC Weekly #169
+2026-05-13 21:45:35,821 - INFO -   old article skipped: AIGC Weekly #168
+2026-05-13 21:45:35,821 - INFO -   old article skipped: AIGC Weekly #167
+2026-05-13 21:45:35,821 - INFO -   old article skipped: AIGC Weekly #166
+2026-05-13 21:45:35,821 - INFO -   old article skipped: AIGC Weekly #165
+2026-05-13 21:45:35,821 - INFO -   old article skipped: AIGC Weekly #164
+2026-05-13 21:45:35,821 - INFO -   old article skipped: AIGC Weekly #163
+2026-05-13 21:45:35,821 - INFO -   old article skipped: AIGC Weekly #162
+2026-05-13 21:45:35,821 - INFO -   old article skipped: AIGC Weekly #161
+2026-05-13 21:45:35,821 - INFO -   old article skipped: AIGC Weekly #160
+2026-05-13 21:45:35,821 - INFO -   old article skipped: AIGC Weekly #159 新年快乐
+2026-05-13 21:45:35,821 - INFO -   old article skipped: AIGC Weekly #158
+2026-05-13 21:45:35,821 - INFO -   old article skipped: AIGC Weekly #157
+2026-05-13 21:45:35,821 - INFO -   old article skipped: AIGC Weekly #156
+2026-05-13 21:45:35,821 - INFO - Fetching: AIGC Studio
+2026-05-13 21:45:35,892 - INFO - Fetching: AI生成未来
+2026-05-13 21:45:35,917 - INFO - Fetching: Vidu AI
+2026-05-13 21:45:35,941 - INFO - Fetching: 可灵AI
+2026-05-13 21:45:35,964 - INFO - Fetching: 火山引擎
+2026-05-13 21:45:35,989 - INFO - Fetching: PaperAgent
+2026-05-13 21:45:36,014 - INFO - Fetching: PaperWeekly
+2026-05-13 21:45:36,038 - INFO - Fetching: AI思想会
+2026-05-13 21:45:36,062 - INFO - Fetching: AIWalker
+2026-05-13 21:45:36,087 - INFO - Fetching: 智能涌现
+2026-05-13 21:45:36,112 - INFO - Fetching: AI小小将
+2026-05-13 21:45:36,139 - INFO - Fetching: 曾天真的算法世界
+2026-05-13 21:45:36,163 - INFO - Fetching: 专知
+2026-05-13 21:45:36,186 - INFO - Fetching: 沈公子今天读什么
+2026-05-13 21:45:36,208 - INFO - Fetching: 踩着梯度上山
+2026-05-13 21:45:36,231 - INFO - Fetching: CVer
+2026-05-13 21:45:36,256 - INFO - Fetching: 十字路口Crossing
+2026-05-13 21:45:44,322 - INFO -   old article skipped: Bridge 首次发声：AI 正在消灭软件，我们要做 Agent 时代的入口
+2026-05-13 21:45:44,322 - INFO -   old article skipped: GENE-26.5 刷屏，堪称今年领域最震撼的demo！真的吗？
+2026-05-13 21:45:44,322 - INFO -   old article skipped: 在你看不见的地方，HeyGen 正在改写 AI 视频生成
+2026-05-13 21:45:44,322 - INFO -   old article skipped: 龙虾退烧后，荣耀给它造了一个宇宙
+2026-05-13 21:45:44,322 - INFO -   old article skipped: 好奇、兴奋、坐不住、年轻 builder：周末来打一个黑客松吧！
+2026-05-13 21:45:44,322 - INFO -   old article skipped: 上海，周日黑客松，欢迎来玩🎪
+2026-05-13 21:45:44,322 - INFO -   old article skipped: 当 AI 学会欺骗和灭迹：Anthropic 244 页报告揭示的困境
+2026-05-13 21:45:44,322 - INFO - Fetching: 花叔
+2026-05-13 21:45:49,089 - INFO -   old article skipped: Claude Code发布Agent View，多任务流的ADHD患者有救了
+2026-05-13 21:45:49,089 - INFO -   old article skipped: 不想做的事交给AI，想做的事留给自己
+2026-05-13 21:45:49,089 - INFO -   old article skipped: 最近重做了公众号文章封面的制作节奏，在犹豫要不要做成Skill或者用别的方式进一步标准化。
+
+然后，放弃了。
+
+这一套设计体系要做标准化太容易了...按道理来说用更统一的封面风格建立IP品牌感也很对。
+
+但是呢...我实在讨厌一成不变，任何东西被用多了都会显得无聊。以及，我发现我很享受用不同的trick去调整生产流程获得不同结果的过程。
+
+所以，当过程本身成为目的之一，而不仅是追求结果的时候，我选择放弃所有的高效和标准化。
+
+那你不想做的事Skill化，把想做的事留给自己。
+2026-05-13 21:45:49,089 - INFO -   old article skipped: Markdown还是HTML？这是个蠢问题！
+2026-05-13 21:45:49,089 - INFO -   old article skipped: AI视频工具悄悄走到了第三阶段
+2026-05-13 21:45:49,089 - INFO -   old article skipped: 企微的这些新功能，补齐了AI在你公司的最后一公里
+2026-05-13 21:45:49,089 - INFO -   old article skipped: DeepSeek视觉原语论文：当所有人在堆图像分辨率时，它在堆「指代精度」！
+2026-05-13 21:45:49,090 - INFO - Fetching: 优设
+2026-05-13 21:45:52,833 - INFO -   old article skipped: GPT Image 2生图教程！5分钟搞定作品集
+2026-05-13 21:45:52,833 - INFO -   old article skipped: 最新100+GPT Image 2高阶提示词大合集
+2026-05-13 21:45:52,833 - INFO -   old article skipped: GPT-image-2电商海报提示词实操教程
+2026-05-13 21:45:52,833 - INFO -   old article skipped: AI漫剧教程！11个运镜方法让画面更有质感
+2026-05-13 21:45:52,833 - INFO -   old article skipped: AI绘画教程！30+GPT-image-2万能提示词
+2026-05-13 21:45:52,833 - INFO -   old article skipped: 5分钟学会！用GPT image2拆卖点生成详情页
+2026-05-13 21:45:52,833 - INFO -   old article skipped: 10个GPT-image-2用法实测！附提示词
+2026-05-13 21:45:52,833 - INFO - Fetching: MiniMax 稀宇科技
+2026-05-13 21:45:54,808 - INFO -   old article skipped: MiniMax 10x Team：邀你一起，推动你的领域 10x 加速
+2026-05-13 21:45:54,808 - INFO -   old article skipped: 大模型不认识马嘉祺？我们做了一次全链路排查
+2026-05-13 21:45:54,808 - INFO -   old article skipped: 想象力也是生产力：MiniMax 在戛纳见证一种新的生产关系
+2026-05-13 21:45:54,808 - INFO -   old article skipped: MaxHermes：全球首个云端沙箱 Hermes，一键养“马”
+2026-05-13 21:45:54,808 - INFO -   old article skipped: MiniMax Agent 更新：这次我们重新设计了 Agent 操作电脑的方式
+2026-05-13 21:45:54,808 - INFO -   old article skipped: MiniMax M2.7 × Hermes Agent：开启自我进化的 Agent 工作流
+2026-05-13 21:45:54,808 - INFO -   old article skipped: MiniMax M2.7开源，携手全球伙伴加速AI生态繁荣
+2026-05-13 21:45:54,808 - INFO - Fetching: Hugging Face
+2026-05-13 21:45:58,535 - INFO -   old article skipped: 社区发布丨全面开源！商汤日日新SenseNova U1发布，迈向模型理解生成统一时代
+2026-05-13 21:45:58,535 - INFO -   old article skipped: 社区供稿丨无需编解码器，NEO-unify如何打造原生视觉语言理解与生成
+2026-05-13 21:45:58,535 - INFO -   old article skipped: Transformer 中的专家混合模型 (MoE)
+2026-05-13 21:45:58,535 - INFO -   old article skipped: 在 Hugging Face Hub 上引入 Storage Buckets
+2026-05-13 21:45:58,535 - INFO -   old article skipped: LeRobot v0.5.0 正式发布
+2026-05-13 21:45:58,535 - INFO -   old article skipped: 社区供稿丨Ling-2.5-1T，普惠智能，即时响应
+2026-05-13 21:45:58,535 - INFO -   old article skipped: 社区供稿丨Ring-2.5-1T，思更深，行更远
+2026-05-13 21:45:58,535 - INFO -   old article skipped: 社区供稿丨感知无界·创造有形：百灵全模态 Ming-flash-omni-2.0 焕新生活想象
+2026-05-13 21:45:58,535 - INFO - Fetching: Google DeepMind Blog
+2026-05-13 21:46:02,637 - INFO -   old article skipped: AlphaEvolve: How our Gemini-powered coding agent is scaling impact across fields
+2026-05-13 21:46:02,637 - INFO -   old article skipped: Enabling a new model for healthcare with AI co-clinician
+2026-05-13 21:46:02,637 - INFO -   old article skipped: Announcing our partnership with the Republic of Korea
+2026-05-13 21:46:02,637 - INFO -   old article skipped: Decoupled DiLoCo: A new frontier for resilient, distributed AI training
+2026-05-13 21:46:02,637 - INFO -   old article skipped: Partnering with industry leaders to accelerate AI transformation
+2026-05-13 21:46:02,637 - INFO -   old article skipped: Gemini 3.1 Flash TTS: the next generation of expressive AI speech
+2026-05-13 21:46:02,637 - INFO -   old article skipped: Gemini Robotics-ER 1.6: Powering real-world robotics tasks through enhanced embodied reasoning
+2026-05-13 21:46:02,637 - INFO -   old article skipped: Gemma 4: Byte for byte, the most capable open models
+2026-05-13 21:46:02,637 - INFO -   old article skipped: Reimagining the mouse pointer for the AI era
+2026-05-13 21:46:02,637 - INFO -   old article skipped: Gemini 3.1 Flash Live: Making audio AI more natural and reliable
+2026-05-13 21:46:02,637 - INFO -   old article skipped: Protecting people from harmful manipulation
+2026-05-13 21:46:02,637 - INFO -   old article skipped: Lyria 3 Pro: Create longer tracks in more
+2026-05-13 21:46:02,637 - INFO -   old article skipped: Measuring progress toward AGI: A cognitive framework
+2026-05-13 21:46:02,637 - INFO -   old article skipped: From games to biology and beyond: 10 years of AlphaGo’s impact
+2026-05-13 21:46:02,637 - INFO -   old article skipped: Gemini 3.1 Flash-Lite: Built for intelligence at scale
+2026-05-13 21:46:02,637 - INFO - Fetching: Google DeepMind
+2026-05-13 21:46:03,838 - INFO -   old article skipped: AlphaEvolve: How our Gemini-powered coding agent is scaling impact across fields
+2026-05-13 21:46:03,838 - INFO -   old article skipped: Enabling a new model for healthcare with AI co-clinician
+2026-05-13 21:46:03,838 - INFO -   old article skipped: Announcing our partnership with the Republic of Korea
+2026-05-13 21:46:03,838 - INFO -   old article skipped: Decoupled DiLoCo: A new frontier for resilient, distributed AI training
+2026-05-13 21:46:03,838 - INFO -   old article skipped: Partnering with industry leaders to accelerate AI transformation
+2026-05-13 21:46:03,838 - INFO -   old article skipped: Gemini 3.1 Flash TTS: the next generation of expressive AI speech
+2026-05-13 21:46:03,838 - INFO -   old article skipped: Gemini Robotics-ER 1.6: Powering real-world robotics tasks through enhanced embodied reasoning
+2026-05-13 21:46:03,838 - INFO -   old article skipped: Gemma 4: Byte for byte, the most capable open models
+2026-05-13 21:46:03,838 - INFO -   old article skipped: Reimagining the mouse pointer for the AI era
+2026-05-13 21:46:03,838 - INFO -   old article skipped: Gemini 3.1 Flash Live: Making audio AI more natural and reliable
+2026-05-13 21:46:03,838 - INFO -   old article skipped: Protecting people from harmful manipulation
+2026-05-13 21:46:03,838 - INFO -   old article skipped: Lyria 3 Pro: Create longer tracks in more
+2026-05-13 21:46:03,838 - INFO -   old article skipped: Measuring progress toward AGI: A cognitive framework
+2026-05-13 21:46:03,838 - INFO -   old article skipped: From games to biology and beyond: 10 years of AlphaGo’s impact
+2026-05-13 21:46:03,838 - INFO -   old article skipped: Gemini 3.1 Flash-Lite: Built for intelligence at scale
+2026-05-13 21:46:03,838 - INFO - Fetching: OpenAI 博客
+2026-05-13 21:46:07,825 - INFO -   old article skipped: How finance teams use Codex
+2026-05-13 21:46:07,826 - INFO -   old article skipped: How NVIDIA engineers and researchers build with Codex
+2026-05-13 21:46:07,826 - INFO -   old article skipped: What Parameter Golf taught us about AI-assisted research
+2026-05-13 21:46:07,826 - INFO -   old article skipped: AutoScout24 scales engineering with AI-powered workflows
+2026-05-13 21:46:07,826 - INFO -   old article skipped: How ChatGPT adoption broadened in early 2026
+2026-05-13 21:46:07,826 - INFO -   old article skipped: How enterprises are scaling AI
+2026-05-13 21:46:07,826 - INFO -   old article skipped: OpenAI Campus Network: Student club interest form
+2026-05-13 21:46:07,826 - INFO -   old article skipped: OpenAI launches DeployCo to help businesses build around intelligence
+2026-05-13 21:46:07,826 - INFO -   old article skipped: Running Codex safely at OpenAI
+2026-05-13 21:46:07,826 - INFO -   old article skipped: Scaling Trusted Access for Cyber with GPT-5.5 and GPT-5.5-Cyber
+2026-05-13 21:46:07,826 - INFO -   old article skipped: Parloa builds service agents customers want to talk to
+2026-05-13 21:46:07,826 - INFO -   old article skipped: Advancing voice intelligence with new models in the API
+2026-05-13 21:46:07,826 - INFO -   old article skipped: Introducing Trusted Contact in ChatGPT
+2026-05-13 21:46:07,826 - INFO -   old article skipped: Testing ads in ChatGPT
+2026-05-13 21:46:07,826 - INFO -   old article skipped: Simplex rethinks software development with Codex
+2026-05-13 21:46:07,826 - INFO - Fetching: Anthropic News
+2026-05-13 21:46:09,428 - INFO -   old article skipped: Higher usage limits for Claude and a compute deal with SpaceX
+2026-05-13 21:46:09,428 - INFO -   old article skipped: Agents for financial services and insurance
+2026-05-13 21:46:09,428 - INFO -   old article skipped: Claude for Creative Work
+2026-05-13 21:46:09,428 - INFO -   old article skipped: Anthropic names Theo Hourmouzis General Manager of Australia & New Zealand and officially opens Sydney office
+2026-05-13 21:46:09,428 - INFO -   old article skipped: An update on our election safeguards
+2026-05-13 21:46:09,428 - INFO -   old article skipped: Anthropic and NEC collaborate to build Japan’s largest AI engineering workforce
+2026-05-13 21:46:09,428 - INFO -   old article skipped: Anthropic and Amazon expand collaboration for up to 5 gigawatts of new compute
+2026-05-13 21:46:09,428 - INFO -   old article skipped: Introducing Claude Design by Anthropic Labs
+2026-05-13 21:46:09,428 - INFO -   old article skipped: Introducing Claude Opus 4.7
+2026-05-13 21:46:09,428 - INFO - Fetching: Google AI Blog
+2026-05-13 21:46:11,130 - INFO -   old article skipped: The new AI-powered Google Finance is expanding to Europe.
+2026-05-13 21:46:11,130 - INFO -   old article skipped: See what happens when creative legends use AI to make ads for small businesses.
+2026-05-13 21:46:11,130 - INFO -   old article skipped: 5 gardening tips you can try right in Search
+2026-05-13 21:46:11,130 - INFO -   old article skipped: Google is partnering with XPRIZE and Range Media Partners on the $3.5 million Future Vision film competition.
+2026-05-13 21:46:11,130 - INFO -   old article skipped: The latest AI news we announced in April 2026
+2026-05-13 21:46:11,130 - INFO -   old article skipped: Reduce friction and latency for long-running jobs with Webhooks in Gemini API
+2026-05-13 21:46:11,130 - INFO -   old article skipped: Celebrating 20 years of Google Translate: Fun facts, tips and new features to try
+2026-05-13 21:46:11,130 - INFO -   old article skipped: Join the new AI Agents Vibe Coding Course from Google and Kaggle
+2026-05-13 21:46:11,130 - INFO -   old article skipped: 8 Gemini tips for organizing your space (and life)
+2026-05-13 21:46:11,130 - INFO -   old article skipped: Here’s how our TPUs power increasingly demanding AI workloads.
+2026-05-13 21:46:11,130 - INFO -   old article skipped: Elevating Austria: Google invests in its first data center in the Alps.
+2026-05-13 21:46:11,130 - INFO -   old article skipped: We're launching two specialized TPUs for the agentic era.
+2026-05-13 21:46:11,130 - INFO -   old article skipped: 3 new ways Ads Advisor is making Google Ads safer and faster
+2026-05-13 21:46:11,130 - INFO -   old article skipped: 7 ways to travel smarter this summer, with help from Google
+2026-05-13 21:46:11,130 - INFO -   old article skipped: A new way to explore the web with AI Mode in Chrome
+2026-05-13 21:46:11,130 - INFO - Fetching: Latent Space
+2026-05-13 21:46:13,936 - INFO -   old article skipped: [AINews] Thinking Machines' Native Interaction Models - TML-Interaction-Small 276B-A12B - advances SOTA Realtime Voice and kills standard VAD
+2026-05-13 21:46:13,936 - INFO -   old article skipped: [AINews] Anthropic growing 10x/year while everyone else is laying off >10% of their workforce
+2026-05-13 21:46:13,936 - INFO -   old article skipped: [AINews] GPT-Realtime-2, -Translate, and -Whisper: new SOTA realtime voice APIs
+2026-05-13 21:46:13,936 - INFO -   old article skipped: [AINews] Anthropic-SpaceXai's 300MW/$5B/yr deal for Colossus I, ARR growth is 8000% annualized
+2026-05-13 21:46:13,936 - INFO -   old article skipped: [AINews] Silicon Valley gets Serious about Services
+2026-05-13 21:46:13,936 - INFO -   old article skipped: 🔬Doing Vibe Physics — Alex Lupsasca, OpenAI
+2026-05-13 21:46:13,936 - INFO -   old article skipped: [AINews] The Other vs The Utility
+2026-05-13 21:46:13,936 - INFO -   old article skipped: [AINews] AI Engineer World's Fair — Autoresearch, Memory, World Models, Tokenmaxxing, Agentic Commerce, and Vertical AI Call for Speakers
+2026-05-13 21:46:13,936 - INFO -   old article skipped: [AINews] Agents for Everything Else: Codex for Knowledge Work, Claude for Creative Work
+2026-05-13 21:46:13,936 - INFO -   old article skipped: [AINews] The Inference Inflection
+2026-05-13 21:46:13,936 - INFO -   old article skipped: [AINews] not much happened today
+2026-05-13 21:46:13,936 - INFO -   old article skipped: [AINews] ImageGen is on the Path to AGI
+2026-05-13 21:46:13,936 - INFO -   old article skipped: Physical AI that Moves the World — Qasar Younis & Peter Ludwig, Applied Intuition
+2026-05-13 21:46:13,936 - INFO -   old article skipped: [AINews] DeepSeek V4 Pro (1.6T-A49B) and Flash (284B-A13B), Base and Instruct — runnable on Huawei Ascend chips
+2026-05-13 21:46:13,936 - INFO - Fetching: Simon Willison's Blog
+2026-05-13 21:46:14,931 - INFO -   old article skipped: llm 0.32a2
+2026-05-13 21:46:14,931 - INFO -   old article skipped: Thoughts on GitLab's workforce reduction" and "structural and strategic decisions"
+2026-05-13 21:46:14,931 - INFO -   old article skipped: Quoting James Shore
+2026-05-13 21:46:14,931 - INFO -   old article skipped: Your AI Use Is Breaking My Brain
+2026-05-13 21:46:14,931 - INFO -   old article skipped: Using LLM in the shebang line of a script
+2026-05-13 21:46:14,931 - INFO -   old article skipped: Learning on the Shop floor
+2026-05-13 21:46:14,931 - INFO -   old article skipped: Quoting New York Times Editors’ Note
+2026-05-13 21:46:14,931 - INFO -   old article skipped: Quoting Andrew Quinn
+2026-05-13 21:46:14,931 - INFO -   old article skipped: Quoting Luke Curley
+2026-05-13 21:46:14,931 - INFO -   old article skipped: Using Claude Code: The Unreasonable Effectiveness of HTML
+2026-05-13 21:46:14,931 - INFO -   old article skipped: llm-gemini 0.31
+2026-05-13 21:46:14,931 - INFO - Fetching: 夕小瑶科技说
+2026-05-13 21:46:20,987 - INFO -   old article skipped: 马斯克解散xAI，22万张GPU算力给Anthropic！Claude取消高峰期限制
+2026-05-13 21:46:20,987 - INFO -   old article skipped: TRAE SOLO 上线手机端！手机一句话，电脑里的Agent自己干活
+2026-05-13 21:46:20,987 - INFO -   old article skipped: 首次大规模真实世界验证：机器人边部署边进化，8项任务全面碾压基线
+2026-05-13 21:46:20,987 - INFO -   old article skipped: DeepSeek多模态要来了，「识图模式」开启灰度
+2026-05-13 21:46:20,987 - INFO -   old article skipped: GenFlow4.0，让通用智能体走进办公现场
+2026-05-13 21:46:20,987 - INFO -   old article skipped: GPT-5.5 发布！OpenAI已经不造天才了
+2026-05-13 21:46:20,987 - INFO -   old article skipped: 理想同学 MindDR 1.5 发布：多智能体强化学习加持，深度研究更可靠
+2026-05-13 21:46:20,987 - INFO -   old article skipped: 实测OpenRouter黑马模型，批量任务秒级响应，成本只有GPT-5.4-mini的1/10
+2026-05-13 21:46:20,987 - INFO -   old article skipped: 刚刚，GPT-5.5 的风声突然传开了
+2026-05-13 21:46:20,987 - INFO -   old article skipped: 刚刚，Claude Opus 4.7 发布！复杂Coding+视觉能力显著升级
+2026-05-13 21:46:20,987 - INFO - Fetching: 大模型智能
+2026-05-13 21:46:27,442 - INFO -   old article skipped: OpenAI翁家翌：“启发式学习”的强化学习新范式
+2026-05-13 21:46:27,442 - INFO -   old article skipped: 不更新参数就能强化学习！OpenAI翁家翌提出新范式：决策只需AI手搓一个.py文件
+2026-05-13 21:46:27,442 - INFO -   old article skipped: 刷榜AI全挂了！Meta斯坦福地狱级测试，GPT/Claude/Gemini交出0分
+2026-05-13 21:46:27,442 - INFO -   old article skipped: 细思极恐！Agent暗藏风险，清华团队打出组合拳，全链路一网打尽
+2026-05-13 21:46:27,442 - INFO -   old article skipped: 李晓熙@中国人民大学：推理、搜索与行动：迈向真实世界的AI智能体
+2026-05-13 21:46:27,442 - INFO -   old article skipped: 突发，OpenAI总裁当庭「认罪」！自曝零元购300亿，马斯克这回真要赢了？
+2026-05-13 21:46:27,442 - INFO -   old article skipped: DeepSeek-V4的并行策略和计算通信遮掩
+2026-05-13 21:46:27,442 - INFO -   old article skipped: MLNLP发布LLMBeginner：零基础通关LLM的项目式学习路线
+2026-05-13 21:46:27,442 - INFO - Fetching: 山行AI
+2026-05-13 21:46:32,030 - INFO -   old article skipped: Hermes Agent 的记忆系统：为什么它修正了 OpenClaw 的错误
+2026-05-13 21:46:32,030 - INFO -   old article skipped: 监管正式落地严查，全国首部AI产品合规标准来了
+2026-05-13 21:46:32,030 - INFO -   old article skipped: 开源榜单显示AI Agent 从项目展示走向工程基础设施
+2026-05-13 21:46:32,030 - INFO -   old article skipped: QuantDinger 一款集AI 量化研究、策略开发与实盘执行全链路于一体的开源量化系统
+2026-05-13 21:46:32,030 - INFO -   old article skipped: GitHub 最新日周月AI热榜
+2026-05-13 21:46:32,030 - INFO -   old article skipped: 重做视频本地化：OmniVoice Studio 与 VideoLingo，到底谁更适合你？
+2026-05-13 21:46:32,030 - INFO -   old article skipped: 全国首部“AI智能体应用评估”标准，现公开征集起草单位和个人
+2026-05-13 21:46:32,030 - INFO -   old article skipped: 一览7 个视频合成Skills
+2026-05-13 21:46:32,030 - INFO -   old article skipped: 为什么 CLI 正在变成 AI Agent 的标准接口？4 个项目看清这条新赛道
+2026-05-13 21:46:32,030 - INFO -   old article skipped: Graphify 与 GitNexus，正在用知识图谱把“代码理解”从搜索升级为结构化认知
+2026-05-13 21:46:32,030 - INFO - Fetching: AINLP
+2026-05-13 21:46:36,013 - INFO -   old article skipped: Ilya还有70亿美元OpenAI股权
+2026-05-13 21:46:36,013 - INFO -   old article skipped: OpenAI 翁家翌：“启发式学习”的强化学习新范式
+2026-05-13 21:46:36,013 - INFO -   old article skipped: 别再用 Markdown 了，HTML 才是 AI 时代真正的输出格式
+2026-05-13 21:46:36,013 - INFO -   old article skipped: DeepSeek 多模态技术报告英中对照版.pdf
+2026-05-13 21:46:36,013 - INFO -   old article skipped: xAI解散，但Grok还没死！马斯克声称新模型正在训练
+2026-05-13 21:46:36,013 - INFO -   old article skipped: DeepSeek-V4的并行策略和计算通信遮掩
+2026-05-13 21:46:36,013 - INFO -   old article skipped: 牧原实验室交叉学科研究中心杨林项目组【AI大模型】、【合成生物学】方向研究员/副研究员/助理研究员招聘
+2026-05-13 21:46:36,013 - INFO -   old article skipped: 一文带你构建AI Agent全能知识体系！
+2026-05-13 21:46:36,013 - INFO -   old article skipped: 李宏毅：AI 能自我修正吗？从 decoding、workflow 到 reasoning 的技术发展整理
+2026-05-13 21:46:36,013 - INFO -   old article skipped: 苹果官方APP惊现Claude.md，24小时秒删！
+2026-05-13 21:46:36,013 - INFO - Fetching: LangChain Blog
+2026-05-13 21:46:44,096 - INFO - Fetching: LlamaIndex Blog
+2026-05-13 21:46:45,642 - INFO - Fetching: 语言即世界language is world
+2026-05-13 21:47:07,395 - INFO -   old article skipped: 独家对话姚顺宇：请允许我小疯一下
+2026-05-13 21:47:07,395 - INFO -   old article skipped: 独家对话罗福莉：AI范式已然巨变！
+2026-05-13 21:47:07,395 - INFO -   old article skipped: 独家对话谢赛宁：逃出硅谷！
+2026-05-13 21:47:07,395 - INFO -   old article skipped: 具身智能漫长的进化史、下一个Scaling与硝烟
+2026-05-13 21:47:07,395 - INFO -   old article skipped: 全球大模型第一股的上市访谈：敢问路在何方？
+2026-05-13 21:47:07,395 - INFO -   old article skipped: 一家投资OpenAI的硅谷基金的深度研究
+2026-05-13 21:47:07,395 - INFO -   old article skipped: 独家对话DeepMind谭捷：机器人、世界模型与Google
+2026-05-13 21:47:07,395 - INFO -   old article skipped: 自动驾驶系统的局部最优陷阱
+2026-05-13 21:47:07,395 - INFO -   old article skipped: 下一代Attention算法改进的猜想
+2026-05-13 21:47:07,395 - INFO -   old article skipped: 对李想的第二次3小时访谈：智慧是我们和万物的关系
+2026-05-13 21:47:07,395 - INFO - Fetching: AI paper实验室
+2026-05-13 21:47:15,940 - INFO - Fetching: 量子位
+2026-05-13 21:47:16,130 - INFO - Fetching: 机器之心
+2026-05-13 21:47:21,694 - INFO -   old article skipped: 光轮智能与谷歌、英伟达共同定义物理AI仿真标准
+2026-05-13 21:47:21,694 - INFO -   old article skipped: 宇树造了款民用高达！390万元起
+2026-05-13 21:47:21,694 - INFO -   old article skipped: 告别云端依赖！字节开源新作DreamLite让手机秒变 AI 画板
+2026-05-13 21:47:21,694 - INFO -   old article skipped: Suno不再是唯一答案，企业开始选择这个国产AI音乐
+2026-05-13 21:47:21,694 - INFO -   old article skipped: ICML 2026｜拒绝大力出奇迹，PRISM框架让dLLM也能高效Test-Time Scaling
+2026-05-13 21:47:21,694 - INFO -   old article skipped: AI4S 引领材料革新｜5月张江AI创新小镇，邀您共赴这场 AI for Materials 闭门之约
+2026-05-13 21:47:21,694 - INFO -   old article skipped: 具身智能来时路：谷歌RT1、2，SayCan作者Ted Xiao复盘机器人学习三大时代
+2026-05-13 21:47:21,694 - INFO -   old article skipped: 图灵奖得主Sutton新作：用一个1967年的公式，解决流式强化学习一大缺陷
+2026-05-13 21:47:21,694 - INFO - Fetching: 有新Newin
+2026-05-13 21:47:25,175 - INFO -   old article skipped: OpenAI 发布语音 AI 新模型，实时翻译、转写、对话全面升级
+2026-05-13 21:47:25,175 - INFO -   old article skipped: 后键盘时代，SpeakON 们想要抢回被打字偷走的生产力
+2026-05-13 21:47:25,175 - INFO -   old article skipped: 前字节产品高管拿到数千万元 Pre-Seed 轮融资，锦秋、百度风投押注 Life Agent
+2026-05-13 21:47:25,175 - INFO -   old article skipped: 部署一批 7×24 小时在线，自主写代码、做报告的 AI 同事
+2026-05-13 21:47:25,175 - INFO -   old article skipped: Agent 终于有了自己的社交网络——FloatlM 发布
+2026-05-13 21:47:25,175 - INFO -   old article skipped: Google Cloud Next 2026：谷歌给 30 亿用户派了个 AI 实习生
+2026-05-13 21:47:25,175 - INFO -   old article skipped: 让 Kimi K2.6 当了一天打工人，它交了三份作业
+2026-05-13 21:47:25,175 - INFO -   old article skipped: 从智元进厂打工到特斯拉量产启动——2026 年具身智能行业洞察
+2026-05-13 21:47:25,175 - INFO - Fetching: 智谱
+2026-05-13 21:47:27,173 - INFO -   old article skipped: GLM-5.1获AA全新Coding Agent基准开源第一
+2026-05-13 21:47:27,173 - INFO -   old article skipped: Scaling Pain：超大规模Coding Agent推理实践
+2026-05-13 21:47:27,173 - INFO -   old article skipped: 智谱入选《时代》“2026年最具影响力的10家人工智能公司”
+2026-05-13 21:47:27,173 - INFO -   old article skipped: 不用研究Hermes！AutoClaw开启自进化
+2026-05-13 21:47:27,173 - INFO -   old article skipped: GLM-5.1获LMArena代码榜开源第一、全球第三
+2026-05-13 21:47:27,173 - INFO -   old article skipped: GLM-5.1开源：一个独立工作8小时的模型
+2026-05-13 21:47:27,173 - INFO -   old article skipped: @2027届同学，你的AGI入场券已送达
+2026-05-13 21:47:27,173 - INFO -   old article skipped: GLM-5V-Turbo发布：多模态Coding基座模型
+2026-05-13 21:47:27,173 - INFO - Fetching: 阶跃星辰
+2026-05-13 21:47:30,057 - INFO -   old article skipped: 阶跃语音模型位列 Artificial Analysis 评测榜中国第一、全球前三
+2026-05-13 21:47:30,057 - INFO -   old article skipped: StepAudio 2.5 Realtime 上线！真人级实时语音对话能力，千万人设任你打造
+2026-05-13 21:47:30,057 - INFO -   old article skipped: 阶跃 Step Image Edit 2 上线！小身材、大能力、快响应
+2026-05-13 21:47:30,057 - INFO -   old article skipped: 阶跃与腾讯云达成战略合作
+2026-05-13 21:47:30,057 - INFO -   old article skipped: 阶跃 StepAudio 2.5 ASR 上线！500TPS 极速推理，30分钟语音“秒级转写”
+2026-05-13 21:47:30,057 - INFO -   old article skipped: 官宣！阶跃和千里科技，达成全面战略合作！
+2026-05-13 21:47:30,057 - INFO -   old article skipped: 坐进极氪8X，感受阶跃大模型
+2026-05-13 21:47:30,057 - INFO -   old article skipped: 阶跃 StepAudio 2.5 TTS 上线！人人都能是配音导演
+2026-05-13 21:47:30,057 - INFO - Fetching: CSDN
+2026-05-13 21:47:35,986 - INFO -   old article skipped: AI 都会写代码了，我们还需要一门国产编程语言吗？
+2026-05-13 21:47:35,986 - INFO -   old article skipped: “飞行汽车没来，但Win32还活着”！微软CTO亲口承认：Win11还在靠90年代「祖传代码」撑着
+2026-05-13 21:47:35,986 - INFO -   old article skipped: “氛围编程让一切看起来很廉价，我要回归手写编码了！”
+2026-05-13 21:47:35,986 - INFO -   old article skipped: 63岁黄仁勋再添博士头衔、英特尔CEO为其披袍，最新演讲刷屏：人类编写软件、计算机执行指令的范式已终结！
+2026-05-13 21:47:35,986 - INFO -   old article skipped: 商业世界模型与因果推断：京东智能定价实践｜奇点智能技术大会实录
+2026-05-13 21:47:35,986 - INFO - Fetching: 数字生命卡兹克
+2026-05-13 21:47:39,856 - INFO -   old article skipped: 分享5个Claude Code + 飞书的超实用Agent办公玩法。
+2026-05-13 21:47:39,856 - INFO -   old article skipped: 观察了三年，我把所有人用AI的水平分成了10个等级。
+2026-05-13 21:47:39,856 - INFO -   old article skipped: 装了这个AI热点Skill之后，你再也不需要自己去刷AI新闻了。
+2026-05-13 21:47:39,856 - INFO -   old article skipped: 这个封装了我3年自媒体经验的AI热点网站，今天向所有人免费开放。
+2026-05-13 21:47:39,856 - INFO -   old article skipped: ChatGPT正式上线广告主平台，AI产品从今天开始走向分裂。
+2026-05-13 21:47:39,856 - INFO -   old article skipped: 分享一下2026我最常用的AI产品。
+2026-05-13 21:47:39,856 - INFO -   old article skipped: 开源「洁癖.skill」，让你的Agent越用越聪明。
+2026-05-13 21:47:39,856 - INFO - Fetching: AI产品黄叔
+2026-05-13 21:47:42,969 - INFO -   old article skipped: Skill是流量王者
+2026-05-13 21:47:42,969 - INFO -   old article skipped: 五一我没开电脑，但我的 Agent 团队没放假 | 如何用Hermes Agent移动办公
+2026-05-13 21:47:42,969 - INFO -   old article skipped: AI时代人最大的幻觉
+2026-05-13 21:47:42,969 - INFO -   old article skipped: 送了三个 1800 块的 CC Max，被打击了三次
+2026-05-13 21:47:42,969 - INFO -   old article skipped: Skill 和 CLI：经验指导能力，能力丰富经验
+2026-05-13 21:47:42,969 - INFO -   old article skipped: 神级CLI写作大法
+2026-05-13 21:47:42,969 - INFO -   old article skipped: 开源一个Skill管理神器
+2026-05-13 21:47:42,969 - INFO - Fetching: Last Week in AI
+2026-05-13 21:47:46,179 - INFO -   old article skipped: Last Week in AI #340 - OpenAI vs Musk + Microsoft, DeepSeek v4, Vision Banana
+2026-05-13 21:47:46,179 - INFO -   old article skipped: LWiAI Podcast #243 - GPT 5.5, DeepSeek V4, AI safety sabotage
+2026-05-13 21:47:46,179 - INFO -   old article skipped: LWiAI Podcast #242 - ChatGPT Images 2.0, Qwen 3.6 Max, Kimi-K2.6
+2026-05-13 21:47:46,179 - INFO -   old article skipped: LWiAI Podcast #238 - GPT 5.4 mini, OpenAI Pivot, Mamba 3, Attention Residuals
+2026-05-13 21:47:46,179 - INFO -   old article skipped: Last Week in AI #339 - DLSS 5, OpenAI Superapp, MiniMax M2.7
+2026-05-13 21:47:46,179 - INFO -   old article skipped: LWiAI Podcast #237 - Nemotron 3 Super, xAI reborn, Anthropic Lawsuit, Research!
+2026-05-13 21:47:46,179 - INFO -   old article skipped: Last Week in AI #338 - Anthropic sues Trump, xAI starting over, Iran AI Fakes
+2026-05-13 21:47:46,179 - INFO -   old article skipped: LWiAI Podcast #236 - GPT 5.4, Gemini 3.1 Flash Lite, Supply Chain Risk
+2026-05-13 21:47:46,179 - INFO - Fetching: Gino Notes
+2026-05-13 21:47:47,542 - INFO -   old article skipped: BestBlogs 周刊 | 第 94 期：语音 AI 突围
+2026-05-13 21:47:47,542 - INFO -   old article skipped: BestBlogs.dev 周刊第 93 期：AI 次方变革
+2026-05-13 21:47:47,542 - INFO -   old article skipped: BestBlogs.dev 周刊第 92 期：模型周
+2026-05-13 21:47:47,542 - INFO -   old article skipped: 为什么 BestBlogs 开始按 Agent Native 来设计开放能力
+2026-05-13 21:47:47,542 - INFO -   old article skipped: BestBlogs 周刊第 91 期：基建周
+2026-05-13 21:47:47,542 - INFO -   old article skipped: BestBlogs 2.0 内测开启：我想重新做一款更适合自己的阅读产品
+2026-05-13 21:47:47,542 - INFO -   old article skipped: Scaling Managed Agents：将大脑与双手解耦[译述]
+2026-05-13 21:47:47,542 - INFO -   old article skipped: BestBlogs 周刊第 89 期：智能体工程化
+2026-05-13 21:47:47,542 - INFO - Fetching: deeplearning.ai
+2026-05-13 21:47:48,717 - INFO -   old article skipped: Seedance Makes A Splash, Nvidia's AI-Guided Chip Designs, Helping Robots Not Forget
+2026-05-13 21:47:48,717 - INFO - Fetching: Jina AI
+2026-05-13 21:47:53,401 - INFO -   old article skipped: 2026 年做搜索就是做 Agent Memory
+2026-05-13 21:47:53,401 - INFO -   old article skipped: 肖涵：2026 年的 AI 搜索就是智能体记忆 | Elastic 中国 AI 搜索技术大会
+2026-05-13 21:47:53,401 - INFO -   old article skipped: 4·18 北京 Elastic AI Tech Day｜搜索基座模型议程（含 Jina 模型与 Reader）
+2026-05-13 21:47:53,401 - INFO -   old article skipped: 从多模态大模型中「拆」出音频向量模型
+2026-05-13 21:47:53,401 - INFO -   old article skipped: Jina AI 何意味
+2026-05-13 21:47:53,401 - INFO -   old article skipped: 从向量里逆向出原始文本和模型来源
+2026-05-13 21:47:53,401 - INFO -   old article skipped: jina-embeddings-v5-text：0.6B 参数下最好的多语言向量模型
+2026-05-13 21:47:53,401 - INFO -   old article skipped: 一文读懂 VLM 背后的视觉编码器
+2026-05-13 21:47:53,401 - INFO - Fetching: 魔搭ModelScope社区
+2026-05-13 21:47:59,730 - INFO -   old article skipped: 蚂蚁·安诊儿医疗大模型：6.1B激活即登顶三大医疗榜单，魔搭在线体验已开放
+2026-05-13 21:47:59,730 - INFO -   old article skipped: 《AI4S实战派》第六期回顾｜告别炼丹术！让 AI 读懂化学反应、预测产率——到了哪一步，还差多远
+2026-05-13 21:47:59,730 - INFO -   old article skipped: 魔搭社区模型速递（4.26-5.9）
+2026-05-13 21:47:59,730 - INFO -   old article skipped: 魔搭开源 Ultron：为 Agent 生态补上"群体智能"这层基础设施
+2026-05-13 21:47:59,730 - INFO -   old article skipped: SenseNova U1开源：原生统一多模态理解与生成，8B参数达到同量级SOTA
+2026-05-13 21:47:59,730 - INFO -   old article skipped: 英特尔 x 魔搭社区：AI PC Agent Skills 征文活动公告
+2026-05-13 21:47:59,730 - INFO -   old article skipped: Mistral Medium 3.5开源：一套权重搞定编码、推理和指令遵循，4块GPU即可部署
+2026-05-13 21:47:59,730 - INFO -   old article skipped: 五大赛道齐亮相！第四届世界科学智能大赛启动报名，首设人文科学赛道
+2026-05-13 21:47:59,730 - INFO - Fetching: 青哥谈AI
+2026-05-13 21:48:06,299 - INFO -   old article skipped: #我的2025公众号总结
+2026-05-13 21:48:06,299 - INFO -   old article skipped: 最新重量级报告，Kimi 开源 K2技术「Make Kimi Great Again」
+2026-05-13 21:48:06,299 - INFO -   old article skipped: 李宏毅2025第七讲｜如何让大模型学会「深度思考」？透彻总结打造类DeepSeek-R1的四大方法
+2026-05-13 21:48:06,299 - INFO -   old article skipped: 李宏毅2025第六讲｜剖析Post-training核心难题：为何大模型微调后容易灾难性遗忘？
+2026-05-13 21:48:06,299 - INFO -   old article skipped: 最通俗的技术讲解：一文回答大模型Pre-train与Alignment的所有问题
+2026-05-13 21:48:06,299 - INFO -   old article skipped: Transformer过时了么？深度盘点AI架构的终极对决
+2026-05-13 21:48:06,299 - INFO -   old article skipped: 最新OpenAI 策略复现实践，以端到端强化学习赋能Agent自主能力涌现
+2026-05-13 21:48:06,299 - INFO -   old article skipped: 偷看AI“内心戏”，从神经元视角剖析LLM运作原理｜李宏毅2025第三讲完整实录
+2026-05-13 21:48:06,299 - INFO - Fetching: InfoQ 中文
+2026-05-13 21:48:09,996 - INFO -   old article skipped: OpenAI 狂砸40亿美刀下场抢FDE，软件工程师的尽头原来是驻场啊
+2026-05-13 21:48:09,996 - INFO -   old article skipped: 把 UI 生成接进流水线：基于半监督评测体系的 UI 自动化生产实践
+2026-05-13 21:48:09,996 - INFO -   old article skipped: 从 Redis 到 Valkey，开源社区如何快速创新？
+2026-05-13 21:48:09,996 - INFO -   old article skipped: Cloudflare 构建了面向 LLM 的高性能基础设施
+2026-05-13 21:48:09,996 - INFO -   old article skipped: 从买算力到卖能力：嬴彻科技七亿商用里程背后的云上飞轮
+2026-05-13 21:48:09,996 - INFO -   old article skipped: 从 OpenAI 的 Kafka 实践看 Kafka 的云原生演进
+2026-05-13 21:48:09,996 - INFO -   old article skipped: CodeGuardian：一种用于 AI 代码质量分析和安全扫描的模型上下文协议服务器
+2026-05-13 21:48:09,996 - INFO -   old article skipped: Meta 部署统一的 AI 智能体，实现超大规模环境的自动化性能优化
+2026-05-13 21:48:09,996 - INFO - Fetching: 新智元
+2026-05-13 21:48:15,324 - INFO -   old article skipped: 人类史上最大单品工业品，正在中国量产！
+2026-05-13 21:48:15,324 - INFO -   old article skipped: 绝杀！OpenAI正式接管人类耳朵，首个GPT-5级推理音频模型来了
+2026-05-13 21:48:15,324 - INFO -   old article skipped: TTS也要真人感！首个字级内容、毫秒级停顿控制的语音合成系统
+2026-05-13 21:48:15,324 - INFO -   old article skipped: 刚刚，Claude Mythos打爆AI评测天花板！超指数狂飙，2027奇点加速
+2026-05-13 21:48:15,324 - INFO -   old article skipped: 史上最大规模IPO逼近，超越SpaceX！28年AI自我迭代，智能爆炸倒计时
+2026-05-13 21:48:15,324 - INFO - Fetching: AI科技评论
+2026-05-13 21:48:19,043 - INFO -   old article skipped: 去掉 VAE 之后，商汤用 8B 参数重新定义了开源生图的上限
+2026-05-13 21:48:19,043 - INFO -   old article skipped: CVPR 2026 视频模型趋势梳理：不止生成下一帧，更要理解下一步
+2026-05-13 21:48:19,043 - INFO -   old article skipped: AI 会笑吗？BIGAI & 上交大团队：多模态大模型是否真的能 get 到视频笑点｜ACL 2026
+2026-05-13 21:48:19,043 - INFO -   old article skipped: 腾讯AI Lab绝唱：30B模型击败万亿旗舰，靠的是让AI学会「预习」
+2026-05-13 21:48:19,043 - INFO -   old article skipped: 从「座上宾」到「主战场」：具身智能如何完成对计算机视觉的「范式夺权」？| CVPR 2026
+2026-05-13 21:48:19,043 - INFO -   old article skipped: 告别天价账单：端云协同与记忆革命，让 Agent 告别「烧钱时代」丨 GAIR Live 029
+2026-05-13 21:48:19,043 - INFO - Fetching: AI前线
+2026-05-13 21:48:23,470 - INFO -   old article skipped: ChatGPT那一套要过时了？翁荔实测创业首个模型，回合制AI被“原生实时交互”秒了
+2026-05-13 21:48:23,470 - INFO -   old article skipped: 重新思考 AI TCO：为何每 Token 成本才是唯一重要的指标
+2026-05-13 21:48:23,471 - INFO -   old article skipped: 智能体时代，我们到底需要什么样的AI人才？｜2026 培训年会X极客时间专场
+2026-05-13 21:48:23,471 - INFO -   old article skipped: Anthropic的Harness工程白做了？Claude Code被曝不遵守CLAUDE.md，开发者烧光credits怒喊退钱！
+2026-05-13 21:48:23,471 - INFO -   old article skipped: Cloudflare 推出 Agent Memory：面向 AI 智能体的持久记忆托管服务
+2026-05-13 21:48:23,471 - INFO -   old article skipped: 梁文锋出资200亿元，DeepSeek阿里谈崩？宇树机器人韩国佛门受戒，法号迦悲；员工人均奖金达610万，被婚恋市场追捧？官方回应｜AI周报
+2026-05-13 21:48:23,471 - INFO -   old article skipped: 微软警告称，AI 正在掏空初级开发者的培养渠道
+2026-05-13 21:48:23,471 - INFO -   old article skipped: 38万应用暴露、2000+应用泄密！AI编程把“内网”变公网
+2026-05-13 21:48:23,471 - INFO - Fetching: Hacker News AI
+2026-05-13 21:48:26,074 - INFO - Fetching: 世界人工智能大会
+2026-05-13 21:48:26,100 - INFO - Fetching: VALSE
+2026-05-13 21:48:26,126 - INFO - Fetching: 腾讯混元
+2026-05-13 21:48:30,465 - INFO -   old article skipped: 限时福利：WorkBuddy 联合 Hy3 preview 推出专属折扣活动
+2026-05-13 21:48:30,466 - INFO -   old article skipped: Hy3 preview上线两周Token调用增长10倍
+2026-05-13 21:48:30,466 - INFO -   old article skipped: 腾讯混元发布CL-Bench Life，精准衡量模型在现实生活中的 “上下文学习” 能力
+2026-05-13 21:48:30,466 - INFO -   old article skipped: 出国必备+1！腾讯混元开源手机端离线翻译模型，仅0.4G，支持33种语言
+2026-05-13 21:48:30,466 - INFO -   old article skipped: Hy3 preview发布并开源：混元重建后首个模型，Agent能力大幅提升
+2026-05-13 21:48:30,466 - INFO -   old article skipped: 腾讯混元3D世界模型2.0发布：无缝对接游戏工作流
+2026-05-13 21:48:30,466 - INFO -   old article skipped: 腾讯Robotics X 实验室联合混元推出2B具身模型：22项评测16项最佳
+2026-05-13 21:48:30,466 - INFO - Fetching: 阿里云开发者
+2026-05-13 21:48:44,476 - INFO -   old article skipped: Agent Skill规范、构建与设计模式
+2026-05-13 21:48:44,476 - INFO -   old article skipped: 0.07% 的"幽灵"丢包：一次 LB VIP 访问超时排查实录
+2026-05-13 21:48:44,476 - INFO -   old article skipped: 5 人 7 天干完 20 人数周的活：Spec-Driven Development 如何重新定义 AI 编程
+2026-05-13 21:48:44,476 - INFO -   old article skipped: Agent 时代的生产力悖论：当协作本身成为最大的瓶颈
+2026-05-13 21:48:44,476 - INFO -   old article skipped: Harness Engineering：耗时一周，我是如何将应用的AI Coding率提升至90%的
+2026-05-13 21:48:44,476 - INFO -   old article skipped: 一个文件让 AI Coding 效率翻倍：AGENTS.md 实践指南
+2026-05-13 21:48:44,476 - INFO -   old article skipped: Qoder Skills 完全指南：从零开始，让 AI 按你的标准执行
+2026-05-13 21:48:44,476 - INFO - Fetching: 自动驾驶之心
+2026-05-13 21:48:44,501 - INFO - Fetching: Apollo智能驾驶
+2026-05-13 21:48:44,528 - INFO - Fetching: 车辆工程研究
+2026-05-13 21:48:44,552 - INFO - Fetching: 地平线HorizonRobotics
+2026-05-13 21:48:44,583 - INFO - Fetching: 高工智能汽车
+2026-05-13 21:48:44,609 - INFO - Fetching: 鉴智机器人 PhiGent Robotics
+2026-05-13 21:48:44,632 - INFO - Fetching: 具身智能研究室
+2026-05-13 21:48:44,656 - INFO - Fetching: NE时代智能体
+2026-05-13 21:48:44,678 - INFO - Fetching: 汽车电子与软件
+2026-05-13 21:48:44,706 - INFO - Fetching: 新智驾
+2026-05-13 21:48:44,731 - INFO - Fetching: 智车文库
+2026-05-13 21:48:44,755 - INFO - Fetching: 智驾具身数据挖掘
+2026-05-13 21:48:44,781 - INFO - Fetching: 智驾社
+2026-05-13 21:48:44,803 - INFO - Fetching: 智驾实验室
+2026-05-13 21:48:44,828 - INFO - Fetching: 卓驭
+2026-05-13 21:48:44,849 - INFO - Fetching: 佐思汽车研究
+2026-05-13 21:48:44,872 - INFO - Fetching: freeCodeCamp.org
+2026-05-13 21:48:47,137 - INFO -   old article skipped: Product Experimentation with Synthetic Control: Causal Inference for Global LLM Rollouts in Python
+2026-05-13 21:48:47,137 - INFO -   old article skipped: How to Build Production-Ready AI Features with Flutter [Full Handbook for Devs]
+2026-05-13 21:48:47,138 - INFO -   old article skipped: How to Build a Browser-Based PDF to Image Converter Using JavaScript
+2026-05-13 21:48:47,138 - INFO -   old article skipped: How to Build Optimal AI Agents That Actually Work – A Handbook for Devs
+2026-05-13 21:48:47,138 - INFO -   old article skipped: How to Develop Chrome Extensions using Plasmo [Full Handbook]
+2026-05-13 21:48:47,138 - INFO -   old article skipped: Why Your “Simple Deploy” Turned Into a Week of Infrastructure Work
+2026-05-13 21:48:47,138 - INFO -   old article skipped: AI Paper Review: Language Models are Unsupervised Multitask Learners (GPT-2)
+2026-05-13 21:48:47,138 - INFO -   old article skipped: How to Build a Self-Hosted WhatsApp Bot with n8n and WAHA
+2026-05-13 21:48:47,138 - INFO -   old article skipped: The Codex Handbook: A Practical Guide to OpenAI's Coding Platform
+2026-05-13 21:48:47,138 - INFO -   old article skipped: Learn Command Line Interface (CLI) Development with Dart: From Zero to a Fully Published Developer Tool
+2026-05-13 21:48:47,138 - INFO - Fetching: 掘金本周最热
+2026-05-13 21:48:50,250 - INFO -   old article skipped: 求求你们🙏 ,别再换打包工具了?
+2026-05-13 21:48:50,250 - INFO -   old article skipped: DeepSeek V4 Flash 可以在 128GB 的 M3 Max 运行，还是 1M 上下文
+2026-05-13 21:48:50,250 - INFO -   old article skipped: 2 分 44 秒,我给一个连招牌都没有的老板娘做了官网
+2026-05-13 21:48:50,250 - INFO -   old article skipped: 以前有一个同事说：最讨厌下班提需求又没电脑在身边...
+2026-05-13 21:48:50,250 - INFO -   old article skipped: Claude Code 团队工程师：我为什么放弃 Markdown，全面转向 HTML
+2026-05-13 21:48:50,250 - INFO -   old article skipped: 当 Codex 成为主力，软件工程的重心已经变了
+2026-05-13 21:48:50,250 - INFO -   old article skipped: 超越 Vibe Coding —— AI 辅助编程指南
+2026-05-13 21:48:50,250 - INFO -   old article skipped: GPT-5.5+Codex！夯爆了，夯中夯。
+2026-05-13 21:48:50,250 - INFO - Fetching: 稀土掘金技术社区
+2026-05-13 21:48:53,936 - INFO -   old article skipped: TRAE SOLO 移动端正式上线，不用带电脑，手机就能搞定高效办公 | 沸点周刊
+2026-05-13 21:48:53,936 - INFO -   old article skipped: 咖啡兑换就在今天！我们在星巴克等你 SOLO
+2026-05-13 21:48:53,936 - INFO -   old article skipped: TRAE SOLO 移动端上线征文｜“我的第一次移动端AI办公” 评测，赢机械键盘礼包+10w矿石！
+2026-05-13 21:48:53,936 - INFO -   old article skipped: TRAE SOLO 移动端上线！我们请你喝星巴克
+2026-05-13 21:48:53,936 - INFO -   old article skipped: 掘友们，一人说一个你买过夯到爆的东西 | 沸点周刊
+2026-05-13 21:48:53,936 - INFO -   old article skipped: 现在面试 AI 相关问题，不把底层原理扒得明明白白，真的分分钟被问麻 | 沸点周刊
+2026-05-13 21:48:53,936 - INFO -   old article skipped: 金三银四面试季，你有被问到怀疑人生吗 | 沸点周刊
+2026-05-13 21:48:53,936 - INFO -   old article skipped: 每月固定续订，但是token根本不够用，掘友们有无算力焦虑啊 | 沸点周刊
+2026-05-13 21:48:53,936 - INFO -   old article skipped: 你每个月花多少钱在AI上，有没有省钱妙招啊 | 沸点周刊
+2026-05-13 21:48:53,936 - INFO -   old article skipped: 小册上新｜玩🦐吗？ai 编程全栈指南了解一下？
+2026-05-13 21:48:53,936 - INFO - Fetching: 强少来了
+2026-05-13 21:48:59,125 - INFO -   old article skipped: 有意思小周刊No.167（2026.04.20）：我把OpenAI-Codex官方案例全跑了一遍
+2026-05-13 21:48:59,125 - INFO -   old article skipped: 有意思小周刊No.166（2026.03.30）：AI是怎么回事
+2026-05-13 21:48:59,125 - INFO -   old article skipped: 有意思小周刊No.165（2026.03.23）：现在最被低估的招聘，是找一个真正厉害的产品人
+2026-05-13 21:48:59,125 - INFO -   old article skipped: 国内各大厂 Claw 产品的官方网址
+2026-05-13 21:48:59,125 - INFO -   old article skipped: 有意思小周刊No.164（2026.03.09）：从工具提效到范式变革，我们还缺什么？
+2026-05-13 21:48:59,125 - INFO -   old article skipped: 拆解 Open WebUI：前端如何做一个生产级 AI 对话界面
+2026-05-13 21:48:59,125 - INFO -   old article skipped: 有意思小周刊No.163（2026.01.26）：AI_Coding 长文分享：如何真正把工具用起来，从原理到实践
+2026-05-13 21:48:59,125 - INFO -   old article skipped: 有意思小周刊No.162（2025.01.12）：VibeCoding基础教程
+2026-05-13 21:48:59,125 - INFO -   old article skipped: 揭秘：年入几十万的AI画师，都在偷用的50个“邪修”词库
+2026-05-13 21:48:59,125 - INFO -   old article skipped: 有意思小周刊No.161（2025.12.29）：21世纪的Q1就要结束了
+2026-05-13 21:48:59,125 - INFO - Fetching: 随机小分队
+2026-05-13 21:49:12,911 - INFO -   old article skipped: Shopify CTO：全员AI，代码量爆炸，用量最高竟然是位产品经理！
+2026-05-13 21:49:12,911 - INFO -   old article skipped: Linkloud沙龙第40期：Build For the NEXT Wave | 5月2日硅谷线下
+2026-05-13 21:49:12,911 - INFO -   old article skipped: 友情招募：知名AI公司优质岗位来袭，快来加入全球化浪潮！
+2026-05-13 21:49:12,911 - INFO -   old article skipped: 友情招募：知名AI公司优质岗位来袭，快来加入全球化浪潮！
+2026-05-13 21:49:12,911 - INFO -   old article skipped: Elad Gil：AI初创要尽早考虑退出，现在是人与AI协作黄金时间！
+2026-05-13 21:49:12,911 - INFO -   old article skipped: Vozo、MuleRun两款AI自动化神器登榜！视频不重拍就能翻75种语言？重复工作交给会学习的AI| Product Hunt精选51
+2026-05-13 21:49:12,911 - INFO -   old article skipped: 硅谷传统VC开始失效，如何投进"不需要钱"的AI公司？
+2026-05-13 21:49:12,911 - INFO -   old article skipped: AI内容爆了，但产品和市场才开始！
+2026-05-13 21:49:12,911 - INFO -   old article skipped: AI独角兽和上市公司谁更贵？解读6.2万亿Agent新市场
+2026-05-13 21:49:12,911 - INFO -   old article skipped: 探索AI Native公司的Playbook · Linkloud先锋加速营第14期招募｜美国硅谷2026春季
+2026-05-13 21:49:12,911 - INFO - Fetching: 宝玉的分享
+2026-05-13 21:49:15,908 - INFO -   old article skipped: AI 时代到底该怎么管一个工程团队
+2026-05-13 21:49:15,908 - INFO -   old article skipped: Codex 的野心，MCP 和 Skill 的下一步
+2026-05-13 21:49:15,908 - INFO -   old article skipped: 深度拆解：AI Agent Harness 的构造
+2026-05-13 21:49:15,908 - INFO -   old article skipped: 裁员潮将持续，直到我们学会发掘 AI 的商业价值
+2026-05-13 21:49:15,908 - INFO -   old article skipped: 机器人的终局：英伟达 Jim Fan 宣告 VLA 时代结束，WAM 登场
+2026-05-13 21:49:15,908 - INFO -   old article skipped: 使用 Claude Code：HTML 难以置信的奇效
+2026-05-13 21:49:15,908 - INFO -   old article skipped: Anthropic 兄妹 Dario Amodei 和 Daniela Amodei 最新对话：Claude 为什么一直限速？
+2026-05-13 21:49:15,908 - INFO -   old article skipped: Boris Cherny：Claude Code 之后，写代码正在变成“管理 Agent”
+2026-05-13 21:49:15,908 - INFO -   old article skipped: 大多数公司根本没有为 AI 做好准备
+2026-05-13 21:49:15,908 - INFO -   old article skipped: Demis Hassabis：AGI 还缺什么，智能体到底行不行，下一个科学突破长什么样
+2026-05-13 21:49:15,908 - INFO -   old article skipped: Karpathy 最新访谈：Vibe Coding 只是开始，真正重要的是 Agentic Engineering
+2026-05-13 21:49:15,908 - INFO -   old article skipped: 深度拆解 Hermes Agent 的记忆系统：它如何修正 OpenClaw 的误区
+2026-05-13 21:49:15,908 - INFO -   old article skipped: AI 的经济账根本算不通
+2026-05-13 21:49:15,908 - INFO -   old article skipped: 为 Agent 设计产品
+2026-05-13 21:49:15,908 - INFO -   old article skipped: Cat Wu 面试了几百个 PM 候选人，几乎没人答对一个问题：AI 产品经理到底应该干什么？
+2026-05-13 21:49:15,908 - INFO - Fetching: GitHub Blog
+2026-05-13 21:49:17,770 - INFO -   old article skipped: GitHub Copilot individual plans: Introducing flex allotments in Pro and Pro+, and a new Max plan
+2026-05-13 21:49:17,770 - INFO -   old article skipped: Dungeons & Desktops: Building a procedurally generated roguelike with GitHub Copilot CLI
+2026-05-13 21:49:17,770 - INFO -   old article skipped: GitHub for Beginners: Getting started with OSS contributions
+2026-05-13 21:49:17,770 - INFO -   old article skipped: Why age assurance laws matter for developers
+2026-05-13 21:49:17,770 - INFO -   old article skipped: How researchers are using GitHub Innovation Graph data to reveal the “digital complexity” of nations
+2026-05-13 21:49:17,770 - INFO -   old article skipped: Improving token efficiency in GitHub Agentic Workflows
+2026-05-13 21:49:17,770 - INFO -   old article skipped: Agent pull requests are everywhere. Here’s how to review them.
+2026-05-13 21:49:17,770 - INFO -   old article skipped: Validating agentic behavior when “correct” isn’t deterministic
+2026-05-13 21:49:17,770 - INFO - Fetching: Dify
+2026-05-13 21:49:19,698 - INFO -   old article skipped: Dify 完成 3000 万美元融资：我们相信，下一代组织将由人与 Agent 共同构建
+2026-05-13 21:49:19,699 - INFO -   old article skipped: Dify 顺利完成年度合规评估：蝉联 ISO 27001 与 SOC 2 Type II 审计，持续深化 GDPR 合规
+2026-05-13 21:49:19,699 - INFO -   old article skipped: 写给那些总觉得可以更好的人
+2026-05-13 21:49:19,699 - INFO -   old article skipped: Human Input 节点，让人类判断融入自动化流程
+2026-05-13 21:49:19,699 - INFO -   old article skipped: 硅基流动 × Dify：AI Coding 活动专场上线，全面提升你的开发效率
+2026-05-13 21:49:19,699 - INFO -   old article skipped: Dify Cloud 免费试用升级：开放 4 大模型厂商额度，Explore 模板一键体验
+2026-05-13 21:49:19,699 - INFO -   old article skipped: 豆包 2.0 模型系列现在已接入 Dify！
+2026-05-13 21:49:19,699 - INFO - Fetching: 海康机器人Hikrobot
+2026-05-13 21:49:19,721 - INFO - Fetching: 顶会 CVPR/ICCV/ECCV
+2026-05-13 21:49:19,721 - INFO - Using custom fetcher for: 顶会 CVPR/ICCV/ECCV
+2026-05-13 21:49:19,721 - WARNING - Cannot determine arXiv category for source: 顶会 CVPR/ICCV/ECCV
+2026-05-13 21:49:19,721 - INFO - Fetching: arXiv AI
+2026-05-13 21:49:19,721 - INFO - Using custom fetcher for: arXiv AI
+2026-05-13 21:49:20,838 - INFO - arXiv API (cs.AI): fetched 15 articles
+2026-05-13 21:49:20,838 - INFO -   old article skipped: AlphaGRPO: Unlocking Self-Reflective Multimodal Generation in UMMs via Decompositional Verifiable Reward
+2026-05-13 21:49:20,838 - INFO -   old article skipped: Learning, Fast and Slow: Towards LLMs That Adapt Continually
+2026-05-13 21:49:20,838 - INFO -   old article skipped: Beyond GRPO and On-Policy Distillation: An Empirical Sparse-to-Dense Reward Principle for Language-Model Post-Training
+2026-05-13 21:49:20,838 - INFO -   old article skipped: ToolCUA: Towards Optimal GUI-Tool Path Orchestration for Computer Use Agents
+2026-05-13 21:49:20,838 - INFO -   old article skipped: OmniNFT: Modality-wise Omni Diffusion Reinforcement for Joint Audio-Video Generation
+2026-05-13 21:49:20,838 - INFO -   old article skipped: Reward Hacking in Rubric-Based Reinforcement Learning
+2026-05-13 21:49:20,838 - INFO -   old article skipped: KV-Fold: One-Step KV-Cache Recurrence for Long-Context Inference
+2026-05-13 21:49:20,838 - INFO -   old article skipped: Solve the Loop: Attractor Models for Language and Reasoning
+2026-05-13 21:49:20,838 - INFO -   old article skipped: Towards Affordable Energy: A Gymnasium Environment for Electric Utility Demand-Response Programs
+2026-05-13 21:49:20,838 - INFO -   old article skipped: Enabling AI-Native Mobility in 6G: A Real-World Dataset for Handover, Beam Management, and Timing Advance
+2026-05-13 21:49:20,838 - INFO -   old article skipped: The Algorithmic Caricature: Auditing LLM-Generated Political Discourse Across Crisis Events
+2026-05-13 21:49:20,838 - INFO -   old article skipped: A Causal Language Modeling Detour Improves Encoder Continued Pretraining
+2026-05-13 21:49:20,838 - INFO -   old article skipped: CAAFC: Chronological Actionable Automated Fact-Checker for misinformation / non-factual hallucination detection and correction
+2026-05-13 21:49:20,838 - INFO -   old article skipped: Formalize, Don't Optimize: The Heuristic Trap in LLM-Generated Combinatorial Solvers
+2026-05-13 21:49:20,838 - INFO -   old article skipped: Stories in Space: In-Context Learning Trajectories in Conceptual Belief Space
+2026-05-13 21:49:20,838 - INFO - Fetching: arXiv 机器学习
+2026-05-13 21:49:20,838 - INFO - Using custom fetcher for: arXiv 机器学习
+2026-05-13 21:49:29,331 - INFO - arXiv API (cs.LG): fetched 15 articles
+2026-05-13 21:49:29,331 - INFO -   old article skipped: AlphaGRPO: Unlocking Self-Reflective Multimodal Generation in UMMs via Decompositional Verifiable Reward
+2026-05-13 21:49:29,331 - INFO -   old article skipped: Pion: A Spectrum-Preserving Optimizer via Orthogonal Equivalence Transformation
+2026-05-13 21:49:29,331 - INFO -   old article skipped: Elastic Attention Cores for Scalable Vision Transformers
+2026-05-13 21:49:29,331 - INFO -   old article skipped: Task-Adaptive Embedding Refinement via Test-time LLM Guidance
+2026-05-13 21:49:29,331 - INFO -   old article skipped: Learning, Fast and Slow: Towards LLMs That Adapt Continually
+2026-05-13 21:49:29,331 - INFO -   old article skipped: Beyond GRPO and On-Policy Distillation: An Empirical Sparse-to-Dense Reward Principle for Language-Model Post-Training
+2026-05-13 21:49:29,331 - INFO -   old article skipped: MEME: Multi-entity & Evolving Memory Evaluation
+2026-05-13 21:49:29,331 - INFO -   old article skipped: Routers Learn the Geometry of Their Experts: Geometric Coupling in Sparse Mixture-of-Experts
+2026-05-13 21:49:29,331 - INFO -   old article skipped: KV-Fold: One-Step KV-Cache Recurrence for Long-Context Inference
+2026-05-13 21:49:29,331 - INFO -   old article skipped: Solve the Loop: Attractor Models for Language and Reasoning
+2026-05-13 21:49:29,331 - INFO -   old article skipped: High-arity Sample Compression
+2026-05-13 21:49:29,331 - INFO -   old article skipped: Search Your Block Floating Point Scales!
+2026-05-13 21:49:29,331 - INFO -   old article skipped: Towards Affordable Energy: A Gymnasium Environment for Electric Utility Demand-Response Programs
+2026-05-13 21:49:29,331 - INFO -   old article skipped: A proximal gradient algorithm for composite log-concave sampling
+2026-05-13 21:49:29,331 - INFO -   old article skipped: Multi-Stream LLMs: Unblocking Language Models with Parallel Streams of Thoughts, Inputs and Outputs
+2026-05-13 21:49:29,331 - INFO - Fetching: arXiv 计算机视觉
+2026-05-13 21:49:29,331 - INFO - Using custom fetcher for: arXiv 计算机视觉
+2026-05-13 21:49:37,881 - INFO - arXiv API (cs.CV): fetched 15 articles
+2026-05-13 21:49:37,882 - INFO -   old article skipped: Covering Human Action Space for Computer Use: Data Synthesis and Benchmark
+2026-05-13 21:49:37,882 - INFO -   old article skipped: SenseNova-U1: Unifying Multimodal Understanding and Generation with NEO-unify Architecture
+2026-05-13 21:49:37,882 - INFO -   old article skipped: EgoForce: Forearm-Guided Camera-Space 3D Hand Pose from a Monocular Egocentric Camera
+2026-05-13 21:49:37,882 - INFO -   old article skipped: From Web to Pixels: Bringing Agentic Search into Visual Perception
+2026-05-13 21:49:37,882 - INFO -   old article skipped: CausalCine: Real-Time Autoregressive Generation for Multi-Shot Video Narratives
+2026-05-13 21:49:37,882 - INFO -   old article skipped: AlphaGRPO: Unlocking Self-Reflective Multimodal Generation in UMMs via Decompositional Verifiable Reward
+2026-05-13 21:49:37,882 - INFO -   old article skipped: Revisiting Photometric Ambiguity for Accurate Gaussian-Splatting Surface Reconstruction
+2026-05-13 21:49:37,882 - INFO -   old article skipped: Elastic Attention Cores for Scalable Vision Transformers
+2026-05-13 21:49:37,882 - INFO -   old article skipped: OmniNFT: Modality-wise Omni Diffusion Reinforcement for Joint Audio-Video Generation
+2026-05-13 21:49:37,882 - INFO -   old article skipped: FuTCR: Future-Targeted Contrast and Repulsion for Continual Panoptic Segmentation
+2026-05-13 21:49:37,882 - INFO -   old article skipped: LychSim: A Controllable and Interactive Simulation Framework for Vision Research
+2026-05-13 21:49:37,882 - INFO -   old article skipped: 3D Gaussian Splatting for Efficient Retrospective Dynamic Scene Novel View Synthesis with a Standardized Benchmark
+2026-05-13 21:49:37,882 - INFO -   old article skipped: GaitProtector: Impersonation-Driven Gait De-Identification via Training-Free Diffusion Latent Optimization
+2026-05-13 21:49:37,882 - INFO -   old article skipped: AOI-SSL: Self-Supervised Framework for Efficient Segmentation of Wire-bonded Semiconductors In Optical Inspection
+2026-05-13 21:49:37,882 - INFO -   old article skipped: Beyond Localization: A Comprehensive Diagnosis of Perspective-Conditioned Spatial Reasoning in MLLMs from Omnidirectional Images
+2026-05-13 21:49:37,882 - INFO - Fetching: 顶会 NeurIPS/ICML/ICLR
+2026-05-13 21:49:37,882 - INFO - Using custom fetcher for: 顶会 NeurIPS/ICML/ICLR
+2026-05-13 21:49:37,882 - WARNING - Cannot determine arXiv category for source: 顶会 NeurIPS/ICML/ICLR
+2026-05-13 21:49:37,882 - INFO - Fetching: 顶会 AAAI/IJCAI
+2026-05-13 21:49:37,882 - INFO - Using custom fetcher for: 顶会 AAAI/IJCAI
+2026-05-13 21:49:51,796 - INFO - arXiv API (cs.AI): fetched 15 articles
+2026-05-13 21:49:51,796 - INFO -   old article skipped: AlphaGRPO: Unlocking Self-Reflective Multimodal Generation in UMMs via Decompositional Verifiable Reward
+2026-05-13 21:49:51,796 - INFO -   old article skipped: Learning, Fast and Slow: Towards LLMs That Adapt Continually
+2026-05-13 21:49:51,796 - INFO -   old article skipped: Beyond GRPO and On-Policy Distillation: An Empirical Sparse-to-Dense Reward Principle for Language-Model Post-Training
+2026-05-13 21:49:51,796 - INFO -   old article skipped: ToolCUA: Towards Optimal GUI-Tool Path Orchestration for Computer Use Agents
+2026-05-13 21:49:51,796 - INFO -   old article skipped: OmniNFT: Modality-wise Omni Diffusion Reinforcement for Joint Audio-Video Generation
+2026-05-13 21:49:51,796 - INFO -   old article skipped: Reward Hacking in Rubric-Based Reinforcement Learning
+2026-05-13 21:49:51,797 - INFO -   old article skipped: KV-Fold: One-Step KV-Cache Recurrence for Long-Context Inference
+2026-05-13 21:49:51,797 - INFO -   old article skipped: Solve the Loop: Attractor Models for Language and Reasoning
+2026-05-13 21:49:51,797 - INFO -   old article skipped: Towards Affordable Energy: A Gymnasium Environment for Electric Utility Demand-Response Programs
+2026-05-13 21:49:51,797 - INFO -   old article skipped: Enabling AI-Native Mobility in 6G: A Real-World Dataset for Handover, Beam Management, and Timing Advance
+2026-05-13 21:49:51,797 - INFO -   old article skipped: The Algorithmic Caricature: Auditing LLM-Generated Political Discourse Across Crisis Events
+2026-05-13 21:49:51,797 - INFO -   old article skipped: A Causal Language Modeling Detour Improves Encoder Continued Pretraining
+2026-05-13 21:49:51,797 - INFO -   old article skipped: CAAFC: Chronological Actionable Automated Fact-Checker for misinformation / non-factual hallucination detection and correction
+2026-05-13 21:49:51,797 - INFO -   old article skipped: Formalize, Don't Optimize: The Heuristic Trap in LLM-Generated Combinatorial Solvers
+2026-05-13 21:49:51,797 - INFO -   old article skipped: Stories in Space: In-Context Learning Trajectories in Conceptual Belief Space
+2026-05-13 21:49:51,797 - INFO - Fetching: 期刊 TPAMI/IJCV/JMLR/TNNLS/NMI
+2026-05-13 21:49:51,797 - INFO - Using custom fetcher for: 期刊 TPAMI/IJCV/JMLR/TNNLS/NMI
+2026-05-13 21:49:51,797 - WARNING - Cannot determine arXiv category for source: 期刊 TPAMI/IJCV/JMLR/TNNLS/NMI
+2026-05-13 21:49:51,797 - INFO - Fetching: arXiv 机器人
+2026-05-13 21:49:51,797 - INFO - Using custom fetcher for: arXiv 机器人
+2026-05-13 21:49:59,234 - INFO - arXiv API (cs.RO): fetched 15 articles
+2026-05-13 21:49:59,234 - INFO -   old article skipped: SafeManip: A Property-Driven Benchmark for Temporal Safety Evaluation in Robotic Manipulation
+2026-05-13 21:49:59,234 - INFO -   old article skipped: GuidedVLA: Specifying Task-Relevant Factors via Plug-and-Play Action Attention Specialization
+2026-05-13 21:49:59,234 - INFO -   old article skipped: Real-Time Whole-Body Teleoperation of a Humanoid Robot Using IMU-Based Motion Capture with Sim2Sim and Sim2Real Validation
+2026-05-13 21:49:59,234 - INFO -   old article skipped: EgoEV-HandPose: Egocentric 3D Hand Pose Estimation and Gesture Recognition with Stereo Event Cameras
+2026-05-13 21:49:59,234 - INFO -   old article skipped: SI-Diff: A Framework for Learning Search and High-Precision Insertion with a Force-Domain Diffusion Policy
+2026-05-13 21:49:59,234 - INFO -   old article skipped: TMRL: Diffusion Timestep-Modulated Pretraining Enables Exploration for Efficient Policy Finetuning
+2026-05-13 21:49:59,234 - INFO -   old article skipped: Morphologically Equivariant Flow Matching for Bimanual Mobile Manipulation
+2026-05-13 21:49:59,234 - INFO -   old article skipped: TriBand-BEV: Real-Time LiDAR-Only 3D Pedestrian Detection via Height-Aware BEV and High-Resolution Feature Fusion
+2026-05-13 21:49:59,234 - INFO -   old article skipped: DexTwist: Dexterous Hand Retargeting for Twist Motion via Mixed Reality-based Teleoperation
+2026-05-13 21:49:59,234 - INFO -   old article skipped: From Imagined Futures to Executable Actions: Mixture of Latent Actions for Robot Manipulation
+2026-05-13 21:49:59,234 - INFO -   old article skipped: X-Imitator: Spatial-Aware Imitation Learning via Bidirectional Action-Pose Interaction
+2026-05-13 21:49:59,234 - INFO -   old article skipped: Premover: Fast Vision-Language-Action Control by Acting Before Instructions Are Complete
+2026-05-13 21:49:59,234 - INFO -   old article skipped: World Action Models: The Next Frontier in Embodied AI
+2026-05-13 21:49:59,234 - INFO -   old article skipped: Learning What Matters: Adaptive Information-Theoretic Objectives for Robot Exploration
+2026-05-13 21:49:59,234 - INFO -   old article skipped: Control of Fully Actuated Aerial Vehicles: A Comparison of Model-based and Sensor-based Dynamic Inversion
+2026-05-13 21:49:59,234 - INFO - Fetching: 顶会 ICRA/CoRL/RSS
+2026-05-13 21:49:59,234 - INFO - Using custom fetcher for: 顶会 ICRA/CoRL/RSS
+2026-05-13 21:49:59,234 - WARNING - Cannot determine arXiv category for source: 顶会 ICRA/CoRL/RSS
+2026-05-13 21:50:01,089 - INFO - HTTP Request: POST https://api.deepseek.com/anthropic/v1/messages "HTTP/1.1 200 OK"
+2026-05-13 21:50:06,687 - INFO - HTTP Request: POST https://api.deepseek.com/anthropic/v1/messages "HTTP/1.1 200 OK"
+2026-05-13 21:50:10,587 - INFO -   filtered 其它: 黄仁勋CMU演讲：取代你的是会AI的人，所有人同一起跑线，奔跑吧
+2026-05-13 21:50:10,588 - INFO -   cached 自动驾驶/技术/算法: 复旦&新加坡国立等推出RoboOmni，全模态环境下的主动式机器人操控和意图识别，开启机器人交互新篇。
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/技术/算法: 腾讯开源HunyuanImage-3.0-Instruct及蒸馏版本，凭借提示词增强与图像创意编辑，实现图像生成高效新突破！
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/产品/应用: 港大开源视频生成神器 ViMax，可本地部署，文字输入开启全流程，导演编剧制片功能一站式集齐！
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/技术/算法: 腾讯开源图像模型SRPO，真实感和美学质量提高了3倍，登Hugging Face趋势榜首！
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/技术/算法: 图像编辑新突破！浙大&哈佛提出RefineAnything：只修复指定区域，背景纹丝不动，局部细节崩坏终结者！
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/技术/算法: ICLR 2026 | DragFlow：让图像编辑像拖拽一样简单，引领DiT架构下的拖拽式图像编辑新风尚。
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/技术/算法: 清华×字节创新成果DreamID - Omni：统一框架+精准控制，开启可控人类中心音视频生成新纪元。
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/技术/算法: ICIR 2026 | 视频复原新突破！淘宝开源生成式视频复原模型Vivid-VR，用AI技术重塑视觉盛宴，让每一帧都栩栩如生！
+2026-05-13 21:50:10,588 - INFO -   cached 自动驾驶/技术/算法: 蚂蚁集团开源 LingBot-VLA：一个实用的 VLA 基础模型，9 类机器人 2 万小时真实操作数据。
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/技术/算法: CVPR 2026 | 一分钟生成十镜头，AI也能拍大片！Meta提出OneStory，多镜头视频输出，叙事连贯性爆表。
+2026-05-13 21:50:10,588 - INFO -   cached 自动驾驶/技术/算法: 国产首个开源、系统化的多模态世界模型HY-World 2.0：效果硬刚闭源商业模型
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/技术/算法: AI生图细节崩坏终结者！RefineAnything：多模态区域级精修，文字/Logo/人脸一键修复，背景像素级不变
+2026-05-13 21:50:10,588 - INFO -   cached 自动驾驶/技术/算法: 眼不见，心不忘！华科&快手联手发布混合记忆新范式：攻克视频世界模型最致命缺陷
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/技术/算法: 媲美Nano Banana Pro！南科大&阶跃星辰等开源真实世界图像恢复之王RealRestorer
+2026-05-13 21:50:10,588 - INFO -   cached 自动驾驶/产品/应用: “世界模型”到底是个啥？OpenWorldLib一锤定音：感知+交互+记忆，这才叫理解世界的AI！
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/技术/算法: 文生图的“天花板”被捅破了！Gen-Searcher让AI学会“翻书找答案”：不是背题，是开卷考!
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/技术/算法: 复旦大学 × 阶跃星辰开源最新力作PixelSmile：AI 终于实现人脸表情PhotoShop
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/技术/算法: 短剧革命！港中文&快手发布ShotStream:16帧/秒实时生成电影级多镜头视频，可边拍边改
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/技术/算法: 2张显卡即可20FPS流式生成！SoulX-LiveAct开启“小时级”实时数字人交互新时代
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/技术/算法: 视觉AR逆袭！177M效果媲美675M最新SOTA扩散模型，仅需一个“即插即用”的正则化reAR
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/产品/应用: Vidu Q3 全家桶再升级，更快更省！
+2026-05-13 21:50:10,588 - INFO -   filtered 其它: 凝智聚力 定义未来 | 2026艾菲AI奖理事会成功举办！
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/产品/应用: Vidu导演及艺术家作品在北影节斩获多项大奖
+2026-05-13 21:50:10,588 - INFO -   filtered 其它: 🎬 人人都是创作者！
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/产品/应用: 「Q3多参 · 剧能演」全民创作大赛火热启动
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/产品/应用: ViduQ3参考生全球上线！
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/产品/应用: 当热潮退去，AI视频的确定性价值正在浮现
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/产品/应用: 当热潮退去，AI视频的确定性价值正在浮现
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/产品/应用: Vidu Claw「V 龙」：你的第一位 AI 创意员工，已正式出道
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/产品/应用: 工具会更迭，但创作不应被按下暂停键
+2026-05-13 21:50:10,588 - INFO -   cached 多模态大模型/大语言模型/产品/应用: 占比49.5%！火山引擎领跑中国大模型公有云市场
+2026-05-13 21:50:10,588 - INFO -   cached 多模态大模型/大语言模型/产品/应用: Doubao-Seed-2.0-lite升级，支持全模态理解
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/产品/应用: 巨日禄AI×火山引擎：Seedance2.0让量产“精品”成为可能
+2026-05-13 21:50:10,588 - INFO -   cached 自动驾驶/产品/应用: 划重点，这届车展火山引擎和朋友们做了啥？
+2026-05-13 21:50:10,588 - INFO -   filtered 其它: 《2025字节跳动企业社会责任报告》发布
+2026-05-13 21:50:10,588 - INFO -   cached 自动驾驶/产品/应用: 奇瑞汽车×火山引擎：达成战略合作！“小奇同学”接入豆包大模型
+2026-05-13 21:50:10,588 - INFO -   cached 自动驾驶/产品/应用: 新一代汽车AI解决方案发布， 豆包大模型搭载超700万辆车
+2026-05-13 21:50:10,588 - INFO -   cached 自动驾驶/产品/应用: 东风汽车携手火山引擎 共筑未来AI时代新汽车、新生态
+2026-05-13 21:50:10,588 - INFO -   cached 自动驾驶/产品/应用: 今年北京车展整啥活儿？提前剧透一波...
+2026-05-13 21:50:10,588 - INFO -   cached 自动驾驶/产品/应用: 荣威×火山引擎：深度合作AI原生汽车序列“家越”
+2026-05-13 21:50:10,588 - INFO -   cached Coding Agent/技术/算法: 业内推荐｜做Agent最值得关注的190篇顶会+谷歌321个落地案例 ！
+2026-05-13 21:50:10,588 - INFO -   filtered 其它: Anthropic最新论文：检测LLM内省意识的方法
+2026-05-13 21:50:10,588 - INFO -   cached Coding Agent/技术/算法: 一篇不错的自进化Agents最新系统性综述
+2026-05-13 21:50:10,588 - INFO -   cached Coding Agent/产品/应用: Claude 4.6只有66%？Claw-Eval-Live 说：会修终端≠能跨系统干活
+2026-05-13 21:50:10,588 - INFO -   cached Coding Agent/技术/算法: 腾讯混元干了件大事：Skill Graphs
+2026-05-13 21:50:10,588 - INFO -   cached Coding Agent/技术/算法: 复旦&北大：Harness也能Agentic自进化了
+2026-05-13 21:50:10,588 - INFO -   cached 多模态大模型/大语言模型/技术/算法: 刚刚，DeepSeek全新多模态技术开源！
+2026-05-13 21:50:10,588 - INFO -   filtered 其它: 越来越觉得强化学习是未来！CVPR/ICML/ICLR/等8大顶会2026最新RL论文整理
+2026-05-13 21:50:10,588 - INFO -   cached 自动驾驶/技术/算法: Agentic的风又吹到了世界模型~
+2026-05-13 21:50:10,588 - INFO -   cached Coding Agent/技术/算法: Skills驱动推理新范式，清华&北大：Token立省59%，准确率不降反升
+2026-05-13 21:50:10,588 - INFO -   filtered 其它: 一张图看懂ICLR 2026：清华331篇登顶，美国仍领跑Oral
+2026-05-13 21:50:10,588 - INFO -   filtered 其它: 5月14日直播预告 | 无人系统的边界：复杂环境下的集群协同与工程挑战
+2026-05-13 21:50:10,588 - INFO -   cached 多模态大模型/大语言模型/技术/算法: Attention Is All You Need作者再出手：Transformer 99%稀疏，还能更快？
+2026-05-13 21:50:10,588 - INFO -   filtered 其它: ACL 2026 | 未见伪造也能识别：「证链侦探」破解“泛化失灵”困局
+2026-05-13 21:50:10,588 - INFO -   filtered 其它: 浙大联合上海AI Lab发布：首个AI原生科学知识图谱上线
+2026-05-13 21:50:10,588 - INFO -   filtered 其它: 0.25美元「洗」一遍论文LaTeX，AI审稿分数原地起飞
+2026-05-13 21:50:10,588 - INFO -   filtered 其它: SIGIR 2026 | 给RAG装上战略大脑！STRIDE用分层决策重塑多跳问答
+2026-05-13 21:50:10,588 - INFO -   cached Coding Agent/产品/应用: 又挖到一个宝藏仓库！高分Auto Research工具，全在这里了
+2026-05-13 21:50:10,588 - INFO -   cached 多模态大模型/大语言模型/技术/算法: ACL 2026 | 通义提出多模态Latent Action RL，破解多模态对话微调难题
+2026-05-13 21:50:10,588 - INFO -   cached Coding Agent/技术/算法: Harness开始自己进化了：复旦×北大让Agent实现自改，10轮跑赢Codex
+2026-05-13 21:50:10,588 - INFO -   cached 多模态大模型/大语言模型/产品/应用: Anthropic让AI先读员工手册再上岗：失控率从54%降到7%
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/产品/应用: Luma Uni-1.1 API开放，图像模型榜单第三，文字渲染直逼GPT image 2
+2026-05-13 21:50:10,588 - INFO -   filtered 其它: “别急着裁底层，很多高管才最该被 AI 接管？”
+2026-05-13 21:50:10,588 - INFO -   filtered 其它: Anthropic联创定下deadline：2028年AI实现自我进化，没有人类了
+2026-05-13 21:50:10,588 - INFO -   filtered 其它: Claude Token榜：迪士尼「榜一大哥」9天46万次，Meta月烧60万亿
+2026-05-13 21:50:10,588 - INFO -   cached 自动驾驶/技术/算法: 【综述】 机器人学习中的世界模型：全面综述
+2026-05-13 21:50:10,588 - INFO -   filtered 其它: 1分钟烧光4千万Token！OpenAI最疯狂的男人，逼奥特曼亲自加额度
+2026-05-13 21:50:10,588 - INFO -   filtered 其它: 骂谷歌干蠢事、炮轰甲骨文、AI在真实数据库测试得分为0！83岁图灵奖数据库教父的硅谷“狂人日记”
+2026-05-13 21:50:10,588 - INFO -   filtered 其它: 《强化学习数学基础》
+2026-05-13 21:50:10,588 - INFO -   cached 多模态大模型/大语言模型/产品/应用: 马斯克的Grok 4.3悄悄上线，跑分评测出炉
+2026-05-13 21:50:10,588 - INFO -   filtered 其它: 总科院发布 EVT | ViT 效率死局被破了！ImageNet 86.6% 把 Swin 和 ConvNeXt 全卷没了
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/技术/算法: 何恺明团队论文全景扫描：一场关于「生成范式」的多角度突破 | CVPR 2026
+2026-05-13 21:50:10,588 - INFO -   filtered 其它: Multinex：通过多先验Retinex实现轻量级弱光图像增强(CVPR2026)
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/产品/应用: 蚂蚁集团发布LLaDA2.0-Uni | 扩散一统多模态，8步出图快到离谱
+2026-05-13 21:50:10,588 - INFO -   cached AIGC视觉生成/技术/算法: 一步扩散也能兼顾保真与细节？FiDeSR：高保真细节保持的单步扩散超分辨率框架拆解
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 谷歌发布 Vision Banana | 轻松击败SAM 3，同时视觉范式要变天了
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: Meta 全面升级视觉基础模型！一个模型搞定7项人体视觉任务，全面超越上一代！
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 1.3MB模型塞进传感器芯片！IBM开源瘦身版SAM：11毫秒完成提示分割，原始图像不出芯片
+2026-05-13 21:50:10,589 - INFO -   cached AIGC视觉生成/产品/应用: 索尼TrueRGB
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 天空蓝到底应该是什么蓝？
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: MaaS竞争更激烈，火山引擎的份额为什么还在涨？
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 在模型厂碾压之前，AI视频Agent产品是否只能挣波快钱？
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 微软AI Tour观察：靠谱的「工友」，可追溯的「智能」
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 别急着All-in DeepSeek V4，先看看这10位从业者的真心话
+2026-05-13 21:50:10,589 - INFO -   cached 自动驾驶/产品/应用: 「破壳机器人」许华哲：两年内，中国将出现可用的家庭机器人
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 科层制崩塌之后：如何重构“超级组织”，打破AI时代的“幽灵效率”悖论
+2026-05-13 21:50:10,589 - INFO -   cached AIGC视觉生成/产品/应用: 融了2000万美金，这家2000万美金ARR的AI公司，推出“视频版Photoshop”「Buzzy」
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 一个对话框、一只青蛙、一周4万用户，Ribbi做对了什么？
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 开年连融两轮的“可以玩的抖音”，又融了5000万美金｜涌现新项目
+2026-05-13 21:50:10,589 - INFO -   cached 自动驾驶/产品/应用: 自变量机器人完成近20亿元B轮融资，小米战投、红杉中国领投丨智能涌现独家
+2026-05-13 21:50:10,589 - INFO -   cached 多模态大模型/大语言模型/技术/算法: DeepSeek 最新发布的视觉模型技术报告，透露出哪些信息？
+2026-05-13 21:50:10,589 - INFO -   cached 多模态大模型/大语言模型/技术/算法: GPT 为什么爱说 goblins？原因找到了！
+2026-05-13 21:50:10,589 - INFO -   cached AIGC视觉生成/技术/算法: 腾讯用170K风格提示词和1.4M图像，重塑AI风格迁移数据基座
+2026-05-13 21:50:10,589 - INFO -   cached AIGC视觉生成/产品/应用: GPT-Image-2 “斩杀” 了 Nano Banana，OpenAI 扳回一局！
+2026-05-13 21:50:10,589 - INFO -   cached 多模态大模型/大语言模型/产品/应用: 刚体验完Kimi K2.6，我对下一代K3更期待了
+2026-05-13 21:50:10,589 - INFO -   cached AIGC视觉生成/技术/算法: Seedance 2.0 的技术报告发布了！
+2026-05-13 21:50:10,589 - INFO -   cached AIGC视觉生成/技术/算法: 超越 SFT 和 RL，混元 SOAR 开启扩散模型训练范式的新时代
+2026-05-13 21:50:10,589 - INFO -   cached AIGC视觉生成/技术/算法: DreamLite：0.39B把图像生成和编辑塞进手机
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: xAI的11位联合创始人3年全跑光了！
+2026-05-13 21:50:10,589 - INFO -   cached Coding Agent/技术/算法: PRDBench：项目级编程智能体，终于有了更高效的构建与评测方式
+2026-05-13 21:50:10,589 - INFO -   cached 多模态大模型/大语言模型/技术/算法: 聊聊DeepSeek-V4中后训练部分中，一些共识有效的经验
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 阿里-春季实习继续招聘-每周更新：HC 很多，包含两个热点方向：LLM & 3D
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 转发个招聘帖：阿里-杭州，春招实习招聘，HC 很多，包含两个热点方向：LLM & 3D
+2026-05-13 21:50:10,589 - INFO -   cached 多模态大模型/大语言模型/产品/应用: LLM/Agent模型跨过临界点的焦虑期
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 近期的一些感悟：算法瓶颈、工程现实与生存博弈
+2026-05-13 21:50:10,589 - INFO -   cached AIGC视觉生成/技术/算法: DiffusionRL：深挖Flow-GRPO 与 DiffusionNFT 的本质差异
+2026-05-13 21:50:10,589 - INFO -   cached 多模态大模型/大语言模型/技术/算法: 残差连接之后，是 mHC：DeepSeek 的下一代连接架构逐步清晰
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 给准备求职的硕/博在读同学的一些建议
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 毕业五年内找工作选择的一些策略
+2026-05-13 21:50:10,589 - INFO -   cached 多模态大模型/大语言模型/技术/算法: SAPO：通义强化学习新论文，Qwen3VL核心优化之一，软门控提升强化学习稳定性
+2026-05-13 21:50:10,589 - INFO -   cached 自动驾驶/技术/算法: 【博士论文】机器人生成式建模：从元学习到多模态建模
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 【ICML2026】大型视觉语言模型在注意力中迷失
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 必看！百篇“AI+军事” 智能防务报告资料汇编！
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 2026必看AI干货!《大模型/AIGC/GPT-4/Transformer/DL/KG/NLP/CV AI+X》集合
+2026-05-13 21:50:10,589 - INFO -   cached 多模态大模型/大语言模型/技术/算法: 【ICML2026】MASPO：面向基于大语言模型的多智能体系统的联合提示词优化
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 【博士论文】基于信息论探索的强化学习与控制：安全性、最优性及其应用研究
+2026-05-13 21:50:10,589 - INFO -   cached Coding Agent/技术/算法: 当AI代理处理机密：面向代理式AI的机密计算综述
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 必看！百篇“AI+军事” 智能防务报告资料汇编！
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 2026必看AI干货!《大模型/AIGC/GPT-4/Transformer/DL/KG/NLP/CV AI+X》集合
+2026-05-13 21:50:10,589 - INFO -   cached 多模态大模型/大语言模型/技术/算法: 生成-过滤-控制-重放：LLM强化学习中Rollout策略的全面综述
+2026-05-13 21:50:10,589 - INFO -   cached Coding Agent/技术/算法: Apple出手:Agent调用工具前先过一道审查,错误率暴降！
+2026-05-13 21:50:10,589 - INFO -   cached 多模态大模型/大语言模型/技术/算法: DeepMind新指标：思维链好不好，看一个数就知道
+2026-05-13 21:50:10,589 - INFO -   cached 多模态大模型/大语言模型/技术/算法: Anthropic 新论文：直接翻译大模型内部向量到人类语言
+2026-05-13 21:50:10,589 - INFO -   cached Coding Agent/技术/算法: 港科大提出XSKILL,无需训练持续学习复盘升级Agent能力。
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 斯坦福新理论：神经网络泛化之谜揭开，Adam加一行代码，提速2.4倍
+2026-05-13 21:50:10,589 - INFO -   cached Coding Agent/产品/应用: GPT-5.4被抓现行:评估他人项目偷工减料, 伪装成本地项目后立刻满血工作
+2026-05-13 21:50:10,589 - INFO -   cached 多模态大模型/大语言模型/技术/算法: icml26 deepmind 新作:证明自回归模型并不短视！
+2026-05-13 21:50:10,589 - INFO -   cached 多模态大模型/大语言模型/技术/算法: DeepSeek 重磅新作：大模型视觉推理新 SOTA
+2026-05-13 21:50:10,589 - INFO -   cached 多模态大模型/大语言模型/产品/应用: 重磅！中国科学家算出所有闭源模型参数量！
+2026-05-13 21:50:10,589 - INFO -   cached 多模态大模型/大语言模型/技术/算法: Anthropic+剑桥新作:一颗LoRA做大模型通用“吐真剂”
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: DeepSeek被曝融资500亿，梁文锋占大头，估值直冲3500亿！
+2026-05-13 21:50:10,589 - INFO -   cached 自动驾驶/技术/算法: 顶刊TPAMI 2026！生成式世界模型综述重磅发布
+2026-05-13 21:50:10,589 - INFO -   cached 多模态大模型/大语言模型/产品/应用: OpenAI翁家翌：梯度之外，下一个AI训练范式有着落了？
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 截稿！NeurIPS 2026 投稿微信群成立
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 【多模态】微信交流群来了！
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 工信部副部长，任985党委书记
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 新晋院士候选人，“80后”任北京协和医学院副院校长！
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 实验室论文被顶刊TPAMI 2026录用
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: CVPR 2026 Findings | 刷新零样本异常检测SOTA！中科院提出CoPS：让CLIP学会“看图生成提示词”
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 投稿量破4万！NeurIPS 2026 投稿微信群成立
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: Building a new enterprise AI services company with Blackstone, Hellman & Friedman, and Goldman Sachs
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: CSP Allow-list Experiment
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: datasette 1.0a29
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: Quoting Mo Bitar
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: Quoting Mitchell Hashimoto
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: AI拿婚外情写勒索邮件，查一年告诉我科幻小说教坏的
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 奥特曼趁马斯克出差爆猛料：他曾想让子女继承OpenAI
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: Conway's Law Teaches a Grim Lesson About AI in Product Development
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: Your AI Frustration Is My Opportunity
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: Software Developers Say AI Is Rotting Their Brains
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: Claude's Constitution; or love as the solution to the AI alignment problem
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 【通知】诚邀您加入CSIG成为会员，尊享专属权益与好礼！
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 【通知】诚邀您加入CSIG成为会员，尊享专属权益与好礼！
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 先睹为快：VALSE 2026 大会亮点与全貌深度解析
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: VALSE 2026【确认参会】通知
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: 寻找有想法、乐分享的你！VALSE 2026特色角主理人招募开启
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: VALSE Webinar 26-11期 总第416期 视觉信息中的高阶关联计算
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: VALSE 2026第二次【预注册】通知
+2026-05-13 21:50:10,589 - INFO -   filtered 其它: VALSE Webinar 26-10期 总第415期 软硬协同优化：释放AI算法的极致潜能
+2026-05-13 21:50:10,589 - INFO -   cached 自动驾驶/产品/应用: 周末和投资人聊了聊，才发现一个更真实的中国 L4 图景......
+2026-05-13 21:50:10,589 - INFO -   cached 自动驾驶/产品/应用: 专访智元罗剑岚：机器人部署不是终点，而是训练数据飞轮的起点
+2026-05-13 21:50:10,589 - INFO -   cached 自动驾驶/产品/应用: 自动驾驶，正在进入基础设施比拼的阶段......
+2026-05-13 21:50:10,589 - INFO -   cached 自动驾驶/技术/算法: 代替NVIDIA NuRec，CARLA-DGGT使用前馈重建与仿真软件联合仿真
+2026-05-13 21:50:10,589 - INFO -   cached 自动驾驶/技术/算法: 理想一篇面向端到端的新工作，可能是新的范式......
+2026-05-13 21:50:10,589 - INFO -   cached 自动驾驶/产品/应用: 我们筹备了一门面向秋招的端到端量产课程......
+2026-05-13 21:50:10,589 - INFO -   cached 自动驾驶/技术/算法: 小鹏又一篇 X-Cache，开始补世界模型最硬的 Infra 拼图......
+2026-05-13 21:50:10,589 - INFO -   cached 自动驾驶/技术/算法: 行深智能开源EdgeFM推理框架：为物流小车解锁灵魂的底层技术实践
+2026-05-13 21:50:10,589 - INFO -   cached 自动驾驶/技术/算法: ICRA 2026｜清华&博世提出UMPE：自驾地图先验大一统
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 自驾正在进入基础设施比拼的阶段......
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/技术/算法: 从交互到驾驶—AI地图重构智能汽车体验
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 深化产学研融合发展：百度Apollo向北京交通大学捐赠自动驾驶车辆
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 榜单赛事丨第28届中国机器人及人工智能大赛—百度Apollo星火自动驾驶大赛报名开启
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 萝卜快跑迪拜正式开跑！用户可在Apollo Go与Uber双平台体验
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 百度首发新一代量产级 AI 座舱智能体｜上汽通用别克至境OS1.1上线
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 五度扩区！萝卜快跑跨区贯通香港机场岛至东涌，无人化再提速
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 官宣！萝卜快跑携手Uber启动迪拜全无人商业化运营
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 百度萝卜快跑积极响应香港《运输策略蓝图》，驶入社区服务市民
+2026-05-13 21:50:10,590 - INFO -   filtered 其它: 【Nature子刊】波恩大学研究揭示AI训练的资源黑洞！
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/技术/算法: 【世界模型】NTU杨剑飞团队联合世界顶级机构发布首个机器人世界模型综述！
+2026-05-13 21:50:10,590 - INFO -   cached AIGC视觉生成/技术/算法: 【具身智能】港科郭嵩院士团队：3D生成赋能具身智能与机器人仿真综述！
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/技术/算法: 【事故预警】澳大李振宁清华李克强院士团队自动驾驶事故提前预警重磅成果！
+2026-05-13 21:50:10,590 - INFO -   filtered 其它: 【Nature子刊】量子超维计算（QHDC）：量子神经形态架构基础范式！
+2026-05-13 21:50:10,590 - INFO -   filtered 其它: 【具身智能】小鹏机器人UniT：人形机器人跨躯体知识迁移！
+2026-05-13 21:50:10,590 - INFO -   filtered 其它: 【Nature系列】KIT发布GENIUS智能体框架开创计算材料AI新范式！
+2026-05-13 21:50:10,590 - INFO -   filtered 其它: 【Nature系列】高电压锂离子电池LiFSI电解液腐蚀问题突破性进展！
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 五一｜懂路更懂你，穿城越海皆从容
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 🥳人头攒动中，看见智能出行的高度与温度
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: “叮～” 地平线想与您共享 HSD｜北京车展限定投送
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 地平线牵手安斯泰莫：中国智驾芯片再入全球顶级Tier 1供应链体系
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 一图看懂｜全新一代地平线HSD V1.6升级登场
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 一图看懂｜三段征程，地平线迈出的每一步都算数
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 地平线携整车智能全品类产品亮相北京车展，绘就“懂路更懂人”图景
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 多款合作车型密集亮相，地平线助力大众掀起史上最强智能攻势
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 行业洗牌加速！全域AI重构汽车产业，谁能抢占下一个十年红利？
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/技术/算法: 告别“楔形膜”枷锁！睿维视用光学创新推动“HUD for All”
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 自动驾驶重卡第一股来了？百度+联想加持，三年交付量暴涨15倍
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 融资超百亿、4/5nm芯片亮剑：中国车载芯片打响“去海外化”大决战
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 比亚迪持续承压！车市调整窗口期开启，舱驾一体或抢食智能模组市场
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 资本加码、头部结盟、订单井喷：无人配送赛道上演“生死时速”
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 大众/智己/华为集体押注AI Agent，谁将定义AI汽车终局？
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 2026智能汽车决战“中央计算”，这家厂商如何抢跑底层架构新赛道？
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 征程®6B行泊一体方案全球首发量产落地，搭载于广汽丰田铂智3X，鉴智机器人全链路交付
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 鉴智机器人祝广汽丰田2026款铂智3X上市大卖
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 转载丨四维图新携全栈量产方案及具身智能赛道新能力亮相2026北京车展
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 北京车展探馆指南，上「新」啦！
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 车展「新」彩蛋，我们剧透了！🚘
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 鉴智机器人热烈祝贺岚图港股上市！
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 量产定点超300万套！鉴智机器人基于征程®6B的PhiGo Entry即将大规模量产，推动普惠智驾迈向全民时代
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 转载｜四维图新CEO程鹏建言两会：做强AI驱动的增长新范式
+2026-05-13 21:50:10,590 - INFO -   filtered 其它: 近5亿元融资落地，搞“机器狗”的维他动力也要做人形机器人了！
+2026-05-13 21:50:10,590 - INFO -   filtered 其它: 前小米高管创业机器人，做工业通用具身智能，小米联合创始人连续4轮追投
+2026-05-13 21:50:10,590 - INFO -   filtered 其它: Figure让2台机器人自主协同，2分钟内完成卧室整理！
+2026-05-13 21:50:10,590 - INFO -   filtered 其它: “能弹琴会做饭”的机器人Demo，灵巧手支撑来自这家企业...
+2026-05-13 21:50:10,590 - INFO -   filtered 其它: 光伏切割设备龙头跨界入局灵巧手腱绳，斩获北美客户订单！
+2026-05-13 21:50:10,590 - INFO -   filtered 其它: 博世签下中国「最强大脑」，多线发力具身智能
+2026-05-13 21:50:10,590 - INFO -   filtered 其它: Figure 03量产提速！每小时生产1台，已交付超350台
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/技术/算法: 告别「挑食」式学习！银河通用推出LDA，超越VLA、世界模型
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 极氪化身「利润奶牛」，吉利市值大涨的隐忧
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 互联网大厂抢跑「智能体上车」，斑马智行打出了什么牌？
+2026-05-13 21:50:10,590 - INFO -   filtered 其它: 新智驾独家｜前蔚来AI平台负责人白宇利创立「补天石科技」，聚焦具身数据 Infra 方向
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 预埋L3硬件、配「满血」版华为乾崑，启境GT7能让年轻人买单吗？
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 对话东软集团副总裁庞宏岩：座舱智能体的爆发，更需要一个安全底座
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 从语音对话到全场景Agent，腾讯如何用“小龙虾”重构座舱灵魂？
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: A10爆单、D19冲高，原来零跑的百万年销不是口号
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 驶入物理AI元年：头部玩家集体跃迁，易航智能交出双线落地答卷
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 伯恩斯坦：2026北京车展，中国既是战场更是全球跳板
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 2026年比亚迪公司深度报告：开启新能源全球化时代
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 2026北京车展展后专题报告（五）
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 摩根大通：2026北京车展十大观察和惊喜车型（含PDF报告）
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 2026北京车展深度观察总结报告（100页）
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 2026北京车展深度观察总结报告（完整版）
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 2026北京车展展后洞察报告
+2026-05-13 21:50:10,590 - INFO -   filtered 其它: 2026具身智能行业深度：驱动因素、市场空间、行业展望、产业链及相关公司深度梳理
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/技术/算法: 【数据生成/预测】澳大李振宁清华李克强院士团队：几何-语义增强事故预测！
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/技术/算法: 【后训练】开源！清华理想CRAFT：反事实-交互式强化微调驾驶策略框架！
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/技术/算法: 【VLA】纯视觉SOTA！理想詹锟团队ReflectDrive-2:RL对齐自编辑离散扩散规划框架！
+2026-05-13 21:50:10,590 - INFO -   filtered 其它: 【数据生成评估】开源！3DGS-AD：3D高斯溅射场景编辑保真度评估框架！
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/技术/算法: 【世界模型】首个机器人领域世界模型综述！NTU杨剑飞团队联合世界顶级机构发布！
+2026-05-13 21:50:10,590 - INFO -   filtered 其它: 【VLA安全】VLA Safety：机器人视觉-语言-动作模型安全全景综述！
+2026-05-13 21:50:10,590 - INFO -   filtered 其它: 【VLA数据】VLA Survey：机器人视觉-语言-动作全栈数据综述！
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/技术/算法: 【世界模型】开源！华科白翔团队HERMES++：统一3D场景理解与生成的驾驶世界模型！
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 史上最严！C-NCAP 2027 正式发布，版 7 月实施，五星门槛暴涨，这些车要慌了
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 重磅｜C-NCAP 2027 版征求意见稿发布！中国汽车安全迎来史上最严升级7月1号实施
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: PanoCar新版推出：功能全面升级、性能大幅提升
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 中国智能网联汽车标准全景解读(截止到2026年4月)
+2026-05-13 21:50:10,590 - INFO -   filtered 其它: MATLAB 和 Simulink R2026a 推出全新 Agentic AI 驱动的工作流，增强工程化系统的设计与开发
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 史上最卷北京车展！215 款新车炸场，全尺寸 SUV 下探 25 万，智驾卷到 6 颗激光雷达
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 2026 年 3 月车市：出口暴涨 72% 撑住大盘，国内市场却藏着 3 个残酷真相
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 中国智能网联汽车标准全景解读(截止到2026年4月)
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/技术/算法: 前方大车挡住视线怎么办？丰田发布CooperDrive，协同感知的革命来了！
+2026-05-13 21:50:10,590 - INFO -   filtered 其它: 人大发布Latent Action | 离散token直接监督，旧方案可以退休了
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/技术/算法: WILD-SAM 发布 | 雨雪天LiDAR抓瞎？涨13%还不用标注
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/技术/算法: KAIST 发布RLDX-1 | 86.8%碾压 π0.5，这才是端到端该有的样子
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/技术/算法: 理想联合清华发布 CRAFT | 反事实+闭环RL双buff，端到端微调直接SOTA
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/技术/算法: 清华发布 SigLoMa | 扔掉动捕和工控机，四足机器人终于能打了
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/技术/算法: 理想汽车提出 ReflectDrive-2 | 1个Token空间里的"自我反思"革命
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/技术/算法: MiniVLA-Nav v1 | 1个数据集，4个场景、12类物体、30种语言，机器人的"六边形战士"来了
+2026-05-13 21:50:10,590 - INFO -   cached 自动驾驶/产品/应用: 舱内监控系统研究：2027年DMS开启强制搭载，装车量或超1400万辆
+2026-05-13 21:50:10,591 - INFO -   cached 自动驾驶/产品/应用: 车载显示研究：多屏化进程放缓，OLED、MiniLED加速上车
+2026-05-13 21:50:10,591 - INFO -   cached 自动驾驶/产品/应用: 零跑三代架构对比：从域集中式到中央计算架构的跃迁
+2026-05-13 21:50:10,591 - INFO -   cached 自动驾驶/产品/应用: 智驾标准与认证：中国标准化体系日趋成熟，将参与全球标准制定
+2026-05-13 21:50:10,591 - INFO -   cached 自动驾驶/产品/应用: 赋能中央超算E/E架构，芯驰重磅发布“中央智控小脑AMU算力基座+IO型区域控制”全套解决方案
+2026-05-13 21:50:10,591 - INFO -   cached 自动驾驶/产品/应用: 北斗智联携手紫光展锐达成战略合作  共筑智能座舱“芯”生态
+2026-05-13 21:50:10,591 - INFO -   cached 自动驾驶/产品/应用: 主动式智能体座舱长啥样？联发科做出解答！
+2026-05-13 21:50:10,591 - INFO -   cached 自动驾驶/产品/应用: 联想车计算发布首款基于NVIDIA DRIVE Thor的舱驾智算平台Auto AI Box，为智能汽车提供强劲AI源动力
+2026-05-13 21:50:10,591 - INFO -   skip (sufficient): 今日开源（2026-5-13）：面壁智能开源MiniCPM-V 4.6，端侧高效... (1973 chars)
+2026-05-13 21:50:11,668 - INFO -   ok: 6.1B激活，三榜开源第一！蚂蚁·安诊儿医疗大模型发布... (100 -> 1776 chars)
+2026-05-13 21:50:12,697 - INFO -   ok: 别错过！Agent Skill 开发者大赛作品提交截止今天... (100 -> 586 chars)
+2026-05-13 21:50:12,698 - INFO -   skip (sufficient): [AINews] The End of Finetuning... (26026 chars)
+2026-05-13 21:50:12,854 - INFO - HTTP Request: POST https://api.deepseek.com/anthropic/v1/messages "HTTP/1.1 200 OK"
+2026-05-13 21:50:33,186 - INFO -   summarized 多模态大模型/大语言模型/产品/应用: 今日开源（2026-5-13）：面壁智能开源MiniCPM-V 4.6，端侧高效多模态理解模型，混合视觉压缩驱动移动平台轻量化部署
+2026-05-13 21:50:33,186 - INFO -   reclassified: 6.1B激活，三榜开源第一！蚂蚁·安诊儿医疗大模型发布 多模态大模型/大语言模型 → 多模态大模型/大语言模型
+2026-05-13 21:50:33,195 - INFO -   summarized 多模态大模型/大语言模型/产品/应用: 6.1B激活，三榜开源第一！蚂蚁·安诊儿医疗大模型发布
+2026-05-13 21:50:33,204 - INFO -   summarized Coding Agent/产品/应用: 别错过！Agent Skill 开发者大赛作品提交截止今天
+2026-05-13 21:50:33,215 - INFO -   summarized Coding Agent/产品/应用: 探秘 Claude Code，搞懂 Agent Harness｜对谈来新璐
+2026-05-13 21:50:33,224 - INFO -   summarized Coding Agent/产品/应用: 我的一人公司，空降腾讯一键开雇！
+2026-05-13 21:50:33,356 - INFO - HTTP Request: POST https://api.deepseek.com/anthropic/v1/messages "HTTP/1.1 200 OK"
+2026-05-13 21:50:54,960 - INFO -   summarized AIGC视觉生成/产品/应用: AI电商详情页设计实操教程！附详细提示词
+2026-05-13 21:50:54,960 - INFO -   filtered by reclassification: 一个 AI 还是不够 (其它)
+2026-05-13 21:50:54,960 - INFO -   filtered by reclassification: [AINews] The End of Finetuning (大语言模型/多模态大模型)
+2026-05-13 21:50:54,960 - INFO -   filtered by reclassification: 林俊旸果然创业了！一个“Qwen负责人”头衔值135亿 (其它)
+2026-05-13 21:50:54,960 - INFO -   filtered by reclassification: 苹果画的饼谷歌率先搞定！Gemini全面进驻全家桶，连鼠标都AI上了 (其它)
+2026-05-13 21:50:55,195 - INFO - HTTP Request: POST https://api.deepseek.com/anthropic/v1/messages "HTTP/1.1 200 OK"
+2026-05-13 21:51:16,267 - INFO -   filtered by reclassification: 高德与千问C端应用团队开源AGenUI：首个覆盖iOS、安卓、鸿蒙三端的原生A2UI框架 (其它)
+2026-05-13 21:51:16,267 - INFO -   filtered by reclassification: AI步入“自我进化”时代，李彦宏首提AI时代度量衡“DAA”｜Create2026百度AI开发者⼤会速览 (其它)
+2026-05-13 21:51:16,279 - INFO -   summarized Coding Agent/产品/应用: Auto Research时代，47个没有标准答案的任务成了Agent能力必测榜
+2026-05-13 21:51:16,279 - INFO -   filtered by reclassification: 爱思唯尔把Meta告了：拿Sci-Hub盗版论文训练大模型 (其它)
+2026-05-13 21:51:16,279 - INFO -   reclassified: “10周的工作量，AI只用4天！”Anthropic发布会全程实录：你引以为傲的复杂工程，在模型眼里只是个玩具 多模态大模型/大语言模型 → Coding Agent
+2026-05-13 21:51:16,290 - INFO -   summarized Coding Agent/产品/应用: “10周的工作量，AI只用4天！”Anthropic发布会全程实录：你引以为傲的复杂工程，在模型眼里只是个玩具
+2026-05-13 21:51:16,411 - INFO - HTTP Request: POST https://api.deepseek.com/anthropic/v1/messages "HTTP/1.1 200 OK"
+2026-05-13 21:51:33,237 - WARNING -   batch missing result, falling back to single: 欠给智能体的技术债，新全栈AI云如何救场？
+2026-05-13 21:51:33,454 - INFO - HTTP Request: POST https://api.deepseek.com/anthropic/v1/messages "HTTP/1.1 200 OK"
+2026-05-13 21:51:38,249 - INFO -   filtered by reclassification: 欠给智能体的技术债，新全栈AI云如何救场？ (其它)
+2026-05-13 21:51:38,249 - WARNING -   batch missing result, falling back to single: Python统治时代结束：当 AI 成为程序员，为什么Rust、Go成了首选！
+2026-05-13 21:51:38,367 - INFO - HTTP Request: POST https://api.deepseek.com/anthropic/v1/messages "HTTP/1.1 200 OK"
+2026-05-13 21:51:43,666 - INFO -   filtered by reclassification: Python统治时代结束：当 AI 成为程序员，为什么Rust、Go成了首选！ (其它)
+2026-05-13 21:51:43,666 - WARNING -   batch missing result, falling back to single: 豆包输入法Mac版正式上线，所有人都该试试AI语音输入了。
+2026-05-13 21:51:43,773 - INFO - HTTP Request: POST https://api.deepseek.com/anthropic/v1/messages "HTTP/1.1 200 OK"
+2026-05-13 21:51:48,315 - INFO -   filtered by reclassification: 豆包输入法Mac版正式上线，所有人都该试试AI语音输入了。 (其它)
+2026-05-13 21:51:48,315 - WARNING -   batch missing result, falling back to single: 豆包输入法正式上线，完全免费
+2026-05-13 21:51:48,439 - INFO - HTTP Request: POST https://api.deepseek.com/anthropic/v1/messages "HTTP/1.1 200 OK"
+2026-05-13 21:51:53,289 - INFO -   filtered by reclassification: 豆包输入法正式上线，完全免费 (其它)
+2026-05-13 21:51:53,289 - WARNING -   batch missing result, falling back to single: 清华系团队出手！一张 4090 即可「爆改」，1.3B小钢炮震撼开源
+2026-05-13 21:51:53,465 - INFO - HTTP Request: POST https://api.deepseek.com/anthropic/v1/messages "HTTP/1.1 200 OK"
+2026-05-13 21:51:59,128 - INFO - HTTP Request: POST https://api.deepseek.com/anthropic/v1/messages "HTTP/1.1 200 OK"
+2026-05-13 21:52:16,400 - INFO -   reclassified: 黄仁勋100万亿预言兑现！易鑫Voice Agent落地，汽车金融迎效率革命 自动驾驶 → AIGC视觉生成
+2026-05-13 21:52:16,411 - INFO -   summarized AIGC视觉生成/产品/应用: 黄仁勋100万亿预言兑现！易鑫Voice Agent落地，汽车金融迎效率革命
+2026-05-13 21:52:16,420 - INFO -   summarized 自动驾驶/学术论文: VLA模型为何忽视语言？破解指令跟随幻觉，分布外场景泛化新突破
+2026-05-13 21:52:16,432 - INFO -   summarized Coding Agent/产品/应用: 对话关梦龙：他想用 Agent 拯救你手机里的 100G 废片
+2026-05-13 21:52:16,443 - WARNING - Batch summarization failed, falling back to single: '学术论文'
+2026-05-13 21:52:16,569 - INFO - HTTP Request: POST https://api.deepseek.com/anthropic/v1/messages "HTTP/1.1 200 OK"
+2026-05-13 21:52:22,944 - INFO -   filtered by reclassification: 黄仁勋100万亿预言兑现！易鑫Voice Agent落地，汽车金融迎效率革命 (其它)
+2026-05-13 21:52:23,061 - INFO - HTTP Request: POST https://api.deepseek.com/anthropic/v1/messages "HTTP/1.1 200 OK"
+2026-05-13 21:52:29,340 - INFO -   summarized 自动驾驶/学术论文: VLA模型为何忽视语言？破解指令跟随幻觉，分布外场景泛化新突破
+2026-05-13 21:52:29,455 - INFO - HTTP Request: POST https://api.deepseek.com/anthropic/v1/messages "HTTP/1.1 200 OK"
+2026-05-13 21:52:34,060 - INFO -   summarized Coding Agent/产品/应用: 对话关梦龙：他想用 Agent 拯救你手机里的 100G 废片
+2026-05-13 21:52:34,177 - INFO - HTTP Request: POST https://api.deepseek.com/anthropic/v1/messages "HTTP/1.1 200 OK"
+2026-05-13 21:52:39,625 - INFO -   reclassified: 从最优传输角度训练奖励模型：让 RLHF 学会「忽略错误偏好」丨ICML 2026 多模态大模型/大语言模型 → 多模态大模型/大语言模型
+2026-05-13 21:52:39,637 - ERROR -   failed: 从最优传输角度训练奖励模型：让 RLHF 学会「忽略错误偏好」丨ICML 2026: '学术论文'
+2026-05-13 21:52:39,767 - INFO - HTTP Request: POST https://api.deepseek.com/anthropic/v1/messages "HTTP/1.1 200 OK"
+2026-05-13 21:52:44,745 - INFO -   summarized Coding Agent/产品/应用: AI agents make small companies bigger
+2026-05-13 21:52:44,888 - INFO - HTTP Request: POST https://api.deepseek.com/anthropic/v1/messages "HTTP/1.1 200 OK"
+2026-05-13 21:53:12,214 - INFO -   filtered by reclassification: Show HN: Docker AI Stack – Deploy 8 self-hosted AI services with one command (其它)
+2026-05-13 21:53:12,227 - INFO -   summarized Coding Agent/产品/应用: Helm AI Kernel – an open-source execution firewall for AI agents
+2026-05-13 21:53:12,236 - INFO -   summarized Coding Agent/技术/算法: AI Coding Assistant Is Not Enough
+2026-05-13 21:53:12,246 - INFO -   summarized 多模态大模型/大语言模型/产品/应用: 腾讯Q1财报：混元迈出重组后第一步，Hy3 preview全球token消耗稳居前列
+2026-05-13 21:53:12,246 - INFO -   filtered by reclassification: 深度解析LLM Wiki / Obsidian-Wiki / GBrain：Agent时代知识的“自组织”与“自进化” (其它)
+2026-05-13 21:53:12,381 - INFO - HTTP Request: POST https://api.deepseek.com/anthropic/v1/messages "HTTP/1.1 200 OK"
+2026-05-13 21:53:16,173 - INFO -   filtered by reclassification: Dify 团队协作上线：Workflow 从个人画布到多人共建 (其它)
+2026-05-13 21:53:16,173 - INFO - Seen 822, recent 297, summarized 194, skipped 103
+2026-05-13 21:53:16,173 - INFO - Trend summary: AIGC视觉生成 (39 articles)
+2026-05-13 21:53:16,926 - INFO - HTTP Request: POST https://api.deepseek.com/anthropic/v1/messages "HTTP/1.1 200 OK"
+2026-05-13 21:53:28,505 - INFO - Trend summary: 自动驾驶 (105 articles)
+2026-05-13 21:53:28,687 - INFO - HTTP Request: POST https://api.deepseek.com/anthropic/v1/messages "HTTP/1.1 200 OK"
+2026-05-13 21:53:43,550 - INFO - Trend summary: Coding Agent (23 articles)
+2026-05-13 21:53:43,687 - INFO - HTTP Request: POST https://api.deepseek.com/anthropic/v1/messages "HTTP/1.1 200 OK"
+2026-05-13 21:53:55,795 - INFO - Trend summary: 多模态大模型/大语言模型 (27 articles)
+2026-05-13 21:53:55,972 - INFO - HTTP Request: POST https://api.deepseek.com/anthropic/v1/messages "HTTP/1.1 200 OK"
+2026-05-13 21:54:07,069 - INFO - === Token & Time Report ===
+2026-05-13 21:54:07,069 - INFO -   LLM calls: 23 (classify/summarize: 19, trend: 4)
+2026-05-13 21:54:07,069 - INFO -   Input tokens:  61,462
+2026-05-13 21:54:07,069 - INFO -   Output tokens: 17,479
+2026-05-13 21:54:07,069 - INFO -   Total tokens:  78,941
+2026-05-13 21:54:07,069 - INFO -   LLM time:      244.0s
+2026-05-13 21:54:07,074 - INFO - Wrote digest (md): ./output/ai_digest\2026-05-13-digest-8.md
+2026-05-13 21:54:07,085 - INFO - Wrote digest (html): ./output/ai_digest\2026-05-13-digest-8.html
+2026-05-13 21:54:07,085 - INFO - Done
