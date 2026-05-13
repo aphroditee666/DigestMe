@@ -45,6 +45,12 @@ class Summarizer:
         for cat in canonical:
             if raw in cat or cat in raw:
                 return cat
+        # Handle swapped slash-separated names (e.g. "大语言模型/多模态大模型" → "多模态大模型/大语言模型")
+        if "/" in raw:
+            raw_parts = set(p.strip() for p in raw.split("/"))
+            for cat in canonical:
+                if set(p.strip() for p in cat.split("/")) == raw_parts:
+                    return cat
         return "其它"
 
     def classify_only(self, title: str, source: str) -> str:

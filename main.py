@@ -57,9 +57,11 @@ ACADEMIC_ELIGIBLE_CATEGORIES = {"AIGC视觉生成", "自动驾驶"}
 def _apply_reclassification(summarizer, summary, old_category: str, title: str, categories_to_output: list, is_academic: bool = False):
     """Compare LLM's verified category against the original. Returns new category or None (filter out)."""
     vc = summary.verified_category
-    if not vc or vc == old_category:
+    if not vc:
         return old_category
     normalized = summarizer._normalize_category(vc)
+    if normalized == old_category:
+        return old_category
     if normalized == "其它" or normalized not in categories_to_output:
         logger.info(f"  filtered by reclassification: {title} ({vc})")
         return None
