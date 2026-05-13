@@ -12,24 +12,24 @@ _CSS = r"""
     --primary: #6366f1;
     --primary-light: #818cf8;
     --primary-dark: #4f46e5;
-    --primary-bg: #eef2ff;
+    --primary-bg: #ede4d6;
     --accent: #8b5cf6;
-    --accent-light: #f5f3ff;
-    --bg: #f5f5f7;
-    --surface: #fff;
-    --border: #e8e8ed;
-    --text: #1a1a2e;
-    --text-secondary: #5a5a7a;
-    --text-muted: #9999b0;
-    --shadow: 0 1px 3px rgba(0,0,0,.06);
-    --shadow-hover: 0 8px 24px rgba(99,102,241,.12);
-    --shadow-card: 0 2px 8px rgba(0,0,0,.04), 0 1px 2px rgba(0,0,0,.06);
+    --accent-light: #f5efe3;
+    --bg: #f5f0e5;
+    --surface: #fefcf5;
+    --border: #e5ddd0;
+    --text: #2c2416;
+    --text-secondary: #6b5d4e;
+    --text-muted: #a09888;
+    --shadow: 0 1px 3px rgba(0,0,0,.05);
+    --shadow-hover: 0 8px 24px rgba(139,92,246,.10);
+    --shadow-card: 0 2px 8px rgba(0,0,0,.04), 0 1px 2px rgba(0,0,0,.05);
     --radius: 12px;
     --radius-sm: 8px;
     --font: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans SC",sans-serif;
     --mono: "SF Mono","Fira Code","Fira Mono","Roboto Mono",monospace;
-    --card-hl: linear-gradient(135deg, #eef2ff 0%, #faf5ff 50%, #fdf2f8 100%);
-    --card-normal: linear-gradient(135deg, #fafafa 0%, #f8f8fc 100%);
+    --card-hl: linear-gradient(135deg, #ede4d6 0%, #f0e8da 50%, #f5efe3 100%);
+    --card-normal: linear-gradient(135deg, #fdfaf5 0%, #faf5ed 100%);
 }
 
 @media (prefers-color-scheme: dark) {
