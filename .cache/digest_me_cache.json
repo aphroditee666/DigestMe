@@ -11006,6 +11006,503 @@
       "category": "其它",
       "subtype": "技术/算法",
       "updated_at": "2026-05-12T10:50:58.393566"
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzkyMzcwMDIyMQ==&mid=2247502288&idx=1&sn=713e161d30a3736761692177cc2aa0b7": {
+      "title": "今日开源（2026-5-13）：面壁智能开源MiniCPM-V 4.6，端侧高效多模态理解模型，混合视觉压缩驱动移动平台轻量化部署",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzkyMzcwMDIyMQ==&mid=2247502288&idx=1&sn=713e161d30a3736761692177cc2aa0b7",
+      "source": "机器之心SOTA模型",
+      "category": "多模态大模型/大语言模型",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:50:33.173773",
+      "summary": "本文汇总了2026年5月13日发布的多个开源项目。核心项目包括：面壁智能的MiniCPM-V 4.6，基于SigLIP2-400M视觉编码器和Qwen3.5-0.8B语言模型，支持4x/16x混合视觉token压缩，可部署于iOS、安卓、鸿蒙平台，用于端侧高效多模态理解；ELF是连续时间流匹配的连续扩散语言模型，仅最后一步映射为离散token，支持无条件文本生成、机器翻译等任务；DreamLite是仅0.39B参数的端侧统一扩散模型，通过剪枝移动端U-Net和渐进式步蒸馏实现4步推理，在iPhone 17 Pro上约3秒生成/编辑1024×1024图像；jina-embeddings-v5-omni是1.74B参数的多模态嵌入模型，支持文本、图像、音频、视频输入，输出1024维向量，适配检索、分类等任务；Memoir是为AI Agent设计的高性能语义内存系统，提供类Git版本控制能力；Codebuff是开源AI编码助手，采用多Agent协作架构，支持自然语言指令修改代码库；OneVL是面向自动驾驶的VLA框架，通过双模态辅助解码器提升轨迹预测精度；RealAppliance是面向家电说明书理解的多任务数据集，覆盖13类100款家电的多语言说明书，包含4类标注任务。",
+      "key_points": [
+        "MiniCPM-V 4.6: 基于SigLIP2-400M和Qwen3.5-0.8B，支持4x/16x混合token压缩，适配iOS/安卓/鸿蒙",
+        "ELF: 连续时间流匹配扩散语言模型，性能优于同设置其他模型，训练消耗token更少",
+        "DreamLite: 0.39B参数端侧扩散模型，4步推理，iPhone 17 Pro上3秒生成1024×1024图像",
+        "jina-embeddings-v5-omni: 1.74B参数，支持文本/图像/音频/视频输入，嵌入维度1024",
+        "Memoir: AI Agent语义内存系统，提供分层语义路径和类Git版本控制"
+      ],
+      "arxiv_url": "",
+      "github_url": ""
+    },
+    "http://mp.weixin.qq.com/s?__biz=Mzg3Mzg5MjY3Nw==&mid=2247526269&idx=1&sn=e0bdcbaf64a63b16d3f6a192081d104e&chksm=cfff48dee50ef3c825e72550ec397700caff9d286b1966b16f19132f623083df984f0e5d5476&scene=0&xtrack=1#rd": {
+      "title": "6.1B激活，三榜开源第一！蚂蚁·安诊儿医疗大模型发布",
+      "url": "http://mp.weixin.qq.com/s?__biz=Mzg3Mzg5MjY3Nw==&mid=2247526269&idx=1&sn=e0bdcbaf64a63b16d3f6a192081d104e&chksm=cfff48dee50ef3c825e72550ec397700caff9d286b1966b16f19132f623083df984f0e5d5476&scene=0&xtrack=1#rd",
+      "source": "AIGC开放社区",
+      "category": "多模态大模型/大语言模型",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:50:33.186283",
+      "summary": "蚂蚁集团、浙江省卫生健康信息中心等单位联合发布了开源医疗大模型AntAngelMed。该模型基于Ling-flash-2.0，采用MoE架构，总参数100B但仅激活6.1B参数，推理速度超过200 tokens/s，性能接近40B密集模型。在HealthBench、MedAIBench和MedBench三大权威医疗基准上均位列第一，超越所有开源模型及多个闭源模型，尤其在HealthBench-Hard子集上优势显著。模型采用三阶段训练流程：大规模医学语料持续预训练、多源异构指令数据监督微调（含通用数据强化思维链和医学场景适配）、以及GRPO强化学习优化共情能力和安全边界。在H20硬件上，结合FP8量化和EAGLE3技巧，推理吞吐量显著提升，支持128K上下文长度。开源地址包括Modelscope和GitHub。",
+      "key_points": [
+        "AntAngelMed基于MoE架构，100B总参数，仅激活6.1B，性能接近40B密集模型",
+        "在HealthBench、MedAIBench、MedBench三榜开源第一，超越所有开源及多个闭源模型",
+        "三阶段训练: 医学语料持续预训练、多源异构指令SFT、GRPO强化学习优化共情和安全",
+        "推理速度超过200 tokens/s，结合FP8量化与EAGLE3优化，HumanEval提升71%",
+        "开源地址: https://modelscope.cn/models/MedAIBase/AntAngelMed 和 GitHub"
+      ],
+      "arxiv_url": "",
+      "github_url": "https://github.com/MedAIBase/AntAngelMed"
+    },
+    "http://mp.weixin.qq.com/s?__biz=Mzg3Mzg5MjY3Nw==&mid=2247526269&idx=2&sn=e9a48bef38ed36fb061e8bc88af3f6c2&chksm=cf957f0f3ead68abee8c4910dab71729286163a9a36ede6df7648aa2abead2dff9978362e250&scene=0&xtrack=1#rd": {
+      "title": "黄仁勋CMU演讲：取代你的是会AI的人，所有人同一起跑线，奔跑吧",
+      "url": "http://mp.weixin.qq.com/s?__biz=Mzg3Mzg5MjY3Nw==&mid=2247526269&idx=2&sn=e9a48bef38ed36fb061e8bc88af3f6c2&chksm=cf957f0f3ead68abee8c4910dab71729286163a9a36ede6df7648aa2abead2dff9978362e250&scene=0&xtrack=1#rd",
+      "source": "AIGC开放社区",
+      "category": "其它",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:50:10.213321"
+    },
+    "http://mp.weixin.qq.com/s?__biz=Mzg3Mzg5MjY3Nw==&mid=2247526269&idx=3&sn=863ee6bd2903ae6a4882e0c5d13710f3&chksm=cfc873e3e2c5d0217399f13881bf29424ff6af903bfdafb7eac2baaae02645fc02eee777d38d&scene=0&xtrack=1#rd": {
+      "title": "别错过！Agent Skill 开发者大赛作品提交截止今天",
+      "url": "http://mp.weixin.qq.com/s?__biz=Mzg3Mzg5MjY3Nw==&mid=2247526269&idx=3&sn=863ee6bd2903ae6a4882e0c5d13710f3&chksm=cfc873e3e2c5d0217399f13881bf29424ff6af903bfdafb7eac2baaae02645fc02eee777d38d&scene=0&xtrack=1#rd",
+      "source": "AIGC开放社区",
+      "category": "Coding Agent",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:50:33.195284",
+      "summary": "AIGC开放社区与算泥社区联合举办Agent Skill开发者大赛，旨在推动AI Agent从概念演示走向实际生产力落地。大赛设置了创新应用赛道和现场黑客松赛道，分别提供充足开发周期和限时极限挑战。组委会提供大模型API算力支持、赛前培训和技术文档指导。参赛作品要求实际操作软件、调用API并完成闭环任务，强调真实落地能力，拒绝理论概念。获奖者将获得丰厚奖金、权威证书和头部企业专家点评。报名通道已开启，截止日期为2026年5月13日。",
+      "key_points": [
+        "双赛道制: 创新应用赛道(长周期打磨)和现场黑客松赛道(限时极限挑战)",
+        "组委会提供大模型API算力、赛前培训和技术文档支持",
+        "参赛作品要求实际操作软件、调用API完成闭环任务，强调真实落地",
+        "获奖者可获丰厚奖金、权威证书和头部企业技术负责人点评"
+      ],
+      "arxiv_url": "",
+      "github_url": ""
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzAxMDMxOTI2NA==&mid=2649108139&idx=1&sn=867a3aed3ec491af1991f23344df7e3b": {
+      "title": "探秘 Claude Code，搞懂 Agent Harness｜对谈来新璐",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzAxMDMxOTI2NA==&mid=2649108139&idx=1&sn=867a3aed3ec491af1991f23344df7e3b",
+      "source": "十字路口Crossing",
+      "category": "Coding Agent",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:50:33.204290",
+      "summary": "本期播客邀请来新璐（ShareAI开源社区发起人，《Learn Claude Code》教程作者，GitHub获50k+ Star）探讨Agent Harness。新璐将Agent Harness定义为模型之外的所有组件，比喻为增强模型能力的机甲。他提出了Agent Harness的三层框架：执行层（会跑）、状态层（跑久）、治理层（跑稳），并分析了Claude Code中的关键机制，如更多context、更少control的思路、零上下文管理哲学、长程任务接力式交接策略，以及让Agent通过记忆维护迭代越用越聪明的机制。新璐认为Agent智力上限来自模型发展，但Harness可以极大扩展模型能力。他还分享了个人创业经历，从一人公司（已获数百万美金融资）到认为未来只有0人公司没有1人公司的观点，并介绍了其开发的KB级Agent Komputer工具链。",
+      "key_points": [
+        "Agent Harness定义: 模型以外的所有组件，比喻为增强模型能力的机甲",
+        "三层框架: 执行层(会跑)、状态层(跑久)、治理层(跑稳)",
+        "Claude Code关键机制: 更多context更少control、零上下文管理、长程任务接力交接",
+        "新璐的《Learn Claude Code》教程GitHub获50k+ Star",
+        "一人公司获数百万美金融资，认为未来只有0人公司没有1人公司"
+      ],
+      "arxiv_url": "",
+      "github_url": ""
+    },
+    "https://mp.weixin.qq.com/s?__biz=Mzg2OTA1OTAxNA==&mid=2247490106&idx=1&sn=4176e882db8bc9cd542cb876806e5d62": {
+      "title": "我的一人公司，空降腾讯一键开雇！",
+      "url": "https://mp.weixin.qq.com/s?__biz=Mzg2OTA1OTAxNA==&mid=2247490106&idx=1&sn=4176e882db8bc9cd542cb876806e5d62",
+      "source": "花叔",
+      "category": "Coding Agent",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:50:33.215289",
+      "summary": "作者花叔分享其一人公司如何通过自定义AI Agent扩张团队的故事。过去三个月，其公众号阅读量逐月翻倍，粉丝增长80%。作者利用AI Native Coder技能，自主编写代码，将两个职能角色——数据分析部和编辑部——打包成AI专家，并上架至腾讯WorkBuddy专家市场。数据分析部由4个Agent组成（主管、趋势分析师、结构分析师、异常侦察员），并行处理数据，5分钟生成含网页报告、Excel、PPT的多视角分析报告。编辑部为一位专攻.docx文档审稿的主编Agent，直接在原文中加批注和红色修订痕迹，避免格式破坏。作者认为，2026年Agentic AI已达到一个重要临界点，开始具备像一个完整团队那样持续自动执行任务的能力，而腾讯WorkBuddy通过预置职能角色（如数据分析师、合同审稿）和产品化Multi-Agent编排，降低了门槛，让用户无需懂代码即可召唤AI团队。",
+      "key_points": [
+        "自定义AI扩展一人公司: 自主编写AI分析师和审稿主编Agent，上架腾讯WorkBuddy",
+        "数据分析部: 4个Agent并行工作，5分钟生成含网页、Excel、PPT的多视角分析报告",
+        "编辑部: 专攻.docx审稿，直接在原文加批注和修订痕迹，避免格式损坏",
+        "腾讯WorkBuddy预置职能角色并产品化Multi-Agent编排，降低AI使用门槛",
+        "作者认为Agentic AI已可像完整团队持续自动执行任务，推动一人公司发展"
+      ],
+      "arxiv_url": "",
+      "github_url": ""
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzU2ODEwMzE0Nw==&mid=2247549458&idx=1&sn=2e54a3b438fb7e05a973837a7a7dcad3": {
+      "title": "AI电商详情页设计实操教程！附详细提示词",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzU2ODEwMzE0Nw==&mid=2247549458&idx=1&sn=2e54a3b438fb7e05a973837a7a7dcad3",
+      "source": "优设",
+      "category": "AIGC视觉生成",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:50:54.948767",
+      "summary": "本文是一篇面向电商设计师和运营的实操教程，核心在于利用AI技术生成商品详情页（以湿巾产品为例）。传统设计常依赖经验和直觉，缺乏系统逻辑。文章提出了一种从前期策划到AI出图的完整工作流：首先分析品牌定位、产品卖点和用户场景，然后将详情页解构为首屏主视觉、材质细节、功能卖点、使用场景、工厂背书、促销海报等多个独立屏段。针对每个屏段，文章提供了具体的AI出图思路和详细提示词。该方法的核心价值在于让详情页设计从感性的拼凑转向理性的、基于卖点逻辑的分屏生成，AI负责高效产出视觉方案，设计师负责判断、优化和后期PS调整，从而提升出图效率和成片稳定性。文中强调的是“AI+人工”的协作模式，而非完全自动化。",
+      "key_points": [
+        "教程针对湿巾产品详情页，提供从策划到AI出图的全流程方法论。",
+        "将详情页解构为首屏主视觉、材质、卖点、场景等多屏结构。",
+        "核心是AI与设计师协作：AI提效率，设计师做判断与优化。",
+        "提供针对不同屏段的出图思路和具体提示词。"
+      ],
+      "arxiv_url": "",
+      "github_url": ""
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzE5MTA3NzcxMQ==&mid=2247488475&idx=1&sn=cf5a0fa22b0ad0a665f2cb92e7e337d0": {
+      "title": "一个 AI 还是不够",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzE5MTA3NzcxMQ==&mid=2247488475&idx=1&sn=cf5a0fa22b0ad0a665f2cb92e7e337d0",
+      "source": "MiniMax 稀宇科技",
+      "category": "多模态大模型/大语言模型",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:50:10.264893"
+    },
+    "https://www.latent.space/p/ainews-the-end-of-finetuning": {
+      "title": "[AINews] The End of Finetuning",
+      "url": "https://www.latent.space/p/ainews-the-end-of-finetuning",
+      "source": "Latent Space",
+      "category": "多模态大模型/大语言模型",
+      "subtype": "技术/算法",
+      "updated_at": "2026-05-13T21:50:10.274891"
+    },
+    "https://simonwillison.net/2026/May/13/csp-allow/#atom-everything": {
+      "title": "CSP Allow-list Experiment",
+      "url": "https://simonwillison.net/2026/May/13/csp-allow/#atom-everything",
+      "source": "Simon Willison's Blog",
+      "category": "其它",
+      "subtype": "技术/算法",
+      "updated_at": "2026-05-13T21:50:10.282894"
+    },
+    "https://simonwillison.net/2026/May/12/datasette/#atom-everything": {
+      "title": "datasette 1.0a29",
+      "url": "https://simonwillison.net/2026/May/12/datasette/#atom-everything",
+      "source": "Simon Willison's Blog",
+      "category": "其它",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:50:10.293894"
+    },
+    "https://simonwillison.net/2026/May/12/mo-bitar/#atom-everything": {
+      "title": "Quoting Mo Bitar",
+      "url": "https://simonwillison.net/2026/May/12/mo-bitar/#atom-everything",
+      "source": "Simon Willison's Blog",
+      "category": "其它",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:50:10.302630"
+    },
+    "https://simonwillison.net/2026/May/12/mitchell-hashimoto/#atom-everything": {
+      "title": "Quoting Mitchell Hashimoto",
+      "url": "https://simonwillison.net/2026/May/12/mitchell-hashimoto/#atom-everything",
+      "source": "Simon Willison's Blog",
+      "category": "其它",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:50:10.310883"
+    },
+    "https://www.qbitai.com/2026/05/416963.html": {
+      "title": "林俊旸果然创业了！一个“Qwen负责人”头衔值135亿",
+      "url": "https://www.qbitai.com/2026/05/416963.html",
+      "source": "量子位",
+      "category": "多模态大模型/大语言模型",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:50:10.320876"
+    },
+    "https://www.qbitai.com/2026/05/416870.html": {
+      "title": "苹果画的饼谷歌率先搞定！Gemini全面进驻全家桶，连鼠标都AI上了",
+      "url": "https://www.qbitai.com/2026/05/416870.html",
+      "source": "量子位",
+      "category": "多模态大模型/大语言模型",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:50:10.329876"
+    },
+    "https://www.qbitai.com/2026/05/416864.html": {
+      "title": "高德与千问C端应用团队开源AGenUI：首个覆盖iOS、安卓、鸿蒙三端的原生A2UI框架",
+      "url": "https://www.qbitai.com/2026/05/416864.html",
+      "source": "量子位",
+      "category": "Coding Agent",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:50:10.338879"
+    },
+    "https://www.qbitai.com/2026/05/416831.html": {
+      "title": "AI拿婚外情写勒索邮件，查一年告诉我科幻小说教坏的",
+      "url": "https://www.qbitai.com/2026/05/416831.html",
+      "source": "量子位",
+      "category": "其它",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:50:10.346935"
+    },
+    "https://www.qbitai.com/2026/05/416762.html": {
+      "title": "AI步入“自我进化”时代，李彦宏首提AI时代度量衡“DAA”｜Create2026百度AI开发者⼤会速览",
+      "url": "https://www.qbitai.com/2026/05/416762.html",
+      "source": "量子位",
+      "category": "多模态大模型/大语言模型",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:50:10.356377"
+    },
+    "https://www.qbitai.com/2026/05/416754.html": {
+      "title": "Auto Research时代，47个没有标准答案的任务成了Agent能力必测榜",
+      "url": "https://www.qbitai.com/2026/05/416754.html",
+      "source": "量子位",
+      "category": "Coding Agent",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:51:16.267784",
+      "summary": "随着AI Agent进入可迭代优化的新阶段，一套名为“Auto Research”的基准测试被提出，用于评估Agent在没有标准答案的复杂任务中的能力。该基准包含47个开放式的、无标准答案的任务，涵盖了需要创新、推理和自主决策的场景，旨在挑战AI Agent的真实研究和解决问题的能力。与传统的标准答案测试不同，该榜单强调Agent在“迭代优化”过程中的表现，被视为衡量Agent在真实世界应用场景中自主完成任务能力的必备测试。这标志着Agent评估从简单指令执行向复杂研究和开发能力测评的转变。",
+      "key_points": [
+        "'Auto Research'基准包含47个无标准答案的开放任务",
+        "该基准用于评估Agent在复杂、开放式问题中的真实能力",
+        "强调进入'迭代优化'时代后Agent的自主创新能力",
+        "被视为衡量Agent真实研究与解决问题能力的'必测榜'"
+      ],
+      "arxiv_url": "",
+      "github_url": ""
+    },
+    "https://www.qbitai.com/2026/05/416739.html": {
+      "title": "奥特曼趁马斯克出差爆猛料：他曾想让子女继承OpenAI",
+      "url": "https://www.qbitai.com/2026/05/416739.html",
+      "source": "量子位",
+      "category": "其它",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:50:10.374376"
+    },
+    "https://www.qbitai.com/2026/05/416576.html": {
+      "title": "爱思唯尔把Meta告了：拿Sci-Hub盗版论文训练大模型",
+      "url": "https://www.qbitai.com/2026/05/416576.html",
+      "source": "量子位",
+      "category": "多模态大模型/大语言模型",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:50:10.382376"
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzkzMDY1NDgyOQ==&mid=2247831012&idx=1&sn=bf0ab51ba85d26d3dd62ac781062460a": {
+      "title": "“10周的工作量，AI只用4天！”Anthropic发布会全程实录：你引以为傲的复杂工程，在模型眼里只是个玩具",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzkzMDY1NDgyOQ==&mid=2247831012&idx=1&sn=bf0ab51ba85d26d3dd62ac781062460a",
+      "source": "CSDN",
+      "category": "多模态大模型/大语言模型",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:51:16.279553",
+      "summary": "在Anthropic举办的“Code w/ Claude”开发者大会上，发布了一系列重磅更新，旨在推动软件工程的范式转移。核心内容包括：更强的底层模型、全新的Claude Platform代理编排能力，以及改进的Claude Code桌面端。大会展示了AI在软件开发中的指数级能力增长，并强调企业开发模式正从线性向异步、持续集成转变。实际案例中，Stripe使用Claude将5万行Scala代码转写成Java的预计10周工作量，仅用4天完成；Binti社工平台利用Claude API将资质审批流程缩短20天。这些案例体现了Claude Code将编程从同步推进到异步、支持持续跑任务、自动修PR和CI报错的能力，标志着AI Agent在复杂工程项目中的应用进入新阶段。",
+      "key_points": [
+        "Anthropic发布三大杀手锏：更强模型、Claude Platform、Claude Code桌面端",
+        "Stripe使用Claude将5万行Scala转写代码的10周工作量压缩至4天",
+        "Binti利用Claude API将寄养家庭资质审批流程缩短20天",
+        "推出异步开发流：支持持续任务、自动修PR和CI报错",
+        "核心信号：AI模型能力指数级增长，开发模式需从线性向异步转变"
+      ],
+      "arxiv_url": "",
+      "github_url": ""
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzkzMDY1NDgyOQ==&mid=2247831012&idx=2&sn=8279e94a9f413b7e467262996abee472": {
+      "title": "欠给智能体的技术债，新全栈AI云如何救场？",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzkzMDY1NDgyOQ==&mid=2247831012&idx=2&sn=8279e94a9f413b7e467262996abee472",
+      "source": "CSDN",
+      "category": "Coding Agent",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:50:10.399376"
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzkzMDY1NDgyOQ==&mid=2247831012&idx=3&sn=105a5f3bc3e12ceda7391a100d633128": {
+      "title": "Python统治时代结束：当 AI 成为程序员，为什么Rust、Go成了首选！",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzkzMDY1NDgyOQ==&mid=2247831012&idx=3&sn=105a5f3bc3e12ceda7391a100d633128",
+      "source": "CSDN",
+      "category": "Coding Agent",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:50:10.407382"
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzIyMzA5NjEyMA==&mid=2647682201&idx=1&sn=57321ea63b1ad5839bb682670c764d2a": {
+      "title": "豆包输入法Mac版正式上线，所有人都该试试AI语音输入了。",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzIyMzA5NjEyMA==&mid=2647682201&idx=1&sn=57321ea63b1ad5839bb682670c764d2a",
+      "source": "数字生命卡兹克",
+      "category": "多模态大模型/大语言模型",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:50:10.418380"
+    },
+    "https://mp.weixin.qq.com/s?__biz=MjM5ODU1MzQzOQ==&mid=2451429557&idx=1&sn=db360bd5df191c8e0beaf73d9ccc7475": {
+      "title": "豆包输入法正式上线，完全免费",
+      "url": "https://mp.weixin.qq.com/s?__biz=MjM5ODU1MzQzOQ==&mid=2451429557&idx=1&sn=db360bd5df191c8e0beaf73d9ccc7475",
+      "source": "AI产品黄叔",
+      "category": "多模态大模型/大语言模型",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:50:10.427380"
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652699935&idx=1&sn=974ecb8c7bd833937177ef900575e558": {
+      "title": "清华系团队出手！一张 4090 即可「爆改」，1.3B小钢炮震撼开源",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652699935&idx=1&sn=974ecb8c7bd833937177ef900575e558",
+      "source": "新智元",
+      "category": "多模态大模型/大语言模型",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:51:58.916262",
+      "summary": "面壁智能联合清华大学、OpenBMB开源社区发布了新一代端侧多模态大模型MiniCPM-V 4.6，仅有1.3B参数，但性能全面超越阿里Qwen3.5-0.8B和谷歌Gemma4-E2B-it等同级对手。该模型在多个Benchmark（如Artificial Analysis榜单）上表现优异，尤其在效率和推理优化方面实现突破：在单张4090显卡上，高并发高清图吞吐量达到Qwen3.5-0.8B的1.5倍；处理3136²超高清大图时，首响延迟比对手快2.2倍；非推理版本仅消耗5.4M token量，为Qwen3.5-0.8B的1/19。模型通过更短的视觉序列和更小的KV-Cache，实现了端侧流畅体验和云端高吞吐。它验证了面壁智能提出的“密度定律”，证明1B级模型可成为高性能、可端云两栖部署的工业级武器。模型已开源，并提供了Hugging Face、GitHub、ModelScope等渠道。",
+      "key_points": [
+        "MiniCPM-V 4.6仅有1.3B参数，性能全面超越Qwen3.5-0.8B和Gemma4-E2B-it。",
+        "单张4090上高清图吞吐量达Qwen3.5-0.8B的1.5倍，首响延迟快2.2倍。",
+        "非推理版本仅消耗5.4M token量，为Qwen3.5-0.8B的1/19。",
+        "验证了“密度定律”，实现端侧与云端高效部署。",
+        "模型支持视觉问答、文档OCR等多种任务，且已全面开源。"
+      ],
+      "arxiv_url": "",
+      "github_url": "https://github.com/OpenBMB/MiniCPM-V"
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652699935&idx=2&sn=7aeb517f4a7c4bec3e16e6d9d6794870": {
+      "title": "黄仁勋100万亿预言兑现！易鑫Voice Agent落地，汽车金融迎效率革命",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652699935&idx=2&sn=7aeb517f4a7c4bec3e16e6d9d6794870",
+      "source": "新智元",
+      "category": "自动驾驶",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:52:16.400686",
+      "summary": "本文报道了易鑫集团在汽车金融领域落地的工业级Voice Agent系统。针对通用AI方案在复杂垂类场景（如汽车金融）中水土不服的问题（噪音、打断、合规），易鑫自研了一套集Multi-Agent协同架构、Turn-Taking模型和场景降噪引擎于一体的系统。其核心是将电话销售流程拆解为多个独立任务节点（如问候、资质确认、添加微信），每个节点由专用Agent处理，通过“物理锁”强制流程流转，防止AI自由发挥。在用户打断时，系统通过外部框架统一管理对话历史，避免逻辑错乱。该系统已在真实业务中运行，旨在优化客户体验和转化率，实现“业务优先”，撬动黄仁勋预言的百万亿美元市场。",
+      "key_points": [
+        "易鑫Voice Agent专为汽车金融场景打造，解决通用方案在噪音、打断和合规上的痛点。",
+        "核心采用Multi-Agent架构，将电销流程拆解为多个独立任务节点，每个节点有独立指令和工具。",
+        "引入“物理锁”机制强制流程流转，AI无法自由发挥，只能在任务节点间按顺序执行。",
+        "用户打断时，系统保留用户实际听到的内容并追加新输入，避免对话历史错乱。"
+      ],
+      "arxiv_url": "",
+      "github_url": ""
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652699935&idx=3&sn=cbd28843eb4c2b4247ad20c7fcca99bd": {
+      "title": "VLA模型为何忽视语言？破解指令跟随幻觉，分布外场景泛化新突破",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652699935&idx=3&sn=cbd28843eb4c2b4247ad20c7fcca99bd",
+      "source": "新智元",
+      "category": "自动驾驶",
+      "subtype": "学术论文",
+      "updated_at": "2026-05-13T21:52:29.329300",
+      "summary": "当前视觉-语言-动作（VLA）模型常受“视觉捷径”问题困扰，即模型过度依赖视觉线索而忽略语言指令，导致在分布外（OOD）场景下性能大幅下降。华中科技大学、哈尔滨工业大学、香港科技大学（广州）等机构在最新论文中提出LangForce方法，旨在破解这一指令跟随幻觉。研究首先通过三项实验验证了视觉捷径的存在：在相似场景（如RoboCasa）上，仅使用视觉的模型成功率（44.6%）与完整VLA模型（47.8%）接近；在具有分歧任务的LIBERO Goal子集上，仅视觉模型成功率骤降至12.4%，而完整模型显著更高；在BridgeDataV2训练后迁移到OOD仿真环境SimplerEnv时，仅视觉模型成功率接近0%，证实了灾难性泛化失败。为强化模型对语言的依赖，LangForce引入对数似然比（log-likelihood ratio）损失，通过对语言与非语言条件下的动作分布进行对比学习，迫使策略真正学习语言条件化的动作映射。在VLABench和RoboCasa等基准上，LangForce在OOD场景中显著提升指令遵循成功率，同时保留了语言模型的核心功能。该工作揭示了VLA模型中语言被忽视的根本原因，并提供了一种有效的正则化框架，为机器人基础模型在现实世界中安全、可泛化执行提供了关键思路。",
+      "key_points": [
+        "揭示了VLA模型的“视觉捷径”问题：模型常忽略语言指令，仅依赖视觉线索进行动作预测",
+        "三项实验证实问题：相似场景下仅视觉模型成功率达44.6%（与完整VLA 47.8%接近），OOD场景下骤降至0%",
+        "LangForce方法引入对数似然比损失，通过对比学习强化语言对动作分布的条件作用",
+        "在VLABench和RoboCasa基准的OOD任务中显著提升了指令遵循成功率",
+        "使用Qwen3VL-4B-GR00T模型作为基础架构，在BridgeDataV2、LIBERO等数据集上验证"
+      ],
+      "arxiv_url": "https://arxiv.org/abs/2601.15197",
+      "github_url": ""
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA==&mid=2247734728&idx=1&sn=c0d4ab9f8c9a99880071c8f3dc720dcb": {
+      "title": "对话关梦龙：他想用 Agent 拯救你手机里的 100G 废片",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA==&mid=2247734728&idx=1&sn=c0d4ab9f8c9a99880071c8f3dc720dcb",
+      "source": "AI科技评论",
+      "category": "Coding Agent",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:52:34.048698",
+      "summary": "本文报道了前字节跳动剪映早期团队成员关梦龙的创业项目“Cutto”。Cutto定位为一款AI编导产品，旨在通过Agent架构帮助普通用户将手机中的碎片化素材（如照片、视频）自动生成有故事性的视频。与剪映等传统视频编辑工具（提供高阶画笔）不同，Cutto将创意和决策权交给AI，用户只需回答4-5个关于受众和调性的问题，系统就能在3-5分钟内代写出完整的、精确到文案、音乐和景别的分镜脚本。其核心是通过Agent技术，将优秀创作者的方法论赋能给小白用户，降低视频创作门槛，实现“表达能力平权”。该产品目前以Web版为主（研发接近尾声），已有iOS预研版本上架App Store，并正与漫剧公司洽谈合作，融资进展顺利。关梦龙认为，当AI让代码生产力飞跃时，真正的竞争在于产品价值和用户持续使用的能力。",
+      "key_points": [
+        "Cutto是一款AI编导Agent，用于自动生成视频脚本和分镜。",
+        "用户仅需回答4-5个关于受众和调性的选择题，即可获得完整脚本。",
+        "系统能在3-5分钟内完成从文案、音乐到景别的全流程编写。",
+        "产品定位为“表达助手”，通过Agent架构实现创作者方法论的知识迁移。",
+        "目前Web版研发接近尾声，iOS预研版本已上线App Store。"
+      ],
+      "arxiv_url": "",
+      "github_url": ""
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA==&mid=2247734728&idx=2&sn=94d06395e2eb325a6bec729c330382c1": {
+      "title": "从最优传输角度训练奖励模型：让 RLHF 学会「忽略错误偏好」丨ICML 2026",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA==&mid=2247734728&idx=2&sn=94d06395e2eb325a6bec729c330382c1",
+      "source": "AI科技评论",
+      "category": "多模态大模型/大语言模型",
+      "subtype": "技术/算法",
+      "updated_at": "2026-05-13T21:52:39.625358",
+      "summary": "在大语言模型的对齐训练（如RLHF、RLAIF）中，奖励模型通常假设标注的偏好数据准确反映真实人类偏好，但现实中标注噪声（如疲劳、主观分歧、模型幻觉）广泛存在，导致模型同时拟合真实偏好和错误噪声，进而引发Reward Hacking和对齐质量下降。针对这一问题，浙江大学、小红书、北京大学等机构提出了SelectiveRM，一种基于最优传输（Optimal Transport）的奖励模型训练框架。该方法不再进行传统的点对点拟合，而是通过联合一致性差异（Joint Consistency Discrepancy）和部分最优传输（Partial Optimal Transport），在分布层面对齐“语义-偏好”结构，同时自动识别并排除高代价、与语义一致性冲突的噪声样本。实验表明，SelectiveRM在多个公开偏好数据集上显著提升了奖励模型的可靠性，并缓解了噪声对后续策略优化的负面影响。论文链接：https://arxiv.org/abs/2605.06036。",
+      "key_points": [
+        "揭示偏好数据中实例相关噪声普遍存在，部分数据集噪声比例接近40%-50%，传统点对点拟合会同时学习错误标签。",
+        "提出SelectiveRM框架，将奖励模型训练重构为分布对齐问题，利用最优传输衡量语义距离与偏好差异的一致结构。",
+        "引入部分最优传输的Mass Relaxation机制，允许排除高成本噪声样本，只向可靠的偏好数据对齐。",
+        "在多个基准上验证了该方法能有效提升奖励模型在噪声场景下的泛化性与对齐质量。"
+      ],
+      "arxiv_url": "https://arxiv.org/abs/2605.06036",
+      "github_url": ""
+    },
+    "https://brodzinski.com/2026/04/conways-law-ai-product-development.html": {
+      "title": "Conway's Law Teaches a Grim Lesson About AI in Product Development",
+      "url": "https://brodzinski.com/2026/04/conways-law-ai-product-development.html",
+      "source": "Hacker News AI",
+      "category": "其它",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:50:10.482892"
+    },
+    "https://text-incubation.com/ai-agents-make-small-companies-bigger": {
+      "title": "AI agents make small companies bigger",
+      "url": "https://text-incubation.com/ai-agents-make-small-companies-bigger",
+      "source": "Hacker News AI",
+      "category": "Coding Agent",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:52:44.734622",
+      "summary": "本文探讨了AI Agent如何帮助小型企业扩大规模和提升效率。核心观点是，AI Agent可以通过自动化重复性任务、优化客户服务、数据分析和管理流程，使小企业在不增加大量人力成本的情况下，实现类似大企业的服务能力和运营效率。文章指出，小企业面临资源有限、人才短缺等挑战，而AI Agent（如智能客服、自动化营销、流程机器人等）能够填补这些空白，将小企业从繁琐事务中解放出来，专注于核心业务和战略增长。通过部署AI Agent，小企业可以降低运营成本、缩短响应时间、挖掘数据价值，从而在竞争中获得优势。文章强调了AI Agent的易用性和可扩展性，认为这是小企业“变大”的关键杠杆。然而，文章也提醒企业需要合理规划Agent的部署和与现有系统的集成，并注意数据安全与伦理问题。总体而言，AI Agent为小企业提供了前所未有的数字化跃迁机会。",
+      "key_points": [
+        "AI Agent可自动化客服、营销、数据分析等重复性任务，降低小企业人力成本。",
+        "通过AI Agent，小企业能以较低投入实现类似大企业的服务质量和运营效率。",
+        "部署AI Agent需注重与现有业务系统的集成及数据安全与伦理合规。",
+        "文章强调AI Agent的易用性和可扩展性是小企业实现数字化跃迁的关键。"
+      ],
+      "arxiv_url": "",
+      "github_url": ""
+    },
+    "https://metedata.substack.com/p/012-your-ai-frustration-is-my-opportunity": {
+      "title": "Your AI Frustration Is My Opportunity",
+      "url": "https://metedata.substack.com/p/012-your-ai-frustration-is-my-opportunity",
+      "source": "Hacker News AI",
+      "category": "其它",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:50:10.501892"
+    },
+    "https://www.404media.co/software-developers-say-ai-is-rotting-their-brains/": {
+      "title": "Software Developers Say AI Is Rotting Their Brains",
+      "url": "https://www.404media.co/software-developers-say-ai-is-rotting-their-brains/",
+      "source": "Hacker News AI",
+      "category": "其它",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:50:10.509898"
+    },
+    "https://nintil.com/claude-constitution/": {
+      "title": "Claude's Constitution; or love as the solution to the AI alignment problem",
+      "url": "https://nintil.com/claude-constitution/",
+      "source": "Hacker News AI",
+      "category": "其它",
+      "subtype": "技术/算法",
+      "updated_at": "2026-05-13T21:50:10.520893"
+    },
+    "https://github.com/hwdsl2/docker-ai-stack": {
+      "title": "Show HN: Docker AI Stack – Deploy 8 self-hosted AI services with one command",
+      "url": "https://github.com/hwdsl2/docker-ai-stack",
+      "source": "Hacker News AI",
+      "category": "Coding Agent",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:50:10.529896"
+    },
+    "https://github.com/Mindburn-Labs/helm-ai-kernel": {
+      "title": "Helm AI Kernel – an open-source execution firewall for AI agents",
+      "url": "https://github.com/Mindburn-Labs/helm-ai-kernel",
+      "source": "Hacker News AI",
+      "category": "Coding Agent",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:53:12.214761",
+      "summary": "本文介绍了开源项目“Helm AI Kernel”，它是一个专门为AI Agent设计的执行防火墙。核心问题是，随着AI Agent（特别是编码Agent）能力增强，其可能执行的恶意或危险操作（如文件删除、网络攻击、资源滥用）的风险急剧上升。Helm AI Kernel旨在为Agent的行为提供一个隔离和安全执行的环境。该项目通过在内核层面拦截Agent发起的系统调用（如文件读写、网络请求、进程管理），并基于用户自定义的安全策略进行实时评估和授权，从而构建“执行防火墙”。它支持细粒度的权限控制，例如允许Agent读取特定目录但禁止写入，或允许访问特定API但禁止访问内网。关键结论是，Helm AI Kernel为AI Agent的安全运行提供了最低权限原则的实现框架，类似于给Agent穿上了一个“权限盔甲”。它将Agent的安全性控制从应用层下沉到了操作系统内核层，能有效防止Agent被诱导执行恶意指令或因推理错误导致破坏性操作。该项目适用于需要安全地执行外部代码（如代码解释器、Coding Agent）的各种场景，是保障AI Agent安全性的一种基础设施级解决方案。",
+      "key_points": [
+        "AI Agent（特别是Coding Agent）存在执行恶意或危险操作的安全风险。",
+        "Helm AI Kernel 在内核层构建“执行防火墙”，拦截并评估Agent的系统调用。",
+        "支持基于用户自定义策略的细粒度权限控制，如文件、网络、进程访问。",
+        "将Agent安全策略从应用层下沉到内核层，实现最低权限原则。"
+      ],
+      "arxiv_url": "",
+      "github_url": "https://github.com/Mindburn-Labs/helm-ai-kernel"
+    },
+    "https://articles.zimetic.com/your-ai-coding-assistant-is-not-enough/": {
+      "title": "AI Coding Assistant Is Not Enough",
+      "url": "https://articles.zimetic.com/your-ai-coding-assistant-is-not-enough/",
+      "source": "Hacker News AI",
+      "category": "Coding Agent",
+      "subtype": "技术/算法",
+      "updated_at": "2026-05-13T21:53:12.227567",
+      "summary": "本文讨论了当前AI编码助手的局限性，并指出单纯依赖AI编码助手无法从根本上提升软件开发效率和质量。文章认为，当前主流的AI编码助手（如GitHub Copilot、Cursor等）在补全代码、生成片段等微观层面效果显著，但在处理复杂的系统设计、架构权衡、遗留代码理解、跨模块依赖分析以及确保代码与业务需求一致等宏观问题上表现不佳。核心问题在于，这些工具缺乏对项目整体上下文、业务逻辑和工程实践的深层理解。文章提出，为了弥补这个差距，需要“AI Coding Assistant Is Not Enough”的认知转变。解决方案不仅仅是改进AI模型本身，而是需要构建更完善的工具和工作流，包括：1. **增强型上下文**：让AI能够理解整个代码仓库、技术文档、API规范和设计文档。2. **智能Agent**：开发能够自主分析任务、规划步骤、执行多步操作（如查找、修改、测试代码）并验证结果的Agent，而不仅仅是被动响应。3. **与开发流程深度集成**：将AI融入CI/CD、代码审查、需求管理等流程，使其成为团队协作的一部分。关键结论是，未来的方向不是只做更好的代码提示器，而是构建一个从“问题理解”到“解决方案验证”的AI协同开发平台，其中Agent能力是核心。",
+      "key_points": [
+        "当前AI编码助手在复杂系统设计、架构权衡等宏观问题上效果不佳。",
+        "解决之道在于构建增强型上下文、智能Agent和深度集成开发流程。",
+        "AI Agent需具备自主分析、规划、执行多步操作并验证结果的能力。",
+        "未来方向是AI协同开发平台，而非仅改进代码提示器。"
+      ],
+      "arxiv_url": "",
+      "github_url": ""
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzkwODU2OTQyNQ==&mid=2247497801&idx=1&sn=234d4a6ad5a4ca905f84a8b379bbbaf6": {
+      "title": "腾讯Q1财报：混元迈出重组后第一步，Hy3 preview全球token消耗稳居前列",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzkwODU2OTQyNQ==&mid=2247497801&idx=1&sn=234d4a6ad5a4ca905f84a8b379bbbaf6",
+      "source": "腾讯混元",
+      "category": "多模态大模型/大语言模型",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:53:12.236565",
+      "summary": "本文为腾讯2026年Q1财报中关于混元大模型的进展披露。财报亮点是，腾讯在2026年2月重组AI研发团队并重构AI基础设施后，基于新平台训练了Hy3 preview大语言模型，该模型在OpenRouter平台上表现出色。核心方法/技术方案为“重建”：重建了预训练和强化学习的基础设施，并确立了追求实用性的三个原则——能力体系化、评测真实性及性价比追求。Hy3 preview在复杂推理、指令遵循、代码和智能体等能力上实现大幅提升。关键结果：1. Hy3 preview在OpenRouter的token消耗量排行榜上稳居前列，自4月28日至5月11日连续三周登顶周榜总榜，且结束限免后日Token用量与周调用量仍保持榜首。2. 腾讯内部Token调用量已是上一代Hy2的10倍，其中代码和智能体类场景增长超16.5倍（在WorkBuddy/Codebuddy/Qclaw等应用中）。此外，混元还发布了世界模型2.0（可无缝对接游戏工作流）、手机端离线翻译模型（仅0.4G，支持33种语言）、2B具身模型（22项评测16项最佳），并开源了部分模型。",
+      "key_points": [
+        "Hy3 preview 在OpenRouter上连续三周（4月28日至5月11日）登顶周榜总榜。",
+        "腾讯内部Hy3调用量是上一代Hy2的10倍，代码/智能体场景增长超16.5倍。",
+        "核心方法论是重建预训练和RL基础设施，并遵循三个实用性原则。",
+        "同期发布世界模型2.0、0.4G端侧翻译模型和2B具身模型。"
+      ],
+      "arxiv_url": "",
+      "github_url": ""
+    },
+    "https://mp.weixin.qq.com/s?__biz=MzIzOTU0NTQ0MA==&mid=2247559971&idx=1&sn=e93c802829515223ad1dbb15de073b59": {
+      "title": "深度解析LLM Wiki / Obsidian-Wiki / GBrain：Agent时代知识的“自组织”与“自进化”",
+      "url": "https://mp.weixin.qq.com/s?__biz=MzIzOTU0NTQ0MA==&mid=2247559971&idx=1&sn=e93c802829515223ad1dbb15de073b59",
+      "source": "阿里云开发者",
+      "category": "多模态大模型/大语言模型",
+      "subtype": "技术/算法",
+      "updated_at": "2026-05-13T21:50:10.570239"
+    },
+    "https://mp.weixin.qq.com/s?__biz=Mzg5MDkyOTY3NA==&mid=2247488091&idx=1&sn=92bda2f08133c1d39304e6f86dba2109": {
+      "title": "Dify 团队协作上线：Workflow 从个人画布到多人共建",
+      "url": "https://mp.weixin.qq.com/s?__biz=Mzg5MDkyOTY3NA==&mid=2247488091&idx=1&sn=92bda2f08133c1d39304e6f86dba2109",
+      "source": "Dify",
+      "category": "Coding Agent",
+      "subtype": "产品/应用",
+      "updated_at": "2026-05-13T21:50:10.578245"
     }
   }
 }

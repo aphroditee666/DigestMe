@@ -36,20 +36,20 @@ _CSS = r"""
     --primary: #cba6f7;
     --primary-light: #d9baf9;
     --primary-dark: #b491e8;
-    --primary-bg: #2a2744;
+    --primary-bg: #221f3a;
     --accent: #cba6f7;
-    --accent-light: #2a2744;
-    --bg: #1e1e2e;
-    --surface: #313244;
-    --border: #45475a;
+    --accent-light: #221f3a;
+    --bg: #14131c;
+    --surface: #1e1d2a;
+    --border: #2d2b3e;
     --text: #cdd6f4;
     --text-secondary: #a6adc8;
     --text-muted: #6c7086;
-    --shadow: 0 1px 3px rgba(0,0,0,.4);
-    --shadow-hover: 0 8px 24px rgba(203,166,247,.18);
-    --shadow-card: 0 2px 8px rgba(0,0,0,.35);
-    --card-hl: linear-gradient(135deg, #313244 0%, #2a2744 50%, #36304a 100%);
-    --card-normal: linear-gradient(135deg, #313244 0%, #2d2f40 100%);
+    --shadow: 0 1px 3px rgba(0,0,0,.5);
+    --shadow-hover: 0 8px 24px rgba(203,166,247,.15);
+    --shadow-card: 0 2px 8px rgba(0,0,0,.45);
+    --card-hl: linear-gradient(135deg, #1e1d2a 0%, #221f3a 50%, #26233e 100%);
+    --card-normal: linear-gradient(135deg, #1e1d2a 0%, #1c1b26 100%);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -267,7 +267,7 @@ body {
     border: 1px solid #fcd34d; border-radius: var(--radius);
     margin-bottom: 24px; overflow: hidden;
 }
-[data-theme="dark"] .trend-card { background: linear-gradient(135deg, #313244 0%, #2a2744 100%); border-color: #cba6f7; }
+[data-theme="dark"] .trend-card { background: linear-gradient(135deg, #1e1d2a 0%, #221f3a 100%); border-color: #cba6f7; }
 .trend-card summary {
     padding: 16px 24px; cursor: pointer; font-weight: 700; font-size: 15px;
     user-select: none; color: #92400e; list-style: none;

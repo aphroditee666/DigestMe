@@ -285,7 +285,7 @@ def run_once(config_path: str):
                         if new_cat is None:
                             continue
                         cat = new_cat
-                        if is_acad:
+                        if cat in ACADEMIC_ELIGIBLE_CATEGORIES:
                             subtype = SUBTYPE_ACADEMIC
                         s.subtype = subtype
                         cache.set_summary(s)
@@ -305,7 +305,7 @@ def run_once(config_path: str):
                         if new_cat is None:
                             continue
                         cat = new_cat
-                        if is_acad:
+                        if cat in ACADEMIC_ELIGIBLE_CATEGORIES:
                             subtype = SUBTYPE_ACADEMIC
                             summary.subtype = subtype
                         cache.set_summary(summary)
@@ -328,7 +328,7 @@ def run_once(config_path: str):
                         if new_cat is None:
                             continue
                         cat = new_cat
-                        if is_acad:
+                        if cat in ACADEMIC_ELIGIBLE_CATEGORIES:
                             subtype = SUBTYPE_ACADEMIC
                             summary.subtype = subtype
                         cache.set_summary(summary)
@@ -464,6 +464,8 @@ def render_only(config_path: str):
             github_url=entry.get("github_url", ""),
             subtype=subtype,
         )
+        if subtype not in articles_by_category[category]:
+            subtype = SUBTYPE_TECH
         articles_by_category[category][subtype].append(s)
         total_summarized += 1
 
