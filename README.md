@@ -1,10 +1,12 @@
-# DigestMe — RSS 资讯聚合摘要
+# DigestMe — RSS 智能聚合摘要
 
 [![DigestMe](https://github.com/aphroditee666/DigestMe/actions/workflows/digest.yml/badge.svg)](https://github.com/aphroditee666/DigestMe/actions/workflows/digest.yml)
 
-📋 [查看AI摘要索引 →](output/README.md)
+从 RSS 源抓取文章，AI 自动分类 + 双层摘要，输出 Markdown + 可交互 HTML 日报。支持暗色/亮色切换、全文搜索、侧边栏分类导航。
 
-从 RSS 源抓取文章，AI 分类并生成摘要，输出 Markdown 日报。订阅什么领域完全由配置文件决定 — 财经、科技、学术、产品……你配什么源，它就推送什么。
+![screenshot](docs/screenshot.png)
+
+📋 [最新摘要索引 →](output/README.md)
 
 ## 安装
 
@@ -12,55 +14,46 @@
 pip install -r requirements.txt
 ```
 
-## 配置
+## 运行
 
-编辑 `config.yaml`，配置 RSS 订阅源、分类体系、LLM API。
+```bash
+python main.py --once                          # 单次抓取+摘要
+python main.py --once --config config/xxx.yaml  # 指定配置
+python main.py --render-only --config config/xxx.yaml  # 仅从缓存渲染
+python main.py                                  # 定时调度模式
+```
+
+## 工作流程
+
+```
+RSS 抓取 → 标题粗分类(Phase1) → 缓存分流(Phase2) → 正文补全 → 批量摘要+正文精筛(Phase3) → 趋势总结 → 输出 MD + HTML
+```
+
+## 配置示例
 
 ```yaml
-# 订阅源：任何 RSS/Atom feed
 rss_sources:
-  - name: "来源名称"
-    url: "https://example.com/feed.xml"
+  - name: "机器之心"
+    url: "https://rsshub.app/wechat/sogou/almosthuman2014"
+    category: "AIGC视觉生成"
+    limit: 15
+    enrich: true           # 正文补全开关
 
-# LLM API（兼容 Anthropic 协议）
-claude:
-  api_key: "${YOUR_API_KEY}"     # 支持 ${ENV_VAR}，不硬编码密钥
+claude:                    # 兼容 Anthropic 协议的 LLM
+  api_key: "${DEEPSEEK_API_KEY}"
   base_url: "https://api.deepseek.com/anthropic"
   model: "deepseek-v4-flash"
-  thinking: "disabled"
 
-# 摘要设置
-digest:
-  recent_days: 3
-  cache_path: ".cache/digest_me_cache.json"
+output:
+  base_dir: "./output"
+  output_format: "both"   # markdown | html | both
+  pages_url: "https://xxx.github.io/repo/output"
 
-# 定时调度
 schedule:
   days: ["monday", "thursday"]
   time: "09:00"
 ```
 
-## 运行
+## GitHub Actions
 
-```bash
-python main.py --once                      # 单次运行
-python main.py --once --config config/ci.yaml  # 指定配置
-python main.py                             # 定时调度模式
-```
-
-## GitHub Actions 自动运行
-
-每周一、三上午 10:00（北京时间）自动抓取、分类、摘要，结果推回仓库。
-
-### 手动触发
-
-1. 打开 [Actions 页面](https://github.com/aphroditee666/DigestMe/actions/workflows/digest.yml)
-2. 点击 **Run workflow** → **Run workflow**
-
-### 环境变量
-
-在仓库 Settings → Secrets and variables → Actions 中配置：
-
-| Secret | 说明 |
-|---|---|
-| `DEEPSEEK_API_KEY` | DeepSeek API 密钥 |
+每周一、三上午 10:00（北京时间）自动运行。需配置 Secrets：`DEEPSEEK_API_KEY`。
