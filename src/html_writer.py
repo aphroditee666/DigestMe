@@ -34,23 +34,23 @@ _CSS = r"""
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --primary: #818cf8;
-        --primary-light: #a5b4fc;
-        --primary-dark: #6366f1;
-        --primary-bg: #1e1b4b;
-        --accent: #a78bfa;
-        --accent-light: #1e1b4b;
-        --bg: #0f0f1a;
-        --surface: #1a1a2e;
-        --border: #2a2a40;
-        --text: #e8e8f0;
-        --text-secondary: #a0a0b8;
-        --text-muted: #6a6a80;
-        --shadow: 0 1px 3px rgba(0,0,0,.3);
-        --shadow-hover: 0 8px 24px rgba(99,102,241,.25);
-        --shadow-card: 0 2px 8px rgba(0,0,0,.3);
-        --card-hl: linear-gradient(135deg, #1e1b4b 0%, #1a1a3e 50%, #2a1a3e 100%);
-        --card-normal: linear-gradient(135deg, #1a1a2e 0%, #1d1d35 100%);
+        --primary: #cba6f7;
+        --primary-light: #d9baf9;
+        --primary-dark: #b491e8;
+        --primary-bg: #2a2744;
+        --accent: #cba6f7;
+        --accent-light: #2a2744;
+        --bg: #1e1e2e;
+        --surface: #313244;
+        --border: #45475a;
+        --text: #cdd6f4;
+        --text-secondary: #a6adc8;
+        --text-muted: #6c7086;
+        --shadow: 0 1px 3px rgba(0,0,0,.4);
+        --shadow-hover: 0 8px 24px rgba(203,166,247,.18);
+        --shadow-card: 0 2px 8px rgba(0,0,0,.35);
+        --card-hl: linear-gradient(135deg, #313244 0%, #2a2744 50%, #36304a 100%);
+        --card-normal: linear-gradient(135deg, #313244 0%, #2d2f40 100%);
     }
 }
 
