@@ -357,7 +357,7 @@ body {
 [data-theme="dark"] .badge.arxiv { background: #3b1111; color: #fca5a5; border-color: #7f1d1d; }
 [data-theme="dark"] .badge.github { background: #1f1f2e; color: #d4d4d8; border-color: #3f3f46; }
 
-.article-points { font-size: 12px; color: var(--text-muted); }
+.article-points { font-size: 12px; color: var(--text-secondary); }
 .article-points ul { padding-left: 18px; }
 .article-points li { margin-bottom: 3px; }
 .article-points li::marker { color: var(--primary-light); }
