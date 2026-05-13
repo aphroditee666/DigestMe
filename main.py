@@ -211,6 +211,8 @@ def run_once(config_path: str):
             final_subtype = llm_subtype or source_default
             if article.source in academic_source_names:
                 final_subtype = SUBTYPE_ACADEMIC
+            elif category not in ACADEMIC_ELIGIBLE_CATEGORIES and final_subtype == SUBTYPE_ACADEMIC:
+                final_subtype = source_default
             subtypes_by_index[idx] = final_subtype
             cache.set_category(article.url, article.source, article.title, category, final_subtype)
 
@@ -287,6 +289,8 @@ def run_once(config_path: str):
                         cat = new_cat
                         if cat in ACADEMIC_ELIGIBLE_CATEGORIES:
                             subtype = SUBTYPE_ACADEMIC
+                        elif subtype not in articles_by_category.get(cat, {}):
+                            subtype = source_subtype_map.get(item["article"].source, SUBTYPE_PRODUCT)
                         s.subtype = subtype
                         cache.set_summary(s)
                         articles_by_category[cat][subtype].append(s)
@@ -307,7 +311,9 @@ def run_once(config_path: str):
                         cat = new_cat
                         if cat in ACADEMIC_ELIGIBLE_CATEGORIES:
                             subtype = SUBTYPE_ACADEMIC
-                            summary.subtype = subtype
+                        elif subtype not in articles_by_category.get(cat, {}):
+                            subtype = source_subtype_map.get(article.source, SUBTYPE_PRODUCT)
+                        summary.subtype = subtype
                         cache.set_summary(summary)
                         articles_by_category[cat][subtype].append(summary)
                         total_summarized += 1
