@@ -20,6 +20,7 @@ class ArticleSummary:
     arxiv_url: str = ""
     github_url: str = ""
     subtype: str = ""
+    verified_category: str = ""
 
 
 def _extract_json_array(text: str) -> str:
@@ -108,7 +109,8 @@ class Summarizer:
                 summary=item.get("summary", ""),
                 key_points=item.get("key_points", []),
                 arxiv_url=item.get("arxiv_url", ""),
-                github_url=item.get("github_url", "")
+                github_url=item.get("github_url", ""),
+                verified_category=item.get("category", "")
             )
         return results
 
@@ -119,7 +121,10 @@ class Summarizer:
             max_tokens=800
         )
 
-        summary_match = re.search(r'### 摘要\s*\n(.+?)(?=### 关键要点|$)', response, re.DOTALL)
+        category_match = re.search(r'### 分类\s*\n(.+)', response)
+        verified_category = category_match.group(1).strip() if category_match else ""
+
+        summary_match = re.search(r'### 摘要\s*\n(.+?)(?=### 关键要点|### 分类|$)', response, re.DOTALL)
         summary = summary_match.group(1).strip() if summary_match else ""
 
         points_match = re.findall(r'- (.+)', response)
@@ -148,6 +153,7 @@ class Summarizer:
             arxiv_url=arxiv_url,
             github_url=github_url,
             subtype=subtype,
+            verified_category=verified_category,
         )
 
 

@@ -22,8 +22,12 @@
 ```
 设计调整可用：
 https://bolt.new/
-https://v0.app/
+https://v0.app/   （maybe better for web design）
 https://www.figma.com/
 ```
 - [ ] paper deep research
-- [ ] 论文关键搜索添加；
+- [ ] 论文关键词搜索添加；
+- [ ] 论文筛选规则：顶会/期刊发表 or 主流的业界大厂 or TOP AI实验室发表工作
+- [ ] html redesign
+- [ ] html 收藏、标签功能
+- [ ] 增加摘要时-再次分类过滤的功能；提升命中准确率；

@@ -54,6 +54,22 @@ def _chunks(items, size: int):
 ACADEMIC_ELIGIBLE_CATEGORIES = {"AIGC视觉生成", "自动驾驶"}
 
 
+def _apply_reclassification(summarizer, summary, old_category: str, title: str, categories_to_output: list, is_academic: bool = False):
+    """Compare LLM's verified category against the original. Returns new category or None (filter out)."""
+    vc = summary.verified_category
+    if not vc or vc == old_category:
+        return old_category
+    normalized = summarizer._normalize_category(vc)
+    if normalized == "其它" or normalized not in categories_to_output:
+        logger.info(f"  filtered by reclassification: {title} ({vc})")
+        return None
+    if is_academic and normalized not in ACADEMIC_ELIGIBLE_CATEGORIES:
+        logger.info(f"  filtered by reclassification (academic): {title} ({vc})")
+        return None
+    logger.info(f"  reclassified: {title} {old_category} → {normalized}")
+    return normalized
+
+
 def _init_articles_by_category(categories):
     """Return {category: {subtype: []}} with 3 subtypes for academic-eligible categories, 2 for others."""
     result = {}
@@ -262,6 +278,13 @@ def run_once(config_path: str):
                     subtype = item.get("subtype", SUBTYPE_PRODUCT)
                     if idx in summaries:
                         s = summaries[idx]
+                        is_acad = item["article"].source in academic_source_names
+                        new_cat = _apply_reclassification(summarizer, s, cat, item["article"].title, CATEGORIES_TO_OUTPUT, is_acad)
+                        if new_cat is None:
+                            continue
+                        cat = new_cat
+                        if is_acad:
+                            subtype = SUBTYPE_ACADEMIC
                         s.subtype = subtype
                         cache.set_summary(s)
                         articles_by_category[cat][subtype].append(s)
@@ -275,6 +298,14 @@ def run_once(config_path: str):
                             url=article.url, content=article.content,
                             subtype=subtype
                         )
+                        is_acad = article.source in academic_source_names
+                        new_cat = _apply_reclassification(summarizer, summary, cat, article.title, CATEGORIES_TO_OUTPUT, is_acad)
+                        if new_cat is None:
+                            continue
+                        cat = new_cat
+                        if is_acad:
+                            subtype = SUBTYPE_ACADEMIC
+                            summary.subtype = subtype
                         cache.set_summary(summary)
                         articles_by_category[cat][subtype].append(summary)
                         total_summarized += 1
@@ -290,6 +321,14 @@ def run_once(config_path: str):
                             url=article.url, content=article.content,
                             subtype=subtype
                         )
+                        is_acad = article.source in academic_source_names
+                        new_cat = _apply_reclassification(summarizer, summary, cat, article.title, CATEGORIES_TO_OUTPUT, is_acad)
+                        if new_cat is None:
+                            continue
+                        cat = new_cat
+                        if is_acad:
+                            subtype = SUBTYPE_ACADEMIC
+                            summary.subtype = subtype
                         cache.set_summary(summary)
                         articles_by_category[cat][subtype].append(summary)
                         total_summarized += 1

@@ -43,7 +43,12 @@ def build_classification_system_prompt() -> str:
 
 def build_summarization_system_prompt() -> str:
     """System prompt for summarization — cached by API, not repeated per article."""
-    return """你是一个专业的技术文章摘要助手。请按以下格式输出：
+    return f"""你是一个专业的技术文章摘要助手。请按以下格式输出：
+
+### 分类
+[基于正文内容判断的分类，从以下选择：{" / ".join(CATEGORIES.keys())}]
+分类定义：
+{_CATEGORY_DEFS}
 
 ### 摘要
 [150-400字的摘要，涵盖背景/问题、核心方法/技术方案、关键结果/结论]
@@ -62,13 +67,14 @@ def build_summarization_system_prompt() -> str:
 [GitHub完整链接或"无"]
 
 要求：
-1. 摘要150-400字，必须涵盖：背景/问题、核心方法/技术方案、关键结果/结论
-2. 提供2-5个关键要点，每条15-50字，必须有实质信息（数字、方法名、技术名称等），切忌空洞概括
-3. 如果文章提到具体模型名、数据集、性能指标、开源地址，务必写入摘要或要点
-4. 用中文输出
-5. 正文可能被截断（最长约2000字符），请基于标题和正文开头提炼关键信息
-6. 涉及论文务必在「### arXiv」后提供arXiv完整链接（如https://arxiv.org/abs/xxxx.xxxxx）；不涉及则输出「无」
-7. 涉及GitHub开源仓库务必在「### GitHub」后提供GitHub完整链接（如https://github.com/user/repo）；不涉及则输出「无」"""
+1. 分类必须基于正文内容（不仅仅是标题）准确判断
+2. 摘要150-400字，必须涵盖：背景/问题、核心方法/技术方案、关键结果/结论
+3. 提供2-5个关键要点，每条15-50字，必须有实质信息（数字、方法名、技术名称等），切忌空洞概括
+4. 如果文章提到具体模型名、数据集、性能指标、开源地址，务必写入摘要或要点
+5. 用中文输出
+6. 正文可能被截断（最长约2000字符），请基于标题和正文开头提炼关键信息
+7. 涉及论文务必在「### arXiv」后提供arXiv完整链接（如https://arxiv.org/abs/xxxx.xxxxx）；不涉及则输出「无」
+8. 涉及GitHub开源仓库务必在「### GitHub」后提供GitHub完整链接（如https://github.com/user/repo）；不涉及则输出「无」"""
 
 
 # Lightweight classification — no article body, no format instructions (moved to system)
@@ -128,26 +134,33 @@ def get_summarization_prompt(title: str, source: str, url: str, content: str = "
 
 
 # ---- Batch summarization ----
-BATCH_SUMMARIZATION_SYSTEM = """你是一个专业的技术文章摘要助手。下面有多篇文章，请为每篇生成摘要。
+_CATEGORY_DEFS = "\n".join(f"- {name}: {desc}" for name, desc in CATEGORIES.items())
+
+BATCH_SUMMARIZATION_SYSTEM = f"""你是一个专业的技术文章摘要助手。下面有多篇文章，请为每篇生成摘要。
 严格输出 JSON 数组，每个元素包含以下字段：
 
-{
+{{
   "index": 序号(整数),
+  "category": "所属分类（基于正文内容和以下分类定义判断：{" / ".join(CATEGORIES.keys())}）",
   "summary": "150-400字的摘要，涵盖背景/问题、核心方法/技术方案、关键结果/结论",
   "key_points": ["要点1", "要点2", ...],  // 2-5个，每条15-50字，必须有实质信息
   "arxiv_url": "arXiv完整链接或空字符串",
   "github_url": "GitHub完整链接或空字符串"
-}
+}}
+
+分类定义（请基于正文内容选择最匹配的分类）：
+{_CATEGORY_DEFS}
 
 要求：
-1. 摘要150-400字，必须涵盖：背景/问题、核心方法/技术方案、关键结果/结论
-2. 提供2-5个关键要点，每条15-50字，必须有实质信息（数字、方法名、技术名称等），切忌空洞概括
-3. 如果文章提到具体模型名、数据集、性能指标、开源地址，务必写入摘要或要点
-4. 用中文输出
-5. 正文可能被截断（最长约2000字符），请基于标题和正文开头提炼关键信息
-6. 涉及论文在 arxiv_url 提供 arXiv 完整链接（如 https://arxiv.org/abs/xxxx.xxxxx），否则空字符串
-7. 涉及 GitHub 开源仓库在 github_url 提供 GitHub 完整链接（如 https://github.com/user/repo），否则空字符串
-8. 只输出 JSON 数组，不要输出其他内容"""
+1. category 必须从上述分类定义中选择，基于正文内容（不仅仅是标题）准确判断
+2. 摘要150-400字，必须涵盖：背景/问题、核心方法/技术方案、关键结果/结论
+3. 提供2-5个关键要点，每条15-50字，必须有实质信息（数字、方法名、技术名称等），切忌空洞概括
+4. 如果文章提到具体模型名、数据集、性能指标、开源地址，务必写入摘要或要点
+5. 用中文输出
+6. 正文可能被截断（最长约2000字符），请基于标题和正文开头提炼关键信息
+7. 涉及论文在 arxiv_url 提供 arXiv 完整链接（如 https://arxiv.org/abs/xxxx.xxxxx），否则空字符串
+8. 涉及 GitHub 开源仓库在 github_url 提供 GitHub 完整链接（如 https://github.com/user/repo），否则空字符串
+9. 只输出 JSON 数组，不要输出其他内容"""
 
 
 def get_batch_summarization_prompt(articles: list) -> str:
