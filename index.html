@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigestMe — AI 驱动的 RSS 智能摘要</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --fg: #c9d1d9;
+            --border: #30363d;
+            --link: #58a6ff;
+            --card-bg: #161b22;
+            --accent: #f78166;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        h1 { font-size: 2em; margin-bottom: 8px; }
+        .subtitle { color: #8b949e; margin-bottom: 24px; }
+        .badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+        .badge-row img { height: 20px; }
+        .section { margin-bottom: 32px; }
+        .section h2 { font-size: 1.2em; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+        .digest-list { list-style: none; }
+        .digest-list li { margin-bottom: 8px; }
+        .digest-list a { color: var(--link); text-decoration: none; }
+        .digest-list a:hover { text-decoration: underline; }
+        .digest-list .date { color: #8b949e; font-size: 0.9em; margin-right: 8px; }
+        .types { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+        .type-tag { font-size: 0.8em; padding: 2px 8px; border-radius: 12px; background: #21262d; border: 1px solid var(--border); }
+        .note { color: #8b949e; font-size: 0.9em; margin-top: 8px; }
+        .features { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+        .feature-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+        .feature-card h3 { font-size: 0.95em; margin-bottom: 4px; }
+        .feature-card p { font-size: 0.85em; color: #8b949e; }
+        footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--border); color: #8b949e; font-size: 0.85em; text-align: center; }
+        footer a { color: var(--link); text-decoration: none; }
+    </style>
+</head>
+<body>
+    <h1>DigestMe</h1>
+    <p class="subtitle">AI 驱动的 RSS 智能摘要 — 97+ 信源 · AI 分类 · 双语摘要 · 趋势分析 · 交互式报告</p>
+
+    <div class="badge-row">
+        <img src="https://img.shields.io/badge/python-3.10+-blue.svg" alt="Python 3.10+">
+        <img src="https://img.shields.io/badge/demo-GitHub%20Pages-brightgreen.svg" alt="GitHub Pages">
+        <img src="https://img.shields.io/badge/LLM-DeepSeek%20%7C%20Claude%20%7C%20OpenAI-blueviolet.svg" alt="LLM Compatible">
+    </div>
+
+    <div class="section">
+        <h2>功能特性</h2>
+        <div class="features">
+            <div class="feature-card">
+                <h3>多源聚合</h3>
+                <p>97+ RSS 信源，覆盖公众号、ArXiv、GitHub 等</p>
+            </div>
+            <div class="feature-card">
+                <h3>AI 智能分类</h3>
+                <p>AIGC视觉/自动驾驶/Coding Agent/多模态LLM</p>
+            </div>
+            <div class="feature-card">
+                <h3>双语摘要</h3>
+                <p>中文要点 + 英文摘要，深度与广度兼顾</p>
+            </div>
+            <div class="feature-card">
+                <h3>趋势分析</h3>
+                <p>每期自动生成各分类趋势总结</p>
+            </div>
+            <div class="feature-card">
+                <h3>交互式报告</h3>
+                <p>暗色/亮色切换、全文搜索、侧边栏导航</p>
+            </div>
+            <div class="feature-card">
+                <h3>LLM 无关</h3>
+                <p>兼容 Anthropic 协议，自由切换模型</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>最新日报</h2>
+        <ul class="digest-list" id="digest-list">
+            <li>加载中...</li>
+        </ul>
+        <p class="note">更多历史日报见 <a href="output/ai_digest/">output/ai_digest/</a> 或 <a href="output/README.md">索引文件</a></p>
+    </div>
+
+    <div class="section">
+        <h2>快速开始</h2>
+        <pre style="background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:16px;overflow-x:auto;font-size:0.85em;">
+git clone https://github.com/aphroditee666/DigestMe.git
+cd DigestMe
+pip install -r requirements.txt
+export DEEPSEEK_API_KEY="your-api-key"
+python main.py --once --config config/ai_digest/ci.yaml</pre>
+    </div>
+
+    <footer>
+        <a href="https://github.com/aphroditee666/DigestMe">GitHub</a> · Powered by DeepSeek + Anthropic SDK
+    </footer>
+
+    <script>
+        // Fetch and display the latest digest links from output/README.md
+        fetch('output/README.md')
+            .then(res => res.text())
+            .then(text => {
+                const list = document.getElementById('digest-list');
+                // Parse markdown links to HTML files
+                const htmlLinks = text.match(/https:\/\/aphroditee666\.github\.io\/DigestMe\/output\/ai_digest\/[^\s)]+\.html/g) || [];
+                const mdLinks = text.match(/\(ai_digest\/[^\s)]+\.md\)/g) || [];
+                const seen = new Set();
+                const items = [];
+
+                // Parse lines for date info
+                const lines = text.split('\n');
+                let currentDate = '';
+                for (const line of lines) {
+                    const dateMatch = line.match(/^## (\d{4}-\d{2}-\d{2})/);
+                    if (dateMatch) {
+                        currentDate = dateMatch[1];
+                    }
+                    const htmlMatch = line.match(/\[([^\]]*HTML[^\]]*)\]\((https:\/\/aphroditee666\.github\.io\/DigestMe\/output\/ai_digest\/[^)]+\.html)\)/);
+                    if (htmlMatch && !seen.has(htmlMatch[2])) {
+                        seen.add(htmlMatch[2]);
+                        items.push({ date: currentDate, label: htmlMatch[1], url: htmlMatch[2] });
+                    }
+                }
+
+                if (items.length === 0) {
+                    list.innerHTML = '<li>暂无日报数据，请查看 <a href="output/ai_digest/">output/ai_digest/</a></li>';
+                } else {
+                    list.innerHTML = items.slice(0, 15).map(item =>
+                        `<li><span class="date">${item.date}</span> <a href="${item.url}">${item.label}</a></li>`
+                    ).join('');
+                }
+            })
+            .catch(() => {
+                document.getElementById('digest-list').innerHTML =
+                    '<li>无法加载日报列表，请直接访问 <a href="output/ai_digest/">output/ai_digest/</a></li>';
+            });
+    </script>
+</body>
+</html>
