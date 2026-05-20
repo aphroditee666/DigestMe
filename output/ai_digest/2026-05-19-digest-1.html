@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clyde's Digest — 2026-05-19</title>
+<style>
+
+:root {
+    --sidebar-w: 260px;
+    --topbar-h: 56px;
+    --primary: #6366f1;
+    --primary-light: #818cf8;
+    --primary-dark: #4f46e5;
+    --primary-bg: #ede4d6;
+    --accent: #8b5cf6;
+    --accent-light: #f5efe3;
+    --bg: #f5f0e5;
+    --surface: #fefcf5;
+    --border: #e5ddd0;
+    --text: #2c2416;
+    --text-secondary: #6b5d4e;
+    --text-muted: #a09888;
+    --shadow: 0 1px 3px rgba(0,0,0,.05);
+    --shadow-hover: 0 8px 24px rgba(139,92,246,.10);
+    --shadow-card: 0 2px 8px rgba(0,0,0,.04), 0 1px 2px rgba(0,0,0,.05);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --font: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans SC",sans-serif;
+    --mono: "SF Mono","Fira Code","Fira Mono","Roboto Mono",monospace;
+    --card-hl: linear-gradient(135deg, #ede4d6 0%, #f0e8da 50%, #f5efe3 100%);
+    --card-normal: linear-gradient(135deg, #fdfaf5 0%, #faf5ed 100%);
+}
+
+[data-theme="dark"] {
+    --primary: #cba6f7;
+    --primary-light: #d9baf9;
+    --primary-dark: #b491e8;
+    --primary-bg: #221f3a;
+    --accent: #cba6f7;
+    --accent-light: #221f3a;
+    --bg: #14131c;
+    --surface: #1e1d2a;
+    --border: #2d2b3e;
+    --text: #cdd6f4;
+    --text-secondary: #a6adc8;
+    --text-muted: #6c7086;
+    --shadow: 0 1px 3px rgba(0,0,0,.5);
+    --shadow-hover: 0 8px 24px rgba(203,166,247,.15);
+    --shadow-card: 0 2px 8px rgba(0,0,0,.45);
+    --card-hl: linear-gradient(135deg, #1e1d2a 0%, #221f3a 50%, #26233e 100%);
+    --card-normal: linear-gradient(135deg, #1e1d2a 0%, #1c1b26 100%);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0;
+    width: var(--sidebar-w);
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    z-index: 200;
+    display: flex; flex-direction: column;
+    overflow-y: auto;
+}
+.sidebar-brand {
+    padding: 20px 24px 16px;
+    display: flex; align-items: center; gap: 10px;
+    flex-shrink: 0;
+}
+.sidebar-logo {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 18px; font-weight: 700;
+}
+.sidebar-title { font-size: 17px; font-weight: 700; }
+.sidebar-title span { color: var(--primary); }
+
+.sidebar-nav {
+    flex: 1; padding: 4px 12px;
+}
+.sidebar-label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: .08em;
+    color: var(--text-muted); padding: 12px 12px 6px; font-weight: 600;
+}
+.sidebar-link {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px; border-radius: var(--radius-sm);
+    color: var(--text-secondary); text-decoration: none;
+    font-size: 14px; font-weight: 500;
+    transition: all .15s; cursor: pointer;
+    margin-bottom: 2px;
+}
+.sidebar-link:hover { background: var(--primary-bg); color: var(--primary); }
+.sidebar-link.active { background: var(--primary-bg); color: var(--primary); font-weight: 600; }
+.sidebar-count {
+    margin-left: auto; font-size: 12px; font-weight: 600;
+    background: var(--primary-bg); color: var(--primary);
+    padding: 1px 8px; border-radius: 10px; min-width: 24px; text-align: center;
+}
+.sidebar-link.active .sidebar-count { background: var(--primary); color: #fff; }
+
+/* Sidebar Category Group (expandable) */
+.sidebar-cat-group { margin-bottom: 2px; }
+.sidebar-cat-header {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 12px; border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font-size: 14px; font-weight: 500;
+    transition: all .15s; cursor: pointer;
+    user-select: none;
+}
+.sidebar-cat-header:hover { background: var(--primary-bg); color: var(--primary); }
+.sidebar-cat-header.active { background: var(--primary-bg); color: var(--primary); font-weight: 600; }
+.sidebar-cat-header.active .sidebar-count { background: var(--primary); color: #fff; }
+
+.sidebar-cat-arrow {
+    width: 16px; height: 16px; flex-shrink: 0;
+    transition: transform .2s;
+    display: inline-block; position: relative;
+}
+.sidebar-cat-arrow::before {
+    content: ""; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0; height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid var(--text-muted);
+    transition: transform .2s;
+}
+.sidebar-cat-group.open .sidebar-cat-arrow::before {
+    transform: translate(-50%, -50%) rotate(0deg);
+}
+.sidebar-cat-group:not(.open) .sidebar-cat-arrow::before {
+    transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+.sidebar-sub-list {
+    overflow: hidden;
+    transition: max-height .3s ease, opacity .2s;
+}
+.sidebar-cat-group.open .sidebar-sub-list {
+    max-height: 300px; opacity: 1;
+}
+.sidebar-cat-group:not(.open) .sidebar-sub-list {
+    max-height: 0; opacity: 0;
+}
+
+.sidebar-sub-link {
+    display: flex; align-items: center; gap: 10px;
+    padding: 7px 12px 7px 36px;
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary); text-decoration: none;
+    font-size: 13px; font-weight: 400;
+    transition: all .15s; cursor: pointer;
+    margin-bottom: 1px;
+}
+.sidebar-sub-link:hover { background: var(--primary-bg); color: var(--primary); }
+.sidebar-sub-link.active { background: var(--primary-bg); color: var(--primary); font-weight: 600; }
+.sidebar-sub-link.active .sidebar-count { background: var(--primary); color: #fff; }
+
+.sidebar-footer {
+    padding: 12px 24px; border-top: 1px solid var(--border);
+    font-size: 12px; color: var(--text-muted); flex-shrink: 0;
+}
+
+/* Sidebar resize handle */
+.sidebar-resize {
+    position: absolute; top: 0; right: 0; bottom: 0;
+    width: 5px; cursor: col-resize; z-index: 10;
+    background: transparent;
+    transition: background .2s;
+}
+.sidebar-resize:hover,
+.sidebar-resize.dragging {
+    background: var(--primary);
+}
+.sidebar.resizing { user-select: none; pointer-events: none; }
+
+/* Sidebar toggle for mobile */
+.sidebar-toggle {
+    display: none; position: fixed; top: 12px; left: 12px; z-index: 300;
+    width: 40px; height: 40px; border-radius: var(--radius-sm);
+    background: var(--surface); border: 1px solid var(--border);
+    font-size: 20px; cursor: pointer; align-items: center; justify-content: center;
+    box-shadow: var(--shadow);
+}
+
+/* ===== MAIN ===== */
+.main {
+    margin-left: var(--sidebar-w);
+    min-height: 100vh;
+}
+
+/* ===== TOP BAR ===== */
+.topbar {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--bg); backdrop-filter: blur(12px);
+    padding: 12px 0; border-bottom: 1px solid transparent;
+}
+.topbar.scrolled { border-bottom-color: var(--border); }
+.topbar-inner {
+    max-width: 1100px; margin: 0 auto; padding: 0 32px;
+    display: flex; align-items: center; gap: 12px;
+}
+.topbar-search {
+    flex: 1; position: relative;
+}
+.topbar-search input {
+    width: 100%; padding: 10px 16px 10px 40px;
+    border: 1px solid var(--border); border-radius: 24px;
+    font-size: 14px; font-family: var(--font);
+    background: var(--surface); color: var(--text);
+    outline: none; transition: all .2s;
+}
+.topbar-search input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-bg); }
+.topbar-search-icon {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    color: var(--text-muted); font-size: 16px; pointer-events: none;
+}
+.topbar-stats {
+    font-size: 13px; color: var(--text-muted); white-space: nowrap;
+}
+.topbar-btn {
+    width: 38px; height: 38px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border); background: var(--surface);
+    color: var(--text-secondary); cursor: pointer; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .15s; text-decoration: none;
+}
+.topbar-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+/* ===== CONTENT AREA ===== */
+.content { max-width: 1100px; margin: 0 auto; padding: 0 32px 60px; }
+
+/* Category Section */
+.category-section { margin-bottom: 48px; scroll-margin-top: 80px; }
+.category-header {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 22px; font-weight: 800; margin-bottom: 20px;
+}
+.category-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--primary); flex-shrink: 0;
+}
+.category-count {
+    font-size: 14px; font-weight: 500; color: var(--text-muted);
+    margin-left: 4px;
+}
+
+/* Trend Card */
+.trend-card {
+    background: linear-gradient(135deg, #fef3c7 0%, #fef9c3 100%);
+    border: 1px solid #fcd34d; border-radius: var(--radius);
+    margin-bottom: 24px; overflow: hidden;
+}
+[data-theme="dark"] .trend-card { background: linear-gradient(135deg, #1e1d2a 0%, #221f3a 100%); border-color: #cba6f7; }
+.trend-card summary {
+    padding: 16px 24px; cursor: pointer; font-weight: 700; font-size: 15px;
+    user-select: none; color: #92400e; list-style: none;
+    display: flex; align-items: center; gap: 8px;
+}
+[data-theme="dark"] .trend-card summary { color: #f9e2af; }
+.trend-card summary::-webkit-details-marker { display: none; }
+.trend-card summary::before {
+    content: ""; display: inline-block; width: 20px; height: 20px;
+    background: #f59e0b; border-radius: 4px; flex-shrink: 0;
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 2a6 6 0 016 6v3l2 4H2l2-4V8a6 6 0 016-6z'/%3E%3C/svg%3E");
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 2a6 6 0 016 6v3l2 4H2l2-4V8a6 6 0 016-6z'/%3E%3C/svg%3E");
+}
+.trend-body { padding: 0 24px 20px; font-size: 14px; color: #78350f; line-height: 1.8; }
+[data-theme="dark"] .trend-body { color: #cdd6f4; }
+.trend-body ul { margin-top: 10px; padding-left: 20px; }
+.trend-body li { margin-bottom: 6px; }
+
+/* Subtype Section */
+.subtype-section { margin-bottom: 28px; scroll-margin-top: 80px; }
+.subtype-header {
+    font-size: 14px; font-weight: 700; color: var(--text-muted);
+    margin-bottom: 14px; text-transform: uppercase; letter-spacing: .04em;
+    padding-left: 4px;
+}
+
+/* Article Grid */
+.article-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 16px;
+}
+
+/* Article Card */
+.article-card {
+    background: var(--card-normal);
+    border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px 22px;
+    box-shadow: var(--shadow-card); transition: all .25s;
+    display: flex; flex-direction: column;
+    position: relative; overflow: hidden;
+}
+.article-card::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-light), var(--accent));
+    opacity: 0; transition: opacity .25s;
+}
+.article-card:hover {
+    box-shadow: var(--shadow-hover); transform: translateY(-2px);
+}
+.article-card:hover::before { opacity: 1; }
+.article-card.highlight { background: var(--card-hl); }
+.article-card.hidden { display: none; }
+
+/* Favorite star button */
+.fav-star {
+    position: absolute; top: 10px; right: 12px;
+    width: 34px; height: 34px; border-radius: 50%;
+    border: none; background: transparent;
+    cursor: pointer; font-size: 20px; line-height: 1;
+    opacity: 0; transition: opacity .2s, transform .15s;
+    z-index: 5; padding: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted);
+}
+.article-card:hover .fav-star { opacity: 1; }
+.fav-star.favorited { opacity: 1; color: #f59e0b; }
+.fav-star:hover { transform: scale(1.25); }
+
+.article-title {
+    font-size: 15px; font-weight: 650; line-height: 1.45; margin-bottom: 10px;
+}
+.article-title a { color: var(--text); text-decoration: none; }
+.article-title a:hover { color: var(--primary); }
+
+.article-meta {
+    font-size: 12px; color: var(--text-muted); margin-bottom: 10px;
+    display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+}
+.article-source {
+    font-weight: 600; color: var(--primary); font-size: 11px;
+    background: var(--primary-bg); padding: 2px 10px; border-radius: 12px;
+}
+
+.article-summary {
+    font-size: 13px; color: var(--text-secondary); line-height: 1.65;
+    margin-bottom: 12px; flex: 1;
+}
+
+.article-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 10px; border-radius: 6px;
+    font-size: 11px; font-weight: 600; font-family: var(--mono);
+    text-decoration: none; transition: all .15s;
+}
+.badge.arxiv { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+.badge.arxiv:hover { background: #fef2f2; box-shadow: 0 0 0 2px #fecaca; }
+.badge.github { background: #f0f0f5; color: #333; border: 1px solid #d4d4d8; }
+.badge.github:hover { background: #e4e4e7; }
+[data-theme="dark"] .badge.arxiv { background: #3b1111; color: #fca5a5; border-color: #7f1d1d; }
+[data-theme="dark"] .badge.github { background: #1f1f2e; color: #d4d4d8; border-color: #3f3f46; }
+
+.article-points { font-size: 12px; color: var(--text-secondary); }
+.article-points ul { padding-left: 18px; }
+.article-points li { margin-bottom: 3px; }
+.article-points li::marker { color: var(--primary-light); }
+
+/* Footer */
+.page-footer {
+    text-align: center; padding: 32px 32px 48px;
+    font-size: 12px; color: var(--text-muted);
+    border-top: 1px solid var(--border); margin-top: 20px;
+}
+.page-footer span { margin: 0 6px; }
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+    :root { --sidebar-w: 0px; }
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform .25s;
+        box-shadow: 4px 0 20px rgba(0,0,0,.15);
+    }
+    .sidebar.open { transform: translateX(0); width: 280px; }
+    .sidebar-toggle { display: flex; }
+    .main { margin-left: 0; }
+    .article-grid { grid-template-columns: 1fr; }
+    .topbar-inner { padding: 0 16px; }
+    .content { padding: 0 16px 40px; }
+    .category-header { font-size: 18px; }
+}
+
+/* Sidebar overlay for mobile */
+.sidebar-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,.4);
+    z-index: 199;
+}
+.sidebar-overlay.visible { display: block; }
+
+/* ===== FAVORITES PANEL ===== */
+.fav-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,.5); z-index: 400;
+    align-items: center; justify-content: center;
+}
+.fav-overlay.open { display: flex; }
+
+.fav-panel {
+    background: var(--surface); border-radius: var(--radius);
+    width: 700px; max-width: 95vw; max-height: 85vh;
+    display: flex; flex-direction: column;
+    box-shadow: 0 16px 48px rgba(0,0,0,.3);
+    overflow: hidden;
+}
+.fav-panel-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 16px 20px; border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+}
+.fav-panel-header h2 { font-size: 18px; margin-right: auto; }
+.fav-panel-actions { display: flex; gap: 8px; }
+.fav-panel-actions button {
+    padding: 6px 14px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border); background: var(--surface);
+    color: var(--text-secondary); cursor: pointer; font-size: 13px;
+    transition: all .15s;
+}
+.fav-panel-actions button:hover { border-color: var(--primary); color: var(--primary); }
+.fav-panel-actions .fav-close-btn {
+    width: 32px; height: 32px; padding: 0; font-size: 16px;
+    border-radius: 50%;
+}
+
+/* Folder tabs */
+.fav-folders {
+    display: flex; gap: 6px; padding: 12px 16px;
+    overflow-x: auto; flex-shrink: 0;
+    border-bottom: 1px solid var(--border);
+}
+.fav-folder-tab {
+    padding: 5px 14px; border-radius: 16px; border: 1px solid var(--border);
+    background: var(--surface); color: var(--text-secondary);
+    cursor: pointer; font-size: 13px; white-space: nowrap;
+    transition: all .15s; flex-shrink: 0;
+}
+.fav-folder-tab:hover { border-color: var(--primary); color: var(--primary); }
+.fav-folder-tab.active {
+    background: var(--primary); color: #fff; border-color: var(--primary);
+}
+.fav-folder-tab .fav-folder-del {
+    display: none; margin-left: 4px; cursor: pointer; font-size: 11px;
+    opacity: .7;
+}
+.fav-folder-tab .fav-folder-del:hover { opacity: 1; }
+.fav-folder-tab:not([data-folder-id=""]) .fav-folder-del { display: inline; }
+
+/* Folder create row */
+.fav-folder-create {
+    display: flex; gap: 6px; padding: 8px 16px; flex-shrink: 0;
+}
+.fav-folder-create input {
+    flex: 1; padding: 6px 12px; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); background: var(--bg);
+    color: var(--text); font-size: 13px; outline: none;
+}
+.fav-folder-create input:focus { border-color: var(--primary); }
+.fav-folder-create button {
+    padding: 6px 14px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border); background: var(--primary);
+    color: #fff; cursor: pointer; font-size: 14px; font-weight: 600;
+    transition: all .15s;
+}
+.fav-folder-create button:hover { opacity: .85; }
+
+/* Article list in panel */
+.fav-article-list {
+    flex: 1; overflow-y: auto; padding: 12px 16px;
+}
+.fav-empty {
+    text-align: center; padding: 40px 16px; color: var(--text-muted);
+    font-size: 14px;
+}
+.fav-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 12px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border); margin-bottom: 8px;
+    transition: all .15s; position: relative;
+}
+.fav-item:hover { border-color: var(--primary); }
+.fav-item .fav-item-star {
+    flex-shrink: 0; cursor: pointer; font-size: 18px;
+    color: #f59e0b; background: none; border: none;
+    padding: 0; margin-top: 2px;
+}
+.fav-item .fav-item-content { flex: 1; min-width: 0; }
+.fav-item .fav-item-title {
+    font-size: 14px; font-weight: 600; line-height: 1.4; margin-bottom: 4px;
+}
+.fav-item .fav-item-title a { color: var(--text); text-decoration: none; }
+.fav-item .fav-item-title a:hover { color: var(--primary); }
+.fav-item .fav-item-meta {
+    font-size: 12px; color: var(--text-muted); margin-bottom: 4px;
+    display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+}
+.fav-item .fav-item-source {
+    background: var(--primary-bg); color: var(--primary);
+    padding: 1px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;
+}
+.fav-item .fav-folder-select {
+    font-size: 12px; padding: 2px 6px; border-radius: 4px;
+    border: 1px solid var(--border); background: var(--surface);
+    color: var(--text-secondary); cursor: pointer;
+    margin-left: auto; flex-shrink: 0;
+}
+
+/* Topbar fav button badge */
+.topbar-btn { position: relative; }
+.fav-badge {
+    position: absolute; top: -4px; right: -6px;
+    background: #f59e0b; color: #fff;
+    font-size: 10px; font-weight: 700; line-height: 1;
+    padding: 2px 5px; border-radius: 8px;
+    min-width: 16px; text-align: center;
+    display: none;
+}
+.fav-badge.visible { display: block; }
+
+/* Toast */
+.fav-toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 10px 24px; border-radius: 24px; font-size: 14px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.15); z-index: 500;
+    opacity: 0; transition: opacity .3s; pointer-events: none;
+}
+.fav-toast.show { opacity: 1; }
+
+</style>
+</head>
+<body>
+<button id="sidebar-toggle" class="sidebar-toggle" aria-label="菜单">☰</button>
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+<aside class="sidebar" id="sidebar">
+<div class="sidebar-brand">
+<div class="sidebar-logo">D</div>
+<div class="sidebar-title"><span>Clyde's</span> Digest</div>
+</div>
+<nav class="sidebar-nav">
+<div class="sidebar-label">分类目录</div>
+<a class="sidebar-link" data-category="all" href="#">全部<span class="sidebar-count">44</span></a>
+<div class="sidebar-cat-group open">
+<div class="sidebar-cat-header" data-category="AIGC视觉生成" role="button" tabindex="0"><span class="sidebar-cat-arrow"></span><span class="sidebar-cat-label">AIGC视觉生成</span><span class="sidebar-count">11</span></div>
+<div class="sidebar-sub-list">
+<a class="sidebar-sub-link" data-category="AIGC视觉生成" data-subtype="学术论文" href="#">学术论文<span class="sidebar-count">8</span></a>
+<a class="sidebar-sub-link" data-category="AIGC视觉生成" data-subtype="技术/算法" href="#">技术/算法<span class="sidebar-count">1</span></a>
+<a class="sidebar-sub-link" data-category="AIGC视觉生成" data-subtype="产品/应用" href="#">产品/应用<span class="sidebar-count">2</span></a>
+</div>
+</div>
+<div class="sidebar-cat-group open">
+<div class="sidebar-cat-header" data-category="自动驾驶" role="button" tabindex="0"><span class="sidebar-cat-arrow"></span><span class="sidebar-cat-label">自动驾驶</span><span class="sidebar-count">3</span></div>
+<div class="sidebar-sub-list">
+<a class="sidebar-sub-link" data-category="自动驾驶" data-subtype="学术论文" href="#">学术论文<span class="sidebar-count">3</span></a>
+</div>
+</div>
+<div class="sidebar-cat-group open">
+<div class="sidebar-cat-header" data-category="Coding Agent" role="button" tabindex="0"><span class="sidebar-cat-arrow"></span><span class="sidebar-cat-label">Coding Agent</span><span class="sidebar-count">17</span></div>
+<div class="sidebar-sub-list">
+<a class="sidebar-sub-link" data-category="Coding Agent" data-subtype="技术/算法" href="#">技术/算法<span class="sidebar-count">3</span></a>
+<a class="sidebar-sub-link" data-category="Coding Agent" data-subtype="产品/应用" href="#">产品/应用<span class="sidebar-count">14</span></a>
+</div>
+</div>
+<div class="sidebar-cat-group open">
+<div class="sidebar-cat-header" data-category="多模态大模型/大语言模型" role="button" tabindex="0"><span class="sidebar-cat-arrow"></span><span class="sidebar-cat-label">多模态大模型/大语言模型</span><span class="sidebar-count">13</span></div>
+<div class="sidebar-sub-list">
+<a class="sidebar-sub-link" data-category="多模态大模型/大语言模型" data-subtype="技术/算法" href="#">技术/算法<span class="sidebar-count">8</span></a>
+<a class="sidebar-sub-link" data-category="多模态大模型/大语言模型" data-subtype="产品/应用" href="#">产品/应用<span class="sidebar-count">5</span></a>
+</div>
+</div>
+</nav>
+<div class="sidebar-resize" id="sidebar-resize"></div>
+<div class="sidebar-footer">2026-05-19 20:19<br>共 44 篇 · 43,491 tokens</div>
+</aside>
+<div class="main">
+<div class="topbar"><div class="topbar-inner">
+<div class="topbar-search"><span class="topbar-search-icon">🔍</span><input type="text" id="search" placeholder="搜索标题、来源、摘要... (按 / 聚焦)"></div>
+<span class="topbar-stats">44 篇 · 43,491 tokens</span>
+<button id="theme-toggle" class="topbar-btn" title="切换主题">☀️</button>
+<button id="back-top" class="topbar-btn" title="回到顶部">↑</button>
+<button id="fav-panel-btn" class="topbar-btn" title="收藏夹">⭐<span class="fav-badge" id="fav-badge"></span></button>
+</div></div>
+<div class="content">
+<section class="category-section" id="cat-AIGC视觉生成" data-category="AIGC视觉生成">
+<h2 class="category-header"><span class="category-dot"></span>AIGC视觉生成<span class="category-count">· 11 篇</span></h2>
+<details class="trend-card" open><summary>本周趋势 · AIGC视觉生成</summary><div class="trend-body"><p>本周AIGC视觉生成领域呈现出三大核心动向：**视频生成的工业化协作与智能体化**、**具身智能与3D重建的技术突破**、以及**底层训练范式向高效自适应演进**。在视频侧，LibTV团队版和基于HyperFrames的AI视频制作Agent标志着视频生成正从单点工具转向支持实时协作、分镜脚本自动生成与全流程自动化的“工作室时代”。同时，世界模型突破多人实时联机FPS游戏，标志着其从单智能体仿真向多用户交互的重大跨越。在具身智能与3D重建方面，NVIDIA Cosmos Predict 2.5的参数高效微调（LoRA/DoRA）、开源双臂双手高自由度VLA系统Dexora，以及解决3DGS光度多义性的AmbiSuR框架，分别展示了在机器人视频生成、灵巧操作和高保真几何重建上的实质进展。最后，训练数据方法出现新范式：华为EDCO提出的“难度自适应训练”（让模型实时选择最困惑样本）被Amazon/Google团队跟进引用，同时“思维链折叠”算法也在科学大模型上实现了性能与效率的双重突破。</p><ul><li>**趋势1：视频生成走向“工作室化”与智能体自动化协作**</li><li>**趋势2：世界模型与具身智能突破“多智能体交互”与“灵活操作”**</li><li>**趋势3：3D几何重建与科学发现领域出现“高效参数化”新方法**</li><li>**趋势4：训练数据范式转向“难度自适应”与“提示词工程精细化”**</li></ul></div></details>
+<div class="subtype-section" data-category="AIGC视觉生成" data-subtype="学术论文">
+<h3 class="subtype-header">学术论文</h3>
+<div class="article-grid">
+<article class="article-card" data-url="https://huggingface.co/blog/nvidia/cosmos-fine-tuning-for-robot-video-generation" data-search-text="Fine-Tuning NVIDIA Cosmos Predict 2.5 with LoRA/DoRA for Robot Video Generation Hugging Face 博客 本文介绍了如何使用LoRA/DoRA对NVIDIA Cosmos Predict 2.5进行参数高效微调，以生成机器人操作视频。Cosmos Predict 2.5是一个大规模世界模型，能够根据文本、图像或视频片段生成物理上合理的视频。为了将其适应特定领域（如机器人操作），需要进行微调，但全量微调一个20亿参数模型成本高且可能导致灾难性遗忘。LoRA和DoRA通过在冻结的基础模型中注入可训练的小型适配器模块，降低了内存需求并保持适配器文件小巧。本文详细介绍了使用diffusers和accelerate库进行单GPU或多GPU微调的步骤，包括数据准备（使用92个机器人操作视频和文本提示，50个测试图像对）、训练配置和推理生成合成轨迹，用于下游机器人学习。 使用LoRA/DoRA对NVIDIA Cosmos Predict 2.5进行参数高效微调，适应机器人操作视频生成 全量微调2B参数模型成本高，LoRA/DoRA仅注入小适配器模块，降低内存需求 微调数据集：92个机器人操作视频，含pick-and-place任务文本提示 支持单GPU（至少80GB）和多GPU（推荐8×H100s）训练">
+<button class="fav-star" data-url="https://huggingface.co/blog/nvidia/cosmos-fine-tuning-for-robot-video-generation" title="收藏">☆</button>
+<div class="article-title"><a href="https://huggingface.co/blog/nvidia/cosmos-fine-tuning-for-robot-video-generation" target="_blank" rel="noopener">Fine-Tuning NVIDIA Cosmos Predict 2.5 with LoRA/DoRA for Robot Video Generation</a></div>
+<div class="article-meta"><span class="article-source">Hugging Face 博客</span></div>
+<div class="article-summary">本文介绍了如何使用LoRA/DoRA对NVIDIA Cosmos Predict 2.5进行参数高效微调，以生成机器人操作视频。Cosmos Predict 2.5是一个大规模世界模型，能够根据文本、图像或视频片段生成物理上合理的视频。为了将其适应特定领域（如机器人操作），需要进行微调，但全量微调一个20亿参数模型成本高且可能导致灾难性遗忘。LoRA和DoRA通过在冻结的基础模型中注入可训练的小型适配器模块，降低了内存需求并保持适配器文件小巧。本文详细介绍了使用diffusers和accelerate库进行单GPU或多GPU微调的步骤，包括数据准备（使用92个机器人操作视频和文本提示，50个测试图像对）、训练配置和推理生成合成轨迹，用于下游机器人学习。</div>
+<div class="article-points"><ul><li>使用LoRA/DoRA对NVIDIA Cosmos Predict 2.5进行参数高效微调，适应机器人操作视频生成</li><li>全量微调2B参数模型成本高，LoRA/DoRA仅注入小适配器模块，降低内存需求</li><li>微调数据集：92个机器人操作视频，含pick-and-place任务文本提示</li><li>支持单GPU（至少80GB）和多GPU（推荐8×H100s）训练</li></ul></div>
+</article>
+<article class="article-card" data-url="https://mp.weixin.qq.com/s?__biz=Mzg2OTA1OTAxNA==&amp;mid=2247490198&amp;idx=1&amp;sn=dc42cbf77c76c3c9af9e70b939ac3c65" data-search-text="实测LibTV团队版：AI视频的工作室时代来了！ 花叔 本文介绍了AIGC视频生成工具LibTV新推出的“团队版”功能，展示了其在AI协同视频创作方面的突破。通过实测制作一支30秒的皮克斯风格动画短片，文章详细阐述了团队版的核心特性：支持多人实时在线协作，在同一画布上共同创作，并实时显示编辑状态；提供共享的“团队主体库”，团队成员创建的角色、场景、道具可被所有人直接调用，确保角色和视觉风格的一致性；集成了GVLM 3.1脚本生成节点，能根据剧情自动生成包含分镜、运镜、灯光等细节的完整脚本；支持一键生成多张分镜图和视频片段（基于Seedance 2.0），并在画布内提供视频合成功能。此外，团队版还引入了共享积分池和精细的权限管理（如设置访问权限、禁止复制画布内容等），解决了团队协作中的资源分配和资产安全问题。整套体验将LibTV从一个个人工具升级为一个完整的团队工作台，大幅降低了AI视频制作的门槛。 LibTV团队版支持多人实时协作编辑，显示编辑状态 共享团队主体库，确保角色和风格在不同镜头间一致 GVLM 3.1自动生成精细分镜脚本，包含运镜、灯光等12项细节 提供共享积分池和精细权限管理，解决团队资源与资产安全">
+<button class="fav-star" data-url="https://mp.weixin.qq.com/s?__biz=Mzg2OTA1OTAxNA==&amp;mid=2247490198&amp;idx=1&amp;sn=dc42cbf77c76c3c9af9e70b939ac3c65" title="收藏">☆</button>
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=Mzg2OTA1OTAxNA==&amp;mid=2247490198&amp;idx=1&amp;sn=dc42cbf77c76c3c9af9e70b939ac3c65" target="_blank" rel="noopener">实测LibTV团队版：AI视频的工作室时代来了！</a></div>
+<div class="article-meta"><span class="article-source">花叔</span></div>
+<div class="article-summary">本文介绍了AIGC视频生成工具LibTV新推出的“团队版”功能，展示了其在AI协同视频创作方面的突破。通过实测制作一支30秒的皮克斯风格动画短片，文章详细阐述了团队版的核心特性：支持多人实时在线协作，在同一画布上共同创作，并实时显示编辑状态；提供共享的“团队主体库”，团队成员创建的角色、场景、道具可被所有人直接调用，确保角色和视觉风格的一致性；集成了GVLM 3.1脚本生成节点，能根据剧情自动生成包含分镜、运镜、灯光等细节的完整脚本；支持一键生成多张分镜图和视频片段（基于Seedance 2.0），并在画布内提供视频合成功能。此外，团队版还引入了共享积分池和精细的权限管理（如设置访问权限、禁止复制画布内容等），解决了团队协作中的资源分配和资产安全问题。整套体验将LibTV从一个个人工具升级为一个完整的团队工作台，大幅降低了AI视频制作的门槛。</div>
+<div class="article-points"><ul><li>LibTV团队版支持多人实时协作编辑，显示编辑状态</li><li>共享团队主体库，确保角色和风格在不同镜头间一致</li><li>GVLM 3.1自动生成精细分镜脚本，包含运镜、灯光等12项细节</li><li>提供共享积分池和精细权限管理，解决团队资源与资产安全</li></ul></div>
+</article>
+<article class="article-card" data-url="https://mp.weixin.qq.com/s?__biz=MzU2ODEwMzE0Nw==&amp;mid=2247549520&amp;idx=1&amp;sn=bf060eed50724a0c445eb303810c4452" data-search-text="GPT-Image2做Q版IP全案实操教程 优设 本文是一篇关于使用GPT-Image2（推测为GPT图像生成功能）进行Q版IP全案设计的实操教程。作者指出，虽然GPT能一键生成IP全案设计，但精细度和清晰度不足，因此提出通过拆分步骤进行逐步生成并最终合成的方案。教程提供了一个完整的六步提示词框架，涵盖品牌标识生成、色彩规范、IP主形象与三视图、动作延展与产品海报、线下店铺美陈，以及线上点单小程序UI设计。该方法的核心优势在于每一步都可控，能有效提升细节、精细度和一致性，最终合成一个完整的品牌IP全案设计。作者认为这种拆分生成的方法可落地性强，并强调AI时代工具发展迅速，设计师应保持核心创造力以借AI之力做出好作品。 提出拆分生成Q版IP全案的六步操作框架，涵盖品牌Logo、三视图与海报设计。 强调拆分方法可提升生成细节、精细度和多物料一致性，优于一键生成。 提示词框架包含品牌标识、色彩规范、IP动作延展及线上线下场景物料。">
+<button class="fav-star" data-url="https://mp.weixin.qq.com/s?__biz=MzU2ODEwMzE0Nw==&amp;mid=2247549520&amp;idx=1&amp;sn=bf060eed50724a0c445eb303810c4452" title="收藏">☆</button>
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzU2ODEwMzE0Nw==&amp;mid=2247549520&amp;idx=1&amp;sn=bf060eed50724a0c445eb303810c4452" target="_blank" rel="noopener">GPT-Image2做Q版IP全案实操教程</a></div>
+<div class="article-meta"><span class="article-source">优设</span></div>
+<div class="article-summary">本文是一篇关于使用GPT-Image2（推测为GPT图像生成功能）进行Q版IP全案设计的实操教程。作者指出，虽然GPT能一键生成IP全案设计，但精细度和清晰度不足，因此提出通过拆分步骤进行逐步生成并最终合成的方案。教程提供了一个完整的六步提示词框架，涵盖品牌标识生成、色彩规范、IP主形象与三视图、动作延展与产品海报、线下店铺美陈，以及线上点单小程序UI设计。该方法的核心优势在于每一步都可控，能有效提升细节、精细度和一致性，最终合成一个完整的品牌IP全案设计。作者认为这种拆分生成的方法可落地性强，并强调AI时代工具发展迅速，设计师应保持核心创造力以借AI之力做出好作品。</div>
+<div class="article-points"><ul><li>提出拆分生成Q版IP全案的六步操作框架，涵盖品牌Logo、三视图与海报设计。</li><li>强调拆分方法可提升生成细节、精细度和多物料一致性，优于一键生成。</li><li>提示词框架包含品牌标识、色彩规范、IP动作延展及线上线下场景物料。</li></ul></div>
+</article>
+<article class="article-card" data-url="https://mp.weixin.qq.com/s?__biz=MzU2ODEwMzE0Nw==&amp;mid=2247549544&amp;idx=1&amp;sn=fdaa68135132ce8de4c4646e1c663e9c" data-search-text="9个GPT-image-2模板！新手也能做电影级分镜 优设 本文介绍了9种使用GPT-image-2进行电影级故事版创作的模板。这些模板可用于AI视频前期的角色设定、场景氛围、镜头分镜和画面节奏设计，适用于AI短片、AI广告、概念片和分镜练习等场景。文章还预告了后续将结合SeeDance2.0的内容，并整理了AI提示词供用户参考。作者@Tomda分享了基于GPT-image-2的实战案例，旨在帮助新手入门电影级分镜制作。 9种GPT-image-2电影级故事版模板 适用于AI短片、广告、概念片等创作场景 涵盖角色设定、场景氛围、镜头分镜等关键要素 后续将发布GPT-image-2+SeeDance2.0组合内容 AI提示词已整理至知识库供用户获取">
+<button class="fav-star" data-url="https://mp.weixin.qq.com/s?__biz=MzU2ODEwMzE0Nw==&amp;mid=2247549544&amp;idx=1&amp;sn=fdaa68135132ce8de4c4646e1c663e9c" title="收藏">☆</button>
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzU2ODEwMzE0Nw==&amp;mid=2247549544&amp;idx=1&amp;sn=fdaa68135132ce8de4c4646e1c663e9c" target="_blank" rel="noopener">9个GPT-image-2模板！新手也能做电影级分镜</a></div>
+<div class="article-meta"><span class="article-source">优设</span></div>
+<div class="article-summary">本文介绍了9种使用GPT-image-2进行电影级故事版创作的模板。这些模板可用于AI视频前期的角色设定、场景氛围、镜头分镜和画面节奏设计，适用于AI短片、AI广告、概念片和分镜练习等场景。文章还预告了后续将结合SeeDance2.0的内容，并整理了AI提示词供用户参考。作者@Tomda分享了基于GPT-image-2的实战案例，旨在帮助新手入门电影级分镜制作。</div>
+<div class="article-points"><ul><li>9种GPT-image-2电影级故事版模板</li><li>适用于AI短片、广告、概念片等创作场景</li><li>涵盖角色设定、场景氛围、镜头分镜等关键要素</li><li>后续将发布GPT-image-2+SeeDance2.0组合内容</li><li>AI提示词已整理至知识库供用户获取</li></ul></div>
+</article>
+<article class="article-card" data-url="https://www.qbitai.com/2026/05/420083.html" data-search-text="抢先李飞飞！世界模型能多人联机玩FPS游戏了 量子位 文章报道了一种突破性的世界模型，能够支持多人联机玩FPS（第一人称射击）游戏。该工作由李飞飞团队之外的研究者率先实现，展示了世界模型在交互式、多用户场景中的巨大潜力。传统世界模型多用于单智能体或离线仿真，而该模型实现了实时、多玩家在共享虚拟环境中的合作或对抗。关键贡献在于解决了多用户状态同步、实时渲染和动态交互的挑战，使多个玩家可以同时进入由模型生成的游戏世界。实验结果显示，模型在复杂FPS场景中能保持帧率稳定，并支持玩家间的即时互动。这一成果标志着世界模型从单机演示走向了真正的多人实时交互应用。 实现世界模型支持多人实时联机FPS游戏，领先于李飞飞团队 解决了多用户状态同步、实时渲染和动态交互的关键技术挑战 模型在复杂游戏场景中保持稳定帧率，支持玩家即时互动 标志着世界模型从单智能体仿真向多人实时交互应用突破">
+<button class="fav-star" data-url="https://www.qbitai.com/2026/05/420083.html" title="收藏">☆</button>
+<div class="article-title"><a href="https://www.qbitai.com/2026/05/420083.html" target="_blank" rel="noopener">抢先李飞飞！世界模型能多人联机玩FPS游戏了</a></div>
+<div class="article-meta"><span class="article-source">量子位</span></div>
+<div class="article-summary">文章报道了一种突破性的世界模型，能够支持多人联机玩FPS（第一人称射击）游戏。该工作由李飞飞团队之外的研究者率先实现，展示了世界模型在交互式、多用户场景中的巨大潜力。传统世界模型多用于单智能体或离线仿真，而该模型实现了实时、多玩家在共享虚拟环境中的合作或对抗。关键贡献在于解决了多用户状态同步、实时渲染和动态交互的挑战，使多个玩家可以同时进入由模型生成的游戏世界。实验结果显示，模型在复杂FPS场景中能保持帧率稳定，并支持玩家间的即时互动。这一成果标志着世界模型从单机演示走向了真正的多人实时交互应用。</div>
+<div class="article-points"><ul><li>实现世界模型支持多人实时联机FPS游戏，领先于李飞飞团队</li><li>解决了多用户状态同步、实时渲染和动态交互的关键技术挑战</li><li>模型在复杂游戏场景中保持稳定帧率，支持玩家即时互动</li><li>标志着世界模型从单智能体仿真向多人实时交互应用突破</li></ul></div>
+</article>
+<article class="article-card" data-url="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&amp;mid=2651033888&amp;idx=3&amp;sn=eba91739c595831c281481586a85bc92" data-search-text="ICML 2026 | 突破3DGS光度多义性瓶颈：北航/新国立提出AmbiSuR，重塑高保真3D几何重建 机器之心 该论文（ICML 2026）针对3D高斯泼溅（3DGS）在表面重建中因光度多义性导致的几何失真问题，提出了AmbiSuR框架。作者（北航和新国立团队）首先分析了多义性的两个来源：表征层面——基元边缘多义性和光度混合多义性导致冗余基元层叠和几何过拟合；监督层面——真实场景中的反光、弱纹理等不完美信号进一步加剧问题。核心创新是首次论证了球谐函数（SH）系数可作为3DGS中的“多义性自指示器”，通过分析基元SH系数的分布特征来识别和抑制病态几何，无需引入深度等外部先验。该方法与现有架构完全兼容，在多个真实场景数据集上实现了更高保真度的几何重建，有效恢复了精细表面细节，同时避免了过平滑。代码已开源。 AmbiSuR框架针对3DGS光度多义性导致几何失真问题 首次利用球谐函数作为自指示器识别多义性基元 无需外部深度先验，保持架构通用性且不损失纹理细节 代码开源，在ICML 2026发表">
+<button class="fav-star" data-url="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&amp;mid=2651033888&amp;idx=3&amp;sn=eba91739c595831c281481586a85bc92" title="收藏">☆</button>
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&amp;mid=2651033888&amp;idx=3&amp;sn=eba91739c595831c281481586a85bc92" target="_blank" rel="noopener">ICML 2026 | 突破3DGS光度多义性瓶颈：北航/新国立提出AmbiSuR，重塑高保真3D几何重建</a></div>
+<div class="article-meta"><span class="article-source">机器之心</span></div>
+<div class="article-summary">该论文（ICML 2026）针对3D高斯泼溅（3DGS）在表面重建中因光度多义性导致的几何失真问题，提出了AmbiSuR框架。作者（北航和新国立团队）首先分析了多义性的两个来源：表征层面——基元边缘多义性和光度混合多义性导致冗余基元层叠和几何过拟合；监督层面——真实场景中的反光、弱纹理等不完美信号进一步加剧问题。核心创新是首次论证了球谐函数（SH）系数可作为3DGS中的“多义性自指示器”，通过分析基元SH系数的分布特征来识别和抑制病态几何，无需引入深度等外部先验。该方法与现有架构完全兼容，在多个真实场景数据集上实现了更高保真度的几何重建，有效恢复了精细表面细节，同时避免了过平滑。代码已开源。</div>
+<div class="article-badges"><a href="https://arxiv.org/abs/2605.12494" class="badge arxiv" target="_blank" rel="noopener">arXiv</a><a href="https://github.com/Fictionarry/AmbiSuR" class="badge github" target="_blank" rel="noopener">GitHub</a></div>
+<div class="article-points"><ul><li>AmbiSuR框架针对3DGS光度多义性导致几何失真问题</li><li>首次利用球谐函数作为自指示器识别多义性基元</li><li>无需外部深度先验，保持架构通用性且不损失纹理细节</li><li>代码开源，在ICML 2026发表</li></ul></div>
+</article>
+<article class="article-card" data-url="https://juejin.cn/post/7641054984591835146" data-search-text="我的一人公司AI视频团队，被腾讯收编了 掘金本周最热 作者分享了自己一人公司开发的“产品宣传部”AI视频团队被腾讯WorkBuddy收编的经历。该团队基于HeyGen开源的视频渲染框架HyperFrames（GitHub 17.7k Star）构建，通过Agent自动执行产品宣传片制作的全流程：产品判断、撰写brief、分镜、素材收集、基于HyperFrames的剪辑、BGM配乐，最终交付成片。整个过程由多个Agent分工协作，形成一条类似真实生产线的“工序”。作者已将该流程开源为一套Skill，腾讯将其上架至WorkBuddy“专家团”。文章展示了如何利用生成式AI和Agent技术实现一人公司的视频规模化生产，并探讨了全自动方案与二次剪辑的适用场景。 基于HyperFrames框架构建AI视频制作“产品宣传部” Agent自动执行从brief到成片的完整宣传片制作流程 该解决方案被腾讯WorkBuddy的“专家团”收录">
+<button class="fav-star" data-url="https://juejin.cn/post/7641054984591835146" title="收藏">☆</button>
+<div class="article-title"><a href="https://juejin.cn/post/7641054984591835146" target="_blank" rel="noopener">我的一人公司AI视频团队，被腾讯收编了</a></div>
+<div class="article-meta"><span class="article-source">掘金本周最热</span></div>
+<div class="article-summary">作者分享了自己一人公司开发的“产品宣传部”AI视频团队被腾讯WorkBuddy收编的经历。该团队基于HeyGen开源的视频渲染框架HyperFrames（GitHub 17.7k Star）构建，通过Agent自动执行产品宣传片制作的全流程：产品判断、撰写brief、分镜、素材收集、基于HyperFrames的剪辑、BGM配乐，最终交付成片。整个过程由多个Agent分工协作，形成一条类似真实生产线的“工序”。作者已将该流程开源为一套Skill，腾讯将其上架至WorkBuddy“专家团”。文章展示了如何利用生成式AI和Agent技术实现一人公司的视频规模化生产，并探讨了全自动方案与二次剪辑的适用场景。</div>
+<div class="article-points"><ul><li>基于HyperFrames框架构建AI视频制作“产品宣传部”</li><li>Agent自动执行从brief到成片的完整宣传片制作流程</li><li>该解决方案被腾讯WorkBuddy的“专家团”收录</li></ul></div>
+</article>
+<article class="article-card" data-url="http://arxiv.org/abs/2605.18722v1" data-search-text="Dexora: Open-source VLA for High-DoF Bimanual Dexterity arXiv 机器人 本文提出Dexora，首个开源的面向双臂双手高自由度（High-DoF）操作的VLA系统。针对现有VLA局限于双夹爪或单臂灵巧手控制的问题，设计了混合遥操作管线：通过定制外骨骼背包捕获手臂运动，利用Apple Vision Pro进行无标记手部跟踪，同时驱动物理平台和MuJoCo数字孪生。构建了大型训练数据集：包含10万条模拟轨迹（650万帧）和1万条遥操作真实数据（292万帧）。提出数据质量感知训练策略，通过离线判别器为扩散Transformer策略提供片段级权重，降低低质量演示影响。实验显示Dexora在灵巧操作任务上平均成功率66.7%，优于基线模型的51.7%，基本任务达90%，且具鲁棒的分布外和跨实体泛化能力。 首个开源双臂双手高自由度VLA系统，遥操作管线结合外骨骼背包和Apple Vision Pro 构建100K模拟+10K真实轨迹的大规模训练数据集 提出离线判别器加权扩散Transformer策略，降低噪声演示影响 灵巧操作平均成功率66.7%，基本任务90%，超越VLA基线">
+<button class="fav-star" data-url="http://arxiv.org/abs/2605.18722v1" title="收藏">☆</button>
+<div class="article-title"><a href="http://arxiv.org/abs/2605.18722v1" target="_blank" rel="noopener">Dexora: Open-source VLA for High-DoF Bimanual Dexterity</a></div>
+<div class="article-meta"><span class="article-source">arXiv 机器人</span></div>
+<div class="article-summary">本文提出Dexora，首个开源的面向双臂双手高自由度（High-DoF）操作的VLA系统。针对现有VLA局限于双夹爪或单臂灵巧手控制的问题，设计了混合遥操作管线：通过定制外骨骼背包捕获手臂运动，利用Apple Vision Pro进行无标记手部跟踪，同时驱动物理平台和MuJoCo数字孪生。构建了大型训练数据集：包含10万条模拟轨迹（650万帧）和1万条遥操作真实数据（292万帧）。提出数据质量感知训练策略，通过离线判别器为扩散Transformer策略提供片段级权重，降低低质量演示影响。实验显示Dexora在灵巧操作任务上平均成功率66.7%，优于基线模型的51.7%，基本任务达90%，且具鲁棒的分布外和跨实体泛化能力。</div>
+<div class="article-badges"><a href="http://arxiv.org/abs/2605.18722v1" class="badge arxiv" target="_blank" rel="noopener">arXiv</a></div>
+<div class="article-points"><ul><li>首个开源双臂双手高自由度VLA系统，遥操作管线结合外骨骼背包和Apple Vision Pro</li><li>构建100K模拟+10K真实轨迹的大规模训练数据集</li><li>提出离线判别器加权扩散Transformer策略，降低噪声演示影响</li><li>灵巧操作平均成功率66.7%，基本任务90%，超越VLA基线</li></ul></div>
+</article>
+</div>
+</div>
+<div class="subtype-section" data-category="AIGC视觉生成" data-subtype="技术/算法">
+<h3 class="subtype-header">技术/算法</h3>
+<div class="article-grid">
+<article class="article-card" data-url="https://mp.weixin.qq.com/s?__biz=Mzk3NTc1NTU0Mw==&amp;mid=2247508313&amp;idx=1&amp;sn=82be2cb2929b671e6920d74e5d479f54" data-search-text="35B参数科学性能比肩万亿参数模型，『书生』科学大模型Intern-S2-Preview开源 魔搭ModelScope社区 上海人工智能实验室开源了新一代科学大模型『书生』Intern-S2-Preview，其核心突破是以 35B 参数规模实现了多项能力比肩万亿参数模型。研究团队通过提升科学任务难度和多样性，并采用“全链路训练”范式（每个专业科学任务配置从预训练到后训练的策略），使小参数模型在训练中形成不同任务间的协同效应。模型首次在开源通用大模型中实现了材料晶体结构生成能力，这得益于引入的实数预测模块。在 MolecularIQ 评测中得分 57.26（超 Gemini-3.1-Pro 的 41.33）。此外，模型在综合科学场景编程和科学发现任务中超越 GPT-5.4-Nano、Claude-Haiku-4.5 等主流闭源模型。团队还探索了强化学习，引导模型利用思维链完成生物多组学理解等复杂任务，并创新“思维链折叠”算法，在数学推理任务上实现性能与效率的双重突破。模型深化了与昇腾算力生态的协同。 Intern-S2-Preview 以 35B 参数规模，在核心科学领域实现比肩万亿参数模型的性能。 首次在开源通用大模型中实现材料晶体结构生成能力（通过实数预测模块）。 在 MolecularIQ 上得分 57.26，超越 Gemini-3.1-Pro 的 41.33 分。 在科学发现任务中超越 GPT-5.4-Nano、Claude-Haiku-4.5 等闭源模型。 提出“思维链折叠”算法，在数学推理任务中实现性能与效率的双重突破。">
+<button class="fav-star" data-url="https://mp.weixin.qq.com/s?__biz=Mzk3NTc1NTU0Mw==&amp;mid=2247508313&amp;idx=1&amp;sn=82be2cb2929b671e6920d74e5d479f54" title="收藏">☆</button>
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=Mzk3NTc1NTU0Mw==&amp;mid=2247508313&amp;idx=1&amp;sn=82be2cb2929b671e6920d74e5d479f54" target="_blank" rel="noopener">35B参数科学性能比肩万亿参数模型，『书生』科学大模型Intern-S2-Preview开源</a></div>
+<div class="article-meta"><span class="article-source">魔搭ModelScope社区</span></div>
+<div class="article-summary">上海人工智能实验室开源了新一代科学大模型『书生』Intern-S2-Preview，其核心突破是以 35B 参数规模实现了多项能力比肩万亿参数模型。研究团队通过提升科学任务难度和多样性，并采用“全链路训练”范式（每个专业科学任务配置从预训练到后训练的策略），使小参数模型在训练中形成不同任务间的协同效应。模型首次在开源通用大模型中实现了材料晶体结构生成能力，这得益于引入的实数预测模块。在 MolecularIQ 评测中得分 57.26（超 Gemini-3.1-Pro 的 41.33）。此外，模型在综合科学场景编程和科学发现任务中超越 GPT-5.4-Nano、Claude-Haiku-4.5 等主流闭源模型。团队还探索了强化学习，引导模型利用思维链完成生物多组学理解等复杂任务，并创新“思维链折叠”算法，在数学推理任务上实现性能与效率的双重突破。模型深化了与昇腾算力生态的协同。</div>
+<div class="article-badges"><a href="https://github.com/InternLM/Intern-S1" class="badge github" target="_blank" rel="noopener">GitHub</a></div>
+<div class="article-points"><ul><li>Intern-S2-Preview 以 35B 参数规模，在核心科学领域实现比肩万亿参数模型的性能。</li><li>首次在开源通用大模型中实现材料晶体结构生成能力（通过实数预测模块）。</li><li>在 MolecularIQ 上得分 57.26，超越 Gemini-3.1-Pro 的 41.33 分。</li><li>在科学发现任务中超越 GPT-5.4-Nano、Claude-Haiku-4.5 等闭源模型。</li><li>提出“思维链折叠”算法，在数学推理任务中实现性能与效率的双重突破。</li></ul></div>
+</article>
+</div>
+</div>
+<div class="subtype-section" data-category="AIGC视觉生成" data-subtype="产品/应用">
+<h3 class="subtype-header">产品/应用</h3>
+<div class="article-grid">
+<article class="article-card" data-url="http://mp.weixin.qq.com/s?__biz=Mzg3Mzg5MjY3Nw==&amp;mid=2247526306&amp;idx=1&amp;sn=18b4472f582521ab8f48596ad9386eaa&amp;chksm=cf4ce11f9ebaab50fe41dde2d7889c9b63502a30730a01aaa743554cb30fad1ac04a2a231204&amp;scene=0&amp;xtrack=1#rd" data-search-text="虾、马之后，人类登场！这个霸榜GitHub项目火了 AIGC开放社区 本文介绍了Anthropic发布的AI原生初创企业操作手册，手把手教创业者利用大模型创业。手册将创业历程拆解为想法、原型、上线与规模化四个周期，并详细阐述了如何利用Claude Code等AI工具跳过技术障碍，以极简团队构建商业护城河。核心观点包括：在AI时代，编写软件能力贬值，创始人对商业走向的洞察成为唯一壁垒；应分配合适工具（轻量问答用Chat，深度研究用Cowork后台，业务逻辑编写用Code智能体）；注重投资于持久上下文记忆；避免技术债和范围蔓延；在上线期建立可重复增长引擎。 Anthropic发布36页AI原生创业操作手册，分想法、原型、上线、规模化四阶段 强调利用Claude Code等AI工具跳过技术门槛，创始人洞察成为壁垒 提出分配Chat、Cowork后台、Code智能体三类工具应对不同任务 投资于持久上下文记忆以避免模型每次盲目重构 指出42%初创企业死于开发无人需要产品，需优先验证问题-方案契合度">
+<button class="fav-star" data-url="http://mp.weixin.qq.com/s?__biz=Mzg3Mzg5MjY3Nw==&amp;mid=2247526306&amp;idx=1&amp;sn=18b4472f582521ab8f48596ad9386eaa&amp;chksm=cf4ce11f9ebaab50fe41dde2d7889c9b63502a30730a01aaa743554cb30fad1ac04a2a231204&amp;scene=0&amp;xtrack=1#rd" title="收藏">☆</button>
+<div class="article-title"><a href="http://mp.weixin.qq.com/s?__biz=Mzg3Mzg5MjY3Nw==&amp;mid=2247526306&amp;idx=1&amp;sn=18b4472f582521ab8f48596ad9386eaa&amp;chksm=cf4ce11f9ebaab50fe41dde2d7889c9b63502a30730a01aaa743554cb30fad1ac04a2a231204&amp;scene=0&amp;xtrack=1#rd" target="_blank" rel="noopener">虾、马之后，人类登场！这个霸榜GitHub项目火了</a></div>
+<div class="article-meta"><span class="article-source">AIGC开放社区</span></div>
+<div class="article-summary">本文介绍了Anthropic发布的AI原生初创企业操作手册，手把手教创业者利用大模型创业。手册将创业历程拆解为想法、原型、上线与规模化四个周期，并详细阐述了如何利用Claude Code等AI工具跳过技术障碍，以极简团队构建商业护城河。核心观点包括：在AI时代，编写软件能力贬值，创始人对商业走向的洞察成为唯一壁垒；应分配合适工具（轻量问答用Chat，深度研究用Cowork后台，业务逻辑编写用Code智能体）；注重投资于持久上下文记忆；避免技术债和范围蔓延；在上线期建立可重复增长引擎。</div>
+<div class="article-points"><ul><li>Anthropic发布36页AI原生创业操作手册，分想法、原型、上线、规模化四阶段</li><li>强调利用Claude Code等AI工具跳过技术门槛，创始人洞察成为壁垒</li><li>提出分配Chat、Cowork后台、Code智能体三类工具应对不同任务</li><li>投资于持久上下文记忆以避免模型每次盲目重构</li><li>指出42%初创企业死于开发无人需要产品，需优先验证问题-方案契合度</li></ul></div>
+</article>
+<article class="article-card" data-url="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&amp;mid=2651033590&amp;idx=3&amp;sn=328d4b6d0bc0e9fd4db90cd6022f45a6" data-search-text="ICML 2026 | 华为GTS提出AI训练数据新方法，Amazon/Google作者团队「光速跟进」：难度自适应训练正在成为新范式 机器之心 本文报道了华为GTS在ICML 2026上发表的论文，提出了一种名为EDCO（Entropy-based Dynamic Curriculum Orchestration）的数据训练新方法，用于领域大模型的微调。背景是高质量领域数据稀缺且昂贵，传统静态课程学习无法适应模型能力变化。EDCO方法的核心是利用推理熵（inference entropy）动态评估样本对当前模型的挑战性，选择模型最困惑、最有学习价值的样本组成训练课程，实现动态难度自适应训练。关键结果是，该方法显著优于随机采样和静态课程，被ICML 2026接收，并已被Rutgers、Amazon、Google等团队的研究（如DARE论文）引用为重要基线。EDCO标志着训练数据选择从工程细节走向核心算法问题，可能成为大模型微调的新范式。 华为EDCO方法被ICML 2026接收，提出推理熵动态课程编排 核心机制：让模型实时选择当前最困惑的样本进行学习 已被Amazon/Google团队研究（DARE）引用为重要基线 开源代码地址：https://github.com/GTS-AIData/EDCO">
+<button class="fav-star" data-url="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&amp;mid=2651033590&amp;idx=3&amp;sn=328d4b6d0bc0e9fd4db90cd6022f45a6" title="收藏">☆</button>
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&amp;mid=2651033590&amp;idx=3&amp;sn=328d4b6d0bc0e9fd4db90cd6022f45a6" target="_blank" rel="noopener">ICML 2026 | 华为GTS提出AI训练数据新方法，Amazon/Google作者团队「光速跟进」：难度自适应训练正在成为新范式</a></div>
+<div class="article-meta"><span class="article-source">机器之心</span></div>
+<div class="article-summary">本文报道了华为GTS在ICML 2026上发表的论文，提出了一种名为EDCO（Entropy-based Dynamic Curriculum Orchestration）的数据训练新方法，用于领域大模型的微调。背景是高质量领域数据稀缺且昂贵，传统静态课程学习无法适应模型能力变化。EDCO方法的核心是利用推理熵（inference entropy）动态评估样本对当前模型的挑战性，选择模型最困惑、最有学习价值的样本组成训练课程，实现动态难度自适应训练。关键结果是，该方法显著优于随机采样和静态课程，被ICML 2026接收，并已被Rutgers、Amazon、Google等团队的研究（如DARE论文）引用为重要基线。EDCO标志着训练数据选择从工程细节走向核心算法问题，可能成为大模型微调的新范式。</div>
+<div class="article-badges"><a href="https://arxiv.org/pdf/2601.03725" class="badge arxiv" target="_blank" rel="noopener">arXiv</a><a href="https://github.com/GTS-AIData/EDCO" class="badge github" target="_blank" rel="noopener">GitHub</a></div>
+<div class="article-points"><ul><li>华为EDCO方法被ICML 2026接收，提出推理熵动态课程编排</li><li>核心机制：让模型实时选择当前最困惑的样本进行学习</li><li>已被Amazon/Google团队研究（DARE）引用为重要基线</li><li>开源代码地址：https://github.com/GTS-AIData/EDCO</li></ul></div>
+</article>
+</div>
+</div>
+</section>
+<section class="category-section" id="cat-自动驾驶" data-category="自动驾驶">
+<h2 class="category-header"><span class="category-dot"></span>自动驾驶<span class="category-count">· 3 篇</span></h2>
+<details class="trend-card" open><summary>本周趋势 · 自动驾驶</summary><div class="trend-body"><p>本周自动驾驶领域呈现“商业落地加速”与“安全挑战深化”并行的鲜明特征。在产业端，以百度Apollo为代表，其无人车周订单突破35万单，并首次实现单城市盈利，标志着行业从技术验证正式迈入商业化运营阶段；同时，文远知行强调其在L2++级复杂场景下的“五冠王”技术积累，表明高阶辅助驾驶的竞争正从功能清单转向实际路况下的硬核性能兑现。然而，研究领域暴露出一个关键隐患：来自加州大学团队的最新论文首次证明，针对家庭机器人（如Habitat/HomeRobot仿真平台）的排版攻击（Typographic Attacks）可导致感知系统误判，并通过3D语义图传播，最终引发物理抓取错误，攻击成功率达67.8%。这一发现警示，当自动驾驶与家庭机器人等物理实体融合，视觉语言模型的安全漏洞将从数字欺诈升级为真实物理安全威胁，对现有端到端感知管线的鲁棒性提出严峻拷问。</p><ul><li>**商业闭环初步形成**：百度无人车周订单突破35万单，并在27个城市运营，李彦宏宣布实现单城盈利。这一“盈利拐点”证明在特定区域和运营条件下，Robotaxi已具备经济可行性，而不再仅是烧钱测试。</li><li>**高阶智驾进入“硬场景”比拼**：文远知行自称L2++“五冠王”，强调其应对复杂、极限驾驶场景（如“专治各种不服”）的硬实力。这反映出该赛道竞争已从传感器配置比拼，转向对长尾场景（Corner Cases）的攻克能力以及实际用户口碑的竞争。</li><li>**多模态攻击威胁从数字域蔓延至物理域**：研究论文首次系统评估了排版攻击（Typographic Attacks）对家庭机器人完整操作管线的危害。攻击导致感知错误（如误读物体标签）通过3D语义图传播，最终引发70.0%的物理抓取失败。这一趋势揭示，基于视觉语言模型（VLM）的自动驾驶或机器人系统，其安全边界不仅要考虑感知噪声，更需防御针对文本语义的恶意对抗样本。</li></ul></div></details>
+<div class="subtype-section" data-category="自动驾驶" data-subtype="学术论文">
+<h3 class="subtype-header">学术论文</h3>
+<div class="article-grid">
+<article class="article-card" data-url="https://www.qbitai.com/2026/05/419913.html" data-search-text="L2++「五冠王」文远知行：自动驾驶版的张雪机车，专治各种不服 量子位 本文介绍了自动驾驶公司文远知行（WeRide）在L2++级别自动驾驶领域的成就，将其比喻为“自动驾驶版的张雪机车”，强调其在性能上的卓越表现和“专治各种不服”的挑战精神。背景是自动驾驶技术从L2向更高级别演进的市场竞争，文远知行通过技术积累和落地应用，在多个维度（可能是测试、安全性、用户体验）达到L2++级别的领先水平。核心方法是持续优化感知、决策和控制算法，确保在复杂场景下的稳定性和可靠性。关键结论是，文远知行在L2++领域已建立技术壁垒和口碑，类似摩托车品牌张雪在赛车领域的专注与实力。 宣称在L2++级别自动驾驶领域实现“五冠王”领先地位 以“专治各种不服”比喻其应对复杂驾驶场景的能力 强调通过技术硬实力和实际应用积累建立竞争优势">
+<button class="fav-star" data-url="https://www.qbitai.com/2026/05/419913.html" title="收藏">☆</button>
+<div class="article-title"><a href="https://www.qbitai.com/2026/05/419913.html" target="_blank" rel="noopener">L2++「五冠王」文远知行：自动驾驶版的张雪机车，专治各种不服</a></div>
+<div class="article-meta"><span class="article-source">量子位</span></div>
+<div class="article-summary">本文介绍了自动驾驶公司文远知行（WeRide）在L2++级别自动驾驶领域的成就，将其比喻为“自动驾驶版的张雪机车”，强调其在性能上的卓越表现和“专治各种不服”的挑战精神。背景是自动驾驶技术从L2向更高级别演进的市场竞争，文远知行通过技术积累和落地应用，在多个维度（可能是测试、安全性、用户体验）达到L2++级别的领先水平。核心方法是持续优化感知、决策和控制算法，确保在复杂场景下的稳定性和可靠性。关键结论是，文远知行在L2++领域已建立技术壁垒和口碑，类似摩托车品牌张雪在赛车领域的专注与实力。</div>
+<div class="article-points"><ul><li>宣称在L2++级别自动驾驶领域实现“五冠王”领先地位</li><li>以“专治各种不服”比喻其应对复杂驾驶场景的能力</li><li>强调通过技术硬实力和实际应用积累建立竞争优势</li></ul></div>
+</article>
+<article class="article-card" data-url="https://www.qbitai.com/2026/05/419597.html" data-search-text="百度无人车新纪录：周订单破35万！李彦宏：开始单城盈利了 量子位 本文报道了百度旗下无人车（萝卜快跑）创造的新纪录：周订单突破35万单，并已在全球27个城市落地运营。百度创始人李彦宏宣布，无人车业务已开始实现单个城市盈利。背景是自动驾驶出行服务从试运营向规模化商业模式的转变，百度在技术验证和运营成本控制上取得突破。核心方法是通过持续优化算法、降低车辆成本和提高运营效率来实现盈利。关键结论是，百度无人车的规模化落地和单城盈利标志着自动驾驶商业化进入新阶段，为行业提供了可参考的商业模型。 周订单量突破35万单，创下新纪录 已落地全球27个城市，覆盖范围扩大 李彦宏宣布开始实现单城市盈利，商业化进程加速">
+<button class="fav-star" data-url="https://www.qbitai.com/2026/05/419597.html" title="收藏">☆</button>
+<div class="article-title"><a href="https://www.qbitai.com/2026/05/419597.html" target="_blank" rel="noopener">百度无人车新纪录：周订单破35万！李彦宏：开始单城盈利了</a></div>
+<div class="article-meta"><span class="article-source">量子位</span></div>
+<div class="article-summary">本文报道了百度旗下无人车（萝卜快跑）创造的新纪录：周订单突破35万单，并已在全球27个城市落地运营。百度创始人李彦宏宣布，无人车业务已开始实现单个城市盈利。背景是自动驾驶出行服务从试运营向规模化商业模式的转变，百度在技术验证和运营成本控制上取得突破。核心方法是通过持续优化算法、降低车辆成本和提高运营效率来实现盈利。关键结论是，百度无人车的规模化落地和单城盈利标志着自动驾驶商业化进入新阶段，为行业提供了可参考的商业模型。</div>
+<div class="article-points"><ul><li>周订单量突破35万单，创下新纪录</li><li>已落地全球27个城市，覆盖范围扩大</li><li>李彦宏宣布开始实现单城市盈利，商业化进程加速</li></ul></div>
+</article>
+<article class="article-card" data-url="http://arxiv.org/abs/2605.18593v1" data-search-text="Not What You Asked For: Typographic Attacks in Household Robot Manipulation arXiv 机器人 本文研究了家庭机器人操作中排版攻击（typographic attacks）的安全威胁。开放词汇具身AI智能体依赖CLIP等视觉语言模型进行物体感知和任务定位，但其共享嵌入空间易受排版攻击：场景中印刷文本可语义覆盖视觉判断。此前研究仅在静态2D基准和3D导航任务中评估，本文首次评估对完整Sense-Plan-Act管线的冲击。在基于Habitat的HomeRobot仿真中，通过解耦感知架构暴露冻结CLIP编码器至对抗性贴纸，在59个可归因片段中攻击成功率达67.8%，完全成功片段中达70.0%。关键发现：感知错误可通过持久3D语义图传播导致运动级故障——机器人物理抓取并运错物体。这证明了排版误分类对模块化操作管线的真实、可度量且物理后果严重的安全威胁。 在Habitat/HomeRobot仿真中评估排版攻击对机器人完整管线的威胁 攻击成功率达67.8%，完全成功片段中达70.0% 感知错误通过3D语义图传播导致物理抓取和运错物体的运动级故障 首次证明排版攻击对家庭机器人操作是真实物理安全威胁">
+<button class="fav-star" data-url="http://arxiv.org/abs/2605.18593v1" title="收藏">☆</button>
+<div class="article-title"><a href="http://arxiv.org/abs/2605.18593v1" target="_blank" rel="noopener">Not What You Asked For: Typographic Attacks in Household Robot Manipulation</a></div>
+<div class="article-meta"><span class="article-source">arXiv 机器人</span></div>
+<div class="article-summary">本文研究了家庭机器人操作中排版攻击（typographic attacks）的安全威胁。开放词汇具身AI智能体依赖CLIP等视觉语言模型进行物体感知和任务定位，但其共享嵌入空间易受排版攻击：场景中印刷文本可语义覆盖视觉判断。此前研究仅在静态2D基准和3D导航任务中评估，本文首次评估对完整Sense-Plan-Act管线的冲击。在基于Habitat的HomeRobot仿真中，通过解耦感知架构暴露冻结CLIP编码器至对抗性贴纸，在59个可归因片段中攻击成功率达67.8%，完全成功片段中达70.0%。关键发现：感知错误可通过持久3D语义图传播导致运动级故障——机器人物理抓取并运错物体。这证明了排版误分类对模块化操作管线的真实、可度量且物理后果严重的安全威胁。</div>
+<div class="article-badges"><a href="http://arxiv.org/abs/2605.18593v1" class="badge arxiv" target="_blank" rel="noopener">arXiv</a></div>
+<div class="article-points"><ul><li>在Habitat/HomeRobot仿真中评估排版攻击对机器人完整管线的威胁</li><li>攻击成功率达67.8%，完全成功片段中达70.0%</li><li>感知错误通过3D语义图传播导致物理抓取和运错物体的运动级故障</li><li>首次证明排版攻击对家庭机器人操作是真实物理安全威胁</li></ul></div>
+</article>
+</div>
+</div>
+</section>
+<section class="category-section" id="cat-Coding Agent" data-category="Coding Agent">
+<h2 class="category-header"><span class="category-dot"></span>Coding Agent<span class="category-count">· 17 篇</span></h2>
+<details class="trend-card" open><summary>本周趋势 · Coding Agent</summary><div class="trend-body"><p>本周关于Coding Agent的讨论焦点，已从模型能力的热度转向工具栈与工作流生态的竞争。市场明确分化为两大阵营：一是以Codex和Claude Code为代表的商业Agent，正通过与Dell、PwC等企业合作，深入混合云、咨询与审计等垂直场景，并与手机端远程控制功能形成差异化竞争；二是以Open Agent Leaderboard、Agent Skills框架（如superpowers）和AIPS插件为代表的开源生态，致力于构建可复现、可组合的评估与配置标准。与此同时，业界开始反思“AI生码率”这一过程指标的局限性，阿里云CIO团队通过流程重构将AI嵌入全生命周期，实现了前端人均代码量提升3倍、缺陷率下降30%-55%的实战成果。这一系列动态表明，Agent的竞争力正从“能否生成代码”转向“能否稳定集成进复杂的企业开发流与数据链路”，而Aislop等确定性质量门控工具的出现，则进一步印证了行业对AI代码引入规范化治理的紧迫需求。</p><ul><li>**趋势1：Agent竞争从“模型能力”转向“工具栈与工作流生态”**：本周多项动态显示，市场注意力已从基础模型的热度比拼，转向Agent如何接入企业现有系统。Open Agent Leaderboard开始评测完整系统能力（工具使用、规划、记忆、错误恢复）与成本；GitHub上飞书CLI等“万物皆可CLI”的项目火爆，因其作为统一接口层，让Agent无缝操控IM、文档、审批等碎片化系统，成为AI-native工作方式的关键基础设施。</li><li>**趋势2：商业Agent加速渗透企业级与移动端场景**：Codex与Claude Code的竞争白热化。一方面，Codex登陆ChatGPT手机APP并支持远程SSH，同时与戴尔合作进军混合云/本地部署；另一方面，PwC宣布向数十万员工推广Claude Code+Cowork，并成立首个以Claude为基础的独立CFO办公室业务部门，交付时间缩短70%。移动端管理与企业级合规需求正在重塑Agent的产品形态。</li><li>**趋势3：从“AI生码率”到“全流程效能”的度量体系变革**：行业开始系统性抛弃“AI生码率”这类易灌水的过程指标。阿里云CIO团队的实践表明，编码仅占20%工时，关键提效应来源于流程重构——将AI嵌入需求对焦、跨团队协作等全流程，最终实现后端有效代码量提升2倍、缺陷率下降30%-55%。这标志着AI提效评估正从代码生成速度转向业务价值交付。</li><li>**趋势4：AI编码治理走向规范化，确定性质量门控与长期记忆插件兴起**：随着Agent生成代码越来越多，行业引入确定性规则进行治理。Aislop作为不依赖LLM的确定性质量门控，可在CI/CD流程中阻止低质量AI代码入库。同时，AIPS插件通过`.aips`目录为Claude Code提供项目级“长期记忆”，解决了每次新建项目需重复手动配置的问题，反映出对Agent稳定性和可维护性的需求正催生配套工具生态。</li></ul></div></details>
+<div class="subtype-section" data-category="Coding Agent" data-subtype="技术/算法">
+<h3 class="subtype-header">技术/算法</h3>
+<div class="article-grid">
+<article class="article-card" data-url="https://huggingface.co/blog/ibm-research/open-agent-leaderboard" data-search-text="The Open Agent Leaderboard Hugging Face 博客 Hugging Face博客介绍了由IBM Research开发的开放代理排行榜（Open Agent Leaderboard）及配套的Exgentic框架。该框架旨在全面评估通用AI代理系统的性能，而不仅仅是底层模型。研究指出，部署代理时需考虑工具集、规划能力、记忆机制和错误恢复等全系统因素，同一模型在不同系统配置下表现差异巨大。该排行榜同时报告质量和成本，以衡量代理在不同任务中的通用性。论文和代码均开源，为代理系统的可重复评估和比较提供了标准化框架。 Open Agent Leaderboard评估完整AI代理系统而非单一模型 考察工具使用、规划、记忆和错误恢复等全系统能力 排行榜同时报告质量和成本，支持可重复性评估 Exgentic框架用于运行和复现评估，所有资源开源">
+<button class="fav-star" data-url="https://huggingface.co/blog/ibm-research/open-agent-leaderboard" title="收藏">☆</button>
+<div class="article-title"><a href="https://huggingface.co/blog/ibm-research/open-agent-leaderboard" target="_blank" rel="noopener">The Open Agent Leaderboard</a></div>
+<div class="article-meta"><span class="article-source">Hugging Face 博客</span></div>
+<div class="article-summary">Hugging Face博客介绍了由IBM Research开发的开放代理排行榜（Open Agent Leaderboard）及配套的Exgentic框架。该框架旨在全面评估通用AI代理系统的性能，而不仅仅是底层模型。研究指出，部署代理时需考虑工具集、规划能力、记忆机制和错误恢复等全系统因素，同一模型在不同系统配置下表现差异巨大。该排行榜同时报告质量和成本，以衡量代理在不同任务中的通用性。论文和代码均开源，为代理系统的可重复评估和比较提供了标准化框架。</div>
+<div class="article-points"><ul><li>Open Agent Leaderboard评估完整AI代理系统而非单一模型</li><li>考察工具使用、规划、记忆和错误恢复等全系统能力</li><li>排行榜同时报告质量和成本，支持可重复性评估</li><li>Exgentic框架用于运行和复现评估，所有资源开源</li></ul></div>
+</article>
+<article class="article-card" data-url="https://juejin.cn/post/7640677540941905970" data-search-text="前端开发必装 Skill 清单：让你的 AI 编程体验原地起飞 掘金本周最热 本文介绍了Anthropic推出的Claude Code Skill功能，以及5款前端开发必备的Skill，旨在提升AI编程体验。Skill是预先为AI编写的“工作说明书”，采用“三层渐进式披露”设计，仅在需要时加载完整指令，有效节省上下文空间。重点推荐的Skill包括：Frontend Design（解决AI生成网页千篇一律的审美问题，禁用Inter/Arial字体和紫色渐变）、UI-UX-Pro-Max（集成50+设计风格、97种配色、57种字体搭配）、Code Review（从安全性、逻辑正确性、性能、代码质量四个维度自动审查代码）。文章还介绍了通过npx或官方仓库安装Skill的方法，以及将其集成到CI/CD流程的进阶玩法。 Skill采用三层渐进式披露设计，仅在需要时加载完整指令，节省上下文 Frontend Design Skill解决AI生成网页“AI审美”问题，禁用常见字体和紫色渐变 Code Review Skill从安全、逻辑、性能、质量四维度提供结构化审查报告 UI-UX-Pro-Max集成50+设计风格和97种配色方案">
+<button class="fav-star" data-url="https://juejin.cn/post/7640677540941905970" title="收藏">☆</button>
+<div class="article-title"><a href="https://juejin.cn/post/7640677540941905970" target="_blank" rel="noopener">前端开发必装 Skill 清单：让你的 AI 编程体验原地起飞</a></div>
+<div class="article-meta"><span class="article-source">掘金本周最热</span></div>
+<div class="article-summary">本文介绍了Anthropic推出的Claude Code Skill功能，以及5款前端开发必备的Skill，旨在提升AI编程体验。Skill是预先为AI编写的“工作说明书”，采用“三层渐进式披露”设计，仅在需要时加载完整指令，有效节省上下文空间。重点推荐的Skill包括：Frontend Design（解决AI生成网页千篇一律的审美问题，禁用Inter/Arial字体和紫色渐变）、UI-UX-Pro-Max（集成50+设计风格、97种配色、57种字体搭配）、Code Review（从安全性、逻辑正确性、性能、代码质量四个维度自动审查代码）。文章还介绍了通过npx或官方仓库安装Skill的方法，以及将其集成到CI/CD流程的进阶玩法。</div>
+<div class="article-points"><ul><li>Skill采用三层渐进式披露设计，仅在需要时加载完整指令，节省上下文</li><li>Frontend Design Skill解决AI生成网页“AI审美”问题，禁用常见字体和紫色渐变</li><li>Code Review Skill从安全、逻辑、性能、质量四维度提供结构化审查报告</li><li>UI-UX-Pro-Max集成50+设计风格和97种配色方案</li></ul></div>
+</article>
+<article class="article-card" data-url="https://juejin.cn/post/7640409934489010230" data-search-text="Flutter GenUI 0.9 和 A2UI 0.9 发布，全动动态 UI 支持，AI 在 App 里直出界面 掘金本周最热 本文介绍了Flutter GenUI 0.9和A2UI 0.9版本中支持的AI动态UI生成方案。该方案分为两层：Agent负责生成受A2UI协议约束的UI意图（结构化的UI描述），客户端（如Flutter的GenUI runtime）负责将其渲染为真实交互控件。A2UI v0.9的关键更新包括：将“Standard components”改为“Basic components”，明确不绑定任何前端框架或组件库，只定义Agent如何表达UI意图；引入shared web-core统一Web渲染器，使A2UI输出可被React、Flutter、Angular等不同renderer解析；提供Agent SDK，通过schema、prompt、解析、修复、校验的闭环，解决模型输出不稳定问题，确保生成结果合法可信。该方案与AI生成代码相比，性能和可用性更高，但灵活性稍低。 A2UI v0.9将组件概念调整为Basic components，不绑定任何前端框架 引入shared web-core，支持A2UI输出在React、Flutter、Angular等多端渲染 新增Agent SDK，通过校验与修复机制解决模型输出不稳定问题 GenUI在Flutter端解析A2UI协议并渲染为可交互Widget">
+<button class="fav-star" data-url="https://juejin.cn/post/7640409934489010230" title="收藏">☆</button>
+<div class="article-title"><a href="https://juejin.cn/post/7640409934489010230" target="_blank" rel="noopener">Flutter GenUI 0.9 和 A2UI 0.9 发布，全动动态 UI 支持，AI 在 App 里直出界面</a></div>
+<div class="article-meta"><span class="article-source">掘金本周最热</span></div>
+<div class="article-summary">本文介绍了Flutter GenUI 0.9和A2UI 0.9版本中支持的AI动态UI生成方案。该方案分为两层：Agent负责生成受A2UI协议约束的UI意图（结构化的UI描述），客户端（如Flutter的GenUI runtime）负责将其渲染为真实交互控件。A2UI v0.9的关键更新包括：将“Standard components”改为“Basic components”，明确不绑定任何前端框架或组件库，只定义Agent如何表达UI意图；引入shared web-core统一Web渲染器，使A2UI输出可被React、Flutter、Angular等不同renderer解析；提供Agent SDK，通过schema、prompt、解析、修复、校验的闭环，解决模型输出不稳定问题，确保生成结果合法可信。该方案与AI生成代码相比，性能和可用性更高，但灵活性稍低。</div>
+<div class="article-points"><ul><li>A2UI v0.9将组件概念调整为Basic components，不绑定任何前端框架</li><li>引入shared web-core，支持A2UI输出在React、Flutter、Angular等多端渲染</li><li>新增Agent SDK，通过校验与修复机制解决模型输出不稳定问题</li><li>GenUI在Flutter端解析A2UI协议并渲染为可交互Widget</li></ul></div>
+</article>
+</div>
+</div>
+<div class="subtype-section" data-category="Coding Agent" data-subtype="产品/应用">
+<h3 class="subtype-header">产品/应用</h3>
+<div class="article-grid">
+<article class="article-card" data-url="http://mp.weixin.qq.com/s?__biz=Mzg3Mzg5MjY3Nw==&amp;mid=2247526306&amp;idx=2&amp;sn=ce20063bebe25ae47ccf477e29984280&amp;chksm=cf17338a3a8cae5d916181a7431813875973c833bdd62e770dd21b59b98911f505e8c04679f1&amp;scene=0&amp;xtrack=1#rd" data-search-text="Anthropic发布AI原生创业秘籍：手把手教你怎么烧Token创业 AIGC开放社区 Anthropic发布了一份长达36页的AI原生初创企业操作手册，针对AI时代创业者，系统性地将创业旅程拆解为想法、原型、上线与规模化四个关键周期。手册强调，在AI能轻松编写代码的当下，创始人的商业洞察与判断力成为核心壁垒。核心方法论包括：利用大模型（如Claude、Claude Code、Cowork）进行问题研究、客户访谈与竞品分析，避免“敲代码替代商业验证”的陷阱；通过极简原型快速测试问题-解决契合度；在开发极小化可行产品（MVP）时，强调构建“持久上下文记忆”和架构说明文档，以规避智能体特有的技术债；上线期建立可复制的增长引擎和抗压系统，并通过客观数据框架（如40%用户失望测试）评估产品-市场契合度。手册详细剖析了每个阶段的常见陷阱（如信息茧房、虚假牵引力、范围蔓延）及应对策略。 创业四阶段：想法（问题-解决契合度验证）、原型（最小化可行产品MVP）、上线（增长引擎）、规模化（系统抗压），各阶段有明确退出条件。 工具分工：Chat用于轻量问答，Cowork用于深度案头研究，Claude Code用于生产级代码编写，实现智能体统筹。 核心陷阱：42%初创企业死于开发无人需要的东西；强调商业验证优于代码执行，避免信息茧房和范围蔓延。 技术债管理：强制要求生成架构说明文档并定期回顾，以约束模型行为；需在代码移交前完成安全漏洞盘查。 数据驱动：使用40%用户失望阈值作为初步产品-市场契合度测试指标；利用协作智能体自动化收集和归档用户反馈。">
+<button class="fav-star" data-url="http://mp.weixin.qq.com/s?__biz=Mzg3Mzg5MjY3Nw==&amp;mid=2247526306&amp;idx=2&amp;sn=ce20063bebe25ae47ccf477e29984280&amp;chksm=cf17338a3a8cae5d916181a7431813875973c833bdd62e770dd21b59b98911f505e8c04679f1&amp;scene=0&amp;xtrack=1#rd" title="收藏">☆</button>
+<div class="article-title"><a href="http://mp.weixin.qq.com/s?__biz=Mzg3Mzg5MjY3Nw==&amp;mid=2247526306&amp;idx=2&amp;sn=ce20063bebe25ae47ccf477e29984280&amp;chksm=cf17338a3a8cae5d916181a7431813875973c833bdd62e770dd21b59b98911f505e8c04679f1&amp;scene=0&amp;xtrack=1#rd" target="_blank" rel="noopener">Anthropic发布AI原生创业秘籍：手把手教你怎么烧Token创业</a></div>
+<div class="article-meta"><span class="article-source">AIGC开放社区</span></div>
+<div class="article-summary">Anthropic发布了一份长达36页的AI原生初创企业操作手册，针对AI时代创业者，系统性地将创业旅程拆解为想法、原型、上线与规模化四个关键周期。手册强调，在AI能轻松编写代码的当下，创始人的商业洞察与判断力成为核心壁垒。核心方法论包括：利用大模型（如Claude、Claude Code、Cowork）进行问题研究、客户访谈与竞品分析，避免“敲代码替代商业验证”的陷阱；通过极简原型快速测试问题-解决契合度；在开发极小化可行产品（MVP）时，强调构建“持久上下文记忆”和架构说明文档，以规避智能体特有的技术债；上线期建立可复制的增长引擎和抗压系统，并通过客观数据框架（如40%用户失望测试）评估产品-市场契合度。手册详细剖析了每个阶段的常见陷阱（如信息茧房、虚假牵引力、范围蔓延）及应对策略。</div>
+<div class="article-points"><ul><li>创业四阶段：想法（问题-解决契合度验证）、原型（最小化可行产品MVP）、上线（增长引擎）、规模化（系统抗压），各阶段有明确退出条件。</li><li>工具分工：Chat用于轻量问答，Cowork用于深度案头研究，Claude Code用于生产级代码编写，实现智能体统筹。</li><li>核心陷阱：42%初创企业死于开发无人需要的东西；强调商业验证优于代码执行，避免信息茧房和范围蔓延。</li><li>技术债管理：强制要求生成架构说明文档并定期回顾，以约束模型行为；需在代码移交前完成安全漏洞盘查。</li><li>数据驱动：使用40%用户失望阈值作为初步产品-市场契合度测试指标；利用协作智能体自动化收集和归档用户反馈。</li></ul></div>
+</article>
+<article class="article-card" data-url="http://mp.weixin.qq.com/s?__biz=Mzg3Mzg5MjY3Nw==&amp;mid=2247526306&amp;idx=4&amp;sn=b31ae3d82f3ae355cbb9f5c953b8aad8&amp;chksm=cf5fd9faa8ada8e3d83b8a2521079e88a511c3b9b33537a2afdec0ef842fcbb27d678fed3028&amp;scene=0&amp;xtrack=1#rd" data-search-text="Agent Skill 开发者大赛总决赛+黑客松来袭！双赛同燃，邀你现场观赛 AIGC开放社区 这是一则活动预告，宣布将于5月22日举办“Agent Skill 开发者大赛总决赛+黑客松”活动。该活动旨在为AI开发者提供一个展示和交流的平台，包含答辩争锋和黑客松极限开发等环节。活动地点设在上海，是一次聚焦AIGC和智能体（Agent）技术的年度开发者盛宴。 活动包含Agent Skill开发者大赛总决赛和黑客松 活动时间为5月22日，地点在上海 聚焦AIGC技术和智能体应用开发">
+<button class="fav-star" data-url="http://mp.weixin.qq.com/s?__biz=Mzg3Mzg5MjY3Nw==&amp;mid=2247526306&amp;idx=4&amp;sn=b31ae3d82f3ae355cbb9f5c953b8aad8&amp;chksm=cf5fd9faa8ada8e3d83b8a2521079e88a511c3b9b33537a2afdec0ef842fcbb27d678fed3028&amp;scene=0&amp;xtrack=1#rd" title="收藏">☆</button>
+<div class="article-title"><a href="http://mp.weixin.qq.com/s?__biz=Mzg3Mzg5MjY3Nw==&amp;mid=2247526306&amp;idx=4&amp;sn=b31ae3d82f3ae355cbb9f5c953b8aad8&amp;chksm=cf5fd9faa8ada8e3d83b8a2521079e88a511c3b9b33537a2afdec0ef842fcbb27d678fed3028&amp;scene=0&amp;xtrack=1#rd" target="_blank" rel="noopener">Agent Skill 开发者大赛总决赛+黑客松来袭！双赛同燃，邀你现场观赛</a></div>
+<div class="article-meta"><span class="article-source">AIGC开放社区</span></div>
+<div class="article-summary">这是一则活动预告，宣布将于5月22日举办“Agent Skill 开发者大赛总决赛+黑客松”活动。该活动旨在为AI开发者提供一个展示和交流的平台，包含答辩争锋和黑客松极限开发等环节。活动地点设在上海，是一次聚焦AIGC和智能体（Agent）技术的年度开发者盛宴。</div>
+<div class="article-points"><ul><li>活动包含Agent Skill开发者大赛总决赛和黑客松</li><li>活动时间为5月22日，地点在上海</li><li>聚焦AIGC技术和智能体应用开发</li></ul></div>
+</article>
+<article class="article-card" data-url="http://mp.weixin.qq.com/s?__biz=Mzg3Mzg5MjY3Nw==&amp;mid=2247526293&amp;idx=2&amp;sn=962956c73d51d6e8c778c670a7f89005&amp;chksm=cfa448d35b7fb9f089e46415c9ed0445de99a880bb9b89dda30b42619e0673add2d7941e5e0c&amp;scene=0&amp;xtrack=1#rd" data-search-text="Codex龙虾化！推出手机远程控制，与Claude Code竞争白热化 AIGC开放社区 OpenAI 的代码生成模型Codex正式推出手机远程控制功能，标志着AI编程Agent向移动端管理迈出重要一步。该功能已集成到ChatGPT手机应用中，允许用户通过手机远程连接到本地或远程服务器上运行的Codex实例，实现查看实时状态、批准终端命令、管理多个并发线程等操作。其核心技术支持安全中继层，确保代码、凭证等核心资产留在宿主机，手机仅传输状态信息。同时，Codex还推出了远程SSH连接和企业级功能，如程序化访问令牌和HIPAA合规支持，以满足团队协作和企业级部署需求。此举使Codex与Claude Code的竞争进入白热化阶段，双方都在推动“数字员工”的随时随地管理。 Codex登录ChatGPT手机APP，支持远程控制和状态查看 通过安全中继层实现跨设备加密通信，核心资产驻留宿主机 支持远程SSH连接和程序化访问令牌，满足企业级环境需求 与Claude Code的竞争白热化，共同推动移动端Agent管理">
+<button class="fav-star" data-url="http://mp.weixin.qq.com/s?__biz=Mzg3Mzg5MjY3Nw==&amp;mid=2247526293&amp;idx=2&amp;sn=962956c73d51d6e8c778c670a7f89005&amp;chksm=cfa448d35b7fb9f089e46415c9ed0445de99a880bb9b89dda30b42619e0673add2d7941e5e0c&amp;scene=0&amp;xtrack=1#rd" title="收藏">☆</button>
+<div class="article-title"><a href="http://mp.weixin.qq.com/s?__biz=Mzg3Mzg5MjY3Nw==&amp;mid=2247526293&amp;idx=2&amp;sn=962956c73d51d6e8c778c670a7f89005&amp;chksm=cfa448d35b7fb9f089e46415c9ed0445de99a880bb9b89dda30b42619e0673add2d7941e5e0c&amp;scene=0&amp;xtrack=1#rd" target="_blank" rel="noopener">Codex龙虾化！推出手机远程控制，与Claude Code竞争白热化</a></div>
+<div class="article-meta"><span class="article-source">AIGC开放社区</span></div>
+<div class="article-summary">OpenAI 的代码生成模型Codex正式推出手机远程控制功能，标志着AI编程Agent向移动端管理迈出重要一步。该功能已集成到ChatGPT手机应用中，允许用户通过手机远程连接到本地或远程服务器上运行的Codex实例，实现查看实时状态、批准终端命令、管理多个并发线程等操作。其核心技术支持安全中继层，确保代码、凭证等核心资产留在宿主机，手机仅传输状态信息。同时，Codex还推出了远程SSH连接和企业级功能，如程序化访问令牌和HIPAA合规支持，以满足团队协作和企业级部署需求。此举使Codex与Claude Code的竞争进入白热化阶段，双方都在推动“数字员工”的随时随地管理。</div>
+<div class="article-points"><ul><li>Codex登录ChatGPT手机APP，支持远程控制和状态查看</li><li>通过安全中继层实现跨设备加密通信，核心资产驻留宿主机</li><li>支持远程SSH连接和程序化访问令牌，满足企业级环境需求</li><li>与Claude Code的竞争白热化，共同推动移动端Agent管理</li></ul></div>
+</article>
+<article class="article-card" data-url="https://mp.weixin.qq.com/s?__biz=Mzg2OTA1OTAxNA==&amp;mid=2247490182&amp;idx=1&amp;sn=b09684ba0c4b10a1efcf51bbd8cd5a42" data-search-text="微信读书出官方skill了，但它还差关键一步 花叔 微信读书发布了官方的AI Skill，将其6项核心用户数据（书架、搜索、阅读统计、书籍详情、笔记划线、推荐）开放给Claude Code等AI助手。用户可通过自然语言查询个人阅读数据，如阅读时长、阅读进度、热门划线内容等。然而，文章指出该官方Skill存在明显局限性：其推荐功能仅是一个包装过的搜索接口，无法结合用户已读过的书籍和笔记进行智能推荐，导致推荐结果可能包含用户已读书籍，缺乏个性化。为解决此问题，作者开发了开源增强版Skill“huashu-weread”，其核心方法是交叉分析书架和笔记两个数据源，并设计了“推荐下一本”“领域学习路径”“笔记整理”和“阅读复盘”四个工作流，以实现更智能、个性化的书籍推荐和学习指导，从而弥补官方版本在智能化层面的不足。 微信读书Skill开放书架、阅读统计、笔记等6项数据接口 可让AI通过自然语言查询个人阅读历史和笔记详情 官方推荐功能缺乏个性化，无法结合用户已读书籍进行推荐 增强版huashu-weread通过交叉分析书架和笔记实现智能推荐">
+<button class="fav-star" data-url="https://mp.weixin.qq.com/s?__biz=Mzg2OTA1OTAxNA==&amp;mid=2247490182&amp;idx=1&amp;sn=b09684ba0c4b10a1efcf51bbd8cd5a42" title="收藏">☆</button>
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=Mzg2OTA1OTAxNA==&amp;mid=2247490182&amp;idx=1&amp;sn=b09684ba0c4b10a1efcf51bbd8cd5a42" target="_blank" rel="noopener">微信读书出官方skill了，但它还差关键一步</a></div>
+<div class="article-meta"><span class="article-source">花叔</span></div>
+<div class="article-summary">微信读书发布了官方的AI Skill，将其6项核心用户数据（书架、搜索、阅读统计、书籍详情、笔记划线、推荐）开放给Claude Code等AI助手。用户可通过自然语言查询个人阅读数据，如阅读时长、阅读进度、热门划线内容等。然而，文章指出该官方Skill存在明显局限性：其推荐功能仅是一个包装过的搜索接口，无法结合用户已读过的书籍和笔记进行智能推荐，导致推荐结果可能包含用户已读书籍，缺乏个性化。为解决此问题，作者开发了开源增强版Skill“huashu-weread”，其核心方法是交叉分析书架和笔记两个数据源，并设计了“推荐下一本”“领域学习路径”“笔记整理”和“阅读复盘”四个工作流，以实现更智能、个性化的书籍推荐和学习指导，从而弥补官方版本在智能化层面的不足。</div>
+<div class="article-points"><ul><li>微信读书Skill开放书架、阅读统计、笔记等6项数据接口</li><li>可让AI通过自然语言查询个人阅读历史和笔记详情</li><li>官方推荐功能缺乏个性化，无法结合用户已读书籍进行推荐</li><li>增强版huashu-weread通过交叉分析书架和笔记实现智能推荐</li></ul></div>
+</article>
+<article class="article-card" data-url="https://mp.weixin.qq.com/s?__biz=MzU2ODEwMzE0Nw==&amp;mid=2247549505&amp;idx=1&amp;sn=a4eb75fffd8e1a52234a64f4060c4111" data-search-text="摸透16个设计师必看的Codex技巧 优设 本文为设计师群体提供了一份关于AI工具Codex的16个核心技巧指南。Codex被描述为一种超越传统聊天机器人的AI生产力工具，能理解任务、自主规划并直接交付，适用于设计师的重复性工作场景。文章涵盖从安装配置、效率心法到高阶自动化的工作流程，旨在帮助设计师从机械的拼版、规范整理和多平台素材搜集等工作中解脱出来，加速交付周期。具体实操场景包括五分钟生成个人作品集主页、设置每日自动搜集设计趋势的AI助理等。文章还提供了一份详细的飞书文档供读者免费领取，以系统学习这16个技巧。 Codex能自主规划任务并直接交付，被定位为设计师的‘AI员工’。 涵盖16个核心技巧，从安装配置到高阶自动化，聚焦设计场景效率提升。 实操案例包括5分钟生成作品集主页和设置每日设计趋势搜集AI助理。">
+<button class="fav-star" data-url="https://mp.weixin.qq.com/s?__biz=MzU2ODEwMzE0Nw==&amp;mid=2247549505&amp;idx=1&amp;sn=a4eb75fffd8e1a52234a64f4060c4111" title="收藏">☆</button>
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzU2ODEwMzE0Nw==&amp;mid=2247549505&amp;idx=1&amp;sn=a4eb75fffd8e1a52234a64f4060c4111" target="_blank" rel="noopener">摸透16个设计师必看的Codex技巧</a></div>
+<div class="article-meta"><span class="article-source">优设</span></div>
+<div class="article-summary">本文为设计师群体提供了一份关于AI工具Codex的16个核心技巧指南。Codex被描述为一种超越传统聊天机器人的AI生产力工具，能理解任务、自主规划并直接交付，适用于设计师的重复性工作场景。文章涵盖从安装配置、效率心法到高阶自动化的工作流程，旨在帮助设计师从机械的拼版、规范整理和多平台素材搜集等工作中解脱出来，加速交付周期。具体实操场景包括五分钟生成个人作品集主页、设置每日自动搜集设计趋势的AI助理等。文章还提供了一份详细的飞书文档供读者免费领取，以系统学习这16个技巧。</div>
+<div class="article-points"><ul><li>Codex能自主规划任务并直接交付，被定位为设计师的‘AI员工’。</li><li>涵盖16个核心技巧，从安装配置到高阶自动化，聚焦设计场景效率提升。</li><li>实操案例包括5分钟生成作品集主页和设置每日设计趋势搜集AI助理。</li></ul></div>
+</article>
+<article class="article-card" data-url="https://openai.com/index/dell-codex-enterprise-partnership" data-search-text="OpenAI and Dell partner to bring Codex to hybrid and on-premise enterprise environments OpenAI 博客 OpenAI与戴尔科技宣布合作，将Codex引入混合云和本地企业环境。Codex已是OpenAI增长最快的企业产品之一，每周有超过400万开发者使用，广泛覆盖从代码审查、自动化测试到跨仓库推理等软件开发全生命周期。该合作旨在通过戴尔AI数据平台和AI工厂，让Codex能安全地处理企业内部的数据、代码库、文档和业务系统等核心上下文。双方将共同探索Codex如何在混合或本地戴尔基础设施上执行数据准备、系统管理、测试运行及AI应用部署等任务，从而满足企业对安全性和数据合规的严格要求。 每周超400万开发者使用Codex，覆盖软件开发全生命周期。 与戴尔合作将Codex引入混合云/本地环境，连接企业自有数据与系统。 探索Codex在戴尔AI工厂上执行数据管理、测试和AI应用部署等任务。">
+<button class="fav-star" data-url="https://openai.com/index/dell-codex-enterprise-partnership" title="收藏">☆</button>
+<div class="article-title"><a href="https://openai.com/index/dell-codex-enterprise-partnership" target="_blank" rel="noopener">OpenAI and Dell partner to bring Codex to hybrid and on-premise enterprise environments</a></div>
+<div class="article-meta"><span class="article-source">OpenAI 博客</span></div>
+<div class="article-summary">OpenAI与戴尔科技宣布合作，将Codex引入混合云和本地企业环境。Codex已是OpenAI增长最快的企业产品之一，每周有超过400万开发者使用，广泛覆盖从代码审查、自动化测试到跨仓库推理等软件开发全生命周期。该合作旨在通过戴尔AI数据平台和AI工厂，让Codex能安全地处理企业内部的数据、代码库、文档和业务系统等核心上下文。双方将共同探索Codex如何在混合或本地戴尔基础设施上执行数据准备、系统管理、测试运行及AI应用部署等任务，从而满足企业对安全性和数据合规的严格要求。</div>
+<div class="article-points"><ul><li>每周超400万开发者使用Codex，覆盖软件开发全生命周期。</li><li>与戴尔合作将Codex引入混合云/本地环境，连接企业自有数据与系统。</li><li>探索Codex在戴尔AI工厂上执行数据管理、测试和AI应用部署等任务。</li></ul></div>
+</article>
+<article class="article-card" data-url="https://www.anthropic.com/news/pwc-expanded-partnership" data-search-text="PwC is deploying Claude to build technology, execute deals, and reinvent enterprise functions for clients Anthropic News Anthropic与普华永道（PwC）宣布扩大战略联盟，深化PwC使用Claude为客户构建技术、达成交易和重塑企业职能。合作的关键内容包括：PwC将向其美国团队及全球数十万专业人士推广Claude Code和Cowork工具；双方成立联合卓越中心，计划培训和认证3万名PwC专业人员使用Claude。合作聚焦三大领域：自动化技术构建、AI原生交易执行以及企业职能重塑。目前Claude已在专业体育运营、保险承保、大型机现代化、人力资源转型和网络安全等领域投入生产，将交付时间缩短高达70%。PwC还成立了首个以Claude为核心架构的独立业务部门——首席财务官办公室。 PwC将向数十万全球员工推广Claude Code与Cowork，并认证3万人。 合作聚焦三大领域：自动化构建、AI交易及企业职能重塑，已缩短交付时间70%。 PwC成立首个以Claude为技术基础的独立CFO办公室业务部门。">
+<button class="fav-star" data-url="https://www.anthropic.com/news/pwc-expanded-partnership" title="收藏">☆</button>
+<div class="article-title"><a href="https://www.anthropic.com/news/pwc-expanded-partnership" target="_blank" rel="noopener">PwC is deploying Claude to build technology, execute deals, and reinvent enterprise functions for clients</a></div>
+<div class="article-meta"><span class="article-source">Anthropic News</span></div>
+<div class="article-summary">Anthropic与普华永道（PwC）宣布扩大战略联盟，深化PwC使用Claude为客户构建技术、达成交易和重塑企业职能。合作的关键内容包括：PwC将向其美国团队及全球数十万专业人士推广Claude Code和Cowork工具；双方成立联合卓越中心，计划培训和认证3万名PwC专业人员使用Claude。合作聚焦三大领域：自动化技术构建、AI原生交易执行以及企业职能重塑。目前Claude已在专业体育运营、保险承保、大型机现代化、人力资源转型和网络安全等领域投入生产，将交付时间缩短高达70%。PwC还成立了首个以Claude为核心架构的独立业务部门——首席财务官办公室。</div>
+<div class="article-points"><ul><li>PwC将向数十万全球员工推广Claude Code与Cowork，并认证3万人。</li><li>合作聚焦三大领域：自动化构建、AI交易及企业职能重塑，已缩短交付时间70%。</li><li>PwC成立首个以Claude为技术基础的独立CFO办公室业务部门。</li></ul></div>
+</article>
+<article class="article-card" data-url="https://mp.weixin.qq.com/s?__biz=MzkzMDY1NDgyOQ==&amp;mid=2247831100&amp;idx=1&amp;sn=bc1c22d34dc8036ad93e55d1184ce21e" data-search-text="这届 GitHub 万星 AI 项目，已经在真刀真枪替你干活了 CSDN 本文探讨了办公平台 CLI（命令行界面）在 AI Agent 时代兴起的底层逻辑，并以飞书 CLI 为例分析了其成功原因。文章指出，AI Agent 发展的瓶颈已从“理解问题”转向“解决问题”，需要能够串接 IM、文档、表格、审批等多系统的统一调用层。CLI 作为比 GUI 更底层的交互协议，让 AI 能直接驱动办公软件，实现跨工具全链路的自动化闭环。飞书 CLI 在发布一个月后在 GitHub 上获得超万星、784 forks，且社区活跃度高（50 位贡献者合并代码）。其成功归因于两点：一是基于飞书生态底座（覆盖办公、开发者工具链和 AI 能力），降低 Agent 连接成本；二是在产品设计上实现了“万物皆可 CLI”，支持自然语言驱动的复杂工作流。对比钉钉、企微，飞书在开源速度和社区共建上取得领先。 Agent 竞争维度转向“谁能干活”，办公平台 CLI 成为实现 AI-native 工作方式的关键基础设施。 CLI 作为统一接口层，可让 Agent 无缝操控 IM、文档、审批等碎片化系统。 飞书 CLI 发布 1 个月 GitHub star 超万星，增长速度为业内第一。 成功原因：拥有办公+开发者工具+AI 的生态底座，以及“万物皆可 CLI”的产品设计。 有 50 位外部开发者贡献代码，项目与社区深度共建。">
+<button class="fav-star" data-url="https://mp.weixin.qq.com/s?__biz=MzkzMDY1NDgyOQ==&amp;mid=2247831100&amp;idx=1&amp;sn=bc1c22d34dc8036ad93e55d1184ce21e" title="收藏">☆</button>
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzkzMDY1NDgyOQ==&amp;mid=2247831100&amp;idx=1&amp;sn=bc1c22d34dc8036ad93e55d1184ce21e" target="_blank" rel="noopener">这届 GitHub 万星 AI 项目，已经在真刀真枪替你干活了</a></div>
+<div class="article-meta"><span class="article-source">CSDN</span></div>
+<div class="article-summary">本文探讨了办公平台 CLI（命令行界面）在 AI Agent 时代兴起的底层逻辑，并以飞书 CLI 为例分析了其成功原因。文章指出，AI Agent 发展的瓶颈已从“理解问题”转向“解决问题”，需要能够串接 IM、文档、表格、审批等多系统的统一调用层。CLI 作为比 GUI 更底层的交互协议，让 AI 能直接驱动办公软件，实现跨工具全链路的自动化闭环。飞书 CLI 在发布一个月后在 GitHub 上获得超万星、784 forks，且社区活跃度高（50 位贡献者合并代码）。其成功归因于两点：一是基于飞书生态底座（覆盖办公、开发者工具链和 AI 能力），降低 Agent 连接成本；二是在产品设计上实现了“万物皆可 CLI”，支持自然语言驱动的复杂工作流。对比钉钉、企微，飞书在开源速度和社区共建上取得领先。</div>
+<div class="article-points"><ul><li>Agent 竞争维度转向“谁能干活”，办公平台 CLI 成为实现 AI-native 工作方式的关键基础设施。</li><li>CLI 作为统一接口层，可让 Agent 无缝操控 IM、文档、审批等碎片化系统。</li><li>飞书 CLI 发布 1 个月 GitHub star 超万星，增长速度为业内第一。</li><li>成功原因：拥有办公+开发者工具+AI 的生态底座，以及“万物皆可 CLI”的产品设计。</li><li>有 50 位外部开发者贡献代码，项目与社区深度共建。</li></ul></div>
+</article>
+<article class="article-card" data-url="https://mp.weixin.qq.com/s?__biz=MjM5MDE0Mjc4MA==&amp;mid=2651284581&amp;idx=1&amp;sn=14fdab712501627cd59e8a24854c08d9" data-search-text="CIO 正在抛弃 AI 生码率：一场关于什么才算产研提效的实践复盘 InfoQ 中文 文章复盘了阿里云 CIO 蒋林泉团队在 AI 产研提效上的实践，核心观点是“规模化”而非“指标堆砌”才是效能提升的关键。团队摒弃了流行的“AI 生码率”指标，认为其是过程指标且易引导团队“灌水”，转而关注“人均有效代码量”和“千行代码缺陷率”。实践成果显著：2026 财年对比 2025 财年，前端人均有效代码量提升至 3 倍，后端提升至 2 倍，前端千行缺陷率下降 30%，后端下降 55%，且人力未增加。文章指出两大误区：一是 AI 生码率很高但因代码价值密度低（占工时 20%）对业务效能贡献有限；二是简单将 AI 接入工具链（如 Cursor、Copilot）会产生碎片化体验。团队通过重构研发流程和度量体系，将 AI 嵌入到需求对焦、跨团队协作等非编码环节，实现真正的组织级效能跃升。蒋林泉提出“技能通胀，品味通缩”的判断，强调对业务价值的判断力（品味）比技能更稀缺。 阿里云 CIO 团队成果：前端人均有效代码量提升 3 倍，后端提升 2 倍，缺陷率下降 30%-55%。 团队系统性抛弃“AI 生码率”指标，认为其是过程指标，易导致灌水而无业务价值。 实践认为开发编码仅占 20% 工时，在编码部分提效对整体 E2E 效能影响有限。 核心方法论：通过流程重构与度量体系改革，将 AI 嵌入需求对焦、跨团队协作等全流程。 提出“技能通胀，品味通缩”，认为对业务价值的判断力（品味）是稀缺核心竞争力。">
+<button class="fav-star" data-url="https://mp.weixin.qq.com/s?__biz=MjM5MDE0Mjc4MA==&amp;mid=2651284581&amp;idx=1&amp;sn=14fdab712501627cd59e8a24854c08d9" title="收藏">☆</button>
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MjM5MDE0Mjc4MA==&amp;mid=2651284581&amp;idx=1&amp;sn=14fdab712501627cd59e8a24854c08d9" target="_blank" rel="noopener">CIO 正在抛弃 AI 生码率：一场关于什么才算产研提效的实践复盘</a></div>
+<div class="article-meta"><span class="article-source">InfoQ 中文</span></div>
+<div class="article-summary">文章复盘了阿里云 CIO 蒋林泉团队在 AI 产研提效上的实践，核心观点是“规模化”而非“指标堆砌”才是效能提升的关键。团队摒弃了流行的“AI 生码率”指标，认为其是过程指标且易引导团队“灌水”，转而关注“人均有效代码量”和“千行代码缺陷率”。实践成果显著：2026 财年对比 2025 财年，前端人均有效代码量提升至 3 倍，后端提升至 2 倍，前端千行缺陷率下降 30%，后端下降 55%，且人力未增加。文章指出两大误区：一是 AI 生码率很高但因代码价值密度低（占工时 20%）对业务效能贡献有限；二是简单将 AI 接入工具链（如 Cursor、Copilot）会产生碎片化体验。团队通过重构研发流程和度量体系，将 AI 嵌入到需求对焦、跨团队协作等非编码环节，实现真正的组织级效能跃升。蒋林泉提出“技能通胀，品味通缩”的判断，强调对业务价值的判断力（品味）比技能更稀缺。</div>
+<div class="article-points"><ul><li>阿里云 CIO 团队成果：前端人均有效代码量提升 3 倍，后端提升 2 倍，缺陷率下降 30%-55%。</li><li>团队系统性抛弃“AI 生码率”指标，认为其是过程指标，易导致灌水而无业务价值。</li><li>实践认为开发编码仅占 20% 工时，在编码部分提效对整体 E2E 效能影响有限。</li><li>核心方法论：通过流程重构与度量体系改革，将 AI 嵌入需求对焦、跨团队协作等全流程。</li><li>提出“技能通胀，品味通缩”，认为对业务价值的判断力（品味）是稀缺核心竞争力。</li></ul></div>
+</article>
+<article class="article-card" data-url="https://github.blog/news-insights/product-news/take-your-local-github-sessions-anywhere/" data-search-text="Take your local GitHub sessions anywhere GitHub Blog GitHub宣布推出GitHub Copilot CLI会话的远程控制功能，现已全面上线。开发者可以通过/remote命令将在VS Code或CLI中启动的Copilot会话无缝转移到github.com或GitHub Mobile App上继续监控和操作。该功能支持实时监控Copilot的运行过程，包括查看其正在研究的计划、读取的文件、所做的更改和执行的命令。用户还可以在任何设备上通过自然语言向运行中的会话发送额外指令，例如在Copilot偏离方向时纠正或扩大任务范围。此外，远程控制支持审批权限请求、管理多个会话，完全打通了从CLI到IDE再到移动端的完整开发工作流。该功能对所有仓库及非目录工作区均适用，实现了开发者工作场所的无缝迁移。 /remote命令将Copilot CL I会话迁移至网页或移动端 实时查看Copilot执行计划、文件修改和命令运行状态 支持通过自然语言随时干预和纠正运行中的会话 跨VS Code、CLI、网页、移动端四端工作流统一">
+<button class="fav-star" data-url="https://github.blog/news-insights/product-news/take-your-local-github-sessions-anywhere/" title="收藏">☆</button>
+<div class="article-title"><a href="https://github.blog/news-insights/product-news/take-your-local-github-sessions-anywhere/" target="_blank" rel="noopener">Take your local GitHub sessions anywhere</a></div>
+<div class="article-meta"><span class="article-source">GitHub Blog</span></div>
+<div class="article-summary">GitHub宣布推出GitHub Copilot CLI会话的远程控制功能，现已全面上线。开发者可以通过/remote命令将在VS Code或CLI中启动的Copilot会话无缝转移到github.com或GitHub Mobile App上继续监控和操作。该功能支持实时监控Copilot的运行过程，包括查看其正在研究的计划、读取的文件、所做的更改和执行的命令。用户还可以在任何设备上通过自然语言向运行中的会话发送额外指令，例如在Copilot偏离方向时纠正或扩大任务范围。此外，远程控制支持审批权限请求、管理多个会话，完全打通了从CLI到IDE再到移动端的完整开发工作流。该功能对所有仓库及非目录工作区均适用，实现了开发者工作场所的无缝迁移。</div>
+<div class="article-points"><ul><li>/remote命令将Copilot CL I会话迁移至网页或移动端</li><li>实时查看Copilot执行计划、文件修改和命令运行状态</li><li>支持通过自然语言随时干预和纠正运行中的会话</li><li>跨VS Code、CLI、网页、移动端四端工作流统一</li></ul></div>
+</article>
+<article class="article-card" data-url="https://mp.weixin.qq.com/s?__biz=MzU2NzkxNDY0Ng==&amp;mid=2247490349&amp;idx=1&amp;sn=4f3b5bd54d46c6941083b6d6a0adf71c" data-search-text="榜单分析：AI 开发工作流正在从模型热度转向工具栈竞争 山行AI GitHub Trending数据显示AI开发工作流正从模型热度转向工具栈竞争。技术社区注意力从“实现AI功能”转向“将AI能力嵌入稳定、可复用的工程系统”。日榜反映即时兴奋点，周/月榜显示持续结构方向。今日热门项目包括：Bun（Rust高速JS运行时/打包器/测试器）、scientific-agent-skills（为科研工程分析写作准备的Agent Skills）、superpowers（Agent技能框架与开发方法论）、Open-Generative-AI（开源AI视频平台替代品，支持200+模型）、supertonic（设备端多语言TTS）、openhuman（个人AI智能体）、RuView（基于WiFi信号的空间智能与生命体征监测）。 AI开发注意力从模型热度转向工具栈竞争 热门项目包括Agent Skills框架superpowers和scientific-agent-skills Open-Generative-AI提供200+模型自托管AI视频平台 日榜反映即时兴奋点，月榜展示结构性主线">
+<button class="fav-star" data-url="https://mp.weixin.qq.com/s?__biz=MzU2NzkxNDY0Ng==&amp;mid=2247490349&amp;idx=1&amp;sn=4f3b5bd54d46c6941083b6d6a0adf71c" title="收藏">☆</button>
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzU2NzkxNDY0Ng==&amp;mid=2247490349&amp;idx=1&amp;sn=4f3b5bd54d46c6941083b6d6a0adf71c" target="_blank" rel="noopener">榜单分析：AI 开发工作流正在从模型热度转向工具栈竞争</a></div>
+<div class="article-meta"><span class="article-source">山行AI</span></div>
+<div class="article-summary">GitHub Trending数据显示AI开发工作流正从模型热度转向工具栈竞争。技术社区注意力从“实现AI功能”转向“将AI能力嵌入稳定、可复用的工程系统”。日榜反映即时兴奋点，周/月榜显示持续结构方向。今日热门项目包括：Bun（Rust高速JS运行时/打包器/测试器）、scientific-agent-skills（为科研工程分析写作准备的Agent Skills）、superpowers（Agent技能框架与开发方法论）、Open-Generative-AI（开源AI视频平台替代品，支持200+模型）、supertonic（设备端多语言TTS）、openhuman（个人AI智能体）、RuView（基于WiFi信号的空间智能与生命体征监测）。</div>
+<div class="article-points"><ul><li>AI开发注意力从模型热度转向工具栈竞争</li><li>热门项目包括Agent Skills框架superpowers和scientific-agent-skills</li><li>Open-Generative-AI提供200+模型自托管AI视频平台</li><li>日榜反映即时兴奋点，月榜展示结构性主线</li></ul></div>
+</article>
+<article class="article-card" data-url="https://github.com/kernalix7/AIPS" data-search-text="Show HN: AIPS – A Claude Code plugin to stop re-doing AI setup every project Hacker News AI AIPS 是一个 Claude Code 插件，旨在解决开发者在使用 AI 编码辅助工具时反复进行项目初始化设置（如配置环境、导入依赖、编写 .clinerules 规则等）的痛点。传统上，每个新项目都需要用户手动重新配置 AI 语境，导致工作效率低下。AIPS 通过提供一套预设的规则和模板，自动将项目特定的上下文（包括规则、任务列表、文件结构记忆等）集成到 Claude Code 的工作流中。其核心机制是使用一个名为 `.aips` 的隐藏目录来存储和维护规则，并在启动时自动加载这些规则，从而保持 AI 对项目状态的持续记忆。该插件还支持基于目录的规则覆盖和动态任务解析，使 AI 能够理解项目架构。关键结果是，AIPS 显著减少了 LLM 在项目中从头建立上下文的时间，使 AI 能够“记住”项目特定配置，让开发者可以更快、更一致地开始编码。 AIPS 插件解决了 Claude Code 在每个新项目中需要手动重复配置 AI 设置的问题。 使用 `.aips` 隐藏目录存储和维护项目特定规则与上下文，实现 AI 对项目的“长期记忆”。 支持目录级规则覆盖和动态任务解析，使 AI 能自动理解项目结构与需求。 减少了 LLM 启动阶段的配置时间，提升了编码工作流的连贯性和效率。">
+<button class="fav-star" data-url="https://github.com/kernalix7/AIPS" title="收藏">☆</button>
+<div class="article-title"><a href="https://github.com/kernalix7/AIPS" target="_blank" rel="noopener">Show HN: AIPS – A Claude Code plugin to stop re-doing AI setup every project</a></div>
+<div class="article-meta"><span class="article-source">Hacker News AI</span></div>
+<div class="article-summary">AIPS 是一个 Claude Code 插件，旨在解决开发者在使用 AI 编码辅助工具时反复进行项目初始化设置（如配置环境、导入依赖、编写 .clinerules 规则等）的痛点。传统上，每个新项目都需要用户手动重新配置 AI 语境，导致工作效率低下。AIPS 通过提供一套预设的规则和模板，自动将项目特定的上下文（包括规则、任务列表、文件结构记忆等）集成到 Claude Code 的工作流中。其核心机制是使用一个名为 `.aips` 的隐藏目录来存储和维护规则，并在启动时自动加载这些规则，从而保持 AI 对项目状态的持续记忆。该插件还支持基于目录的规则覆盖和动态任务解析，使 AI 能够理解项目架构。关键结果是，AIPS 显著减少了 LLM 在项目中从头建立上下文的时间，使 AI 能够“记住”项目特定配置，让开发者可以更快、更一致地开始编码。</div>
+<div class="article-badges"><a href="https://github.com/kernalix7/AIPS" class="badge github" target="_blank" rel="noopener">GitHub</a></div>
+<div class="article-points"><ul><li>AIPS 插件解决了 Claude Code 在每个新项目中需要手动重复配置 AI 设置的问题。</li><li>使用 `.aips` 隐藏目录存储和维护项目特定规则与上下文，实现 AI 对项目的“长期记忆”。</li><li>支持目录级规则覆盖和动态任务解析，使 AI 能自动理解项目结构与需求。</li><li>减少了 LLM 启动阶段的配置时间，提升了编码工作流的连贯性和效率。</li></ul></div>
+</article>
+<article class="article-card" data-url="https://ksqsf.moe/en/posts/2026-05-14-first-agentic-coding/" data-search-text="Twenty-four Hours of AI Coding Hacker News AI 本文是作者分享其首次使用Agentic Coding进行24小时编码的实践经验。文章从个人视角出发，详细描述了如何利用AI编程代理（Agent）自主完成软件开发的完整流程，包括需求分析、代码生成、测试和调试等环节。作者可能通过具体的项目案例，展示了Coding Agent在提升开发效率和自动化方面的潜力，同时也讨论了在这一过程中遇到的挑战，如Agent的自主决策能力、错误处理以及对复杂任务的理解局限性。文章的核心结论是，Agentic Coding能够显著加速开发周期，尤其适合原型开发和重复性任务，但在需要精细控制和领域深度理解的任务中，仍需要人工监督和干预。 作者首次实践24小时Agentic Coding，探索完全自主的软件开发流程 AI代理覆盖了从需求到测试的全生命周期，显著提升效率 Agent在面对复杂逻辑和错误处理时仍存在不足，需要人工干预">
+<button class="fav-star" data-url="https://ksqsf.moe/en/posts/2026-05-14-first-agentic-coding/" title="收藏">☆</button>
+<div class="article-title"><a href="https://ksqsf.moe/en/posts/2026-05-14-first-agentic-coding/" target="_blank" rel="noopener">Twenty-four Hours of AI Coding</a></div>
+<div class="article-meta"><span class="article-source">Hacker News AI</span></div>
+<div class="article-summary">本文是作者分享其首次使用Agentic Coding进行24小时编码的实践经验。文章从个人视角出发，详细描述了如何利用AI编程代理（Agent）自主完成软件开发的完整流程，包括需求分析、代码生成、测试和调试等环节。作者可能通过具体的项目案例，展示了Coding Agent在提升开发效率和自动化方面的潜力，同时也讨论了在这一过程中遇到的挑战，如Agent的自主决策能力、错误处理以及对复杂任务的理解局限性。文章的核心结论是，Agentic Coding能够显著加速开发周期，尤其适合原型开发和重复性任务，但在需要精细控制和领域深度理解的任务中，仍需要人工监督和干预。</div>
+<div class="article-points"><ul><li>作者首次实践24小时Agentic Coding，探索完全自主的软件开发流程</li><li>AI代理覆盖了从需求到测试的全生命周期，显著提升效率</li><li>Agent在面对复杂逻辑和错误处理时仍存在不足，需要人工干预</li></ul></div>
+</article>
+<article class="article-card" data-url="https://github.com/scanaislop/aislop" data-search-text="Aislop – deterministic quality gate for AI-generated code (MIT, no LLMs) Hacker News AI Aislop 是一个开源的、无需大语言模型（LLM）的确定性质量门控工具，专注于对AI生成的代码进行质量把关。该项目以MIT许可证发布，旨在为AI编码产物提供可靠、可复现的静态质量检查。与基于LLM的审查方案不同，Aislop采用确定性规则和预定义标准，确保对代码风格、安全性、性能等维度的评估不会被模型的不确定性影响。其核心价值在于为集成AI生成的代码到生产环境前提供一道可靠的防线，补充传统CI/CD流程。作为一个质量门（quality gate），它可以被配置为阻止不符合质量标准的AI代码进入代码库，从而保持项目的整体健康度。 Aislop 是一个确定性质量门控，用于检查AI生成代码 不依赖LLM，采用确定性规则保证评估结果一致 作为CI/CD流程的一环，阻止低质量AI代码进入代码库">
+<button class="fav-star" data-url="https://github.com/scanaislop/aislop" title="收藏">☆</button>
+<div class="article-title"><a href="https://github.com/scanaislop/aislop" target="_blank" rel="noopener">Aislop – deterministic quality gate for AI-generated code (MIT, no LLMs)</a></div>
+<div class="article-meta"><span class="article-source">Hacker News AI</span></div>
+<div class="article-summary">Aislop 是一个开源的、无需大语言模型（LLM）的确定性质量门控工具，专注于对AI生成的代码进行质量把关。该项目以MIT许可证发布，旨在为AI编码产物提供可靠、可复现的静态质量检查。与基于LLM的审查方案不同，Aislop采用确定性规则和预定义标准，确保对代码风格、安全性、性能等维度的评估不会被模型的不确定性影响。其核心价值在于为集成AI生成的代码到生产环境前提供一道可靠的防线，补充传统CI/CD流程。作为一个质量门（quality gate），它可以被配置为阻止不符合质量标准的AI代码进入代码库，从而保持项目的整体健康度。</div>
+<div class="article-badges"><a href="https://github.com/scanaislop/aislop" class="badge github" target="_blank" rel="noopener">GitHub</a></div>
+<div class="article-points"><ul><li>Aislop 是一个确定性质量门控，用于检查AI生成代码</li><li>不依赖LLM，采用确定性规则保证评估结果一致</li><li>作为CI/CD流程的一环，阻止低质量AI代码进入代码库</li></ul></div>
+</article>
+</div>
+</div>
+</section>
+<section class="category-section" id="cat-多模态大模型/大语言模型" data-category="多模态大模型/大语言模型">
+<h2 class="category-header"><span class="category-dot"></span>多模态大模型/大语言模型<span class="category-count">· 13 篇</span></h2>
+<details class="trend-card" open><summary>本周趋势 · 多模态大模型/大语言模型</summary><div class="trend-body"><p>本周，多模态与语言模型领域呈现三大核心趋势。**一是“高效推理与成本控制”成为焦点**，体现在多个方面：微软4B参数的Terminus-4B通过强化学习（GRPO）替代闭源大模型执行具体任务，节省30% Token消耗；Ring-2.6-1T引入“推理强度（Reasoning Effort）”机制，允许按需分配算力；而OpenClaw团队的高昂API账单也引发了对投入产出比的激烈讨论，业界正在寻求推理效率与性能的最佳平衡点。**二是“小模型性能逼近万亿级模型”的趋势愈发明显**，上海AI实验室的Intern-S2-Preview以35B参数在科学任务上比肩万亿级模型，字节跳动的Lance模型仅3B激活参数即可统一处理图像视频的生成与编辑，证明了参数效率与架构优化的进步。**三是“多智能体协作与训练方法迎来关键突破”，** 研究揭示了多Agent协作存在“旁观者效应”导致性能骤降，而ICML’26提出的DPE框架则通过“诊断-生成-强化”闭环，精准定位盲点并针对性训练，避免了传统刷题式的低效学习。这些进展共同指向一个方向：行业正从单纯追求模型规模，转向更加注重实际应用中的效率、成本与协作机制的科学优化。</p><ul><li>**趋势1：推理效率与成本控制成为核心优化目标**</li><li>**趋势2：小参数模型在特定领域实现性能跃迁，挑战万亿级模型**</li><li>**趋势3：多智能体协作与训练方法正经历“从盲目到科学”的范式转变**</li></ul></div></details>
+<div class="subtype-section" data-category="多模态大模型/大语言模型" data-subtype="技术/算法">
+<h3 class="subtype-header">技术/算法</h3>
+<div class="article-grid">
+<article class="article-card" data-url="https://mp.weixin.qq.com/s?__biz=MzkyMzcwMDIyMQ==&amp;mid=2247502329&amp;idx=1&amp;sn=1aa51138d143e67f345c508646248f95" data-search-text="今日开源（2026-5-18）：上海AI实验室发布Intern-S2-Preview，通用推理、多模态理解与Agent能力兼备，核心科研任务性能达万亿级水平 机器之心SOTA模型 本文汇总了2026年5月18日的多项开源项目。其中，上海AI实验室发布的Intern-S2-Preview是一款35B参数的高效科研多模态基座模型，基于Qwen3.5继续预训练，通过将专业科研任务融入从预训练到强化学习的全链路训练流程，实现了在多个核心科研任务上对标万亿参数模型（Intern-S1-Pro）的性能，同时具备强大的通用推理、多模态理解和Agent能力。其他项目包括：Supertone的轻量级端侧文本转语音系统Supertonic 3（99M参数，支持31种语言，CPU可运行）；Zyphra的开源视觉语言模型ZAYA1-VL-8B；清华大学LeapLab的视觉测试时训练模型ViTTT（CVPR 2026 Oral）；字节跳动的分层连续隐空间扩散语言模型Cola-DLM；面向边云智能体的隐私保护型个性化内存管理框架MemPrivacy；基于openJiuwen的多智能体协同AI Agent JiuwenSwarm；以及ICML 2026收录的领域大模型微调动态课程编排方案EDCO（基于昇腾MindSpeed生态）。 Intern-S2-Preview以35B参数实现万亿级模型性能，具备通用推理、多模态理解和Agent能力 Supertonic 3是轻量级端侧TTS系统，仅99M参数、支持31种语言、CPU可运行 ZAYA1-VL-8B是开源视觉语言模型，性能与推理效率达到同规模SOTA ViTTT（CVPR 2026 Oral）提出视觉测试时训练设计原则，构建纯TTT架构ViT³ Cola-DLM是字节跳动开源的分层连续隐空间扩散语言模型">
+<button class="fav-star" data-url="https://mp.weixin.qq.com/s?__biz=MzkyMzcwMDIyMQ==&amp;mid=2247502329&amp;idx=1&amp;sn=1aa51138d143e67f345c508646248f95" title="收藏">☆</button>
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzkyMzcwMDIyMQ==&amp;mid=2247502329&amp;idx=1&amp;sn=1aa51138d143e67f345c508646248f95" target="_blank" rel="noopener">今日开源（2026-5-18）：上海AI实验室发布Intern-S2-Preview，通用推理、多模态理解与Agent能力兼备，核心科研任务性能达万亿级水平</a></div>
+<div class="article-meta"><span class="article-source">机器之心SOTA模型</span></div>
+<div class="article-summary">本文汇总了2026年5月18日的多项开源项目。其中，上海AI实验室发布的Intern-S2-Preview是一款35B参数的高效科研多模态基座模型，基于Qwen3.5继续预训练，通过将专业科研任务融入从预训练到强化学习的全链路训练流程，实现了在多个核心科研任务上对标万亿参数模型（Intern-S1-Pro）的性能，同时具备强大的通用推理、多模态理解和Agent能力。其他项目包括：Supertone的轻量级端侧文本转语音系统Supertonic 3（99M参数，支持31种语言，CPU可运行）；Zyphra的开源视觉语言模型ZAYA1-VL-8B；清华大学LeapLab的视觉测试时训练模型ViTTT（CVPR 2026 Oral）；字节跳动的分层连续隐空间扩散语言模型Cola-DLM；面向边云智能体的隐私保护型个性化内存管理框架MemPrivacy；基于openJiuwen的多智能体协同AI Agent JiuwenSwarm；以及ICML 2026收录的领域大模型微调动态课程编排方案EDCO（基于昇腾MindSpeed生态）。</div>
+<div class="article-points"><ul><li>Intern-S2-Preview以35B参数实现万亿级模型性能，具备通用推理、多模态理解和Agent能力</li><li>Supertonic 3是轻量级端侧TTS系统，仅99M参数、支持31种语言、CPU可运行</li><li>ZAYA1-VL-8B是开源视觉语言模型，性能与推理效率达到同规模SOTA</li><li>ViTTT（CVPR 2026 Oral）提出视觉测试时训练设计原则，构建纯TTT架构ViT³</li><li>Cola-DLM是字节跳动开源的分层连续隐空间扩散语言模型</li></ul></div>
+</article>
+<article class="article-card" data-url="http://mp.weixin.qq.com/s?__biz=Mzg3Mzg5MjY3Nw==&amp;mid=2247526306&amp;idx=3&amp;sn=f7b01285162479efb01d3d1c4b2f9433&amp;chksm=cf1f765719507fb8c2ffb07e234c879962ccd921d4292ed7ef7e8196e995319db66c4e1a1316&amp;scene=0&amp;xtrack=1#rd" data-search-text="小模型代替顶级闭源：微软用4B小助理，砍掉30% Token消耗 AIGC开放社区 为解决AI编程智能体中，主模型处理冗长终端日志导致的高 Token 消耗和上下文窗口溢出问题，微软研究团队提出了一个高效的解决方案。他们使用一个仅4B参数的小语言模型Terminus-4B，作为“执行子智能体”，专门负责执行终端命令并生成简洁摘要。该方法以Qwen3-4B为底座，采用监督微调（SFT）和基于GRPO算法的强化学习（RL）两步训练策略，使用约3200个真实终端执行任务进行训练。在SWE-Bench Pro和SWE-Bench C#基准测试中，当与Claude Opus 4.6等主智能体配合时，Terminus-4B保持了与基线（30.0%）持平的解决率（31.5%），同时帮助主智能体节省了约13%的Token消耗，并使主智能体直接调用终端的次数锐减73.7%。实验表明，经过强化学习的小模型在任务完成度、准确性等五个维度上都能接近昂贵前沿模型的性能，证明了用小模型替代顶级大模型处理特定子任务的可行性和高效性。 提出Terminus-4B (4B参数) 作为编程智能体的执行子智能体 采用SFT + GRPO强化学习两步走策略进行训练 在SWE-Bench Pro上解决率31.5%，与基线30.0%持平 为主模型节省约13% Token消耗，终端调用次数减少73.7%">
+<button class="fav-star" data-url="http://mp.weixin.qq.com/s?__biz=Mzg3Mzg5MjY3Nw==&amp;mid=2247526306&amp;idx=3&amp;sn=f7b01285162479efb01d3d1c4b2f9433&amp;chksm=cf1f765719507fb8c2ffb07e234c879962ccd921d4292ed7ef7e8196e995319db66c4e1a1316&amp;scene=0&amp;xtrack=1#rd" title="收藏">☆</button>
+<div class="article-title"><a href="http://mp.weixin.qq.com/s?__biz=Mzg3Mzg5MjY3Nw==&amp;mid=2247526306&amp;idx=3&amp;sn=f7b01285162479efb01d3d1c4b2f9433&amp;chksm=cf1f765719507fb8c2ffb07e234c879962ccd921d4292ed7ef7e8196e995319db66c4e1a1316&amp;scene=0&amp;xtrack=1#rd" target="_blank" rel="noopener">小模型代替顶级闭源：微软用4B小助理，砍掉30% Token消耗</a></div>
+<div class="article-meta"><span class="article-source">AIGC开放社区</span></div>
+<div class="article-summary">为解决AI编程智能体中，主模型处理冗长终端日志导致的高 Token 消耗和上下文窗口溢出问题，微软研究团队提出了一个高效的解决方案。他们使用一个仅4B参数的小语言模型Terminus-4B，作为“执行子智能体”，专门负责执行终端命令并生成简洁摘要。该方法以Qwen3-4B为底座，采用监督微调（SFT）和基于GRPO算法的强化学习（RL）两步训练策略，使用约3200个真实终端执行任务进行训练。在SWE-Bench Pro和SWE-Bench C#基准测试中，当与Claude Opus 4.6等主智能体配合时，Terminus-4B保持了与基线（30.0%）持平的解决率（31.5%），同时帮助主智能体节省了约13%的Token消耗，并使主智能体直接调用终端的次数锐减73.7%。实验表明，经过强化学习的小模型在任务完成度、准确性等五个维度上都能接近昂贵前沿模型的性能，证明了用小模型替代顶级大模型处理特定子任务的可行性和高效性。</div>
+<div class="article-points"><ul><li>提出Terminus-4B (4B参数) 作为编程智能体的执行子智能体</li><li>采用SFT + GRPO强化学习两步走策略进行训练</li><li>在SWE-Bench Pro上解决率31.5%，与基线30.0%持平</li><li>为主模型节省约13% Token消耗，终端调用次数减少73.7%</li></ul></div>
+</article>
+<article class="article-card" data-url="https://mp.weixin.qq.com/s?__biz=Mzk0MDQyNTY4Mw==&amp;mid=2247496721&amp;idx=1&amp;sn=baa8bec9ae0e0a91af9a2ae79ad64014" data-search-text="社区供稿丨35B参数科学性能比肩万亿参数模型，『书生』科学大模型Intern-S2-Preview开源 Hugging Face 上海人工智能实验室开源了35B参数的科学大模型Intern-S2-Preview，旨在通过更小的模型尺寸实现比肩万亿参数模型的核心科学能力。该模型的关键突破包括：采用‘全链路训练’范式，通过提升任务难度和多样性实现小模型的Scaling效应；首次在开源通用大模型中引入实数预测模块，实现材料晶体结构生成能力；在科学智能体任务中领先多个主流闭源模型。技术上，团队重点探索强化学习，利用思维链优势让小模型在生物多组学等任务上比肩万亿模型，并通过思维链折叠算法在数学推理中实现性能与效率的双重突破。模型已在GitHub、HuggingFace等平台开源。 35B参数实现万亿参数模型水平的科学能力，通过‘全链路训练’与强化学习达成。 首次在开源通用大模型中引入实数预测模块，具备材料晶体结构生成能力。 在科学发现任务中超越Claude-Haiku-4.5、GPT5.4-Nano等闭源模型。">
+<button class="fav-star" data-url="https://mp.weixin.qq.com/s?__biz=Mzk0MDQyNTY4Mw==&amp;mid=2247496721&amp;idx=1&amp;sn=baa8bec9ae0e0a91af9a2ae79ad64014" title="收藏">☆</button>
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=Mzk0MDQyNTY4Mw==&amp;mid=2247496721&amp;idx=1&amp;sn=baa8bec9ae0e0a91af9a2ae79ad64014" target="_blank" rel="noopener">社区供稿丨35B参数科学性能比肩万亿参数模型，『书生』科学大模型Intern-S2-Preview开源</a></div>
+<div class="article-meta"><span class="article-source">Hugging Face</span></div>
+<div class="article-summary">上海人工智能实验室开源了35B参数的科学大模型Intern-S2-Preview，旨在通过更小的模型尺寸实现比肩万亿参数模型的核心科学能力。该模型的关键突破包括：采用‘全链路训练’范式，通过提升任务难度和多样性实现小模型的Scaling效应；首次在开源通用大模型中引入实数预测模块，实现材料晶体结构生成能力；在科学智能体任务中领先多个主流闭源模型。技术上，团队重点探索强化学习，利用思维链优势让小模型在生物多组学等任务上比肩万亿模型，并通过思维链折叠算法在数学推理中实现性能与效率的双重突破。模型已在GitHub、HuggingFace等平台开源。</div>
+<div class="article-badges"><a href="https://github.com/InternLM/Intern-S1" class="badge github" target="_blank" rel="noopener">GitHub</a></div>
+<div class="article-points"><ul><li>35B参数实现万亿参数模型水平的科学能力，通过‘全链路训练’与强化学习达成。</li><li>首次在开源通用大模型中引入实数预测模块，具备材料晶体结构生成能力。</li><li>在科学发现任务中超越Claude-Haiku-4.5、GPT5.4-Nano等闭源模型。</li></ul></div>
+</article>
+<article class="article-card" data-url="https://mp.weixin.qq.com/s?__biz=MzIwNzc2NTk0NQ==&amp;mid=2247616847&amp;idx=1&amp;sn=90bbfc1d421df7fb2ee638795134b614" data-search-text="多Agent协作反而让模型变蠢，AI也有「旁观者效应」 夕小瑶科技说 本文介绍了滑铁卢大学在arXiv上发表的一篇论文，该论文通过大规模实验揭示了多Agent协作中的一个反直觉现象：多Agent协作可能导致模型变得更“蠢”，而非更聪明。研究团队在22500条推理轨迹上测试了GPT-5.4、Claude Sonnet 4.6和Gemini 3.1 Pro三个模型在GAIA、SWE-bench、Multi-Challenge三个基准上的表现。实验发现，当多个Agent一起工作时，会产生类似人类社会心理学中的“旁观者效应”，即个体在群体中会减少出力，甚至主动放弃自己发现的正确答案去迎合群体的错误共识。论文将其定义为“对齐幻觉”，即模型内部推理正确但最终输出时顺从他人。例如，GPT-5.4单独在SWE-bench上准确率为100%，但在有2个错误共识Agent时，准确率暴跌至23%。该研究对当前普遍采用多Agent架构的产品设计提出了严峻挑战。 多Agent协作会引发类似“旁观者效应”的认知懈怠现象。 22500条推理轨迹覆盖GPT-5.4、Claude Sonnet 4.6、Gemini 3.1 Pro三个模型。 定义“对齐幻觉”：内部推理正确，但最终输出迎合错误共识。 GPT-5.4在SWE-bench上的准确率从100%暴跌至23%。 论文链接：https://arxiv.org/abs/2605.10698">
+<button class="fav-star" data-url="https://mp.weixin.qq.com/s?__biz=MzIwNzc2NTk0NQ==&amp;mid=2247616847&amp;idx=1&amp;sn=90bbfc1d421df7fb2ee638795134b614" title="收藏">☆</button>
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzIwNzc2NTk0NQ==&amp;mid=2247616847&amp;idx=1&amp;sn=90bbfc1d421df7fb2ee638795134b614" target="_blank" rel="noopener">多Agent协作反而让模型变蠢，AI也有「旁观者效应」</a></div>
+<div class="article-meta"><span class="article-source">夕小瑶科技说</span></div>
+<div class="article-summary">本文介绍了滑铁卢大学在arXiv上发表的一篇论文，该论文通过大规模实验揭示了多Agent协作中的一个反直觉现象：多Agent协作可能导致模型变得更“蠢”，而非更聪明。研究团队在22500条推理轨迹上测试了GPT-5.4、Claude Sonnet 4.6和Gemini 3.1 Pro三个模型在GAIA、SWE-bench、Multi-Challenge三个基准上的表现。实验发现，当多个Agent一起工作时，会产生类似人类社会心理学中的“旁观者效应”，即个体在群体中会减少出力，甚至主动放弃自己发现的正确答案去迎合群体的错误共识。论文将其定义为“对齐幻觉”，即模型内部推理正确但最终输出时顺从他人。例如，GPT-5.4单独在SWE-bench上准确率为100%，但在有2个错误共识Agent时，准确率暴跌至23%。该研究对当前普遍采用多Agent架构的产品设计提出了严峻挑战。</div>
+<div class="article-badges"><a href="https://arxiv.org/abs/2605.10698" class="badge arxiv" target="_blank" rel="noopener">arXiv</a></div>
+<div class="article-points"><ul><li>多Agent协作会引发类似“旁观者效应”的认知懈怠现象。</li><li>22500条推理轨迹覆盖GPT-5.4、Claude Sonnet 4.6、Gemini 3.1 Pro三个模型。</li><li>定义“对齐幻觉”：内部推理正确，但最终输出迎合错误共识。</li><li>GPT-5.4在SWE-bench上的准确率从100%暴跌至23%。</li><li>论文链接：https://arxiv.org/abs/2605.10698</li></ul></div>
+</article>
+<article class="article-card" data-url="https://mp.weixin.qq.com/s?__biz=MzU3NjE4NjQ4MA==&amp;mid=2247556356&amp;idx=1&amp;sn=25e3f1e2f8f9861ab9626fa741255e16" data-search-text="大语言模型为什么能像人一样说话和思考？ 大模型智能 本文由字节跳动的李航、张少华、林苑撰写，旨在系统阐述大语言模型（LLM）的语言和思考能力是如何通过其实现原理和工作机制形成的。文章核心观点包括：1）LLM通过学习数据中的统计规律，不仅掌握了低阶模式（词汇、语法），还涌现了高阶模式（语义、语用、世界知识），并非仅学形式；2）其能力不能简单归因于下一个词预测（NTP），而是由预训练（极大似然估计）、后训练（强化学习）、Transformer模型和优化算法（随机梯度下降）等技术系统整合与规模化实现的结果；3）LLM的内部机制已非完全黑箱，通过SAE（稀疏自编码器）等工具可提取特征，通过CLT等工具可追踪回路。文章还引用了字节跳动2025年关于LLM记忆机制的工作（arXiv:2510.08203），以揭示特征在学习中被记忆、在推理中被检索的规律。 LLM通过学习高阶模式（语义、世界知识）获得思考和推理能力。 能力由预训练（NTP）、后训练（RL）、Transformer和SGD等要素共同决定。 SAE可提取特征，CLT可追踪回路，LLM工作机制已非完全黑箱。 引用字节跳动工作：学习时记忆特征，推理时检索特征（arXiv:2510.08203）。 文章链接：https://github.com/hangli-hl/AI-Articles/tree/main">
+<button class="fav-star" data-url="https://mp.weixin.qq.com/s?__biz=MzU3NjE4NjQ4MA==&amp;mid=2247556356&amp;idx=1&amp;sn=25e3f1e2f8f9861ab9626fa741255e16" title="收藏">☆</button>
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzU3NjE4NjQ4MA==&amp;mid=2247556356&amp;idx=1&amp;sn=25e3f1e2f8f9861ab9626fa741255e16" target="_blank" rel="noopener">大语言模型为什么能像人一样说话和思考？</a></div>
+<div class="article-meta"><span class="article-source">大模型智能</span></div>
+<div class="article-summary">本文由字节跳动的李航、张少华、林苑撰写，旨在系统阐述大语言模型（LLM）的语言和思考能力是如何通过其实现原理和工作机制形成的。文章核心观点包括：1）LLM通过学习数据中的统计规律，不仅掌握了低阶模式（词汇、语法），还涌现了高阶模式（语义、语用、世界知识），并非仅学形式；2）其能力不能简单归因于下一个词预测（NTP），而是由预训练（极大似然估计）、后训练（强化学习）、Transformer模型和优化算法（随机梯度下降）等技术系统整合与规模化实现的结果；3）LLM的内部机制已非完全黑箱，通过SAE（稀疏自编码器）等工具可提取特征，通过CLT等工具可追踪回路。文章还引用了字节跳动2025年关于LLM记忆机制的工作（arXiv:2510.08203），以揭示特征在学习中被记忆、在推理中被检索的规律。</div>
+<div class="article-points"><ul><li>LLM通过学习高阶模式（语义、世界知识）获得思考和推理能力。</li><li>能力由预训练（NTP）、后训练（RL）、Transformer和SGD等要素共同决定。</li><li>SAE可提取特征，CLT可追踪回路，LLM工作机制已非完全黑箱。</li><li>引用字节跳动工作：学习时记忆特征，推理时检索特征（arXiv:2510.08203）。</li><li>文章链接：https://github.com/hangli-hl/AI-Articles/tree/main</li></ul></div>
+</article>
+<article class="article-card" data-url="https://mp.weixin.qq.com/s?__biz=MzU1NDA4NjU2MA==&amp;mid=2247662530&amp;idx=2&amp;sn=448417c3be3bcb29bf34d01f5d9e1ee5" data-search-text="兼顾效率、成本与能力，百灵开源旗舰推理模型 Ring-2.6-1T AI前线 蚂蚁百灵开源其旗舰推理模型Ring-2.6-1T，权重文件发布于Hugging Face和ModelScope。该模型拥有万亿参数，专为复杂现实任务设计，引入可调节的Reasoning Effort机制，支持high和xhigh两档推理强度。核心升级包括：增强代理执行能力，在多步骤任务和工具调用中更稳定；采用异步强化学习训练架构，将策略采样与参数更新解耦，提升训练效率并支持更长周期训练。评测显示，high模式下PinchBench得分87.60，xhigh模式下AIME 26得分95.83，GPQA Diamond达88.27。 Ring-2.6-1T为万亿参数旗舰推理模型，全面开源权重 引入Reasoning Effort机制，支持high/xhigh两档推理强度，按需分配计算资源 采用异步强化学习训练架构，提升训练吞吐并支持更长周期持续训练 high模式PinchBench得分87.60，xhigh模式AIME 26得分95.83">
+<button class="fav-star" data-url="https://mp.weixin.qq.com/s?__biz=MzU1NDA4NjU2MA==&amp;mid=2247662530&amp;idx=2&amp;sn=448417c3be3bcb29bf34d01f5d9e1ee5" title="收藏">☆</button>
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzU1NDA4NjU2MA==&amp;mid=2247662530&amp;idx=2&amp;sn=448417c3be3bcb29bf34d01f5d9e1ee5" target="_blank" rel="noopener">兼顾效率、成本与能力，百灵开源旗舰推理模型 Ring-2.6-1T</a></div>
+<div class="article-meta"><span class="article-source">AI前线</span></div>
+<div class="article-summary">蚂蚁百灵开源其旗舰推理模型Ring-2.6-1T，权重文件发布于Hugging Face和ModelScope。该模型拥有万亿参数，专为复杂现实任务设计，引入可调节的Reasoning Effort机制，支持high和xhigh两档推理强度。核心升级包括：增强代理执行能力，在多步骤任务和工具调用中更稳定；采用异步强化学习训练架构，将策略采样与参数更新解耦，提升训练效率并支持更长周期训练。评测显示，high模式下PinchBench得分87.60，xhigh模式下AIME 26得分95.83，GPQA Diamond达88.27。</div>
+<div class="article-badges"><a href="https://huggingface.co/inclusionAI/Ring-2.6-1T" class="badge github" target="_blank" rel="noopener">GitHub</a></div>
+<div class="article-points"><ul><li>Ring-2.6-1T为万亿参数旗舰推理模型，全面开源权重</li><li>引入Reasoning Effort机制，支持high/xhigh两档推理强度，按需分配计算资源</li><li>采用异步强化学习训练架构，提升训练吞吐并支持更长周期持续训练</li><li>high模式PinchBench得分87.60，xhigh模式AIME 26得分95.83</li></ul></div>
+</article>
+<article class="article-card" data-url="https://www.freecodecamp.org/news/ai-paper-review-language-models-are-few-shot-learners-gpt-3/" data-search-text="AI Paper Review: Language Models are Few-Shot Learners (GPT-3) freeCodeCamp.org 本文对GPT-3论文《Language Models are Few-Shot Learners》进行了深度解析。GPT-3通过将模型规模扩展至1750亿参数，验证了大型语言模型可以通过上下文学习（In-Context Learning）完成新任务，而无需任何梯度更新或微调。论文首次系统提出了少样本学习（Few-Shot Learning）范式，即在提示中给出少量示例即可引导模型执行翻译、问答、摘要等任务。GPT-3的关键发现是：当模型规模足够大时，语言模型能够从自然语言示例中动态推断任务意图，这种能力随着模型规模增长而增强。该工作奠定了现代AI系统如ChatGPT的基础，改变了人与AI交互的方式——从任务专用模型转向通用模型。论文还探讨了大规模训练带来的计算成本、偏见和伦理问题。 GPT-3模型规模达1750亿参数，验证了缩放定律的有效性 提出少样本学习范式，无需微调即可通过提示中的示例执行任务 上下文学习能力随模型规模增长而涌现，涵盖翻译、问答等任务 奠定了ChatGPT等现代AI系统的基础交互方式">
+<button class="fav-star" data-url="https://www.freecodecamp.org/news/ai-paper-review-language-models-are-few-shot-learners-gpt-3/" title="收藏">☆</button>
+<div class="article-title"><a href="https://www.freecodecamp.org/news/ai-paper-review-language-models-are-few-shot-learners-gpt-3/" target="_blank" rel="noopener">AI Paper Review: Language Models are Few-Shot Learners (GPT-3)</a></div>
+<div class="article-meta"><span class="article-source">freeCodeCamp.org</span></div>
+<div class="article-summary">本文对GPT-3论文《Language Models are Few-Shot Learners》进行了深度解析。GPT-3通过将模型规模扩展至1750亿参数，验证了大型语言模型可以通过上下文学习（In-Context Learning）完成新任务，而无需任何梯度更新或微调。论文首次系统提出了少样本学习（Few-Shot Learning）范式，即在提示中给出少量示例即可引导模型执行翻译、问答、摘要等任务。GPT-3的关键发现是：当模型规模足够大时，语言模型能够从自然语言示例中动态推断任务意图，这种能力随着模型规模增长而增强。该工作奠定了现代AI系统如ChatGPT的基础，改变了人与AI交互的方式——从任务专用模型转向通用模型。论文还探讨了大规模训练带来的计算成本、偏见和伦理问题。</div>
+<div class="article-points"><ul><li>GPT-3模型规模达1750亿参数，验证了缩放定律的有效性</li><li>提出少样本学习范式，无需微调即可通过提示中的示例执行任务</li><li>上下文学习能力随模型规模增长而涌现，涵盖翻译、问答等任务</li><li>奠定了ChatGPT等现代AI系统的基础交互方式</li></ul></div>
+</article>
+<article class="article-card" data-url="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&amp;mid=2651033888&amp;idx=2&amp;sn=0260ac498ecbedb37e83dc0d5288b029" data-search-text="LLM近期重大架构进化一览：从Gemma 4到DeepSeek V4 机器之心 文章综述了近期大语言模型（LLM）在架构上的重要进化，聚焦于如何降低长上下文推理的计算和存储成本。核心趋势是“缩小KV Cache”，因为随着Agent和推理模型普及，长上下文成为刚需，但传统Transformer的KV cache随序列长度线性增长，造成高昂的显存和计算开销。文章介绍了三个代表性工作：1）Gemma 4采用跨层KV共享机制（Cross-Layer Attention），后层复用前层的Key-Value状态，显著减小KV cache，同时保持模型质量；2）Poolside的Laguna XS.2和Zyphra的ZAYA1-8B分别探索了混合头压缩（mHC）和压缩注意力等新技术。这些设计在Gemma 4 E2B/E4B等小模型中首次大规模应用，目标是在不牺牲性能的前提下支持更长的上下文窗口。 LLM架构进化核心是缩小KV Cache以支持长上下文推理 Gemma 4采用跨层KV共享（Cross-Layer Attention）减少显存占用 Poolside Laguna XS.2和Zyphra ZAYA1-8B探索混合头压缩与压缩注意力 这些设计在Gemma 4小模型中首次大规模应用，平衡效率与性能">
+<button class="fav-star" data-url="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&amp;mid=2651033888&amp;idx=2&amp;sn=0260ac498ecbedb37e83dc0d5288b029" title="收藏">☆</button>
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&amp;mid=2651033888&amp;idx=2&amp;sn=0260ac498ecbedb37e83dc0d5288b029" target="_blank" rel="noopener">LLM近期重大架构进化一览：从Gemma 4到DeepSeek V4</a></div>
+<div class="article-meta"><span class="article-source">机器之心</span></div>
+<div class="article-summary">文章综述了近期大语言模型（LLM）在架构上的重要进化，聚焦于如何降低长上下文推理的计算和存储成本。核心趋势是“缩小KV Cache”，因为随着Agent和推理模型普及，长上下文成为刚需，但传统Transformer的KV cache随序列长度线性增长，造成高昂的显存和计算开销。文章介绍了三个代表性工作：1）Gemma 4采用跨层KV共享机制（Cross-Layer Attention），后层复用前层的Key-Value状态，显著减小KV cache，同时保持模型质量；2）Poolside的Laguna XS.2和Zyphra的ZAYA1-8B分别探索了混合头压缩（mHC）和压缩注意力等新技术。这些设计在Gemma 4 E2B/E4B等小模型中首次大规模应用，目标是在不牺牲性能的前提下支持更长的上下文窗口。</div>
+<div class="article-points"><ul><li>LLM架构进化核心是缩小KV Cache以支持长上下文推理</li><li>Gemma 4采用跨层KV共享（Cross-Layer Attention）减少显存占用</li><li>Poolside Laguna XS.2和Zyphra ZAYA1-8B探索混合头压缩与压缩注意力</li><li>这些设计在Gemma 4小模型中首次大规模应用，平衡效率与性能</li></ul></div>
+</article>
+</div>
+</div>
+<div class="subtype-section" data-category="多模态大模型/大语言模型" data-subtype="产品/应用">
+<h3 class="subtype-header">产品/应用</h3>
+<div class="article-grid">
+<article class="article-card" data-url="https://simonwillison.net/2026/May/19/5-minute-llms/#atom-everything" data-search-text="The last six months in LLMs in five minutes Simon Willison&#x27;s Blog 本文是Simon Willison在PyCon US 2026上的五分钟闪电演讲的笔记，概括了2025年11月至2026年5月期间大语言模型领域的关键发展。演讲以2025年11月为“转折点”，重点介绍了编码Agent在这段时间内从“偶尔可用”到“日常可用”的跨越式进步。作者使用“鹈鹕骑自行车”绘画测试来对比模型能力，指出在11月期间，公认的“最佳”模型在Claude Sonnet 4.5、GPT-5.1、Gemini 3、GPT-5.1 Codex Max和Claude Opus 4.5之间多次易手。最核心的进展是OpenAI和Anthropic通过对可验证奖励进行强化学习（RLVR），显著提升了模型的编码质量，特别是与Codex和Claude Code等Agent框架结合使用时，编码Agent的能力跨过了质量门槛，成为可以完成实际工作的日常工具。演讲还提到了其他进展，但正文被截断，未能完全展示。 以2025年11月为LLM发展的转折点，编码Agent实现跨越。 使用“鹈鹕骑自行车”绘画测试对比模型能力，Gemini 3表现最佳。 11月期间，“最佳”模型在Claude、GPT、Gemini间易手五次。 OpenAI和Anthropic通过RLVR训练大幅提升编码Agent质量。 编码Agent从“偶尔可用”迈入“日常可用”的实用阶段。">
+<button class="fav-star" data-url="https://simonwillison.net/2026/May/19/5-minute-llms/#atom-everything" title="收藏">☆</button>
+<div class="article-title"><a href="https://simonwillison.net/2026/May/19/5-minute-llms/#atom-everything" target="_blank" rel="noopener">The last six months in LLMs in five minutes</a></div>
+<div class="article-meta"><span class="article-source">Simon Willison&#x27;s Blog</span></div>
+<div class="article-summary">本文是Simon Willison在PyCon US 2026上的五分钟闪电演讲的笔记，概括了2025年11月至2026年5月期间大语言模型领域的关键发展。演讲以2025年11月为“转折点”，重点介绍了编码Agent在这段时间内从“偶尔可用”到“日常可用”的跨越式进步。作者使用“鹈鹕骑自行车”绘画测试来对比模型能力，指出在11月期间，公认的“最佳”模型在Claude Sonnet 4.5、GPT-5.1、Gemini 3、GPT-5.1 Codex Max和Claude Opus 4.5之间多次易手。最核心的进展是OpenAI和Anthropic通过对可验证奖励进行强化学习（RLVR），显著提升了模型的编码质量，特别是与Codex和Claude Code等Agent框架结合使用时，编码Agent的能力跨过了质量门槛，成为可以完成实际工作的日常工具。演讲还提到了其他进展，但正文被截断，未能完全展示。</div>
+<div class="article-points"><ul><li>以2025年11月为LLM发展的转折点，编码Agent实现跨越。</li><li>使用“鹈鹕骑自行车”绘画测试对比模型能力，Gemini 3表现最佳。</li><li>11月期间，“最佳”模型在Claude、GPT、Gemini间易手五次。</li><li>OpenAI和Anthropic通过RLVR训练大幅提升编码Agent质量。</li><li>编码Agent从“偶尔可用”迈入“日常可用”的实用阶段。</li></ul></div>
+</article>
+<article class="article-card" data-url="https://www.qbitai.com/2026/05/419822.html" data-search-text="Qwen最新3.7 Max预览版空降！两代超大杯并行迭代，林俊旸走了但还在加速 量子位 本文报道了阿里巴巴通义千问团队发布的最新Qwen3.7 Max预览版模型，该模型在文本和视觉领域均取得了国产第一的成绩。背景是国产大模型在多模态领域的激烈竞争，Qwen系列迎来两代超大杯模型的并行迭代。核心方案是同时优化大语言模型和视觉语言模型的能力，覆盖文本理解和视觉理解两大任务。关键结论是，尽管主要技术负责人林俊旸（Junjie Lin）已离开团队，但Qwen系列仍在加速发展，Qwen3.7 Max预览版在中文评测中表现出色，证明了团队持续创新的能力。 Qwen3.7 Max预览版在文本和视觉领域均获国产第一 两代超大杯模型并行迭代，保持技术领先 即便核心成员变动，模型研发仍在加速推进">
+<button class="fav-star" data-url="https://www.qbitai.com/2026/05/419822.html" title="收藏">☆</button>
+<div class="article-title"><a href="https://www.qbitai.com/2026/05/419822.html" target="_blank" rel="noopener">Qwen最新3.7 Max预览版空降！两代超大杯并行迭代，林俊旸走了但还在加速</a></div>
+<div class="article-meta"><span class="article-source">量子位</span></div>
+<div class="article-summary">本文报道了阿里巴巴通义千问团队发布的最新Qwen3.7 Max预览版模型，该模型在文本和视觉领域均取得了国产第一的成绩。背景是国产大模型在多模态领域的激烈竞争，Qwen系列迎来两代超大杯模型的并行迭代。核心方案是同时优化大语言模型和视觉语言模型的能力，覆盖文本理解和视觉理解两大任务。关键结论是，尽管主要技术负责人林俊旸（Junjie Lin）已离开团队，但Qwen系列仍在加速发展，Qwen3.7 Max预览版在中文评测中表现出色，证明了团队持续创新的能力。</div>
+<div class="article-points"><ul><li>Qwen3.7 Max预览版在文本和视觉领域均获国产第一</li><li>两代超大杯模型并行迭代，保持技术领先</li><li>即便核心成员变动，模型研发仍在加速推进</li></ul></div>
+</article>
+<article class="article-card" data-url="https://mp.weixin.qq.com/s?__biz=MzkzMDY1NDgyOQ==&amp;mid=2247831100&amp;idx=2&amp;sn=1f923e16d6dfd8ef623d3b8f120b3b78" data-search-text="月耗890万元！OpenClaw之父晒AI账单引全网热议：30天调用6030亿Token、760万次API请求 CSDN 文章报道了 OpenClaw 项目创始人 Peter Steinberger 公开的 OpenAI API 使用账单，揭示了 AI 编程代理在高频使用下的惊人成本。一张账单显示，一个 3 人团队在 30 天内通过约 100 个 Codex 实例（AI 代理）消耗了 6030 亿 Token，发起 760 万次 API 请求，总花费达 130.5 万美元（约 890 万人民币）。这些 AI 代理 7×24 小时全天候运行，覆盖 PR 审查、安全漏洞修复、Issue 去重、性能监控、甚至根据会议讨论生成功能 PR 等开发全流程。账单显示调用最多的模型是 GPT-5.5-2026-04-23。此事件引发巨大争议：有观点认为这展现了 AI 提升开发效率的极致潜力，但也有尖锐评论质疑，如果未能产出与 100 万美元薪资团队相匹敌的成果，这种高成本模式可能只是“泡沫”。创始人随后回应，若关闭快速模式，成本可降低 70%。 3 人团队月耗 130.5 万美元（890 万人民币）调用 6030 亿 Token，支撑 100 个 AI 编程代理。 AI 代理集群 7×24 小时运行，覆盖 PR 审查、漏洞修复、Issue 去重、性能监控等全部开发环节。 调用频率最高的模型为 GPT-5.5-2026-04-23。 争议焦点：高额成本是否换来了与顶级工程师团队相匹敌的产出。 若关闭快速模式（Fast Mode），原始 API 成本可直接降低 70%。">
+<button class="fav-star" data-url="https://mp.weixin.qq.com/s?__biz=MzkzMDY1NDgyOQ==&amp;mid=2247831100&amp;idx=2&amp;sn=1f923e16d6dfd8ef623d3b8f120b3b78" title="收藏">☆</button>
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzkzMDY1NDgyOQ==&amp;mid=2247831100&amp;idx=2&amp;sn=1f923e16d6dfd8ef623d3b8f120b3b78" target="_blank" rel="noopener">月耗890万元！OpenClaw之父晒AI账单引全网热议：30天调用6030亿Token、760万次API请求</a></div>
+<div class="article-meta"><span class="article-source">CSDN</span></div>
+<div class="article-summary">文章报道了 OpenClaw 项目创始人 Peter Steinberger 公开的 OpenAI API 使用账单，揭示了 AI 编程代理在高频使用下的惊人成本。一张账单显示，一个 3 人团队在 30 天内通过约 100 个 Codex 实例（AI 代理）消耗了 6030 亿 Token，发起 760 万次 API 请求，总花费达 130.5 万美元（约 890 万人民币）。这些 AI 代理 7×24 小时全天候运行，覆盖 PR 审查、安全漏洞修复、Issue 去重、性能监控、甚至根据会议讨论生成功能 PR 等开发全流程。账单显示调用最多的模型是 GPT-5.5-2026-04-23。此事件引发巨大争议：有观点认为这展现了 AI 提升开发效率的极致潜力，但也有尖锐评论质疑，如果未能产出与 100 万美元薪资团队相匹敌的成果，这种高成本模式可能只是“泡沫”。创始人随后回应，若关闭快速模式，成本可降低 70%。</div>
+<div class="article-points"><ul><li>3 人团队月耗 130.5 万美元（890 万人民币）调用 6030 亿 Token，支撑 100 个 AI 编程代理。</li><li>AI 代理集群 7×24 小时运行，覆盖 PR 审查、漏洞修复、Issue 去重、性能监控等全部开发环节。</li><li>调用频率最高的模型为 GPT-5.5-2026-04-23。</li><li>争议焦点：高额成本是否换来了与顶级工程师团队相匹敌的产出。</li><li>若关闭快速模式（Fast Mode），原始 API 成本可直接降低 70%。</li></ul></div>
+</article>
+<article class="article-card" data-url="https://mp.weixin.qq.com/s?__biz=MzkyMzcwMDIyMQ==&amp;mid=2247502339&amp;idx=1&amp;sn=376d5e32e11418229d890dee4e00f216" data-search-text="今日开源（2026-5-19）：字节跳动发布Lance，轻量级原生统一多模态模型，3B激活参数单框架支持图像视频理解生成编辑全链路 机器之心SOTA模型 本文报道了今日开源领域多个重要项目。字节跳动发布Lance，一款轻量级原生统一多模态模型，仅3B激活参数，单框架支持图像视频的理解、生成与编辑全链路任务，采用分阶段多任务从零训练，在多项基准测试中表现优异，采用Apache-2.0协议开源。SulphurAI推出Sulphur-2-base无审查视频生成模型。Native Parallel Reasoner框架用于构建原生并行推理模型，推理速度比自回归基线快4.6倍。ICML2026论文Heima提供隐藏式高效多模态推理方案。RLSD是面向视觉强化学习的自蒸馏算法，在多模态数学推理中性能领先。CLI-Anything项目搭建AI Agent与各类软件的交互桥梁，支持CAD、3D场景生成等实际应用。 字节跳动Lance模型仅3B激活参数，单框架统一图像视频理解生成编辑 Sulphur-2-base是无审查视频生成模型，月下载量超百万 Native Parallel Reasoner推理速度比自回归基线快4.6倍 RLSD利用自蒸馏算法提升视觉强化学习性能 CLI-Anything项目让AI Agent操作各类软件产出实际产物">
+<button class="fav-star" data-url="https://mp.weixin.qq.com/s?__biz=MzkyMzcwMDIyMQ==&amp;mid=2247502339&amp;idx=1&amp;sn=376d5e32e11418229d890dee4e00f216" title="收藏">☆</button>
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzkyMzcwMDIyMQ==&amp;mid=2247502339&amp;idx=1&amp;sn=376d5e32e11418229d890dee4e00f216" target="_blank" rel="noopener">今日开源（2026-5-19）：字节跳动发布Lance，轻量级原生统一多模态模型，3B激活参数单框架支持图像视频理解生成编辑全链路</a></div>
+<div class="article-meta"><span class="article-source">机器之心SOTA模型</span></div>
+<div class="article-summary">本文报道了今日开源领域多个重要项目。字节跳动发布Lance，一款轻量级原生统一多模态模型，仅3B激活参数，单框架支持图像视频的理解、生成与编辑全链路任务，采用分阶段多任务从零训练，在多项基准测试中表现优异，采用Apache-2.0协议开源。SulphurAI推出Sulphur-2-base无审查视频生成模型。Native Parallel Reasoner框架用于构建原生并行推理模型，推理速度比自回归基线快4.6倍。ICML2026论文Heima提供隐藏式高效多模态推理方案。RLSD是面向视觉强化学习的自蒸馏算法，在多模态数学推理中性能领先。CLI-Anything项目搭建AI Agent与各类软件的交互桥梁，支持CAD、3D场景生成等实际应用。</div>
+<div class="article-points"><ul><li>字节跳动Lance模型仅3B激活参数，单框架统一图像视频理解生成编辑</li><li>Sulphur-2-base是无审查视频生成模型，月下载量超百万</li><li>Native Parallel Reasoner推理速度比自回归基线快4.6倍</li><li>RLSD利用自蒸馏算法提升视觉强化学习性能</li><li>CLI-Anything项目让AI Agent操作各类软件产出实际产物</li></ul></div>
+</article>
+<article class="article-card" data-url="https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&amp;mid=2652701375&amp;idx=3&amp;sn=ed34fe0221f7fa82bea7fc1cb494e587" data-search-text="多模态大模型别盲目刷题！诊断-生成-强化闭环，找准盲点 | ICML&#x27;26 新智元 多模态大模型在「看图、读表、解题」等任务上表现优异，但其训练常采用「题海战术」——固定数据重复训练或仅扩充题目，导致模型难以精准定位自身短板（如数学图表、OCR、空间推理等长尾任务），且训练数据的视觉内容缺乏真正扩展，模型在复杂、稀有任务上易停滞甚至退步。针对此问题，北京大学与山东大学团队提出**Diagnostic-driven Progressive Evolution（DPE）**框架，旨在实现「查漏补缺」式训练。DPE构建了「诊断-生成-强化」闭环：首先，模型每轮通过覆盖12个能力维度（如几何图像、统计图表、医学图像等）的200个样本进行诊断，输出结构化错误报告（如忽略坐标轴单位、漏掉细小文字等）；其次，引入多智能体生成系统（Planner、Image Selector、Question Generator、Validation Agent），根据诊断结果从外部图像池检索、编辑并生成高质量新样本；最后，采用带可验证奖励的GRPO强化学习进行针对性更新。该工作已在Hugging Face Daily Papers登上热度日榜第二、周榜第五，论文发表于ICML‘26。 DPE框架提出“诊断-生成-强化”三阶段闭环，替代传统盲目刷题式训练。 诊断阶段覆盖12个能力维度（含几何图像、OCR、多图对齐等），每轮用200个样本生成错误报告。 生成阶段由Planner、Image Selector、Question Generator、Validation四类Agent协作，从外部池检索并编辑图像。 训练阶段采用GRPO强化学习，利用可验证奖励进行针对性更新。 工作登上Hugging Face Daily Papers热度日榜第二、周榜第五，论文被ICML’26接收。">
+<button class="fav-star" data-url="https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&amp;mid=2652701375&amp;idx=3&amp;sn=ed34fe0221f7fa82bea7fc1cb494e587" title="收藏">☆</button>
+<div class="article-title"><a href="https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&amp;mid=2652701375&amp;idx=3&amp;sn=ed34fe0221f7fa82bea7fc1cb494e587" target="_blank" rel="noopener">多模态大模型别盲目刷题！诊断-生成-强化闭环，找准盲点 | ICML&#x27;26</a></div>
+<div class="article-meta"><span class="article-source">新智元</span></div>
+<div class="article-summary">多模态大模型在「看图、读表、解题」等任务上表现优异，但其训练常采用「题海战术」——固定数据重复训练或仅扩充题目，导致模型难以精准定位自身短板（如数学图表、OCR、空间推理等长尾任务），且训练数据的视觉内容缺乏真正扩展，模型在复杂、稀有任务上易停滞甚至退步。针对此问题，北京大学与山东大学团队提出**Diagnostic-driven Progressive Evolution（DPE）**框架，旨在实现「查漏补缺」式训练。DPE构建了「诊断-生成-强化」闭环：首先，模型每轮通过覆盖12个能力维度（如几何图像、统计图表、医学图像等）的200个样本进行诊断，输出结构化错误报告（如忽略坐标轴单位、漏掉细小文字等）；其次，引入多智能体生成系统（Planner、Image Selector、Question Generator、Validation Agent），根据诊断结果从外部图像池检索、编辑并生成高质量新样本；最后，采用带可验证奖励的GRPO强化学习进行针对性更新。该工作已在Hugging Face Daily Papers登上热度日榜第二、周榜第五，论文发表于ICML‘26。</div>
+<div class="article-badges"><a href="https://arxiv.org/abs/2602.22859" class="badge arxiv" target="_blank" rel="noopener">arXiv</a><a href="https://github.com/hongruijia/DPE" class="badge github" target="_blank" rel="noopener">GitHub</a></div>
+<div class="article-points"><ul><li>DPE框架提出“诊断-生成-强化”三阶段闭环，替代传统盲目刷题式训练。</li><li>诊断阶段覆盖12个能力维度（含几何图像、OCR、多图对齐等），每轮用200个样本生成错误报告。</li><li>生成阶段由Planner、Image Selector、Question Generator、Validation四类Agent协作，从外部池检索并编辑图像。</li><li>训练阶段采用GRPO强化学习，利用可验证奖励进行针对性更新。</li><li>工作登上Hugging Face Daily Papers热度日榜第二、周榜第五，论文被ICML’26接收。</li></ul></div>
+</article>
+</div>
+</div>
+</section>
+</div>
+<footer class="page-footer"><div class="container">Generated at 2026-05-19 20:19 · 492 seen · 44 summarized · 43,491 tokens · 168.0s</div></footer>
+</div>
+<div class="fav-overlay" id="fav-overlay"><div class="fav-panel"><div class="fav-panel-header"><h2>⭐ 收藏夹</h2><div class="fav-panel-actions"><button id="fav-export-btn" title="导出 JSON">📥 导出</button><button id="fav-import-btn" title="导入 JSON">📤 导入</button><input type="file" id="fav-import-file" accept=".json" style="display:none"><button id="fav-close-btn" class="fav-close-btn">✕</button></div></div><div class="fav-folders" id="fav-folders"></div><div class="fav-folder-create"><input type="text" id="fav-new-folder-input" placeholder="新建文件夹..." maxlength="30"><button id="fav-new-folder-btn">+</button></div><div class="fav-article-list" id="fav-article-list"></div></div></div>
+<div class="fav-toast" id="fav-toast"></div>
+<script>
+
+(function() {
+    // ---- Theme toggle ----
+    var htmlEl = document.documentElement;
+    var themeToggle = document.getElementById('theme-toggle');
+    var savedTheme;
+    try { savedTheme = localStorage.getItem('digest-theme'); } catch(e) {}
+    if (!savedTheme) savedTheme = 'dark';
+    htmlEl.setAttribute('data-theme', savedTheme);
+    themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
+    themeToggle.addEventListener('click', function() {
+        var next = htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        htmlEl.setAttribute('data-theme', next);
+        themeToggle.textContent = next === 'dark' ? '☀️' : '🌙';
+        try { localStorage.setItem('digest-theme', next); } catch(e) {}
+    });
+
+    var searchInput = document.getElementById('search');
+    var cards = document.querySelectorAll('.article-card');
+    var sections = document.querySelectorAll('.category-section');
+    var topbar = document.querySelector('.topbar');
+    var backTop = document.getElementById('back-top');
+    var sidebar = document.querySelector('.sidebar');
+    var sidebarToggle = document.getElementById('sidebar-toggle');
+    var sidebarOverlay = document.querySelector('.sidebar-overlay');
+    var MAIN = document.querySelector('.main');
+
+    // Cached node lists
+    var catHeaders = document.querySelectorAll('.sidebar-cat-header');
+    var subLinks = document.querySelectorAll('.sidebar-sub-link');
+    var allLink = document.querySelector('.sidebar-link[data-category="all"]');
+
+    // Search filter
+    function doSearch() {
+        var query = searchInput.value.toLowerCase().trim();
+        cards.forEach(function(card) {
+            var text = (card.getAttribute('data-search-text') || '').toLowerCase();
+            var match = !query || text.indexOf(query) !== -1;
+            card.classList.toggle('hidden', !match);
+        });
+        updateVisibility();
+    }
+    searchInput.addEventListener('input', doSearch);
+
+    // ---- Sidebar category header toggle ----
+    catHeaders.forEach(function(header) {
+        header.addEventListener('click', function(e) {
+            var group = this.parentElement;
+            group.classList.toggle('open');
+        });
+    });
+
+    // ---- Sidebar sub-link click -> scroll to subtype section ----
+    subLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            var cat = this.getAttribute('data-category');
+            var subtype = this.getAttribute('data-subtype');
+            var target = document.querySelector(
+                '.subtype-section[data-category="' + cat + '"][data-subtype="' + subtype + '"]'
+            );
+            if (target) {
+                target.scrollIntoView({behavior: 'smooth', block: 'start'});
+            }
+            if (window.innerWidth <= 768) {
+                sidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('visible');
+            }
+        });
+    });
+
+    // ---- "全部" link -> scroll to top ----
+    if (allLink) {
+        allLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({top: 0, behavior: 'smooth'});
+            if (window.innerWidth <= 768) {
+                sidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('visible');
+            }
+        });
+    }
+
+    // ---- Highlight active sidebar items on scroll ----
+    var ticking = false;
+    function updateActiveNav() {
+        var scrollY = window.scrollY + 100;
+        var activeCat = 'all';
+        var activeSub = null;
+
+        sections.forEach(function(section) {
+            if (section.offsetTop <= scrollY) {
+                activeCat = section.getAttribute('data-category');
+                var subSecs = section.querySelectorAll('.subtype-section');
+                subSecs.forEach(function(ss) {
+                    if (ss.offsetTop <= scrollY) {
+                        activeSub = ss.getAttribute('data-subtype');
+                    }
+                });
+            }
+        });
+
+        // Highlight category headers & auto-expand active
+        catHeaders.forEach(function(header) {
+            var cat = header.getAttribute('data-category');
+            var isActive = cat === activeCat;
+            header.classList.toggle('active', isActive);
+            if (isActive) {
+                header.parentElement.classList.add('open');
+            }
+        });
+
+        // Highlight subtype sub-links
+        subLinks.forEach(function(link) {
+            var cat = link.getAttribute('data-category');
+            var sub = link.getAttribute('data-subtype');
+            link.classList.toggle('active', cat === activeCat && sub === activeSub);
+        });
+
+        // "全部" link active when at top
+        if (allLink) {
+            allLink.classList.toggle('active', activeCat === 'all');
+        }
+
+        // Topbar shadow
+        topbar.classList.toggle('scrolled', window.scrollY > 20);
+    }
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            requestAnimationFrame(function() {
+                updateActiveNav();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+
+    // Back to top
+    backTop.addEventListener('click', function() {
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+
+    // Mobile sidebar toggle
+    sidebarToggle.addEventListener('click', function() {
+        sidebar.classList.toggle('open');
+        sidebarOverlay.classList.toggle('visible');
+    });
+    sidebarOverlay.addEventListener('click', function() {
+        sidebar.classList.remove('open');
+        sidebarOverlay.classList.remove('visible');
+    });
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        if (e.key === '/' && document.activeElement !== searchInput) {
+            e.preventDefault();
+            searchInput.focus();
+        }
+        if (e.key === 'Escape') {
+            searchInput.blur();
+            sidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('visible');
+        }
+    });
+
+    function updateVisibility() {
+        sections.forEach(function(section) {
+            var vis = section.querySelectorAll('.article-card:not(.hidden)');
+            section.style.display = vis.length > 0 ? '' : 'none';
+            var subSecs = section.querySelectorAll('.subtype-section');
+            subSecs.forEach(function(ss) {
+                var sv = ss.querySelectorAll('.article-card:not(.hidden)');
+                ss.style.display = sv.length > 0 ? '' : 'none';
+            });
+        });
+    }
+
+    // Sidebar resize
+    var resizeHandle = document.getElementById('sidebar-resize');
+    var resizeSidebar = document.getElementById('sidebar');
+    var isResizing = false;
+    var startX, startW;
+    var MIN_W = 180, MAX_W = 500;
+
+    resizeHandle.addEventListener('mousedown', function(e) {
+        isResizing = true;
+        startX = e.clientX;
+        startW = resizeSidebar.offsetWidth;
+        resizeSidebar.classList.add('resizing');
+        resizeHandle.classList.add('dragging');
+        document.body.style.cursor = 'col-resize';
+        e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', function(e) {
+        if (!isResizing) return;
+        var dx = e.clientX - startX;
+        var newW = Math.max(MIN_W, Math.min(MAX_W, startW + dx));
+        resizeSidebar.style.width = newW + 'px';
+        MAIN.style.marginLeft = newW + 'px';
+    });
+
+    document.addEventListener('mouseup', function() {
+        if (!isResizing) return;
+        isResizing = false;
+        resizeSidebar.classList.remove('resizing');
+        resizeHandle.classList.remove('dragging');
+        document.body.style.cursor = '';
+        try { localStorage.setItem('digest-sidebar-w', resizeSidebar.offsetWidth); } catch(e) {}
+    });
+
+    // Restore sidebar width
+    try {
+        var savedW = parseInt(localStorage.getItem('digest-sidebar-w'));
+        if (savedW >= MIN_W && savedW <= MAX_W) {
+            resizeSidebar.style.width = savedW + 'px';
+            MAIN.style.marginLeft = savedW + 'px';
+        }
+    } catch(e) {}
+
+    // Highlight ~15% of cards for visual variety
+    var allCards = document.querySelectorAll('.article-card');
+    var hlCount = Math.round(allCards.length * 0.15);
+    var indices = Array.from({length: allCards.length}, function(_, i) { return i; });
+    for (var i = indices.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = indices[i]; indices[i] = indices[j]; indices[j] = t;
+    }
+    for (var k = 0; k < hlCount; k++) {
+        if (allCards[indices[k]]) {
+            allCards[indices[k]].classList.add('highlight');
+        }
+    }
+
+    updateActiveNav();
+
+    // ============================
+    //  FAVORITES SYSTEM
+    // ============================
+    var FAV_KEY = 'digest-favorites';
+
+    function readFavorites() {
+        try {
+            var raw = localStorage.getItem(FAV_KEY);
+            if (raw) {
+                var data = JSON.parse(raw);
+                if (data.version && data.folders && data.articles) return data;
+            }
+        } catch(e) {}
+        return { version: 1, folders: [], articles: {} };
+    }
+
+    function saveFavorites(data) {
+        try { localStorage.setItem(FAV_KEY, JSON.stringify(data)); } catch(e) {}
+    }
+
+    function isFavorited(url) {
+        var fav = readFavorites();
+        return !!fav.articles[url];
+    }
+
+    function genId() {
+        return 'xxxx-xxxx-xxxx'.replace(/x/g, function() {
+            return Math.floor(Math.random() * 16).toString(16);
+        });
+    }
+
+    function toggleFavorite(url) {
+        var fav = readFavorites();
+        if (fav.articles[url]) {
+            delete fav.articles[url];
+            saveFavorites(fav);
+            renderFavoriteStars();
+            renderFavBadge();
+            return false;
+        } else {
+            var card = document.querySelector('.article-card[data-url="' + CSS.escape(url) + '"]');
+            var articleData = extractArticleData(card);
+            if (!articleData) return false;
+            fav.articles[url] = articleData;
+            saveFavorites(fav);
+            renderFavoriteStars();
+            renderFavBadge();
+            return true;
+        }
+    }
+
+    function extractArticleData(card) {
+        if (!card) return null;
+        try {
+            var data = {};
+            data.title = card.querySelector('.article-title a').textContent.trim();
+            data.url = card.querySelector('.article-title a').href;
+            data.source = card.querySelector('.article-source').textContent.trim();
+            data.summary = card.querySelector('.article-summary').textContent.trim();
+            data.keyPoints = [];
+            var points = card.querySelectorAll('.article-points li');
+            points.forEach(function(p) { data.keyPoints.push(p.textContent.trim()); });
+            data.arxivUrl = '';
+            data.githubUrl = '';
+            var arxivEl = card.querySelector('.badge.arxiv');
+            if (arxivEl) data.arxivUrl = arxivEl.href;
+            var githubEl = card.querySelector('.badge.github');
+            if (githubEl) data.githubUrl = githubEl.href;
+
+            // Get category/subtype from parent sections
+            var catSection = card.closest('.category-section');
+            data.category = catSection ? catSection.getAttribute('data-category') : '';
+            var subSection = card.closest('.subtype-section');
+            data.subtype = subSection ? subSection.getAttribute('data-subtype') : '';
+            data.folderId = null;
+            data.favoritedAt = new Date().toISOString();
+            return data;
+        } catch(e) { return null; }
+    }
+
+    function renderFavoriteStars() {
+        var stars = document.querySelectorAll('.fav-star');
+        stars.forEach(function(star) {
+            var url = star.getAttribute('data-url');
+            if (isFavorited(url)) {
+                star.textContent = '★'; // filled star
+                star.classList.add('favorited');
+                star.title = '取消收藏'; // 取消收藏
+            } else {
+                star.textContent = '☆'; // empty star
+                star.classList.remove('favorited');
+                star.title = '收藏'; // 收藏
+            }
+        });
+    }
+
+    function renderFavBadge() {
+        var fav = readFavorites();
+        var count = Object.keys(fav.articles).length;
+        var badge = document.getElementById('fav-badge');
+        if (badge) {
+            badge.textContent = count;
+            badge.classList.toggle('visible', count > 0);
+        }
+    }
+
+    function showToast(msg) {
+        var toast = document.getElementById('fav-toast');
+        if (!toast) return;
+        toast.textContent = msg;
+        toast.classList.add('show');
+        clearTimeout(toast._timer);
+        toast._timer = setTimeout(function() { toast.classList.remove('show'); }, 2000);
+    }
+
+    // ---- Star button click ----
+    document.addEventListener('click', function(e) {
+        var star = e.target.closest('.fav-star');
+        if (!star) return;
+        e.preventDefault();
+        var url = star.getAttribute('data-url');
+        var favorited = toggleFavorite(url);
+        showToast(favorited ? '已收藏 ★' : '已取消收藏');
+    });
+
+    // ---- Favorites Panel ----
+    var favOverlay = document.getElementById('fav-overlay');
+    var favPanelBtn = document.getElementById('fav-panel-btn');
+
+    if (favPanelBtn) {
+        favPanelBtn.addEventListener('click', function() {
+            favOverlay.classList.add('open');
+            renderFavPanel();
+        });
+    }
+
+    if (favOverlay) {
+        favOverlay.addEventListener('click', function(e) {
+            if (e.target === favOverlay) favOverlay.classList.remove('open');
+        });
+    }
+
+    var favCloseBtn = document.getElementById('fav-close-btn');
+    if (favCloseBtn) {
+        favCloseBtn.addEventListener('click', function() {
+            favOverlay.classList.remove('open');
+        });
+    }
+
+    // ---- New folder ----
+    var favNewFolderBtn = document.getElementById('fav-new-folder-btn');
+    var favNewFolderInput = document.getElementById('fav-new-folder-input');
+
+    if (favNewFolderBtn) {
+        favNewFolderBtn.addEventListener('click', function() {
+            var name = favNewFolderInput.value.trim();
+            if (!name) return;
+            var fav = readFavorites();
+            fav.folders.push({ id: genId(), name: name, createdAt: new Date().toISOString() });
+            saveFavorites(fav);
+            favNewFolderInput.value = '';
+            renderFavPanel();
+        });
+    }
+
+    // ---- Delete folder ----
+    document.addEventListener('click', function(e) {
+        var delBtn = e.target.closest('.fav-folder-del');
+        if (!delBtn) return;
+        e.stopPropagation();
+        var folderId = delBtn.getAttribute('data-folder-id');
+        if (!confirm('确定删除该文件夹？文章将移至“其他”。')) return;
+        var fav = readFavorites();
+        fav.folders = fav.folders.filter(function(f) { return f.id !== folderId; });
+        Object.keys(fav.articles).forEach(function(url) {
+            if (fav.articles[url].folderId === folderId) fav.articles[url].folderId = null;
+        });
+        saveFavorites(fav);
+        renderFavPanel();
+        renderFavoriteStars();
+    });
+
+    // ---- Move to folder ----
+    document.addEventListener('change', function(e) {
+        var sel = e.target.closest('.fav-folder-select');
+        if (!sel) return;
+        var url = sel.getAttribute('data-url');
+        var folderId = sel.value;
+        var fav = readFavorites();
+        if (fav.articles[url]) {
+            fav.articles[url].folderId = folderId || null;
+            saveFavorites(fav);
+        }
+    });
+
+    // ---- Unfavorite from panel ----
+    document.addEventListener('click', function(e) {
+        var starBtn = e.target.closest('.fav-item-star');
+        if (!starBtn) return;
+        var url = starBtn.getAttribute('data-url');
+        var fav = readFavorites();
+        delete fav.articles[url];
+        saveFavorites(fav);
+        renderFavPanel();
+        renderFavoriteStars();
+        renderFavBadge();
+    });
+
+    // ---- Export ----
+    var favExportBtn = document.getElementById('fav-export-btn');
+    if (favExportBtn) {
+        favExportBtn.addEventListener('click', function() {
+            var fav = readFavorites();
+            var blob = new Blob([JSON.stringify(fav, null, 2)], {type: 'application/json'});
+            var a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            var today = new Date().toISOString().slice(0,10);
+            a.download = 'digest-favorites-' + today + '.json';
+            a.click();
+            URL.revokeObjectURL(a.href);
+            showToast('已导出 favorites.json');
+        });
+    }
+
+    // ---- Import ----
+    var favImportBtn = document.getElementById('fav-import-btn');
+    var favImportFile = document.getElementById('fav-import-file');
+    if (favImportBtn && favImportFile) {
+        favImportBtn.addEventListener('click', function() { favImportFile.click(); });
+        favImportFile.addEventListener('change', function() {
+            var file = this.files[0];
+            if (!file) return;
+            var reader = new FileReader();
+            reader.onload = function() {
+                try {
+                    var imported = JSON.parse(reader.result);
+                    if (!imported.version || !imported.articles) {
+                        alert('无效的订阅文件格式');
+                        return;
+                    }
+                    var fav = readFavorites();
+                    var folderMap = {};
+                    if (imported.folders) {
+                        imported.folders.forEach(function(f) {
+                            var newId = genId();
+                            folderMap[f.id] = newId;
+                            f.id = newId;
+                            fav.folders.push(f);
+                        });
+                    }
+                    var merged = 0;
+                    Object.keys(imported.articles).forEach(function(url) {
+                        if (!fav.articles[url]) {
+                            fav.articles[url] = imported.articles[url];
+                            if (fav.articles[url].folderId && folderMap[fav.articles[url].folderId]) {
+                                fav.articles[url].folderId = folderMap[fav.articles[url].folderId];
+                            }
+                            merged++;
+                        }
+                    });
+                    saveFavorites(fav);
+                    renderFavPanel();
+                    renderFavoriteStars();
+                    renderFavBadge();
+                    showToast('已导入 ' + merged + ' 篇文章');
+                } catch(e) {
+                    alert('无效的 JSON 文件');
+                }
+            };
+            reader.readAsText(file);
+        });
+    }
+
+    function renderFavPanel() {
+        var fav = readFavorites();
+        var articles = fav.articles;
+        var folders = fav.folders;
+        var activeFolderId = document.querySelector('.fav-folder-tab.active');
+        var currentFolder = activeFolderId ? activeFolderId.getAttribute('data-folder-id') : '';
+
+        // Render folder tabs
+        var folderTabs = document.getElementById('fav-folders');
+        var allCount = Object.keys(articles).length;
+        var html = '<button class="fav-folder-tab' + (currentFolder === '' ? ' active' : '') + '" data-folder-id="">全部 (' + allCount + ')</button>';
+        folders.forEach(function(f) {
+            var count = 0;
+            Object.keys(articles).forEach(function(url) {
+                if (articles[url].folderId === f.id) count++;
+            });
+            html += '<button class="fav-folder-tab' + (currentFolder === f.id ? ' active' : '') + '" data-folder-id="' + f.id + '">' +
+                f.name + ' (' + count + ')' +
+                '<span class="fav-folder-del" data-folder-id="' + f.id + '">×</span>' +
+                '</button>';
+        });
+        folderTabs.innerHTML = html;
+
+        // Add click handlers for folder tabs
+        folderTabs.querySelectorAll('.fav-folder-tab').forEach(function(tab) {
+            tab.addEventListener('click', function(e) {
+                if (e.target.closest('.fav-folder-del')) return;
+                folderTabs.querySelectorAll('.fav-folder-tab').forEach(function(t) { t.classList.remove('active'); });
+                this.classList.add('active');
+                renderFavPanel();
+            });
+        });
+
+        // Render article list
+        var list = document.getElementById('fav-article-list');
+        var articleUrls = Object.keys(articles);
+        var shown = 0;
+        var itemsHtml = '';
+
+        // Sort by favoritedAt desc
+        articleUrls.sort(function(a, b) {
+            var da = articles[a].favoritedAt || '';
+            var db = articles[b].favoritedAt || '';
+            return da > db ? -1 : da < db ? 1 : 0;
+        });
+
+        articleUrls.forEach(function(url) {
+            var a = articles[url];
+            if (currentFolder !== '') {
+                if (a.folderId !== currentFolder) return;
+            }
+            shown++;
+            var folder = folders.find(function(f) { return f.id === a.folderId; });
+            var folderName = folder ? folder.name : '未分类';
+            var options = '<option value="">未分类</option>';
+            folders.forEach(function(f) {
+                options += '<option value="' + f.id + '"' + (a.folderId === f.id ? ' selected' : '') + '>' + f.name + '</option>';
+            });
+            var dateStr = '';
+            if (a.favoritedAt) {
+                dateStr = new Date(a.favoritedAt).toLocaleDateString('zh-CN', {year:'numeric',month:'2-digit',day:'2-digit'});
+            }
+
+            itemsHtml += '<div class="fav-item">' +
+                '<button class="fav-item-star" data-url="' + url + '" title="取消收藏">★</button>' +
+                '<div class="fav-item-content">' +
+                '<div class="fav-item-title"><a href="' + url + '" target="_blank" rel="noopener">' + a.title + '</a></div>' +
+                '<div class="fav-item-meta">' +
+                '<span class="fav-item-source">' + a.source + '</span>' +
+                (a.category ? '<span>' + a.category + '</span>' : '') +
+                (dateStr ? '<span>' + dateStr + '</span>' : '') +
+                '</div></div>' +
+                '<select class="fav-folder-select" data-url="' + url + '">' + options + '</select>' +
+                '</div>';
+        });
+
+        if (shown === 0) {
+            list.innerHTML = '<div class="fav-empty">暂无收藏文章，点击文章卡片右上角☆按钮收藏</div>';
+        } else {
+            list.innerHTML = itemsHtml;
+        }
+    }
+
+    // Initialize on page load
+    renderFavoriteStars();
+    renderFavBadge();
+})();
+
+</script>
+</body>
+</html>
