@@ -323,6 +323,21 @@ body {
 .article-card.highlight { background: var(--card-hl); }
 .article-card.hidden { display: none; }
 
+/* Favorite star button */
+.fav-star {
+    position: absolute; top: 10px; right: 12px;
+    width: 34px; height: 34px; border-radius: 50%;
+    border: none; background: transparent;
+    cursor: pointer; font-size: 20px; line-height: 1;
+    opacity: 0; transition: opacity .2s, transform .15s;
+    z-index: 5; padding: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted);
+}
+.article-card:hover .fav-star { opacity: 1; }
+.fav-star.favorited { opacity: 1; color: #f59e0b; }
+.fav-star:hover { transform: scale(1.25); }
+
 .article-title {
     font-size: 15px; font-weight: 650; line-height: 1.45; margin-bottom: 10px;
 }
@@ -393,6 +408,144 @@ body {
     z-index: 199;
 }
 .sidebar-overlay.visible { display: block; }
+
+/* ===== FAVORITES PANEL ===== */
+.fav-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,.5); z-index: 400;
+    align-items: center; justify-content: center;
+}
+.fav-overlay.open { display: flex; }
+
+.fav-panel {
+    background: var(--surface); border-radius: var(--radius);
+    width: 700px; max-width: 95vw; max-height: 85vh;
+    display: flex; flex-direction: column;
+    box-shadow: 0 16px 48px rgba(0,0,0,.3);
+    overflow: hidden;
+}
+.fav-panel-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 16px 20px; border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+}
+.fav-panel-header h2 { font-size: 18px; margin-right: auto; }
+.fav-panel-actions { display: flex; gap: 8px; }
+.fav-panel-actions button {
+    padding: 6px 14px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border); background: var(--surface);
+    color: var(--text-secondary); cursor: pointer; font-size: 13px;
+    transition: all .15s;
+}
+.fav-panel-actions button:hover { border-color: var(--primary); color: var(--primary); }
+.fav-panel-actions .fav-close-btn {
+    width: 32px; height: 32px; padding: 0; font-size: 16px;
+    border-radius: 50%;
+}
+
+/* Folder tabs */
+.fav-folders {
+    display: flex; gap: 6px; padding: 12px 16px;
+    overflow-x: auto; flex-shrink: 0;
+    border-bottom: 1px solid var(--border);
+}
+.fav-folder-tab {
+    padding: 5px 14px; border-radius: 16px; border: 1px solid var(--border);
+    background: var(--surface); color: var(--text-secondary);
+    cursor: pointer; font-size: 13px; white-space: nowrap;
+    transition: all .15s; flex-shrink: 0;
+}
+.fav-folder-tab:hover { border-color: var(--primary); color: var(--primary); }
+.fav-folder-tab.active {
+    background: var(--primary); color: #fff; border-color: var(--primary);
+}
+.fav-folder-tab .fav-folder-del {
+    display: none; margin-left: 4px; cursor: pointer; font-size: 11px;
+    opacity: .7;
+}
+.fav-folder-tab .fav-folder-del:hover { opacity: 1; }
+.fav-folder-tab:not([data-folder-id=""]) .fav-folder-del { display: inline; }
+
+/* Folder create row */
+.fav-folder-create {
+    display: flex; gap: 6px; padding: 8px 16px; flex-shrink: 0;
+}
+.fav-folder-create input {
+    flex: 1; padding: 6px 12px; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); background: var(--bg);
+    color: var(--text); font-size: 13px; outline: none;
+}
+.fav-folder-create input:focus { border-color: var(--primary); }
+.fav-folder-create button {
+    padding: 6px 14px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border); background: var(--primary);
+    color: #fff; cursor: pointer; font-size: 14px; font-weight: 600;
+    transition: all .15s;
+}
+.fav-folder-create button:hover { opacity: .85; }
+
+/* Article list in panel */
+.fav-article-list {
+    flex: 1; overflow-y: auto; padding: 12px 16px;
+}
+.fav-empty {
+    text-align: center; padding: 40px 16px; color: var(--text-muted);
+    font-size: 14px;
+}
+.fav-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 12px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border); margin-bottom: 8px;
+    transition: all .15s; position: relative;
+}
+.fav-item:hover { border-color: var(--primary); }
+.fav-item .fav-item-star {
+    flex-shrink: 0; cursor: pointer; font-size: 18px;
+    color: #f59e0b; background: none; border: none;
+    padding: 0; margin-top: 2px;
+}
+.fav-item .fav-item-content { flex: 1; min-width: 0; }
+.fav-item .fav-item-title {
+    font-size: 14px; font-weight: 600; line-height: 1.4; margin-bottom: 4px;
+}
+.fav-item .fav-item-title a { color: var(--text); text-decoration: none; }
+.fav-item .fav-item-title a:hover { color: var(--primary); }
+.fav-item .fav-item-meta {
+    font-size: 12px; color: var(--text-muted); margin-bottom: 4px;
+    display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+}
+.fav-item .fav-item-source {
+    background: var(--primary-bg); color: var(--primary);
+    padding: 1px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;
+}
+.fav-item .fav-folder-select {
+    font-size: 12px; padding: 2px 6px; border-radius: 4px;
+    border: 1px solid var(--border); background: var(--surface);
+    color: var(--text-secondary); cursor: pointer;
+    margin-left: auto; flex-shrink: 0;
+}
+
+/* Topbar fav button badge */
+.topbar-btn { position: relative; }
+.fav-badge {
+    position: absolute; top: -4px; right: -6px;
+    background: #f59e0b; color: #fff;
+    font-size: 10px; font-weight: 700; line-height: 1;
+    padding: 2px 5px; border-radius: 8px;
+    min-width: 16px; text-align: center;
+    display: none;
+}
+.fav-badge.visible { display: block; }
+
+/* Toast */
+.fav-toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 10px 24px; border-radius: 24px; font-size: 14px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.15); z-index: 500;
+    opacity: 0; transition: opacity .3s; pointer-events: none;
+}
+.fav-toast.show { opacity: 1; }
 """
 
 
@@ -632,6 +785,565 @@ _JS = r"""
     }
 
     updateActiveNav();
+
+    // ============================
+    //  FAVORITES SYSTEM
+    // ============================
+    var FAV_KEY = 'digest-favorites';
+
+    function readFavorites() {
+        try {
+            var raw = localStorage.getItem(FAV_KEY);
+            if (raw) {
+                var data = JSON.parse(raw);
+                if (data.version && data.folders && data.articles) return data;
+            }
+        } catch(e) {}
+        return { version: 1, folders: [], articles: {} };
+    }
+
+    function saveFavorites(data) {
+        try { localStorage.setItem(FAV_KEY, JSON.stringify(data)); } catch(e) {}
+    }
+
+    function isFavorited(url) {
+        var fav = readFavorites();
+        return !!fav.articles[url];
+    }
+
+    function genId() {
+        return 'xxxx-xxxx-xxxx'.replace(/x/g, function() {
+            return Math.floor(Math.random() * 16).toString(16);
+        });
+    }
+
+    function toggleFavorite(url) {
+        var fav = readFavorites();
+        if (fav.articles[url]) {
+            delete fav.articles[url];
+            saveFavorites(fav);
+            renderFavoriteStars();
+            renderFavBadge();
+            return false;
+        } else {
+            var card = document.querySelector('.article-card[data-url="' + CSS.escape(url) + '"]');
+            var articleData = extractArticleData(card);
+            if (!articleData) return false;
+            fav.articles[url] = articleData;
+            saveFavorites(fav);
+            renderFavoriteStars();
+            renderFavBadge();
+            return true;
+        }
+    }
+
+    function extractArticleData(card) {
+        if (!card) return null;
+        try {
+            var data = {};
+            data.title = card.querySelector('.article-title a').textContent.trim();
+            data.url = card.querySelector('.article-title a').href;
+            data.source = card.querySelector('.article-source').textContent.trim();
+            data.summary = card.querySelector('.article-summary').textContent.trim();
+            data.keyPoints = [];
+            var points = card.querySelectorAll('.article-points li');
+            points.forEach(function(p) { data.keyPoints.push(p.textContent.trim()); });
+            data.arxivUrl = '';
+            data.githubUrl = '';
+            var arxivEl = card.querySelector('.badge.arxiv');
+            if (arxivEl) data.arxivUrl = arxivEl.href;
+            var githubEl = card.querySelector('.badge.github');
+            if (githubEl) data.githubUrl = githubEl.href;
+
+            // Get category/subtype from parent sections
+            var catSection = card.closest('.category-section');
+            data.category = catSection ? catSection.getAttribute('data-category') : '';
+            var subSection = card.closest('.subtype-section');
+            data.subtype = subSection ? subSection.getAttribute('data-subtype') : '';
+            data.folderId = null;
+            data.favoritedAt = new Date().toISOString();
+            return data;
+        } catch(e) { return null; }
+    }
+
+    function renderFavoriteStars() {
+        var stars = document.querySelectorAll('.fav-star');
+        stars.forEach(function(star) {
+            var url = star.getAttribute('data-url');
+            if (isFavorited(url)) {
+                star.textContent = '★'; // filled star
+                star.classList.add('favorited');
+                star.title = '取消收藏'; // 取消收藏
+            } else {
+                star.textContent = '☆'; // empty star
+                star.classList.remove('favorited');
+                star.title = '收藏'; // 收藏
+            }
+        });
+    }
+
+    function renderFavBadge() {
+        var fav = readFavorites();
+        var count = Object.keys(fav.articles).length;
+        var badge = document.getElementById('fav-badge');
+        if (badge) {
+            badge.textContent = count;
+            badge.classList.toggle('visible', count > 0);
+        }
+    }
+
+    function showToast(msg) {
+        var toast = document.getElementById('fav-toast');
+        if (!toast) return;
+        toast.textContent = msg;
+        toast.classList.add('show');
+        clearTimeout(toast._timer);
+        toast._timer = setTimeout(function() { toast.classList.remove('show'); }, 2000);
+    }
+
+    // ---- Star button click ----
+    document.addEventListener('click', function(e) {
+        var star = e.target.closest('.fav-star');
+        if (!star) return;
+        e.preventDefault();
+        var url = star.getAttribute('data-url');
+        var favorited = toggleFavorite(url);
+        showToast(favorited ? '已收藏 ★' : '已取消收藏');
+    });
+
+    // ---- Favorites Panel ----
+    var favOverlay = document.getElementById('fav-overlay');
+    var favPanelBtn = document.getElementById('fav-panel-btn');
+
+    if (favPanelBtn) {
+        favPanelBtn.addEventListener('click', function() {
+            favOverlay.classList.add('open');
+            renderFavPanel();
+        });
+    }
+
+    if (favOverlay) {
+        favOverlay.addEventListener('click', function(e) {
+            if (e.target === favOverlay) favOverlay.classList.remove('open');
+        });
+    }
+
+    var favCloseBtn = document.getElementById('fav-close-btn');
+    if (favCloseBtn) {
+        favCloseBtn.addEventListener('click', function() {
+            favOverlay.classList.remove('open');
+        });
+    }
+
+    // ---- New folder ----
+    var favNewFolderBtn = document.getElementById('fav-new-folder-btn');
+    var favNewFolderInput = document.getElementById('fav-new-folder-input');
+
+    if (favNewFolderBtn) {
+        favNewFolderBtn.addEventListener('click', function() {
+            var name = favNewFolderInput.value.trim();
+            if (!name) return;
+            var fav = readFavorites();
+            fav.folders.push({ id: genId(), name: name, createdAt: new Date().toISOString() });
+            saveFavorites(fav);
+            favNewFolderInput.value = '';
+            renderFavPanel();
+        });
+    }
+
+    // ---- Delete folder ----
+    document.addEventListener('click', function(e) {
+        var delBtn = e.target.closest('.fav-folder-del');
+        if (!delBtn) return;
+        e.stopPropagation();
+        var folderId = delBtn.getAttribute('data-folder-id');
+        if (!confirm('确定删除该文件夹？文章将移至“其他”。')) return;
+        var fav = readFavorites();
+        fav.folders = fav.folders.filter(function(f) { return f.id !== folderId; });
+        Object.keys(fav.articles).forEach(function(url) {
+            if (fav.articles[url].folderId === folderId) fav.articles[url].folderId = null;
+        });
+        saveFavorites(fav);
+        renderFavPanel();
+        renderFavoriteStars();
+    });
+
+    // ---- Move to folder ----
+    document.addEventListener('change', function(e) {
+        var sel = e.target.closest('.fav-folder-select');
+        if (!sel) return;
+        var url = sel.getAttribute('data-url');
+        var folderId = sel.value;
+        var fav = readFavorites();
+        if (fav.articles[url]) {
+            fav.articles[url].folderId = folderId || null;
+            saveFavorites(fav);
+        }
+    });
+
+    // ---- Unfavorite from panel ----
+    document.addEventListener('click', function(e) {
+        var starBtn = e.target.closest('.fav-item-star');
+        if (!starBtn) return;
+        var url = starBtn.getAttribute('data-url');
+        var fav = readFavorites();
+        delete fav.articles[url];
+        saveFavorites(fav);
+        renderFavPanel();
+        renderFavoriteStars();
+        renderFavBadge();
+    });
+
+    // ---- Export ----
+    var favExportBtn = document.getElementById('fav-export-btn');
+    if (favExportBtn) {
+        favExportBtn.addEventListener('click', function() {
+            var fav = readFavorites();
+            var articles = fav.articles;
+            var folders = fav.folders;
+            var total = Object.keys(articles).length;
+            var today = new Date().toISOString().slice(0,10);
+            var now = new Date().toISOString().slice(0,16).replace('T', ' ');
+
+            // Build MD content
+            var md = [];
+            md.push('# DigestMe 收藏夹');
+            md.push('');
+            md.push('> 共 ' + total + ' 篇收藏 · 导出 ' + now);
+            md.push('');
+
+            // Group articles
+            var byFolder = {};
+            var uncategorized = [];
+            Object.keys(articles).forEach(function(url) {
+                var a = articles[url];
+                a._url = url;
+                var fid = a.folderId;
+                if (fid && folders.some(function(f) { return f.id === fid; })) {
+                    byFolder[fid] = byFolder[fid] || [];
+                    byFolder[fid].push(a);
+                } else {
+                    uncategorized.push(a);
+                }
+            });
+            var sortFn = function(a, b) { return (b.favoritedAt||'').localeCompare(a.favoritedAt||''); };
+            uncategorized.sort(sortFn);
+            Object.keys(byFolder).forEach(function(fid) { byFolder[fid].sort(sortFn); });
+
+            // TOC
+            md.push('## 目录');
+            md.push('');
+            var folderOrder = [null].concat(folders.map(function(f) { return f.id; }));
+            folderOrder.forEach(function(fid) {
+                var name, anchor, count;
+                if (fid === null) {
+                    name = '未分类'; anchor = 'uncategorized'; count = uncategorized.length;
+                } else {
+                    var f = folders.find(function(x) { return x.id === fid; });
+                    if (!f) return;
+                    name = f.name; anchor = f.id; count = (byFolder[fid] || []).length;
+                }
+                if (count === 0) return;
+                md.push('- [' + name + ' (' + count + ' 篇)](#' + anchor + ')');
+            });
+            md.push('');
+
+            // Per-folder sections
+            folderOrder.forEach(function(fid) {
+                var name, anchor, arts;
+                if (fid === null) {
+                    name = '未分类'; anchor = 'uncategorized'; arts = uncategorized;
+                } else {
+                    var f = folders.find(function(x) { return x.id === fid; });
+                    if (!f) return;
+                    name = f.name; anchor = f.id; arts = byFolder[fid] || [];
+                }
+                if (arts.length === 0) return;
+
+                md.push('## ' + name + ' {#' + anchor + '}');
+                md.push('');
+
+                arts.forEach(function(a) {
+                    md.push('### [' + a.title + '](' + a.url + ')');
+                    md.push('');
+                    var meta = ['**来源**: ' + a.source];
+                    if (a.subtype) meta.push('**类型**: ' + a.subtype);
+                    if (a.favoritedAt) meta.push('**收藏于**: ' + (a.favoritedAt.slice(0,10)));
+                    md.push(meta.join(' · '));
+                    md.push('');
+                    if (a.summary) { md.push(a.summary); md.push(''); }
+                    var badges = [];
+                    if (a.arxivUrl) badges.push('[arXiv](' + a.arxivUrl + ')');
+                    if (a.githubUrl) badges.push('[GitHub](' + a.githubUrl + ')');
+                    if (badges.length) { md.push(badges.join(' · ')); md.push(''); }
+                    if (a.keyPoints && a.keyPoints.length) {
+                        a.keyPoints.forEach(function(p) { md.push('- ' + p); });
+                        md.push('');
+                    }
+                });
+            });
+
+            md.push('---');
+            md.push('*Exported at ' + now + ' · ' + total + ' articles*');
+            md.push('');
+
+            // Embed JSON data block for reliable re-import
+            md.push('<!-- digest-favorites-data');
+            md.push(JSON.stringify(fav));
+            md.push('-->');
+            md.push('');
+
+            var blob = new Blob([md.join('\n')], {type: 'text/markdown'});
+            var a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'digest-favorites-' + today + '.md';
+            a.click();
+            URL.revokeObjectURL(a.href);
+            showToast('已导出 favorites.md');
+        });
+    }
+
+    // ---- Import ----
+    function parseImported(text) {
+        // Extract embedded JSON from MD file
+        var m = text.match(/<!-- digest-favorites-data\s*\n([\s\S]*?)\s*-->/);
+        if (m) {
+            var data = JSON.parse(m[1]);
+            if (data.version && data.articles) return data;
+        }
+        // Fallback: parse MD structure directly
+        return parseMdFavorites(text);
+    }
+
+    function parseMdFavorites(text) {
+        var articles = {};
+        var folders = [];
+        var lines = text.split('\n');
+        var currentFolderId = null;
+        var currentFolderName = '未分类';
+        var i = 0;
+
+        while (i < lines.length) {
+            var line = lines[i];
+
+            // Folder section: ## name {#id}
+            var fm = line.match(/^## (.+) \{#(.+)\}$/);
+            if (fm && fm[1] !== '目录') {
+                currentFolderName = fm[1].trim();
+                currentFolderId = fm[2].trim();
+                if (currentFolderId === 'uncategorized') {
+                    currentFolderId = null;
+                } else {
+                    var exists = folders.some(function(f) { return f.id === currentFolderId; });
+                    if (!exists) {
+                        folders.push({ id: currentFolderId, name: currentFolderName, createdAt: new Date().toISOString() });
+                    }
+                }
+                i++; continue;
+            }
+
+            // Article title: ### [title](url)
+            var am = line.match(/^### \[(.+)\]\((.+)\)$/);
+            if (am) {
+                var title = am[1].trim();
+                var url = am[2].trim();
+                var article = {
+                    title: title,
+                    url: url,
+                    source: '',
+                    summary: '',
+                    keyPoints: [],
+                    arxivUrl: '',
+                    githubUrl: '',
+                    subtype: '',
+                    category: '',
+                    folderId: currentFolderId,
+                    favoritedAt: new Date().toISOString()
+                };
+
+                i++;
+                // Metadata line
+                if (i < lines.length && lines[i].startsWith('**来源**:')) {
+                    var metaLine = lines[i];
+                    var srcm = metaLine.match(/\*\*来源\*\*:\s*([^·]+)/);
+                    if (srcm) article.source = srcm[1].trim();
+                    var subm = metaLine.match(/\*\*类型\*\*:\s*([^·]+)/);
+                    if (subm) article.subtype = subm[1].trim();
+                    i++;
+                }
+
+                // Skip blank lines, then read summary
+                while (i < lines.length && lines[i].trim() === '') i++;
+                var summaryParts = [];
+                while (i < lines.length && lines[i].trim() !== '' && !lines[i].startsWith('### ') && !lines[i].startsWith('## ') && !lines[i].startsWith('[') && !lines[i].startsWith('- ') && !lines[i].startsWith('<!--')) {
+                    summaryParts.push(lines[i]);
+                    i++;
+                }
+                if (summaryParts.length > 0) article.summary = summaryParts.join('\n').trim();
+
+                // Badges: [arXiv](url) · [GitHub](url)
+                if (i < lines.length && (lines[i].startsWith('[arXiv]') || lines[i].startsWith('[GitHub]'))) {
+                    var badgeLine = lines[i];
+                    var arxm = badgeLine.match(/\[arXiv\]\((.+?)\)/);
+                    if (arxm) article.arxivUrl = arxm[1];
+                    var ghm = badgeLine.match(/\[GitHub\]\((.+?)\)/);
+                    if (ghm) article.githubUrl = ghm[1];
+                    i++;
+                }
+
+                // Bullet points
+                while (i < lines.length && lines[i].startsWith('- ')) {
+                    var pt = lines[i].replace(/^- /, '').trim();
+                    if (pt) article.keyPoints.push(pt);
+                    i++;
+                }
+
+                articles[url] = article;
+                continue;
+            }
+            i++;
+        }
+
+        return { version: 1, folders: folders, articles: articles };
+    }
+
+    var favImportBtn = document.getElementById('fav-import-btn');
+    var favImportFile = document.getElementById('fav-import-file');
+    if (favImportBtn && favImportFile) {
+        favImportBtn.addEventListener('click', function() { favImportFile.click(); });
+        favImportFile.addEventListener('change', function() {
+            var file = this.files[0];
+            if (!file) return;
+            var reader = new FileReader();
+            reader.onload = function() {
+                try {
+                    var imported = parseImported(reader.result);
+                    if (!imported || !imported.articles || Object.keys(imported.articles).length === 0) {
+                        alert('未找到有效的收藏数据');
+                        return;
+                    }
+                    var fav = readFavorites();
+                    var folderMap = {};
+                    if (imported.folders) {
+                        imported.folders.forEach(function(f) {
+                            var newId = genId();
+                            folderMap[f.id] = newId;
+                            f.id = newId;
+                            // Avoid duplicate folder names
+                            if (!fav.folders.some(function(x) { return x.name === f.name; })) {
+                                fav.folders.push(f);
+                            }
+                        });
+                    }
+                    var merged = 0;
+                    Object.keys(imported.articles).forEach(function(url) {
+                        if (!fav.articles[url]) {
+                            fav.articles[url] = imported.articles[url];
+                            if (fav.articles[url].folderId && folderMap[fav.articles[url].folderId]) {
+                                fav.articles[url].folderId = folderMap[fav.articles[url].folderId];
+                            }
+                            merged++;
+                        }
+                    });
+                    saveFavorites(fav);
+                    renderFavPanel();
+                    renderFavoriteStars();
+                    renderFavBadge();
+                    showToast('已导入 ' + merged + ' 篇文章');
+                } catch(e) {
+                    alert('无法解析文件，请确认是 DigestMe 收藏夹导出文件');
+                }
+            };
+            reader.readAsText(file);
+        });
+    }
+
+    function renderFavPanel() {
+        var fav = readFavorites();
+        var articles = fav.articles;
+        var folders = fav.folders;
+        var activeFolderId = document.querySelector('.fav-folder-tab.active');
+        var currentFolder = activeFolderId ? activeFolderId.getAttribute('data-folder-id') : '';
+
+        // Render folder tabs
+        var folderTabs = document.getElementById('fav-folders');
+        var allCount = Object.keys(articles).length;
+        var html = '<button class="fav-folder-tab' + (currentFolder === '' ? ' active' : '') + '" data-folder-id="">全部 (' + allCount + ')</button>';
+        folders.forEach(function(f) {
+            var count = 0;
+            Object.keys(articles).forEach(function(url) {
+                if (articles[url].folderId === f.id) count++;
+            });
+            html += '<button class="fav-folder-tab' + (currentFolder === f.id ? ' active' : '') + '" data-folder-id="' + f.id + '">' +
+                f.name + ' (' + count + ')' +
+                '<span class="fav-folder-del" data-folder-id="' + f.id + '">×</span>' +
+                '</button>';
+        });
+        folderTabs.innerHTML = html;
+
+        // Add click handlers for folder tabs
+        folderTabs.querySelectorAll('.fav-folder-tab').forEach(function(tab) {
+            tab.addEventListener('click', function(e) {
+                if (e.target.closest('.fav-folder-del')) return;
+                folderTabs.querySelectorAll('.fav-folder-tab').forEach(function(t) { t.classList.remove('active'); });
+                this.classList.add('active');
+                renderFavPanel();
+            });
+        });
+
+        // Render article list
+        var list = document.getElementById('fav-article-list');
+        var articleUrls = Object.keys(articles);
+        var shown = 0;
+        var itemsHtml = '';
+
+        // Sort by favoritedAt desc
+        articleUrls.sort(function(a, b) {
+            var da = articles[a].favoritedAt || '';
+            var db = articles[b].favoritedAt || '';
+            return da > db ? -1 : da < db ? 1 : 0;
+        });
+
+        articleUrls.forEach(function(url) {
+            var a = articles[url];
+            if (currentFolder !== '') {
+                if (a.folderId !== currentFolder) return;
+            }
+            shown++;
+            var folder = folders.find(function(f) { return f.id === a.folderId; });
+            var folderName = folder ? folder.name : '未分类';
+            var options = '<option value="">未分类</option>';
+            folders.forEach(function(f) {
+                options += '<option value="' + f.id + '"' + (a.folderId === f.id ? ' selected' : '') + '>' + f.name + '</option>';
+            });
+            var dateStr = '';
+            if (a.favoritedAt) {
+                dateStr = new Date(a.favoritedAt).toLocaleDateString('zh-CN', {year:'numeric',month:'2-digit',day:'2-digit'});
+            }
+
+            itemsHtml += '<div class="fav-item">' +
+                '<button class="fav-item-star" data-url="' + url + '" title="取消收藏">★</button>' +
+                '<div class="fav-item-content">' +
+                '<div class="fav-item-title"><a href="' + url + '" target="_blank" rel="noopener">' + a.title + '</a></div>' +
+                '<div class="fav-item-meta">' +
+                '<span class="fav-item-source">' + a.source + '</span>' +
+                (a.category ? '<span>' + a.category + '</span>' : '') +
+                (dateStr ? '<span>' + dateStr + '</span>' : '') +
+                '</div></div>' +
+                '<select class="fav-folder-select" data-url="' + url + '">' + options + '</select>' +
+                '</div>';
+        });
+
+        if (shown === 0) {
+            list.innerHTML = '<div class="fav-empty">暂无收藏文章，点击文章卡片右上角☆按钮收藏</div>';
+        } else {
+            list.innerHTML = itemsHtml;
+        }
+    }
+
+    // Initialize on page load
+    renderFavoriteStars();
+    renderFavBadge();
 })();
 """
 
@@ -746,6 +1458,9 @@ class HTMLWriter:
         parts.append(
             '<button id="back-top" class="topbar-btn" title="回到顶部">↑</button>'
         )
+        parts.append(
+            '<button id="fav-panel-btn" class="topbar-btn" title="收藏夹">⭐<span class="fav-badge" id="fav-badge"></span></button>'
+        )
         parts.append('</div></div>')
 
         # Content
@@ -789,6 +1504,29 @@ class HTMLWriter:
         parts.append(self._render_footer(generated_at, stats))
         parts.append('</div>')  # /.main
 
+        # Favorites Modal
+        parts.append(
+            '<div class="fav-overlay" id="fav-overlay">'
+            '<div class="fav-panel">'
+            '<div class="fav-panel-header">'
+            '<h2>⭐ 收藏夹</h2>'
+            '<div class="fav-panel-actions">'
+            '<button id="fav-export-btn" title="导出为 Markdown">📥 导出 MD</button>'
+            '<button id="fav-import-btn" title="导入收藏夹">📤 导入</button>'
+            '<input type="file" id="fav-import-file" accept=".md" style="display:none">'
+            '<button id="fav-close-btn" class="fav-close-btn">✕</button>'
+            '</div></div>'
+            '<div class="fav-folders" id="fav-folders"></div>'
+            '<div class="fav-folder-create">'
+            '<input type="text" id="fav-new-folder-input" placeholder="新建文件夹..." maxlength="30">'
+            '<button id="fav-new-folder-btn">+</button>'
+            '</div>'
+            '<div class="fav-article-list" id="fav-article-list"></div>'
+            '</div></div>'
+        )
+        # Toast notification
+        parts.append('<div class="fav-toast" id="fav-toast"></div>')
+
         parts.append("<script>")
         parts.append(_JS)
         parts.append("</script>")
@@ -807,7 +1545,9 @@ class HTMLWriter:
         )
         lines = [
             '<article class="article-card"'
+            f' data-url="{html.escape(article.url, quote=True)}"'
             f' data-search-text="{html.escape(search_text, quote=True)}">',
+            f'<button class="fav-star" data-url="{html.escape(article.url, quote=True)}" title="收藏">☆</button>',
             f'<div class="article-title"><a href="{html.escape(article.url)}" target="_blank" rel="noopener">{html.escape(article.title)}</a></div>',
             f'<div class="article-meta"><span class="article-source">{html.escape(article.source)}</span></div>',
             f'<div class="article-summary">{html.escape(article.summary)}</div>',

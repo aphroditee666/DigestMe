@@ -540,7 +540,24 @@ def main():
     parser.add_argument('--config', default='config.yaml', help='Config file path')
     parser.add_argument('--once', action='store_true', help='Run once without scheduler')
     parser.add_argument('--render-only', action='store_true', help='Re-render HTML/MD from cache only (no fetch, no LLM)')
+    parser.add_argument('--export-favorites', action='store_true', help='Generate standalone favorites HTML from JSON export')
+    parser.add_argument('--input', type=str, help='Favorites JSON file path (for --export-favorites)')
+    parser.add_argument('--favorites-output', type=str, default='output/favorites.md', help='Favorites output path (.md or .html)')
     args = parser.parse_args()
+
+    if args.export_favorites:
+        if not args.input:
+            logger.error("--input is required for --export-favorites")
+            sys.exit(1)
+        from src.favorites_writer import FavoritesWriter
+        writer = FavoritesWriter()
+        output_path = args.favorites_output
+        if output_path.endswith('.html'):
+            path = writer.write_standalone_html(args.input, output_path)
+        else:
+            path = writer.write_standalone_md(args.input, output_path)
+        logger.info(f"Favorites written to: {path}")
+        sys.exit(0)
 
     config_path = Path(args.config)
     if not config_path.exists():

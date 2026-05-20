@@ -403,7 +403,7 @@ claude:
   thinking: "disabled"
 
 digest:
-  recent_days: 4
+  recent_days: 2
   cache_path: ".cache/digest_me_cache.json"
   classification_batch_size: 30
   summarization_batch_size: 5
